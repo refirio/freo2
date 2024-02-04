@@ -3,3 +3,7 @@ Thumbs.db
 
 /config.php
 /app/config.local.php
+/database/
+/files/entries/
+/files/pages/
+/mail/
