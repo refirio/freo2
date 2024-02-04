@@ -1,0 +1,47 @@
+@charset "utf-8";
+
+/********* アップロード *******************************************************/
+
+/* ファイルを選択してアップロード */
+div.upload {
+    position: relative;
+}
+div.upload button {
+    width: 100px;
+    height: 30px;
+    border: 0;
+    background-color: #CCCCCC;
+}
+div.upload button:hover {
+    background-color: #EEEEEE;
+}
+div.upload input {
+    visibility: hidden;
+    position: absolute;
+    height: 0px;
+}
+div.upload p {
+    margin: 0;
+    padding: 5px 0 0;
+}
+div.upload p img {
+    max-width: 100px;
+    max-height: 100px;
+}
+div.upload ul {
+    display: none;
+    margin-top: 0;
+    padding: 0;
+}
+div.upload ul li {
+    display: inline;
+    list-style: none;
+    margin-right: 10px;
+    font-size: 90%;
+    font-weight: bold;
+}
+
+/* ファイルをドラッグ＆ドロップしてアップロード */
+div.upload.dragover button {
+    background-color: #EEEEEE;
+}

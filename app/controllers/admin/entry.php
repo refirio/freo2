@@ -1,0 +1,35 @@
+<?php
+
+// ページを取得
+if (isset($_GET['page'])) {
+    $_GET['page'] = intval($_GET['page']);
+} else {
+    $_GET['page'] = 1;
+
+    $_SESSION['bulk']['entry'] = [];
+}
+
+// 記事を取得
+$_view['entries'] = model('select_entries', [
+    'order_by' => 'entries.datetime DESC, entries.id',
+    'limit'    => [
+        ':offset, :limit',
+        [
+            'offset' => $GLOBALS['config']['limits']['entry'] * ($_GET['page'] - 1),
+            'limit'  => $GLOBALS['config']['limits']['entry'],
+        ],
+    ],
+], [
+    'associate' => true,
+]);
+
+$entry_count = model('select_entries', [
+    'select' => 'COUNT(DISTINCT entries.id) AS count',
+], [
+    'associate' => true,
+]);
+$_view['entry_count'] = $entry_count[0]['count'];
+$_view['entry_page']  = ceil($entry_count[0]['count'] / $GLOBALS['config']['limits']['entry']);
+
+// タイトル
+$_view['title'] = '記事管理';

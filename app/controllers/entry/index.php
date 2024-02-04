@@ -1,0 +1,88 @@
+<?php
+
+import('app/services/entry.php');
+
+// 記事の絞り込み
+$filters = model('filter_entries', $_GET, [
+    'associate' => true,
+]);
+
+/*
+if ($filters['where'] !== '') {
+    $filters['where'] .= ' AND ';
+}
+$where = [
+    $filters['where'] . 'entries.public = 1 && (entries.public_begin IS NULL OR entries.public_begin <= :now) && (entries.public_end IS NULL OR entries.public_end >= :now)',
+    [
+        'now' => localdate('Y-m-d H:i:s'),
+    ],
+];
+*/
+
+// 検索用文字列を初期化
+if (!isset($_GET['category_sets'])) {
+    $_GET['category_sets'] = [];
+}
+if (!isset($_GET['archive'])) {
+    $_GET['archive'] = null;
+}
+
+// ページを取得
+if (isset($_GET['page'])) {
+    $_GET['page'] = intval($_GET['page']);
+} else {
+    $_GET['page'] = 1;
+}
+
+// 記事を取得
+$_view['entries'] = service_entry_select_published([
+    'where'    => $filters['where'],
+    'order_by' => 'entries.datetime DESC, entries.id',
+    'limit'    => [
+        ':offset, :limit',
+        [
+            'offset' => $GLOBALS['config']['limits']['entry'] * ($_GET['page'] - 1),
+            'limit'  => $GLOBALS['config']['limits']['entry'],
+        ],
+    ],
+]);
+
+
+/*
+// 記事を取得
+$_view['entries'] = model('select_entries', [
+    'where'    => $where,
+    'order_by' => 'entries.datetime DESC, entries.id',
+    'limit'    => [
+        ':offset, :limit',
+        [
+            'offset' => $GLOBALS['config']['limits']['entry'] * ($_GET['page'] - 1),
+            'limit'  => $GLOBALS['config']['limits']['entry'],
+        ],
+    ],
+], [
+    'associate' => true,
+]);
+*/
+
+$entry_count = service_entry_select_published([
+    'select' => 'COUNT(DISTINCT entries.id) AS count',
+    'where'  => $filters['where'],
+]);
+$_view['entry_count'] = $entry_count[0]['count'];
+$_view['entry_page']  = ceil($entry_count[0]['count'] / $GLOBALS['config']['limits']['entry']);
+
+// カテゴリを取得
+$_view['categories'] = model('select_categories', [
+    'order_by' => 'sort, id',
+]);
+
+// 月ごとの記事数を取得
+$_view['entry_archives'] = service_entry_select_published([
+    'select'   => 'DATE_FORMAT(entries.datetime, \'%Y-%m-%d\') AS month, COUNT(DISTINCT entries.id) AS count',
+    'group_by' => 'month',
+    'order_by' => 'month DESC',
+]);
+
+// タイトル
+$_view['title'] = '記事';

@@ -1,0 +1,38 @@
+@charset "utf-8";
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+body {
+    color: #222222;
+}
+h1, h2 {
+    font-family: 'Roboto', sans-serif;
+}
+h1 a {
+    text-decoration: none;
+}
+a {
+    color: #222222;
+}
+
+main label .badge {
+    vertical-align: text-bottom;
+}
+
+main ul.headline {
+    padding-left: 0;
+}
+main ul.headline li {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    list-style: none;
+}
+main ul.headline li a {
+    padding-left: 0.6em;
+    padding-right: 0.4em;
+}
+
+main ul.headline li span.text {
+    color: #AAAAAA;
+}
