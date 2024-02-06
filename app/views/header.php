@@ -16,7 +16,7 @@
         </header>
         <div class="container-fluid">
             <div class="row">
-                <nav class="col-md-3 col-lg-2 ps-3 d-md-block">
+                <nav class="col-md-3 col-lg-2 mb-3 ps-3 pe-0 d-md-block">
                     <h2 class="h4 mb-3">Menu</h2>
                     <ul>
                         <?php foreach ($_view['menus'] as $menu) : ?>

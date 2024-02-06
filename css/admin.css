@@ -109,6 +109,10 @@ main .table {
     margin: 20px 0;
 }
 
+main .upload button {
+    padding: 0;
+}
+
 @media (min-width: 767.99px) {
     main .search .row > div:not(:last-child) {
         padding-right: 0;
