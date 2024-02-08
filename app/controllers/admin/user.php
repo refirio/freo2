@@ -29,5 +29,15 @@ $user_count = model('select_users', [
 $_view['user_count'] = $user_count[0]['count'];
 $_view['user_page']  = ceil($user_count[0]['count'] / $GLOBALS['config']['limits']['user']);
 
+// 権限を取得
+$authorities = model('select_authorities', [
+    'order_by' => 'power DESC, id',
+]);
+
+$_view['authority_sets'] = [];
+foreach ($authorities as $authority) {
+    $_view['authority_sets'][$authority['id']] = $authority['name'];
+}
+
 // タイトル
 $_view['title'] = 'ユーザ管理';

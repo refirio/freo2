@@ -233,6 +233,13 @@ function validate_users($queries, $options = [])
         }
     }
 
+    // 外部キー 権限
+    if (isset($queries['authority_id'])) {
+        if (!validator_required($queries['authority_id'])) {
+            $messages['authority_id'] = '権限が入力されていません。';
+        }
+    }
+
     // 名前
     if (isset($queries['name'])) {
         if (!validator_required($queries['name'])) {
@@ -296,8 +303,9 @@ function default_users()
         'modified'      => localdate('Y-m-d H:i:s'),
         'deleted'       => null,
         'username'      => '',
-        'password'      => null,
-        'password_salt' => null,
+        'password'      => '',
+        'password_salt' => '',
+        'authority_id'  => 0,
         'name'          => null,
         'email'         => '',
         'loggedin'      => null,

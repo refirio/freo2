@@ -11,23 +11,23 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
                         <div class="card-body">
-                            <p><a href="<?php t(MAIN_FILE) ?>/admin/menu_form" class="btn btn-primary">カテゴリ登録</a></p>
+                            <p><a href="<?php t(MAIN_FILE) ?>/admin/menu_form" class="btn btn-primary">メニュー登録</a></p>
                             <?php if (isset($_GET['ok'])) : ?>
                             <div class="alert alert-success">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                                 <?php if ($_GET['ok'] === 'post') : ?>
-                                カテゴリを登録しました。
+                                メニューを登録しました。
                                 <?php elseif ($_GET['ok'] === 'sort') : ?>
-                                カテゴリを並び替えました。
+                                メニューを並び替えました。
                                 <?php elseif ($_GET['ok'] === 'delete') : ?>
-                                カテゴリを削除しました。
+                                メニューを削除しました。
                                 <?php endif ?>
                             </div>
                             <?php elseif (isset($_GET['warning'])) : ?>
                             <div class="alert alert-danger">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                                 <?php if ($_GET['warning'] === 'delete') : ?>
-                                カテゴリが選択されていません。
+                                メニューが選択されていません。
                                 <?php endif ?>
                             </div>
                             <?php endif ?>

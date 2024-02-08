@@ -30,6 +30,15 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group mb-2">
+                                            <label class="fw-bold">権限 <span class="badge bg-danger">必須</span></label>
+                                            <select name="authority_id" class="form-select" style="width: 200px;">
+                                                <option value=""></option>
+                                                <?php foreach ($_view['authorities'] as $authority) : ?>
+                                                <option value="<?php t($authority['id']) ?>"<?php $authority['id'] == $_view['user']['authority_id'] ? e(' selected="selected"') : '' ?>><?php t($authority['name']) ?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-2">
                                             <label class="fw-bold">ユーザ名 <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="username" size="30" value="<?php t($_view['user']['username']) ?>" class="form-control">
                                         </div>

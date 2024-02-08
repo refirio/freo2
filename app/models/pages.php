@@ -551,7 +551,7 @@ function default_pages()
         'public_end'   => null,
         'datetime'     => localdate('Y-m-d H:00'),
         'title'        => '',
-        'code'     => '',
+        'code'         => '',
         'text'         => null,
         'picture'      => null,
         'thumbnail'    => null,

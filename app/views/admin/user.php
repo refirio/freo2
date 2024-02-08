@@ -35,8 +35,9 @@
                                     <tr>
                                         <th class="text-nowrap">ID</th>
                                         <th class="text-nowrap">ユーザ名</th>
+                                        <th class="text-nowrap">権限</th>
                                         <th class="text-nowrap">名前</th>
-                                        <th class="text-nowrap">メールアドレス</th>
+                                        <th class="text-nowrap d-none d-md-table-cell">メールアドレス</th>
                                         <th class="text-nowrap d-none d-md-table-cell">最終ログイン日時</th>
                                         <th class="text-nowrap">作業</th>
                                     </tr>
@@ -45,8 +46,9 @@
                                     <tr>
                                         <th class="text-nowrap">ID</th>
                                         <th class="text-nowrap">ユーザ名</th>
+                                        <th class="text-nowrap">権限</th>
                                         <th class="text-nowrap">名前</th>
-                                        <th class="text-nowrap">メールアドレス</th>
+                                        <th class="text-nowrap d-none d-md-table-cell">メールアドレス</th>
                                         <th class="text-nowrap d-none d-md-table-cell">最終ログイン日時</th>
                                         <th class="text-nowrap">作業</th>
                                     </tr>
@@ -56,8 +58,9 @@
                                     <tr>
                                         <td><?php h($user['id']) ?></td\>
                                         <td><?php h($user['username']) ?></td>
+                                        <td><?php h($_view['authority_sets'][$user['authority_id']]) ?></td>
                                         <td><?php h($user['name']) ?></td>
-                                        <td><?php h($user['email']) ?></td>
+                                        <td class="d-none d-md-table-cell"><?php h($user['email']) ?></td>
                                         <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $user['loggedin']) == localdate('Ymd') ? localdate('H:i:s', $user['loggedin']) : localdate('Y-m-d', $user['loggedin'])) ?></td>
                                         <td><a href="<?php t(MAIN_FILE) ?>/admin/user_form?id=<?php t($user['id']) ?>" class="btn btn-primary">編集</a></td>
                                     </tr>

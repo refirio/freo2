@@ -27,6 +27,7 @@ if (empty($_SESSION['post']['user']['id'])) {
             'username'      => $_SESSION['post']['user']['username'],
             'password'      => hash_crypt($_SESSION['post']['user']['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']),
             'password_salt' => $password_salt,
+            'authority_id'  => $_SESSION['post']['user']['authority_id'],
             'name'          => $_SESSION['post']['user']['name'],
             'email'         => $_SESSION['post']['user']['email'],
         ],
@@ -37,9 +38,10 @@ if (empty($_SESSION['post']['user']['id'])) {
 } else {
     // ユーザを編集
     $sets = [
-        'username' => $_SESSION['post']['user']['username'],
-        'name'     => $_SESSION['post']['user']['name'],
-        'email'    => $_SESSION['post']['user']['email'],
+        'username'     => $_SESSION['post']['user']['username'],
+        'authority_id' => $_SESSION['post']['user']['authority_id'],
+        'name'         => $_SESSION['post']['user']['name'],
+        'email'        => $_SESSION['post']['user']['email'],
     ];
     if (!empty($_SESSION['post']['user']['password'])) {
         $sets['password']      = hash_crypt($_SESSION['post']['user']['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']);

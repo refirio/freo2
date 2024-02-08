@@ -81,7 +81,7 @@ function default_sessions()
         'created'  => localdate('Y-m-d H:i:s'),
         'modified' => localdate('Y-m-d H:i:s'),
         'user_id'  => 0,
-        'agent'    => null,
+        'agent'    => '',
         'keep'     => 0,
         'expire'   => localdate('Y-m-d H:i:s'),
     ];

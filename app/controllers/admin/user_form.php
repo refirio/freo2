@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'username'         => isset($_POST['username'])         ? $_POST['username']         : '',
             'password'         => isset($_POST['password'])         ? $_POST['password']         : '',
             'password_confirm' => isset($_POST['password_confirm']) ? $_POST['password_confirm'] : '',
+            'authority_id'     => isset($_POST['authority_id'])     ? $_POST['authority_id']     : '',
             'name'             => isset($_POST['name'])             ? $_POST['name']             : '',
             'email'            => isset($_POST['email'])            ? $_POST['email']            : '',
         ]),
@@ -76,6 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['update']['user'] = localdate('Y-m-d H:i:s');
     }
 }
+
+// 権限を取得
+$_view['authorities'] = model('select_authorities', [
+    'order_by' => 'power DESC, id',
+]);
 
 // タイトル
 if (empty($_GET['id'])) {
