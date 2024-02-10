@@ -18,8 +18,8 @@
 
                     <?php if ($_view['entry']['picture'] || $_view['entry']['thumbnail']) : ?>
                     <div class="images">
-                        <?php if ($_view['entry']['picture']) : ?><div class="image"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_targets']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['picture']) ?>" alt=""></div><?php endif ?>
-                        <?php if ($_view['entry']['thumbnail']) : ?><div class="image"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_targets']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['thumbnail']) ?>" alt=""></div><?php endif ?>
+                        <?php if ($_view['entry']['picture']) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_targets']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['picture']) ?>" alt="" class="img-fluid"></div><?php endif ?>
+                        <?php if ($_view['entry']['thumbnail']) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_targets']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['thumbnail']) ?>" alt="" class="img-fluid"></div><?php endif ?>
                     </div>
                     <?php endif ?>
                 </main>
