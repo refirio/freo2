@@ -62,6 +62,34 @@ if (!empty($_SESSION['auth']['user']['id'])) {
         // リダイレクト
         redirect('/admin/');
     } else {
+        // 権限を取得
+        $authorities = model('select_authorities', [
+            'where' => [
+                'id = :id',
+                [
+                    'id' => $users[0]['authority_id'],
+                ],
+            ],
+        ]);
+        $GLOBALS['authority'] = $authorities[0];
+
+        // 権限を確認
+        if ($GLOBALS['authority']['power'] <= 2) {
+            if (preg_match('/^(admin)$/', $_REQUEST['_mode']) && !preg_match('/^modify(_|$)/', $_REQUEST['_work'])) {
+                if (preg_match('/^user(_|$)/', $_REQUEST['_work']) || preg_match('/^log$/', $_REQUEST['_work'])) {
+                    error('不正なアクセスです。');
+                }
+            }
+        }
+        if ($GLOBALS['authority']['power'] <= 1) {
+            if (preg_match('/^(admin)$/', $_REQUEST['_mode']) && !preg_match('/^modify(_|$)/', $_REQUEST['_work'])) {
+                if (preg_match('/^setting(_|$)/', $_REQUEST['_work']) || preg_match('/_/', $_REQUEST['_work'])) {
+                    error('不正なアクセスです。');
+                }
+            }
+        }
+
+        // ユーザ情報を取得
         $_view['_user'] = $users[0];
     }
 }

@@ -103,6 +103,7 @@
                             </li>
                         </ul>
 
+                        <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
                         <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-4 mb-2">
                             <span>システム</span>
                         </h6>
@@ -125,6 +126,7 @@
                                     メール設定
                                 </a>
                             </li>
+                            <?php if ($GLOBALS['authority']['power'] >= 3) : ?>
                             <li class="nav-item">
                                 <a class="nav-link<?php if (preg_match('/^user(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/user">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
@@ -137,6 +139,8 @@
                                     ログ一覧
                                 </a>
                             </li>
+                            <?php endif ?>
                         </ul>
+                        <?php endif ?>
                     </div>
                 </nav>
