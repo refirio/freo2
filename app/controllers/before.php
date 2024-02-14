@@ -35,14 +35,16 @@ if ($GLOBALS['config']['storage_type'] === 's3') {
 service_storage_init($config);
 
 // オートログイン
-if (empty($_SESSION['auth']['session']) && !empty($_COOKIE['auth']['session'])) {
-    list($session, $user_id) = service_user_login($_COOKIE['auth']['session']);
-    if ($session === true) {
-        $_SESSION['auth']['session'] = $session;
-        $_SESSION['auth']['user']    = [
-            'id'   => $user_id,
-            'time' => localdate(),
-        ];
+if (!preg_match('/^(index|logout)$/', $_REQUEST['_work'])) {
+    if (empty($_SESSION['auth']['session']) && !empty($_COOKIE['auth']['session'])) {
+        list($session, $user_id) = service_user_login($_COOKIE['auth']['session']);
+        if ($session === true) {
+            $_SESSION['auth']['session'] = $session;
+            $_SESSION['auth']['user']    = [
+                'id'   => $user_id,
+                'time' => localdate(),
+            ];
+        }
     }
 }
 
