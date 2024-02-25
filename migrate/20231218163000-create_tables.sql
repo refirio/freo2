@@ -85,6 +85,26 @@ CREATE TABLE IF NOT EXISTS pages(
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'ページ';
 
+CREATE TABLE IF NOT EXISTS fields(
+    id       INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理キー',
+    created  DATETIME     NOT NULL                COMMENT '作成日時',
+    modified DATETIME     NOT NULL                COMMENT '更新日時',
+    deleted  DATETIME                             COMMENT '削除日時',
+    name     VARCHAR(255) NOT NULL                COMMENT '名前',
+    type     VARCHAR(80)  NOT NULL                COMMENT '種類',
+    text     TEXT                                 COMMENT 'テキスト',
+    target   VARCHAR(80)  NOT NULL                COMMENT '対象',
+    sort     INT UNSIGNED NOT NULL                COMMENT '並び順',
+    PRIMARY KEY(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'フィールド';
+
+CREATE TABLE IF NOT EXISTS field_sets(
+    field_id INT UNSIGNED NOT NULL COMMENT '外部キー フィールド',
+    entry_id INT UNSIGNED          COMMENT '外部キー 記事',
+    page_id  INT UNSIGNED          COMMENT '外部キー ページ',
+    text     TEXT                  COMMENT 'テキスト'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'フィールド ひも付け';
+
 CREATE TABLE IF NOT EXISTS menus(
     id       INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理キー',
     created  DATETIME     NOT NULL                COMMENT '作成日時',

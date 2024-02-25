@@ -47,6 +47,24 @@ $GLOBALS['config']['options'] = [
             1 => '公開',
         ],
     ],
+    'field' => [
+        // 種類
+        'types' => [
+            'text'     => '一行入力',
+            'number'   => '数字入力',
+            'alphabet' => '英数字入力',
+            'textarea' => '複数行入力',
+            'select'   => 'セレクトボックス',
+            'radio'    => 'ラジオボタン',
+            'checkbox' => 'チェックボックス',
+            'file'     => 'アップロード',
+        ],
+        // 対象
+        'targets' => [
+            'entry' => '記事',
+            'page'  => 'ページ',
+        ],
+    ],
 ];
 
 /* ストレージ */

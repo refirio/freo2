@@ -126,6 +126,12 @@
                                     メール設定
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link<?php if (preg_match('/^field(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/field">
+                                    <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
+                                    フィールド管理
+                                </a>
+                            </li>
                             <?php if ($GLOBALS['authority']['power'] >= 3) : ?>
                             <li class="nav-item">
                                 <a class="nav-link<?php if (preg_match('/^user(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/user">
