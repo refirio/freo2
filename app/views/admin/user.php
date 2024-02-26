@@ -69,11 +69,11 @@
                             </table>
                             <?php if ($_view['user_page'] > 1) : ?>
                                 <ul class="pagination" style="justify-content: flex-end;">
-                                    <li class="page-item"><a class="page-link" href="<?php t(MAIN_FILE) ?>/admin/user?page=1">&laquo;</a></li>
+                                    <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/user?page=1" class="page-link">&laquo;</a></li>
                                     <?php for ($i = 1; $i <= $_view['user_page']; $i++) : ?>
                                     <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/user?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                                     <?php endfor ?>
-                                    <li class="page-item"><a class="page-link" href="<?php t(MAIN_FILE) ?>/admin/user?page=<?php t(ceil($_view['user_count'] / $GLOBALS['config']['limits']['user'])) ?>">&raquo;</a></li>
+                                    <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/user?page=<?php t(ceil($_view['user_count'] / $GLOBALS['config']['limits']['user'])) ?>" class="page-link">&raquo;</a></li>
                                 </ul>
                             <?php endif ?>
                         </div>

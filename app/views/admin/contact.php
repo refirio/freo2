@@ -64,11 +64,11 @@
                                 <p><input type="submit" value="一括削除" class="btn btn-danger"></p>
                                 <?php if ($_view['contact_page'] > 1) : ?>
                                     <ul class="pagination" style="justify-content: flex-end;">
-                                        <li class="page-item"><a class="page-link" href="<?php t(MAIN_FILE) ?>/admin/contact?page=1">&laquo;</a></li>
+                                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=1" class="page-link">&laquo;</a></li>
                                         <?php for ($i = 1; $i <= $_view['contact_page']; $i++) : ?>
                                         <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                                         <?php endfor ?>
-                                        <li class="page-item"><a class="page-link" href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t(ceil($_view['contact_count'] / $GLOBALS['config']['limits']['contact'])) ?>">&raquo;</a></li>
+                                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t(ceil($_view['contact_count'] / $GLOBALS['config']['limits']['contact'])) ?>" class="page-link">&raquo;</a></li>
                                     </ul>
                                 <?php endif ?>
                             </form>

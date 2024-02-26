@@ -77,11 +77,11 @@
                                 <p><input type="submit" value="一括削除" class="btn btn-danger"></p>
                                 <?php if ($_view['entry_page'] > 1) : ?>
                                     <ul class="pagination" style="justify-content: flex-end;">
-                                        <li class="page-item"><a class="page-link" href="<?php t(MAIN_FILE) ?>/admin/entry?page=1">&laquo;</a></li>
+                                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/entry?page=1" class="page-link">&laquo;</a></li>
                                         <?php for ($i = 1; $i <= $_view['entry_page']; $i++) : ?>
                                         <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/entry?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                                         <?php endfor ?>
-                                        <li class="page-item"><a class="page-link" href="<?php t(MAIN_FILE) ?>/admin/entry?page=<?php t(ceil($_view['entry_count'] / $GLOBALS['config']['limits']['entry'])) ?>">&raquo;</a></li>
+                                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/entry?page=<?php t(ceil($_view['entry_count'] / $GLOBALS['config']['limits']['entry'])) ?>" class="page-link">&raquo;</a></li>
                                     </ul>
                                 <?php endif ?>
                             </form>

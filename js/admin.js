@@ -196,21 +196,23 @@ $(document).ready(function() {
     /*
      * エディタ
      */
-    if ($('#editor').length > 0) {
-        ClassicEditor
-            .create(document.querySelector('#editor'), {
-                toolbar: [ 'heading', 'bold', 'italic', 'link', 'bulletedList', 'numberedList' ],
-                heading: {
-                    options: [
-                        { model: 'paragraph', title: '段落', class: 'ck-heading_paragraph' },
-                        { model: 'heading4', view: 'h4', title: '見出し1', class: 'ck-heading_heading4' },
-                        { model: 'heading5', view: 'h5', title: '見出し2', class: 'ck-heading_heading5' }
-                    ]
-                }
-            })
-            .catch(error => {
-                console.error(error);
-            });
+    if ($('.editor').length > 0) {
+        document.querySelectorAll('.editor').forEach(function(editor) {
+            ClassicEditor
+                .create(editor, {
+                    toolbar: [ 'heading', 'bold', 'italic', 'link', 'bulletedList', 'numberedList' ],
+                    heading: {
+                        options: [
+                            { model: 'paragraph', title: '段落', class: 'ck-heading_paragraph' },
+                            { model: 'heading4', view: 'h4', title: '見出し1', class: 'ck-heading_heading4' },
+                            { model: 'heading5', view: 'h5', title: '見出し2', class: 'ck-heading_heading5' }
+                        ]
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
     }
 
     /*

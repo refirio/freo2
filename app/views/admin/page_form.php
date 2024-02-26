@@ -75,7 +75,7 @@
                                         </div>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">本文</label>
-                                            <textarea name="text" rows="10" cols="50" class="form-control" id="editor"><?php t($_view['page']['text']) ?></textarea>
+                                            <textarea name="text" rows="10" cols="50" class="form-control editor"><?php t($_view['page']['text']) ?></textarea>
                                         </div>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">画像</label>
