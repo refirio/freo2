@@ -67,11 +67,11 @@
 .sidebar .sidebar-sticky {
     position: -webkit-sticky;
     position: sticky;
-    top: 48px;
-    height: calc(100vh - 48px);
+    top: 24px;
+    height: calc(100vh - 24px);
     overflow-x: hidden;
     overflow-y: auto;
-    padding-bottom: 48px;
+    padding-bottom: 24px;
 }
 .sidebar .sidebar-sticky::-webkit-scrollbar{
     width: 10px;

@@ -55,7 +55,7 @@
                             </li>
                         </ul>
 
-                        <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-4 mb-2">
+                        <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
                             <span>コンテンツ</span>
                         </h3>
                         <ul class="nav flex-column mb-2">
@@ -91,7 +91,7 @@
                             </li>
                         </ul>
 
-                        <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-4 mb-2">
+                        <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
                             <span>お問い合わせ</span>
                         </h3>
                         <ul class="nav flex-column mb-2">
@@ -104,7 +104,7 @@
                         </ul>
 
                         <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
-                        <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-4 mb-2">
+                        <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
                             <span>システム</span>
                         </h6>
                         <ul class="nav flex-column mb-2">

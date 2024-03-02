@@ -15,6 +15,9 @@
                             <ul>
                                 <li><a href="<?php t(MAIN_FILE) ?>/admin/entry">記事管理</a></li>
                                 <li><a href="<?php t(MAIN_FILE) ?>/admin/category">カテゴリ管理</a></li>
+                                <li><a href="<?php t(MAIN_FILE) ?>/admin/page">ページ管理</a></li>
+                                <li><a href="<?php t(MAIN_FILE) ?>/admin/menu">メニュー管理</a></li>
+                                <li><a href="<?php t(MAIN_FILE) ?>/admin/widget">ウィジェット管理</a></li>
                             </ul>
                         </div>
                     </div>
