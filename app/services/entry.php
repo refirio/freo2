@@ -69,6 +69,7 @@ function service_entry_update($queries, $options = [])
 {
     $options = [
         'id'            => isset($options['id'])            ? $options['id']            : null,
+        'field_sets'    => isset($options['field_sets'])    ? $options['field_sets']    : [],
         'category_sets' => isset($options['category_sets']) ? $options['category_sets'] : [],
         'files'         => isset($options['files'])         ? $options['files']         : [],
         'update'        => isset($options['update'])        ? $options['update']        : null,

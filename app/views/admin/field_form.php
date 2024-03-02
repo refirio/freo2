@@ -41,6 +41,14 @@
                                             </select>
                                         </div>
                                         <div class="form-group mb-2">
+                                            <label class="fw-bold">バリデーション</label>
+                                            <select name="validation" class="form-select" style="width: 200px;">
+                                                <?php foreach ($GLOBALS['config']['options']['field']['validations'] as $key => $value) : ?>
+                                                <option value="<?php t($key) ?>"<?php $key == $_view['field']['validation'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-2">
                                             <label class="fw-bold">テキスト</label>
                                             <textarea name="text" rows="5" cols="50" class="form-control"><?php t($_view['field']['text']) ?></textarea>
                                         </div>

@@ -59,6 +59,11 @@ $GLOBALS['config']['options'] = [
             'checkbox' => 'チェックボックス',
             'file'     => 'アップロード',
         ],
+        // バリデーション
+        'validations' => [
+            'none'     => 'なし',
+            'required' => '必須',
+        ],
         // 対象
         'targets' => [
             'entry' => '記事',

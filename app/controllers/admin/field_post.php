@@ -20,11 +20,12 @@ if (empty($_SESSION['post']['field']['id'])) {
     // フィールドを登録
     $resource = service_field_insert([
         'values' => [
-            'name'   => $_SESSION['post']['field']['name'],
-            'type'   => $_SESSION['post']['field']['type'],
-            'text'   => $_SESSION['post']['field']['text'],
-            'target' => $_SESSION['post']['field']['target'],
-            'sort'   => $_SESSION['post']['field']['sort'],
+            'name'       => $_SESSION['post']['field']['name'],
+            'type'       => $_SESSION['post']['field']['type'],
+            'validation' => $_SESSION['post']['field']['validation'],
+            'text'       => $_SESSION['post']['field']['text'],
+            'target'     => $_SESSION['post']['field']['target'],
+            'sort'       => $_SESSION['post']['field']['sort'],
         ],
     ]);
     if (!$resource) {
@@ -34,10 +35,11 @@ if (empty($_SESSION['post']['field']['id'])) {
     // フィールドを編集
     $resource = service_field_update([
         'set'   => [
-            'name'   => $_SESSION['post']['field']['name'],
-            'type'   => $_SESSION['post']['field']['type'],
-            'text'   => $_SESSION['post']['field']['text'],
-            'target' => $_SESSION['post']['field']['target'],
+            'name'       => $_SESSION['post']['field']['name'],
+            'type'       => $_SESSION['post']['field']['type'],
+            'validation' => $_SESSION['post']['field']['validation'],
+            'text'       => $_SESSION['post']['field']['text'],
+            'target'     => $_SESSION['post']['field']['target'],
         ],
         'where' => [
             'id = :id',

@@ -14,11 +14,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 入力データを整理
     $post = [
         'field' => model('normalize_fields', [
-            'id'     => isset($_POST['id'])     ? $_POST['id']     : '',
-            'name'   => isset($_POST['name'])   ? $_POST['name']   : '',
-            'type'   => isset($_POST['type'])   ? $_POST['type']   : '',
-            'text'   => isset($_POST['text'])   ? $_POST['text']   : '',
-            'target' => isset($_POST['target']) ? $_POST['target'] : '',
+            'id'         => isset($_POST['id'])         ? $_POST['id']         : '',
+            'name'       => isset($_POST['name'])       ? $_POST['name']       : '',
+            'type'       => isset($_POST['type'])       ? $_POST['type']       : '',
+            'validation' => isset($_POST['validation']) ? $_POST['validation'] : '',
+            'text'       => isset($_POST['text'])       ? $_POST['text']       : '',
+            'target'     => isset($_POST['target'])     ? $_POST['target']     : '',
         ]),
     ];
 

@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'datetime'      => isset($_POST['datetime'])      ? $_POST['datetime']      : '',
             'title'         => isset($_POST['title'])         ? $_POST['title']         : '',
             'text'          => isset($_POST['text'])          ? $_POST['text']          : '',
+            'field_sets'    => isset($_POST['field_sets'])    ? $_POST['field_sets']    : [],
             'category_sets' => isset($_POST['category_sets']) ? $_POST['category_sets'] : [],
         ]),
     ];
@@ -107,6 +108,17 @@ if ((empty($_POST['view']) || $_POST['view'] !== 'preview')) {
 
 // カテゴリを取得
 $_view['categories'] = model('select_categories', [
+    'order_by' => 'sort, id',
+]);
+
+// フィールドを取得
+$_view['fields'] = model('select_fields', [
+    'where'    => [
+        'target = :target',
+        [
+            'target' => 'entry',
+        ],
+    ],
     'order_by' => 'sort, id',
 ]);
 

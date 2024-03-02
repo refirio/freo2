@@ -25,6 +25,7 @@ function select_entries($queries, $options = [])
         }
 
         $queries['from'] = DATABASE_PREFIX . 'entries AS entries '
+                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'field_sets AS field_sets ON entries.id = field_sets.entry_id '
                          . 'LEFT JOIN ' . DATABASE_PREFIX . 'category_sets AS category_sets ON entries.id = category_sets.entry_id';
 
         // 削除済みデータは取得しない
@@ -51,6 +52,18 @@ function select_entries($queries, $options = [])
         $id_columns = array_column($results, 'id');
 
         if (!empty($id_columns)) {
+            // フィールドを取得
+            $field_sets = model('select_field_sets', [
+                'where' => 'field_sets.entry_id IN(' . implode(',', array_map('db_escape', $id_columns)) . ')',
+            ], [
+                'associate' => true,
+            ]);
+
+            $fields = [];
+            foreach ($field_sets as $field_set) {
+                $fields[$field_set['entry_id']][$field_set['field_id']] = $field_set['text'];
+            }
+
             // カテゴリを取得
             $category_sets = model('select_category_sets', [
                 'where' => 'category_sets.entry_id IN(' . implode(',', array_map('db_escape', $id_columns)) . ')',
@@ -65,9 +78,13 @@ function select_entries($queries, $options = [])
 
             // 関連するデータを結合
             for ($i = 0; $i < count($results); $i++) {
+                if (!isset($fields[$results[$i]['id']])) {
+                    $fields[$results[$i]['id']] = [];
+                }
                 if (!isset($categories[$results[$i]['id']])) {
                     $categories[$results[$i]['id']] = [];
                 }
+                $results[$i]['field_sets']    = $fields[$results[$i]['id']];
                 $results[$i]['category_sets'] = $categories[$results[$i]['id']];
             }
         }
@@ -88,6 +105,7 @@ function insert_entries($queries, $options = [])
 {
     $queries = db_placeholder($queries);
     $options = [
+        'field_sets'    => isset($options['field_sets'])    ? $options['field_sets']    : [],
         'category_sets' => isset($options['category_sets']) ? $options['category_sets'] : [],
         'files'         => isset($options['files'])         ? $options['files']         : [],
     ];
@@ -120,6 +138,28 @@ function insert_entries($queries, $options = [])
 
     // IDを取得
     $entry_id = db_last_insert_id();
+
+    if (isset($options['field_sets'])) {
+        // フィールドを登録
+        foreach ($options['field_sets'] as $field_id => $text) {
+            if ($text === '') {
+                continue;
+            }
+            if (is_array($text)) {
+                $text = implode("\n", $text);
+            }
+            $resource = model('insert_field_sets', [
+                'values' => [
+                    'field_id' => $field_id,
+                    'entry_id' => $entry_id,
+                    'text'     => $text,
+                ],
+            ]);
+            if (!$resource) {
+                return $resource;
+            }
+        }
+    }
 
     if (isset($options['category_sets'])) {
         // カテゴリを登録
@@ -160,6 +200,7 @@ function update_entries($queries, $options = [])
     $queries = db_placeholder($queries);
     $options = [
         'id'            => isset($options['id'])            ? $options['id']            : null,
+        'field_sets'    => isset($options['field_sets'])    ? $options['field_sets']    : [],
         'category_sets' => isset($options['category_sets']) ? $options['category_sets'] : [],
         'files'         => isset($options['files'])         ? $options['files']         : [],
     ];
@@ -185,6 +226,40 @@ function update_entries($queries, $options = [])
 
     // IDを取得
     $id = $options['id'];
+
+    if (isset($options['field_sets'])) {
+        // フィールドを編集
+        $resource = model('delete_field_sets', [
+            'where' => [
+                'entry_id = :id',
+                [
+                    'id' => $id,
+                ],
+            ],
+        ]);
+        if (!$resource) {
+            return $resource;
+        }
+
+        foreach ($options['field_sets'] as $field_id => $text) {
+            if ($text === '') {
+                continue;
+            }
+            if (is_array($text)) {
+                $text = implode("\n", $text);
+            }
+            $resource = model('insert_field_sets', [
+                'values' => [
+                    'field_id' => $field_id,
+                    'entry_id' => $id,
+                    'text'     => $text,
+                ],
+            ]);
+            if (!$resource) {
+                return $resource;
+            }
+        }
+    }
 
     if (isset($options['category_sets'])) {
         // カテゴリを編集
@@ -237,6 +312,7 @@ function delete_entries($queries, $options = [])
     $queries = db_placeholder($queries);
     $options = [
         'softdelete' => isset($options['softdelete']) ? $options['softdelete'] : true,
+        'field'      => isset($options['field'])      ? $options['field']      : false,
         'category'   => isset($options['category'])   ? $options['category']   : false,
         'file'       => isset($options['file'])       ? $options['file']       : false,
     ];
@@ -273,6 +349,16 @@ function delete_entries($queries, $options = [])
             'delete_from' => DATABASE_PREFIX . 'entries AS entries',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
+        ]);
+        if (!$resource) {
+            return $resource;
+        }
+    }
+
+    if ($options['field'] === true) {
+        // 関連するフィールドを削除
+        $resource = model('delete_field_sets', [
+            'where' => 'entry_id IN(' . implode(',', array_map('db_escape', $deletes)) . ')',
         ]);
         if (!$resource) {
             return $resource;
@@ -331,6 +417,13 @@ function normalize_entries($queries, $options = [])
             $queries['datetime'] .= ':00';
         }
         $queries['datetime'] = mb_convert_kana($queries['datetime'], 'a', MAIN_INTERNAL_ENCODING);
+    }
+
+    // フィールド
+    if (isset($queries['field_sets'])) {
+        foreach ($queries['field_sets'] as $key => $value) {
+            $queries['field_sets'][$key] = is_array($value) ? implode("\n", $value) : $value;
+        }
     }
 
     return $queries;
@@ -397,6 +490,40 @@ function validate_entries($queries, $options = [])
         }
     }
 
+    // フィールド
+    if (isset($queries['field_sets'])) {
+        // フィールドを取得
+        $fields = model('select_fields', [
+            'where'    => [
+                'target = :target',
+                [
+                    'target' => 'entry',
+                ],
+            ],
+            'order_by' => 'sort, id',
+        ]);
+
+        // フィールドを検証
+        foreach ($fields as $field) {
+            if (isset($queries['field_sets'][$field['id']])) {
+                if ($field['validation'] === 'required' && !validator_required($queries['field_sets'][$field['id']])) {
+                    $messages['field_sets_' . $field['id']] = $field['name'] . 'が入力されていません。';
+                } elseif ($field['type'] === 'number' && $queries['field_sets'][$field['id']] !== '' && !validator_decimal($queries['field_sets'][$field['id']])) {
+                    $messages['field_sets_' . $field['id']] = $field['name'] . 'は数値で入力してください。';
+                } elseif ($field['type'] === 'alphabet' && $queries['field_sets'][$field['id']] !== '' && !validator_alpha_dash($queries['field_sets'][$field['id']])) {
+                    $messages['field_sets_' . $field['id']] = $field['name'] . 'は英数字で入力してください。';
+                } elseif (($field['type'] === 'text' || $field['type'] === 'number' || $field['type'] === 'alphabet') && !validator_max_length($queries['field_sets'][$field['id']], 100)) {
+                    $messages['field_sets_' . $field['id']] = $field['name'] . 'は100文字以内で入力してください。';
+                } elseif (($field['type'] === 'textarea') && !validator_max_length($queries['field_sets'][$field['id']], 2000)) {
+                    $messages['field_sets_' . $field['id']] = $field['name'] . 'は2000文字以内で入力してください。';
+                } elseif (($field['type'] === 'select' || $field['type'] === 'radio' || $field['type'] === 'checkbox') && $queries['field_sets'][$field['id']] && !validator_list(explode("\n", $queries['field_sets'][$field['id']]), array_fill_keys(explode("\n", $field['text']), 1))) {
+                    $messages['field_sets_' . $field['id']] = $field['name'] . 'の値が不正です。';
+                } elseif ($field['type'] === 'file') {
+                }
+            }
+        }
+    }
+
     return $messages;
 }
 
@@ -417,6 +544,18 @@ function filter_entries($queries, $options = [])
     if ($options['associate'] === true) {
         $wheres = [];
         $pagers = [];
+
+        // フィールドを取得
+        if (isset($queries['field_sets'])) {
+            if (is_array($queries['field_sets'])) {
+                $fields = [];
+                foreach ($queries['field_sets'] as $field_set) {
+                    $fields[] = 'field_sets.field_id = ' . db_escape($field_set);
+                    $pagers[] = 'field_sets[]=' . rawurlencode($field_set);
+                }
+                $wheres[] = '(' . implode(' OR ', $fields) . ')';
+            }
+        }
 
         // カテゴリを取得
         if (isset($queries['category_sets'])) {
@@ -621,6 +760,7 @@ function default_entries()
         'text'          => null,
         'picture'       => null,
         'thumbnail'     => null,
+        'field_sets'    => [],
         'category_sets' => [],
     ];
 }

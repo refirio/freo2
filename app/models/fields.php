@@ -229,6 +229,14 @@ function validate_fields($queries, $options = [])
         }
     }
 
+    // バリデーション
+    if (isset($queries['validation'])) {
+        if (!validator_required($queries['validation'])) {
+        } elseif (!validator_list($queries['validation'], $GLOBALS['config']['options']['field']['validations'])) {
+            $messages['validation'] = 'バリデーションの値が不正です。';
+        }
+    }
+
     // テキスト
     if (isset($queries['text'])) {
         if (!validator_required($queries['text'])) {
@@ -268,14 +276,15 @@ function validate_fields($queries, $options = [])
 function default_fields()
 {
     return [
-        'id'       => null,
-        'created'  => localdate('Y-m-d H:i:s'),
-        'modified' => localdate('Y-m-d H:i:s'),
-        'deleted'  => null,
-        'name'     => '',
-        'type'     => '',
-        'text'     => null,
-        'target'   => '',
-        'sort'     => 0,
+        'id'         => null,
+        'created'    => localdate('Y-m-d H:i:s'),
+        'modified'   => localdate('Y-m-d H:i:s'),
+        'deleted'    => null,
+        'name'       => '',
+        'type'       => '',
+        'validation' => null,
+        'text'       => null,
+        'target'     => '',
+        'sort'       => 0,
     ];
 }
