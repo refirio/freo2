@@ -68,9 +68,10 @@ function service_page_insert($queries, $options = [])
 function service_page_update($queries, $options = [])
 {
     $options = [
-        'id'     => isset($options['id'])     ? $options['id']     : null,
-        'files'  => isset($options['files'])  ? $options['files']  : [],
-        'update' => isset($options['update']) ? $options['update'] : null,
+        'id'         => isset($options['id'])         ? $options['id']         : null,
+        'field_sets' => isset($options['field_sets']) ? $options['field_sets'] : [],
+        'files'      => isset($options['files'])      ? $options['files']      : [],
+        'update'     => isset($options['update'])     ? $options['update']     : null,
     ];
 
     // 最終編集日時を確認

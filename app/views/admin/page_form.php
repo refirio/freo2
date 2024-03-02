@@ -99,6 +99,7 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                        <?php import('app/views/admin/field_set.php') ?>
                                         <div class="form-group mt-4">
                                             <button type="button" class="btn btn-primary px-4 preview">確認</button>
                                             <button type="submit" class="btn btn-primary px-4">登録</button>

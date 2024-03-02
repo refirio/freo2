@@ -58,15 +58,6 @@ if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
                     ],
                 ],
             ]);
-        } elseif ($_GET['target'] === 'field') {
-            $results = model('select_fields', [
-                'where' => [
-                    'id = :id',
-                    [
-                        'id' => $_GET['id'],
-                    ],
-                ],
-            ]);
         }
         if (empty($results)) {
             warning('データが見つかりません。');

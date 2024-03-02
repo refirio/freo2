@@ -29,6 +29,7 @@ if (empty($_SESSION['post']['page']['id'])) {
             'text'         => $_SESSION['post']['page']['text'],
         ],
     ], [
+        'field_sets'    => $_SESSION['post']['page']['field_sets'],
         'category_sets' => $_SESSION['post']['page']['category_sets'],
         'files'         => [
             'picture'   => isset($_SESSION['file']['page']['picture'])   ? $_SESSION['file']['page']['picture']   : [],
@@ -59,6 +60,7 @@ if (empty($_SESSION['post']['page']['id'])) {
     ], [
         'id'            => intval($_SESSION['post']['page']['id']),
         'update'        => $_SESSION['update']['page'],
+        'field_sets'    => $_SESSION['post']['page']['field_sets'],
         'category_sets' => $_SESSION['post']['page']['category_sets'],
         'files'         => [
             'picture'   => isset($_SESSION['file']['page']['picture'])   ? $_SESSION['file']['page']['picture']   : [],

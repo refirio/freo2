@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'title'         => isset($_POST['title'])         ? $_POST['title']         : '',
             'code'          => isset($_POST['code'])          ? $_POST['code']          : '',
             'text'          => isset($_POST['text'])          ? $_POST['text']          : '',
+            'field_sets'    => isset($_POST['field_sets'])    ? $_POST['field_sets']    : [],
             'category_sets' => isset($_POST['category_sets']) ? $_POST['category_sets'] : [],
         ]),
     ];
@@ -105,6 +106,17 @@ if ((empty($_POST['view']) || $_POST['view'] !== 'preview')) {
     // ページの表示用データ作成
     $_view['page'] = model('view_pages', $_view['page']);
 }
+
+// フィールドを取得
+$_view['fields'] = model('select_fields', [
+    'where'    => [
+        'target = :target',
+        [
+            'target' => 'page',
+        ],
+    ],
+    'order_by' => 'sort, id',
+]);
 
 // タイトル
 if (empty($_GET['id'])) {
