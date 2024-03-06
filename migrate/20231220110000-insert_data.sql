@@ -12,8 +12,14 @@ INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, '下層ページ', 'page', 
 
 INSERT INTO settings VALUES('title', 'Example');
 INSERT INTO settings VALUES('description', 'サイトの概要。');
+INSERT INTO settings VALUES('entry_use_text', 1);
+INSERT INTO settings VALUES('entry_use_picture', 1);
+INSERT INTO settings VALUES('entry_use_thumbnail', 1);
+INSERT INTO settings VALUES('page_use_text', 1);
+INSERT INTO settings VALUES('page_use_picture', 1);
+INSERT INTO settings VALUES('page_use_thumbnail', 1);
 INSERT INTO settings VALUES('page_home_code', NULL);
-INSERT INTO settings VALUES('page_url_omission', '');
+INSERT INTO settings VALUES('page_url_omission', NULL);
 INSERT INTO settings VALUES('mail_to', 'admin@example.com');
 INSERT INTO settings VALUES('mail_subject_admin', 'Webサイトからお問い合わせがありました');
 INSERT INTO settings VALUES('mail_subject_user', 'お問い合わせありがとうございます');

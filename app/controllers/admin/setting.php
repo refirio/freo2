@@ -15,8 +15,41 @@ if (isset($_GET['target']) && $_GET['target'] == 'basis') {
             'required' => false,
         ],
     ];
+} elseif (isset($_GET['target']) && $_GET['target'] == 'entry') {
+    $targets = [
+        'entry_use_text' => [
+            'name'     => '本文の入力',
+            'type'     => 'boolean',
+            'required' => false,
+        ],
+        'entry_use_picture' => [
+            'name'     => '写真の入力',
+            'type'     => 'boolean',
+            'required' => false,
+        ],
+        'entry_use_thumbnail' => [
+            'name'     => 'サムネイルの入力',
+            'type'     => 'boolean',
+            'required' => false,
+        ],
+    ];
 } elseif (isset($_GET['target']) && $_GET['target'] == 'page') {
     $targets = [
+        'page_use_text' => [
+            'name'     => '本文の入力',
+            'type'     => 'boolean',
+            'required' => false,
+        ],
+        'page_use_picture' => [
+            'name'     => '写真の入力',
+            'type'     => 'boolean',
+            'required' => false,
+        ],
+        'page_use_thumbnail' => [
+            'name'     => 'サムネイルの入力',
+            'type'     => 'boolean',
+            'required' => false,
+        ],
         'page_home_code' => [
             'name'     => 'ホームページに表示するページのコード',
             'type'     => 'text',
@@ -126,6 +159,8 @@ $_view['targets'] = $targets;
 // タイトル
 if (isset($_GET['target']) && $_GET['target'] == 'basis') {
     $_view['title'] = '基本設定';
+} elseif (isset($_GET['target']) && $_GET['target'] == 'entry') {
+    $_view['title'] = '記事設定';
 } elseif (isset($_GET['target']) && $_GET['target'] == 'page') {
     $_view['title'] = 'ページ設定';
 } elseif (isset($_GET['target']) && $_GET['target'] == 'mail') {

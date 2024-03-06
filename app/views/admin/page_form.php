@@ -73,10 +73,13 @@
                                             <label class="fw-bold">タイトル <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="title" size="30" value="<?php t($_view['page']['title']) ?>" class="form-control">
                                         </div>
+                                        <?php if ($GLOBALS['setting']['page_use_text']) : ?>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">本文</label>
                                             <textarea name="text" rows="10" cols="50" class="form-control editor"><?php t($_view['page']['text']) ?></textarea>
                                         </div>
+                                        <?php endif ?>
+                                        <?php if ($GLOBALS['setting']['page_use_picture']) : ?>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">画像</label>
                                             <div class="upload" id="picture" data-upload="<?php t(MAIN_FILE) ?>/admin/file_upload?_type=json&amp;target=page&amp;key=picture&amp;format=image">
@@ -88,6 +91,8 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                        <?php endif ?>
+                                        <?php if ($GLOBALS['setting']['page_use_thumbnail']) : ?>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">サムネイル</label>
                                             <div class="upload" id="thumbnail" data-upload="<?php t(MAIN_FILE) ?>/admin/file_upload?_type=json&amp;target=page&amp;key=thumbnail&amp;format=image">
@@ -99,6 +104,7 @@
                                                 </ul>
                                             </div>
                                         </div>
+                                        <?php endif ?>
                                         <?php import('app/views/admin/field_set.php') ?>
                                         <div class="form-group mt-4">
                                             <button type="button" class="btn btn-primary px-4 preview">確認</button>

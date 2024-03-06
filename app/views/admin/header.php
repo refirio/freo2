@@ -48,7 +48,7 @@
                         <h2 class="d-none">メニュー</h2>
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'home') : ?> active<?php endif ?>" aria-current="page" href="<?php t(MAIN_FILE) ?>/admin/home">
+                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'home') : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/home">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-clipboard-data"/></svg>
                                     ホーム
                                 </a>
@@ -112,6 +112,12 @@
                                 <a class="nav-link<?php if ($_REQUEST['_work'] == 'setting' && $_GET['target'] == 'basis' && empty($_GET['id'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/setting?target=basis">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-pencil-square"/></svg>
                                     基本設定
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'setting' && $_GET['target'] == 'entry' && empty($_GET['id'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/setting?target=entry">
+                                    <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-pencil-square"/></svg>
+                                    記事設定
                                 </a>
                             </li>
                             <li class="nav-item">
