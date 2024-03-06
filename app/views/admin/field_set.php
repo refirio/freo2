@@ -10,6 +10,10 @@
                                                 <div class="field">
                                                     <textarea name="field_sets[<?php t($field['id']) ?>]" rows="5" cols="50" class="form-control"><?php t($_view[$field['target']]['field_sets'][$field['id']] ?? '') ?></textarea>
                                                 </div>
+                                                <?php elseif ($field['type'] === 'wysiwyg') : ?>
+                                                <div class="field">
+                                                    <textarea name="field_sets[<?php t($field['id']) ?>]" rows="5" cols="50" class="form-control editor"><?php t($_view[$field['target']]['field_sets'][$field['id']] ?? '') ?></textarea>
+                                                </div>
                                                 <?php elseif ($field['type'] === 'select') : ?>
                                                 <div class="field">
                                                     <select name="field_sets[<?php t($field['id']) ?>]" class="form-select" style="width: 200px;">

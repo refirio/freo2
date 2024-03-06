@@ -54,6 +54,7 @@ $GLOBALS['config']['options'] = [
             'number'   => '数字入力',
             'alphabet' => '英数字入力',
             'textarea' => '複数行入力',
+            'wysiwyg'  => 'WYSIWYGエディタ',
             'select'   => 'セレクトボックス',
             'radio'    => 'ラジオボタン',
             'checkbox' => 'チェックボックス',
