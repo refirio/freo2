@@ -20,6 +20,7 @@ if (!preg_match('/^[\w\-]+$/', $_GET['format'])) {
     error('不正なアクセスです。');
 }
 
+$file    = null;
 $mime    = null;
 $content = null;
 
@@ -37,7 +38,7 @@ if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
 
         // コンテンツ
         $content = $_SESSION['file'][$_GET['target']][$_GET['key']]['data'];
-    } elseif (isset($_GET['id'])) {
+    } elseif (($_GET['target'] === 'entry' || $_GET['target'] === 'page') && isset($_GET['id'])) {
         // 登録内容からファイルを取得
         $results = [];
         if ($_GET['target'] === 'entry') {
@@ -66,21 +67,70 @@ if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
         }
 
         $file = $GLOBALS['config']['file_targets'][$_GET['target']] . intval($_GET['id']) . '/' . $result[$_GET['key']];
+    } elseif ($_GET['target'] === 'field' && isset($_GET['id'])) {
+        list($target, $id, $key) = explode('_', $_GET['key']);
 
-        if (service_storage_exist($file)) {
-            foreach (array_keys($GLOBALS['config']['file_permissions'][$_GET['format']]) as $permission) {
-                if (preg_match($GLOBALS['config']['file_permissions'][$_GET['format']][$permission]['regexp'], $result[$_GET['key']])) {
-                    // マイムタイプ
-                    $mime = $GLOBALS['config']['file_permissions'][$_GET['format']][$permission]['mime'];
+        $results = model('select_fields', [
+            'select' => 'target',
+            'where'  => [
+                'id = :id',
+                [
+                    'id' => $key,
+                ],
+            ],
+        ]);
+        if (empty($results)) {
+            warning('データが見つかりません。');
+        } else {
+            $target = $results[0]['target'];
+        }
 
-                    break;
-                }
+        if ($target == 'entry') {
+            $results = model('select_field_sets', [
+                'where' => [
+                    'field_id = :field_id AND entry_id = :entry_id',
+                    [
+                        'field_id' => $key,
+                        'entry_id' => $_GET['id'],
+                    ],
+                ],
+            ]);
+            if (!empty($results)) {
+                $result = $results[0];
+
+                $file = $GLOBALS['config']['file_targets']['field'] . $result['entry_id'] . '_' . $result['field_id'] . '/' . $result['text'];
             }
+        } elseif ($target == 'page') {
+            $results = model('select_field_sets', [
+                'where' => [
+                    'field_id = :field_id AND page_id = :page_id',
+                    [
+                        'field_id' => $key,
+                        'page_id'  => $_GET['id'],
+                    ],
+                ],
+            ]);
+            if (!empty($results)) {
+                $result = $results[0];
 
-            // コンテンツ
-            $content = service_storage_get($file);
+                $file = $GLOBALS['config']['file_targets']['field'] . $result['page_id'] . '_' . $result['field_id'] . '/' . $result['text'];
+            }
         }
     }
+}
+
+if (service_storage_exist($file)) {
+    foreach (array_keys($GLOBALS['config']['file_permissions'][$_GET['format']]) as $permission) {
+        if (preg_match($GLOBALS['config']['file_permissions'][$_GET['format']][$permission]['regexp'], $result[$_GET['key']])) {
+            // マイムタイプ
+            $mime = $GLOBALS['config']['file_permissions'][$_GET['format']][$permission]['mime'];
+
+            break;
+        }
+    }
+
+    // コンテンツ
+    $content = service_storage_get($file);
 }
 
 if (isset($_GET['_type']) && $_GET['_type'] === 'json') {

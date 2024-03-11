@@ -81,10 +81,13 @@ $GLOBALS['config']['storage_url'] = null;
 $GLOBALS['config']['file_targets'] = [
     'entry' => 'files/entries/',
     'page'  => 'files/pages/',
+    'field' => 'files/fields/',
 ];
 
 /* ファイルアップロード許可 */
 $GLOBALS['config']['file_permissions'] = [
+    'file'  => [
+    ],
     'image' => [
         'png' => [
             'name'   => 'PNG',
@@ -109,11 +112,13 @@ $GLOBALS['config']['file_permissions'] = [
 
 /* 代替ファイル */
 $GLOBALS['config']['file_alternatives'] = [
+    'file'  => 'img/admin/file.png',
     'image' => null,
 ];
 
 /* ダミー画像ファイル */
 $GLOBALS['config']['file_dummies'] = [
+    'file'  => 'img/admin/no_file.png',
     'image' => 'img/admin/no_file.png',
 ];
 

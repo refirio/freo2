@@ -20,6 +20,7 @@ function select_category_sets($queries, $options = [])
         if (!isset($queries['select'])) {
             $queries['select'] = 'category_sets.*, '
                                . 'categories.name AS category_name, '
+                               . 'categories.code AS category_code, '
                                . 'categories.sort AS category_sort';
         }
 

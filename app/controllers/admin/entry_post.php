@@ -13,6 +13,26 @@ if (empty($_SESSION['post'])) {
     redirect('/admin/entry_form');
 }
 
+// アップロードファイル
+$files = [
+    'picture'   => isset($_SESSION['file']['entry']['picture'])   ? $_SESSION['file']['entry']['picture']   : [],
+    'thumbnail' => isset($_SESSION['file']['entry']['thumbnail']) ? $_SESSION['file']['entry']['thumbnail'] : [],
+];
+$fields = model('select_fields', [
+    'select' => 'id',
+    'where'  => 'type = \'file\' AND target = \'entry\'',
+]);
+if (!empty($fields)) {
+    foreach ($fields as $field) {
+        if (empty($_SESSION['post']['entry']['id'])) {
+            $key = 'field__' . $field['id'];
+        } else {
+            $key = 'field_' . $_SESSION['post']['entry']['id'] . '_' . $field['id'];
+        }
+        $files[$key] = isset($_SESSION['file']['field'][$key]) ? $_SESSION['file']['field'][$key] : [];
+    }
+}
+
 // トランザクションを開始
 db_transaction();
 
@@ -30,10 +50,7 @@ if (empty($_SESSION['post']['entry']['id'])) {
     ], [
         'field_sets'    => $_SESSION['post']['entry']['field_sets'],
         'category_sets' => $_SESSION['post']['entry']['category_sets'],
-        'files'         => [
-            'picture'   => isset($_SESSION['file']['entry']['picture'])   ? $_SESSION['file']['entry']['picture']   : [],
-            'thumbnail' => isset($_SESSION['file']['entry']['thumbnail']) ? $_SESSION['file']['entry']['thumbnail'] : [],
-        ],
+        'files'         => $files,
     ]);
     if (!$resource) {
         error('データを登録できません。');
@@ -60,10 +77,7 @@ if (empty($_SESSION['post']['entry']['id'])) {
         'update'        => $_SESSION['update']['entry'],
         'field_sets'    => $_SESSION['post']['entry']['field_sets'],
         'category_sets' => $_SESSION['post']['entry']['category_sets'],
-        'files'         => [
-            'picture'   => isset($_SESSION['file']['entry']['picture'])   ? $_SESSION['file']['entry']['picture']   : [],
-            'thumbnail' => isset($_SESSION['file']['entry']['thumbnail']) ? $_SESSION['file']['entry']['thumbnail'] : [],
-        ],
+        'files'         => $files,
     ]);
     if (!$resource) {
         error('データを編集できません。');

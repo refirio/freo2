@@ -76,16 +76,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($_GET['_type']) && $_GET['_type'] === 'json') {
+        $files = [
+            'picture'   => $_view['entry']['picture']   ? file_mimetype($_view['entry']['picture'])   : null,
+            'thumbnail' => $_view['entry']['thumbnail'] ? file_mimetype($_view['entry']['thumbnail']) : null,
+        ];
+        if (!empty($_GET['id'])) {
+            $field_sets = model('select_field_sets', [
+                'select' => 'field_sets.field_id, field_sets.text',
+                'where'  => [
+                    'field_sets.entry_id = :entry_id AND fields.type = \'file\' AND fields.target = \'entry\'',
+                    [
+                        'entry_id' => $_GET['id'],
+                    ]
+                ]
+            ], [
+                'associate' => true,
+            ]);
+            foreach ($field_sets as $field_set) {
+                $key = 'field_' . $_GET['id'] . '_' . $field_set['field_id'];
+
+                if ($field_set['text']) {
+                    $files[$key] = file_mimetype($field_set['text']);
+                }
+            }
+        }
+
         // 記事情報を取得
         header('Content-Type: application/json; charset=' . MAIN_CHARSET);
 
         echo json_encode([
             'status' => 'OK',
             'data'   => $_view,
-            'files'  => [
-                'picture'   => $_view['entry']['picture']   ? file_mimetype($_view['entry']['picture'])   : null,
-                'thumbnail' => $_view['entry']['thumbnail'] ? file_mimetype($_view['entry']['thumbnail']) : null,
-            ],
+            'files'  => $files,
         ]);
 
         exit;

@@ -4,7 +4,10 @@ $(document).ready(function() {
         /*
          * 作業対象を決定
          */
-        var targets = ['picture', 'thumbnail'];
+        var targets = [];
+        $('.upload').each(function() {
+            targets.push($(this).attr('id'));
+        });
 
         /*
          * ファイルを選択してアップロード
@@ -139,7 +142,7 @@ $(document).ready(function() {
             (function(value) {
                 if ($('#' + value).length > 0) {
                     $('#' + value + ' ul').hide();
-                    $('#' + value + '_delete').click(file_delete(value));
+                    $('#' + value + '_delete').on('click', file_delete(value));
                 }
             })(value);
         });
