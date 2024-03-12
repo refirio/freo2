@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $field_sets = model('select_field_sets', [
                 'select' => 'field_sets.field_id, field_sets.text',
                 'where'  => [
-                    'field_sets.entry_id = :entry_id AND fields.type = \'file\' AND fields.target = \'entry\'',
+                    'field_sets.entry_id = :entry_id AND (fields.type = \'image\' OR fields.type = \'file\') AND fields.target = \'entry\'',
                     [
                         'entry_id' => $_GET['id'],
                     ]

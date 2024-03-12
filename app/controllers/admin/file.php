@@ -121,7 +121,12 @@ if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
 
 if (service_storage_exist($file)) {
     foreach (array_keys($GLOBALS['config']['file_permissions'][$_GET['format']]) as $permission) {
-        if (preg_match($GLOBALS['config']['file_permissions'][$_GET['format']][$permission]['regexp'], $result[$_GET['key']])) {
+        if (isset($result[$_GET['key']])) {
+            $value = $result[$_GET['key']];
+        } else {
+            $value = $result['text'];
+        }
+        if (preg_match($GLOBALS['config']['file_permissions'][$_GET['format']][$permission]['regexp'], $value)) {
             // マイムタイプ
             $mime = $GLOBALS['config']['file_permissions'][$_GET['format']][$permission]['mime'];
 

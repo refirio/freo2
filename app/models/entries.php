@@ -231,7 +231,7 @@ function update_entries($queries, $options = [])
         // フィールドを編集
         $fields = model('select_fields', [
             'select' => 'id',
-            'where'  => 'type != \'file\' && target = \'entry\'',
+            'where'  => 'type != \'image\' AND type != \'file\' && target = \'entry\'',
         ]);
         if (empty($fields)) {
             $field_ids = [0];
@@ -528,7 +528,7 @@ function validate_entries($queries, $options = [])
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'は2000文字以内で入力してください。';
                 } elseif (($field['type'] === 'select' || $field['type'] === 'radio' || $field['type'] === 'checkbox') && $queries['field_sets'][$field['id']] && !validator_list(explode("\n", $queries['field_sets'][$field['id']]), array_fill_keys(explode("\n", $field['text']), 1))) {
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'の値が不正です。';
-                } elseif ($field['type'] === 'file') {
+                } elseif ($field['type'] === 'image' || $field['type'] === 'file') {
                 }
             }
         }

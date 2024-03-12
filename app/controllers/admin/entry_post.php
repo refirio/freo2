@@ -20,7 +20,7 @@ $files = [
 ];
 $fields = model('select_fields', [
     'select' => 'id',
-    'where'  => 'type = \'file\' AND target = \'entry\'',
+    'where'  => '(type = \'image\' OR type = \'file\') AND target = \'entry\'',
 ]);
 if (!empty($fields)) {
     foreach ($fields as $field) {

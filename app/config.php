@@ -58,7 +58,8 @@ $GLOBALS['config']['options'] = [
             'select'   => 'セレクトボックス',
             'radio'    => 'ラジオボタン',
             'checkbox' => 'チェックボックス',
-            'file'     => 'アップロード',
+            'image'    => '画像アップロード',
+            'file'     => 'ファイルアップロード',
         ],
         // バリデーション
         'validations' => [
