@@ -528,7 +528,6 @@ function validate_entries($queries, $options = [])
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'は2000文字以内で入力してください。';
                 } elseif (($field['type'] === 'select' || $field['type'] === 'radio' || $field['type'] === 'checkbox') && $queries['field_sets'][$field['id']] && !validator_list(explode("\n", $queries['field_sets'][$field['id']]), array_fill_keys(explode("\n", $field['text']), 1))) {
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'の値が不正です。';
-                } elseif ($field['type'] === 'image' || $field['type'] === 'file') {
                 }
             }
         }
@@ -642,9 +641,10 @@ function save_entries($id, $files)
             $key    = intval($id);
         }
         if (empty($files[$file]['delete']) && !empty($files[$file]['name'])) {
-            if (preg_match('/\.(.*)$/', $files[$file]['name'], $matches)) {
+            if (preg_match('/(.*)\.(.*)$/', $files[$file]['name'], $matches)) {
                 $directory = $GLOBALS['config']['file_targets'][$target] . $key . '/';
-                $filename  = $file . '.' . $matches[1];
+                $suffix    = $file === 'thumbnail' ? '_thumbnail' : '';
+                $filename  = rawurlencode($matches[1]) . $suffix . '.' . $matches[2];
 
                 service_storage_put($directory);
 
