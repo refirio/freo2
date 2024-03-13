@@ -102,7 +102,7 @@ $_view['categories'] = model('select_categories', [
 
 // タイトル
 if (empty($_GET['id'])) {
-    $_view['title'] = '記事登録';
+    $_view['title'] = 'お問い合わせ登録';
 } else {
-    $_view['title'] = '記事編集';
+    $_view['title'] = 'お問い合わせ編集';
 }

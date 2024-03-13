@@ -38,7 +38,7 @@ $(document).ready(function() {
                     },
                     error: function(message) {
                         // 結果を表示
-                        target.find('p').html('アップロードに失敗しました。' + message);
+                        target.find('p').html('<div class="warning">アップロードに失敗しました。' + message + '</div>');
                     },
                 });
             })(value);
@@ -91,7 +91,7 @@ $(document).ready(function() {
                     },
                     error: function(message) {
                         // 結果を表示
-                        target.find('p').html('アップロードに失敗しました。' + message);
+                        target.find('p').html('<div class="warning">アップロードに失敗しました。' + message + '</div>');
                     },
                 });
             })(value);
