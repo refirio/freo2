@@ -643,7 +643,8 @@ function save_entries($id, $files)
         if (empty($files[$file]['delete']) && !empty($files[$file]['name'])) {
             if (preg_match('/(.*)\.(.*)$/', $files[$file]['name'], $matches)) {
                 $directory = $GLOBALS['config']['file_targets'][$target] . $key . '/';
-                $suffix    = $file === 'thumbnail' ? '_thumbnail' : '';
+                //$suffix    = $file === 'thumbnail' ? '_thumbnail' : '';
+                $suffix    = '';
                 $filename  = rawurlencode($matches[1]) . $suffix . '.' . $matches[2];
 
                 service_storage_put($directory);

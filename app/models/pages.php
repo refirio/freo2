@@ -195,9 +195,19 @@ function update_pages($queries, $options = [])
 
     if (isset($options['field_sets'])) {
         // フィールドを編集
+        $fields = model('select_fields', [
+            'select' => 'id',
+            'where'  => 'type != \'image\' AND type != \'file\' && target = \'page\'',
+        ]);
+        if (empty($fields)) {
+            $field_ids = [0];
+        } else {
+            $field_ids = array_column($fields, 'id');
+        }
+
         $resource = model('delete_field_sets', [
             'where' => [
-                'page_id = :id',
+                'field_id IN(' . implode(',', $field_ids) . ') AND page_id = :id',
                 [
                     'id' => $id,
                 ],
@@ -489,7 +499,6 @@ function validate_pages($queries, $options = [])
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'は2000文字以内で入力してください。';
                 } elseif (($field['type'] === 'select' || $field['type'] === 'radio' || $field['type'] === 'checkbox') && $queries['field_sets'][$field['id']] && !validator_list(explode("\n", $queries['field_sets'][$field['id']]), array_fill_keys(explode("\n", $field['text']), 1))) {
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'の値が不正です。';
-                } elseif ($field['type'] === 'file') {
                 }
             }
         }
@@ -577,30 +586,58 @@ function filter_pages($queries, $options = [])
 function save_pages($id, $files)
 {
     foreach (array_keys($files) as $file) {
+        if (preg_match('/^field__(.*)$/', $file, $matches)) {
+            $target = 'field';
+            $field  = $matches[1];
+            $key    = $id . '_' . $matches[1];
+        } elseif (preg_match('/^field_(.*)_(.*)$/', $file, $matches)) {
+            $target = 'field';
+            $field  = $matches[2];
+            $key    = $matches[1] . '_' . $matches[2];
+        } else {
+            $target = 'page';
+            $field  = null;
+            $key    = intval($id);
+        }
         if (empty($files[$file]['delete']) && !empty($files[$file]['name'])) {
-            if (preg_match('/\.(.*)$/', $files[$file]['name'], $matches)) {
-                $directory = $GLOBALS['config']['file_targets']['page'] . intval($id) . '/';
-                $filename  = $file . '.' . $matches[1];
+            if (preg_match('/(.*)\.(.*)$/', $files[$file]['name'], $matches)) {
+                $directory = $GLOBALS['config']['file_targets'][$target] . $key . '/';
+                //$suffix    = $file === 'thumbnail' ? '_thumbnail' : '';
+                $suffix    = '';
+                $filename  = rawurlencode($matches[1]) . $suffix . '.' . $matches[2];
 
                 service_storage_put($directory);
 
                 if (service_storage_put($directory . $filename, $files[$file]['data']) === false) {
                     error('ファイル ' . $filename . ' を保存できません。');
                 } else {
-                    $resource = db_update([
-                        'update' => DATABASE_PREFIX . 'pages',
-                        'set'    => [
-                            $file => $filename,
-                        ],
-                        'where'  => [
-                            'id = :id',
-                            [
-                                'id' => $id,
+                    if ($target === 'field') {
+                        $resource = model('insert_field_sets', [
+                            'values' => [
+                                'field_id' => $field,
+                                'page_id'  => $id,
+                                'text'     => $filename,
                             ],
-                        ],
-                    ]);
-                    if (!$resource) {
-                        error('データを編集できません。');
+                        ]);
+                        if (!$resource) {
+                            return $resource;
+                        }
+                    } else {
+                        $resource = db_update([
+                            'update' => DATABASE_PREFIX . 'pages',
+                            'set'    => [
+                                $file => $filename,
+                            ],
+                            'where'  => [
+                                'id = :id',
+                                [
+                                    'id' => $id,
+                                ],
+                            ],
+                        ]);
+                        if (!$resource) {
+                            error('データを編集できません。');
+                        }
                     }
 
                     //file_resize($directory . $filename, $directory . 'thumbnail_' . $filename, $GLOBALS['config']['resize_width'], $GLOBALS['config']['resize_height'], $GLOBALS['config']['resize_quality']);
@@ -623,34 +660,58 @@ function save_pages($id, $files)
 function remove_pages($id, $files)
 {
     foreach (array_keys($files) as $file) {
+        if (preg_match('/^field__(.*)$/', $file, $matches)) {
+            $target = 'field';
+            $field  = $matches[1];
+            $key    = $id . '_' . $matches[1];
+        } elseif (preg_match('/^field_(.*)_(.*)$/', $file, $matches)) {
+            $target = 'field';
+            $field  = $matches[2];
+            $key    = $matches[1] . '_' . $matches[2];
+        } else {
+            $target = 'page';
+            $field  = null;
+            $key    = intval($id);
+        }
         if (!empty($files[$file]['delete']) || !empty($files[$file]['name'])) {
-            $pages = db_select([
-                'select' => $file,
-                'from'   => DATABASE_PREFIX . 'pages',
-                'where'  => [
-                    'id = :id',
-                    [
-                        'id' => $id,
+            if ($target === 'field') {
+                $field_sets = model('select_field_sets', [
+                    'select' => 'text',
+                    'where'  => [
+                        'field_id = :field_id AND page_id = :page_id',
+                        [
+                            'field_id' => $field,
+                            'page_id'  => $id,
+                        ],
                     ],
-                ],
-            ]);
-            if (empty($pages)) {
-                error('編集データが見つかりません。');
+                ]);
+                if (!empty($field_sets)) {
+                    $field_set = $field_sets[0];
+
+                    if (service_storage_exist($GLOBALS['config']['file_targets']['field'] . $key . '/' . $field_set['text'])) {
+                        //if (is_file($GLOBALS['config']['file_targets']['field'] . intval($id) . '/thumbnail_' . $field_set['text'])) {
+                        //    unlink($GLOBALS['config']['file_targets']['field'] . intval($id) . '/thumbnail_' . $field_set['text']);
+                        //}
+                        service_storage_remove($GLOBALS['config']['file_targets']['field'] . $key . '/' . $field_set['text']);
+
+                        $resource = model('delete_field_sets', [
+                            'where' => [
+                                'field_id = :field_id AND page_id = :page_id',
+                                [
+                                    'field_id' => $field,
+                                    'page_id'  => $id,
+                                ],
+                            ],
+                        ]);
+                        if (!$resource) {
+                            return $resource;
+                        }
+                    }
+                }
             } else {
-                $page = $pages[0];
-            }
-
-            if (service_storage_exist($GLOBALS['config']['file_targets']['page'] . intval($id) . '/' . $page[$file])) {
-                //if (is_file($GLOBALS['config']['file_targets']['page'] . intval($id) . '/thumbnail_' . $page[$file])) {
-                //    unlink($GLOBALS['config']['file_targets']['page'] . intval($id) . '/thumbnail_' . $page[$file]);
-                //}
-                service_storage_remove($GLOBALS['config']['file_targets']['page'] . intval($id) . '/' . $page[$file]);
-
-                $resource = db_update([
-                    'update' => DATABASE_PREFIX . 'pages',
-                    'set'    => [
-                        $file => null,
-                    ],
+                $pages = db_select([
+                    'select' => $file,
+                    'from'   => DATABASE_PREFIX . 'pages',
                     'where'  => [
                         'id = :id',
                         [
@@ -658,8 +719,33 @@ function remove_pages($id, $files)
                         ],
                     ],
                 ]);
-                if (!$resource) {
-                    error('データを編集できません。');
+                if (empty($pages)) {
+                    error('編集データが見つかりません。');
+                } else {
+                    $page = $pages[0];
+                }
+
+                if (service_storage_exist($GLOBALS['config']['file_targets']['page'] . intval($id) . '/' . $page[$file])) {
+                    //if (is_file($GLOBALS['config']['file_targets']['page'] . intval($id) . '/thumbnail_' . $page[$file])) {
+                    //    unlink($GLOBALS['config']['file_targets']['page'] . intval($id) . '/thumbnail_' . $page[$file]);
+                    //}
+                    service_storage_remove($GLOBALS['config']['file_targets']['page'] . intval($id) . '/' . $page[$file]);
+
+                    $resource = db_update([
+                        'update' => DATABASE_PREFIX . 'pages',
+                        'set'    => [
+                            $file => null,
+                        ],
+                        'where'  => [
+                            'id = :id',
+                            [
+                                'id' => $id,
+                            ],
+                        ],
+                    ]);
+                    if (!$resource) {
+                        error('データを編集できません。');
+                    }
                 }
             }
         }
