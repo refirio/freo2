@@ -202,15 +202,6 @@ function validate_widgets($queries, $options = [])
 
     $messages = [];
 
-    // タイトル
-    if (isset($queries['title'])) {
-        if (!validator_required($queries['title'])) {
-            $messages['title'] = 'タイトルが入力されていません。';
-        } elseif (!validator_max_length($queries['title'], 20)) {
-            $messages['title'] = 'タイトルは20文字以内で入力してください。';
-        }
-    }
-
     // コード
     if (isset($queries['code'])) {
         if (!validator_required($queries['code'])) {
@@ -247,6 +238,15 @@ function validate_widgets($queries, $options = [])
             if (!empty($users)) {
                 $messages['code'] = '入力されたコードはすでに使用されています。';
             }
+        }
+    }
+
+    // タイトル
+    if (isset($queries['title'])) {
+        if (!validator_required($queries['title'])) {
+            $messages['title'] = 'タイトルが入力されていません。';
+        } elseif (!validator_max_length($queries['title'], 20)) {
+            $messages['title'] = 'タイトルは20文字以内で入力してください。';
         }
     }
 

@@ -38,8 +38,8 @@
                                         <tr>
                                             <th class="text-nowrap"><label><input type="checkbox" name="" value="" class="bulks"></label></th>
                                             <th class="text-nowrap">ID</th>
-                                            <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap">コード</th>
+                                            <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap">公開</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
@@ -48,8 +48,8 @@
                                         <tr>
                                             <th class="text-nowrap"><label><input type="checkbox" name="" value="" class="bulks"></label></th>
                                             <th class="text-nowrap">ID</th>
-                                            <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap">コード</th>
+                                            <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap">公開</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
@@ -59,8 +59,8 @@
                                         <tr>
                                             <td><input type="checkbox" name="bulks[]" value="<?php h($page['id']) ?>"<?php isset($_SESSION['bulk']['page'][$page['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
                                             <td><?php h($page['id']) ?></td>
-                                            <td><?php h(truncate($page['title'], 50)) ?></td>
                                             <td><?php h(truncate($page['code'], 50)) ?></td>
+                                            <td><?php h(truncate($page['title'], 50)) ?></td>
                                             <td><?php h($GLOBALS['config']['options']['page']['publics'][$page['public']]) ?></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/page_form?id=<?php t($page['id']) ?>" class="btn btn-primary text-nowrap">編集</a></td>
                                         </tr>

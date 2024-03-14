@@ -415,15 +415,6 @@ function validate_pages($queries, $options = [])
         }
     }
 
-    // タイトル
-    if (isset($queries['title'])) {
-        if (!validator_required($queries['title'])) {
-            $messages['title'] = 'タイトルが入力されていません。';
-        } elseif (!validator_max_length($queries['title'], 100)) {
-            $messages['title'] = 'タイトルは100文字以内で入力してください。';
-        }
-    }
-
     // コード
     if (isset($queries['code'])) {
         if (!validator_required($queries['code'])) {
@@ -460,6 +451,15 @@ function validate_pages($queries, $options = [])
             if (!empty($users)) {
                 $messages['code'] = '入力されたコードはすでに使用されています。';
             }
+        }
+    }
+
+    // タイトル
+    if (isset($queries['title'])) {
+        if (!validator_required($queries['title'])) {
+            $messages['title'] = 'タイトルが入力されていません。';
+        } elseif (!validator_max_length($queries['title'], 100)) {
+            $messages['title'] = 'タイトルは100文字以内で入力してください。';
         }
     }
 
@@ -801,8 +801,8 @@ function default_pages()
         'public_begin' => null,
         'public_end'   => null,
         'datetime'     => localdate('Y-m-d H:00'),
-        'title'        => '',
         'code'         => '',
+        'title'        => '',
         'text'         => null,
         'picture'      => null,
         'field_sets'   => [],

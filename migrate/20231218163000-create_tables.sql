@@ -57,8 +57,8 @@ CREATE TABLE IF NOT EXISTS categories(
     created  DATETIME     NOT NULL                COMMENT '作成日時',
     modified DATETIME     NOT NULL                COMMENT '更新日時',
     deleted  DATETIME                             COMMENT '削除日時',
+    code     VARCHAR(255) NOT NULL                COMMENT 'コード',
     name     VARCHAR(255) NOT NULL                COMMENT '名前',
-    code     VARCHAR(255) NOT NULL UNIQUE         COMMENT 'コード',
     sort     INT UNSIGNED NOT NULL                COMMENT '並び順',
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'カテゴリ';
@@ -122,8 +122,8 @@ CREATE TABLE IF NOT EXISTS widgets(
     created  DATETIME     NOT NULL                COMMENT '作成日時',
     modified DATETIME     NOT NULL                COMMENT '更新日時',
     deleted  DATETIME                             COMMENT '削除日時',
-    title    VARCHAR(255) NOT NULL                COMMENT 'タイトル',
     code     VARCHAR(255) NOT NULL UNIQUE         COMMENT 'コード',
+    title    VARCHAR(255) NOT NULL                COMMENT 'タイトル',
     text     TEXT                                 COMMENT 'テキスト',
     sort     INT UNSIGNED NOT NULL                COMMENT '並び順',
     PRIMARY KEY(id)

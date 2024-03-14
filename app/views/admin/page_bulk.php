@@ -36,16 +36,16 @@
                                 <thead>
                                     <tr>
                                         <th class="text-nowrap">ID</th>
-                                        <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">コード</th>
+                                        <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">公開</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th class="text-nowrap">ID</th>
-                                        <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">コード</th>
+                                        <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">公開</th>
                                     </tr>
                                 </tfoot>
@@ -53,8 +53,8 @@
                                     <?php foreach ($_view['pages'] as $page) : ?>
                                     <tr>
                                         <td><?php h($page['id']) ?></td>
-                                        <td><?php h(truncate($page['title'], 50)) ?></td>
                                         <td><?php h(truncate($page['code'], 50)) ?></td>
+                                        <td><?php h(truncate($page['title'], 50)) ?></td>
                                         <td><?php h(localdate('Ymd', $page['datetime']) == localdate('Ymd') ? localdate('H:i:s', $page['datetime']) : localdate('Y-m-d', $page['datetime'])) ?></td>
                                         <td><?php h($GLOBALS['config']['options']['page']['publics'][$page['public']]) ?></td>
                                     </tr>

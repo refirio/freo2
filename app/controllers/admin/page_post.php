@@ -44,8 +44,8 @@ if (empty($_SESSION['post']['page']['id'])) {
             'public_begin' => $_SESSION['post']['page']['public_begin'],
             'public_end'   => $_SESSION['post']['page']['public_end'],
             'datetime'     => $_SESSION['post']['page']['datetime'],
-            'title'        => $_SESSION['post']['page']['title'],
             'code'         => $_SESSION['post']['page']['code'],
+            'title'        => $_SESSION['post']['page']['title'],
             'text'         => $_SESSION['post']['page']['text'],
         ],
     ], [
@@ -64,8 +64,8 @@ if (empty($_SESSION['post']['page']['id'])) {
             'public_begin' => $_SESSION['post']['page']['public_begin'],
             'public_end'   => $_SESSION['post']['page']['public_end'],
             'datetime'     => $_SESSION['post']['page']['datetime'],
-            'title'        => $_SESSION['post']['page']['title'],
             'code'         => $_SESSION['post']['page']['code'],
+            'title'        => $_SESSION['post']['page']['title'],
             'text'         => $_SESSION['post']['page']['text'],
         ],
         'where' => [

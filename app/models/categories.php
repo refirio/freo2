@@ -213,15 +213,6 @@ function validate_categories($queries, $options = [])
 
     $messages = [];
 
-    // 名前
-    if (isset($queries['name'])) {
-        if (!validator_required($queries['name'])) {
-            $messages['name'] = '名前が入力されていません。';
-        } elseif (!validator_max_length($queries['name'], 20)) {
-            $messages['name'] = '名前は20文字以内で入力してください。';
-        }
-    }
-
     // コード
     if (isset($queries['code'])) {
         if (!validator_required($queries['code'])) {
@@ -261,6 +252,15 @@ function validate_categories($queries, $options = [])
         }
     }
 
+    // 名前
+    if (isset($queries['name'])) {
+        if (!validator_required($queries['name'])) {
+            $messages['name'] = '名前が入力されていません。';
+        } elseif (!validator_max_length($queries['name'], 20)) {
+            $messages['name'] = '名前は20文字以内で入力してください。';
+        }
+    }
+
     // 並び順
     if (isset($queries['sort'])) {
         if (!validator_required($queries['sort'])) {
@@ -287,8 +287,8 @@ function default_categories()
         'created'  => localdate('Y-m-d H:i:s'),
         'modified' => localdate('Y-m-d H:i:s'),
         'deleted'  => null,
-        'name'     => '',
         'code'     => '',
+        'name'     => '',
         'sort'     => 0,
     ];
 }

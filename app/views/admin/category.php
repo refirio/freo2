@@ -38,8 +38,8 @@
                                     <thead>
                                         <tr>
                                             <th class="text-nowrap">ID</th>
-                                            <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">コード</th>
+                                            <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">並び替え</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
@@ -47,8 +47,8 @@
                                     <tfoot>
                                         <tr>
                                             <th class="text-nowrap">ID</th>
-                                            <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">コード</th>
+                                            <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">並び替え</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
@@ -57,8 +57,8 @@
                                         <?php foreach ($_view['categories'] as $category) : ?>
                                         <tr id="sort_<?php h($category['id']) ?>">
                                             <td><?php h($category['id']) ?></td>
-                                            <td><?php h(truncate($category['name'], 50)) ?></td>
                                             <td><?php h(truncate($category['code'], 50)) ?></td>
+                                            <td><?php h(truncate($category['name'], 50)) ?></td>
                                             <td><span class="handle text-nowrap">並び替え</span></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/category_form?id=<?php t($category['id']) ?>" class="btn btn-primary">編集</a></td>
                                         </tr>

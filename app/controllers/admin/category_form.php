@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $post = [
         'category' => model('normalize_categories', [
             'id'   => isset($_POST['id'])   ? $_POST['id']   : '',
-            'name' => isset($_POST['name']) ? $_POST['name'] : '',
             'code' => isset($_POST['code']) ? $_POST['code'] : '',
+            'name' => isset($_POST['name']) ? $_POST['name'] : '',
         ]),
     ];
 

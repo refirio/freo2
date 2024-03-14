@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $post = [
         'widget' => model('normalize_widgets', [
             'id'    => isset($_POST['id'])    ? $_POST['id']    : '',
-            'title' => isset($_POST['title']) ? $_POST['title'] : '',
             'code'  => isset($_POST['code'])  ? $_POST['code']  : '',
+            'title' => isset($_POST['title']) ? $_POST['title'] : '',
             'text'  => isset($_POST['text'])  ? $_POST['text']  : '',
         ]),
     ];

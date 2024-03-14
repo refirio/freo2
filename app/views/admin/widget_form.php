@@ -29,12 +29,12 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group mb-2">
-                                            <label class="fw-bold">タイトル <span class="badge bg-danger">必須</span></label>
-                                            <input type="text" name="title" size="30" value="<?php t($_view['widget']['title']) ?>" readonly class="form-control">
-                                        </div>
-                                        <div class="form-group mb-2">
                                             <label class="fw-bold">コード <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="code" size="30" value="<?php t($_view['widget']['code']) ?>" readonly class="form-control">
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">タイトル <span class="badge bg-danger">必須</span></label>
+                                            <input type="text" name="title" size="30" value="<?php t($_view['widget']['title']) ?>" readonly class="form-control">
                                         </div>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">テキスト</label>

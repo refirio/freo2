@@ -19,8 +19,8 @@ db_transaction();
 // ウィジェットを編集
 $resource = service_widget_update([
     'set'   => [
-        'title' => $_SESSION['post']['widget']['title'],
         'code'  => $_SESSION['post']['widget']['code'],
+        'title' => $_SESSION['post']['widget']['title'],
         'text'  => $_SESSION['post']['widget']['text'],
     ],
     'where' => [

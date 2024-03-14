@@ -24,16 +24,16 @@
                                 <thead>
                                     <tr>
                                         <th class="text-nowrap">ID</th>
-                                        <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">コード</th>
+                                        <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">作業</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th class="text-nowrap">ID</th>
-                                        <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">コード</th>
+                                        <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">作業</th>
                                     </tr>
                                 </tfoot>
@@ -41,8 +41,8 @@
                                     <?php foreach ($_view['widgets'] as $widget) : ?>
                                     <tr>
                                         <td><?php h($widget['id']) ?></td>
-                                        <td><?php h(truncate($widget['title'], 50)) ?></td>
                                         <td><?php h(truncate($widget['code'], 50)) ?></td>
+                                        <td><?php h(truncate($widget['title'], 50)) ?></td>
                                         <td><a href="<?php t(MAIN_FILE) ?>/admin/widget_form?id=<?php t($widget['id']) ?>" class="btn btn-primary">編集</a></td>
                                     </tr>
                                     <?php endforeach ?>

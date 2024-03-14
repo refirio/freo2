@@ -4,11 +4,11 @@ INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '管理者', 3);
 INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '投稿者', 2);
 INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '閲覧者', 1);
 
-INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, '読み込み開始', 'initial', NULL, 1);
-INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, '読み込み完了', 'ready', NULL, 2);
-INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'メニュー', 'menu', NULL, 3);
-INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'ホームページ', 'home', NULL, 4);
-INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, '下層ページ', 'page', NULL, 5);
+INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'initial', '読み込み開始', NULL, 1);
+INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'ready', '読み込み完了', NULL, 2);
+INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'menu', 'メニュー', NULL, 3);
+INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'home', 'ホームページ', NULL, 4);
+INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'page', '下層ページ', NULL, 5);
 
 INSERT INTO settings VALUES('title', 'Example');
 INSERT INTO settings VALUES('description', 'サイトの概要。');
