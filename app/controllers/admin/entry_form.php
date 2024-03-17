@@ -59,6 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 初期データを取得
     if (empty($_GET['id'])) {
         $_view['entry'] = model('default_entries');
+        $_view['entry']['code'] = $GLOBALS['setting']['entry_default_code'] ? localdate($GLOBALS['setting']['entry_default_code']) : '';
     } else {
         $entries = model('select_entries', [
             'where' => [

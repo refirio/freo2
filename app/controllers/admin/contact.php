@@ -9,7 +9,7 @@ if (isset($_GET['page'])) {
     $_SESSION['bulk']['contact'] = [];
 }
 
-// 記事を取得
+// お問い合わせを取得
 $_view['contacts'] = model('select_contacts', [
     'order_by' => 'contacts.id DESC',
     'limit'    => [

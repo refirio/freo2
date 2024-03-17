@@ -32,6 +32,11 @@ if (isset($_GET['target']) && $_GET['target'] == 'basis') {
             'type'     => 'boolean',
             'required' => false,
         ],
+        'entry_default_code' => [
+            'name'     => 'コードの初期値',
+            'type'     => 'text',
+            'required' => false,
+        ],
     ];
 } elseif (isset($_GET['target']) && $_GET['target'] == 'page') {
     $targets = [
@@ -48,6 +53,11 @@ if (isset($_GET['target']) && $_GET['target'] == 'basis') {
         'page_use_thumbnail' => [
             'name'     => 'サムネイルの入力',
             'type'     => 'boolean',
+            'required' => false,
+        ],
+        'page_default_code' => [
+            'name'     => 'コードの初期値',
+            'type'     => 'text',
             'required' => false,
         ],
         'page_home_code' => [

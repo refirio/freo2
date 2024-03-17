@@ -16,7 +16,7 @@ if (empty($_SESSION['post'])) {
 // トランザクションを開始
 db_transaction();
 
-// 記事を編集
+// お問い合わせを編集
 $resource = service_contact_update([
     'set'  => [
         'name'    => $_SESSION['post']['contact']['name'],

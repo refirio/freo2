@@ -19,7 +19,7 @@ if ($GLOBALS['setting']['page_home_code']) {
     }
 }
 
-// 記事を取得
+// エントリーを取得
 $_view['entries'] = service_entry_select_published('entry', [
     'order_by' => 'entries.datetime DESC, entries.id',
     'limit'    => $GLOBALS['config']['limits']['entry'],

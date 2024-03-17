@@ -37,7 +37,6 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="text-nowrap">ID</th>
                                             <th class="text-nowrap">対象</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">種類</th>
@@ -47,7 +46,6 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th class="text-nowrap">ID</th>
                                             <th class="text-nowrap">対象</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">種類</th>
@@ -58,7 +56,6 @@
                                     <tbody>
                                         <?php foreach ($_view['fields'] as $field) : ?>
                                         <tr id="sort_<?php h($field['id']) ?>">
-                                            <td><?php h($field['id']) ?></td>
                                             <td><?php h($field['type_name']) ?></td>
                                             <td><?php h(truncate($field['name'], 50)) ?></td>
                                             <td><?php h($GLOBALS['config']['options']['field']['kinds'][$field['kind']]) ?></td>

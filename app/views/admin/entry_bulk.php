@@ -35,7 +35,7 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="text-nowrap">ID</th>
+                                        <th class="text-nowrap">コード</th>
                                         <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">日時</th>
                                         <th class="text-nowrap">公開</th>
@@ -44,7 +44,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th class="text-nowrap">ID</th>
+                                        <th class="text-nowrap">コード</th>
                                         <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">日時</th>
                                         <th class="text-nowrap">公開</th>
@@ -54,7 +54,7 @@
                                 <tbody>
                                     <?php foreach ($_view['entries'] as $entry) : ?>
                                     <tr>
-                                        <td><?php h($entry['id']) ?></td>
+                                        <td><?php h(truncate($entry['code'], 50)) ?></td>
                                         <td><?php h(truncate($entry['title'], 50)) ?></td>
                                         <td><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y-m-d', $entry['datetime'])) ?></td>
                                         <td><?php h($GLOBALS['config']['options']['entry']['publics'][$entry['public']]) ?></td>

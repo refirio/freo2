@@ -33,7 +33,6 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="text-nowrap">ID</th>
                                         <th class="text-nowrap">ユーザ名</th>
                                         <th class="text-nowrap">権限</th>
                                         <th class="text-nowrap">名前</th>
@@ -44,7 +43,6 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th class="text-nowrap">ID</th>
                                         <th class="text-nowrap">ユーザ名</th>
                                         <th class="text-nowrap">権限</th>
                                         <th class="text-nowrap">名前</th>
@@ -56,7 +54,6 @@
                                 <tbody>
                                     <?php foreach ($_view['users'] as $user) : ?>
                                     <tr>
-                                        <td><?php h($user['id']) ?></td\>
                                         <td><?php h($user['username']) ?></td>
                                         <td><?php h($_view['authority_sets'][$user['authority_id']]) ?></td>
                                         <td><?php h($user['name']) ?></td>

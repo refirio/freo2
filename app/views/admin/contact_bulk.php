@@ -19,7 +19,7 @@
                             <p><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t($_POST['page']) ?>" class="btn btn-secondary">戻る</a></p>
                         <?php else : ?>
                             <ul>
-                                <li>以下の記事が削除されます。よろしければ削除ボタンを押してください。</li>
+                                <li>以下のお問い合わせが削除されます。よろしければ削除ボタンを押してください。</li>
                             </ul>
                             <p><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t($_POST['page']) ?>">戻る</a></p>
 

@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($_GET['_type']) && $_GET['_type'] === 'json') {
-        // 記事情報を取得
+        // お問い合わせ情報を取得
         header('Content-Type: application/json; charset=' . MAIN_CHARSET);
 
         echo json_encode([
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 if ((empty($_POST['view']) || $_POST['view'] !== 'preview')) {
-    // 記事の表示用データ作成
+    // お問い合わせの表示用データ作成
     $_view['contact'] = model('view_contacts', $_view['contact']);
 }
 

@@ -9,7 +9,7 @@ if (isset($_GET['page'])) {
 
 // ユーザを取得
 $_view['users'] = model('select_users', [
-    'order_by' => 'users.id',
+    'order_by' => 'users.username, users.id',
     'limit'    => [
         ':offset, :limit',
         [

@@ -16,7 +16,7 @@ if (!empty($_POST['id'])) {
     // トランザクションを開始
     db_transaction();
 
-    // 記事を削除
+    // お問い合わせを削除
     $resource = service_contact_delete([
         'where' => [
             'id = :id',
@@ -38,7 +38,7 @@ if (!empty($_POST['id'])) {
     // トランザクションを開始
     db_transaction();
 
-    // 記事を削除
+    // お問い合わせを削除
     $resource = service_contact_delete([
         'where' => 'id IN(' . implode(',', array_map('db_escape', $_POST['list'])) . ')',
     ]);

@@ -504,8 +504,8 @@ function validate_entries($queries, $options = [])
             $messages['code'] = 'コードが入力されていません。';
         } elseif (!validator_regexp($queries['code'], '^[\w\-\/]+$')) {
             $messages['code'] = 'コードは半角英数字で入力してください。';
-        } elseif (!validator_between($queries['code'], 2, 80)) {
-            $messages['code'] = 'コードは2文字以上80文字以内で入力してください。';
+        } elseif (!validator_between($queries['code'], 1, 80)) {
+            $messages['code'] = 'コードは1文字以上80文字以内で入力してください。';
         } elseif ($options['duplicate'] === true) {
             if (empty($queries['id'])) {
                 $entries = db_select([

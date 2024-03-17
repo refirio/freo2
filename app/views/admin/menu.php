@@ -37,7 +37,6 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="text-nowrap">ID</th>
                                             <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap">URL</th>
                                             <th class="text-nowrap">並び替え</th>
@@ -46,7 +45,6 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th class="text-nowrap">ID</th>
                                             <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap">URL</th>
                                             <th class="text-nowrap">並び替え</th>
@@ -56,7 +54,6 @@
                                     <tbody>
                                         <?php foreach ($_view['menus'] as $menu) : ?>
                                         <tr id="sort_<?php h($menu['id']) ?>">
-                                            <td><?php h($menu['id']) ?></td>
                                             <td><?php h(truncate($menu['title'], 50)) ?></td>
                                             <td><?php h(truncate($menu['url'], 50)) ?></td>
                                             <td><span class="handle text-nowrap">並び替え</span></td>

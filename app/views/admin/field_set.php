@@ -4,45 +4,45 @@
                                             <div id="validate_field_sets_<?php t($field['id']) ?>">
                                                 <?php if ($field['kind'] === 'text' || $field['kind'] === 'number' || $field['kind'] === 'alphabet') : ?>
                                                 <div class="field">
-                                                    <input type="text" name="field_sets[<?php t($field['id']) ?>]" size="30" value="<?php t($_view[$_view['type']['code']]['field_sets'][$field['id']] ?? '') ?>" class="form-control">
+                                                    <input type="text" name="field_sets[<?php t($field['id']) ?>]" size="30" value="<?php t($_view['entry']['field_sets'][$field['id']] ?? '') ?>" class="form-control">
                                                 </div>
                                                 <?php elseif ($field['kind'] === 'textarea') : ?>
                                                 <div class="field">
-                                                    <textarea name="field_sets[<?php t($field['id']) ?>]" rows="5" cols="50" class="form-control"><?php t($_view[$_view['type']['code']]['field_sets'][$field['id']] ?? '') ?></textarea>
+                                                    <textarea name="field_sets[<?php t($field['id']) ?>]" rows="5" cols="50" class="form-control"><?php t($_view['entry']['field_sets'][$field['id']] ?? '') ?></textarea>
                                                 </div>
                                                 <?php elseif ($field['kind'] === 'wysiwyg') : ?>
                                                 <div class="field">
-                                                    <textarea name="field_sets[<?php t($field['id']) ?>]" rows="5" cols="50" class="form-control editor"><?php t($_view[$_view['type']['code']]['field_sets'][$field['id']] ?? '') ?></textarea>
+                                                    <textarea name="field_sets[<?php t($field['id']) ?>]" rows="5" cols="50" class="form-control editor"><?php t($_view['entry']['field_sets'][$field['id']] ?? '') ?></textarea>
                                                 </div>
                                                 <?php elseif ($field['kind'] === 'select') : ?>
                                                 <div class="field">
                                                     <select name="field_sets[<?php t($field['id']) ?>]" class="form-select" style="width: 200px;">
                                                         <option value=""></option>
                                                         <?php foreach (explode("\n", $field['text']) as $value) : ?>
-                                                        <option value="<?php t($value) ?>"<?php isset($_view[$_view['type']['code']]['field_sets'][$field['id']]) && $value == $_view[$_view['type']['code']]['field_sets'][$field['id']] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
+                                                        <option value="<?php t($value) ?>"<?php isset($_view['entry']['field_sets'][$field['id']]) && $value == $_view['entry']['field_sets'][$field['id']] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
                                                         <?php endforeach ?>
                                                     </select>
                                                 </div>
                                                 <?php elseif ($field['kind'] === 'radio') : ?>
                                                 <?php foreach (explode("\n", $field['text']) as $value) : ?>
                                                 <div class="field">
-                                                    <label><input type="radio" name="field_sets[<?php t($field['id']) ?>]" value="<?php t($value) ?>" class="form-check-input"<?php (isset($_view[$_view['type']['code']]['field_sets'][$field['id']]) && in_array($value, explode("\n", $_view[$_view['type']['code']]['field_sets'][$field['id']]))) ? e(' checked="checked"') : '' ?>> <?php t($value) ?></label><br>
+                                                    <label><input type="radio" name="field_sets[<?php t($field['id']) ?>]" value="<?php t($value) ?>" class="form-check-input"<?php (isset($_view['entry']['field_sets'][$field['id']]) && in_array($value, explode("\n", $_view['entry']['field_sets'][$field['id']]))) ? e(' checked="checked"') : '' ?>> <?php t($value) ?></label><br>
                                                 </div>
                                                 <?php endforeach ?>
                                                 <?php elseif ($field['kind'] === 'checkbox') : ?>
                                                 <div class="field">
                                                     <?php foreach (explode("\n", $field['text']) as $value) : ?>
-                                                    <label><input type="checkbox" name="field_sets[<?php t($field['id']) ?>][]" value="<?php t($value) ?>" class="form-check-input"<?php (isset($_view[$_view['type']['code']]['field_sets'][$field['id']]) && in_array($value, explode("\n", $_view[$_view['type']['code']]['field_sets'][$field['id']]))) ? e(' checked="checked"') : '' ?>> <?php t($value) ?></label><br>
+                                                    <label><input type="checkbox" name="field_sets[<?php t($field['id']) ?>][]" value="<?php t($value) ?>" class="form-check-input"<?php (isset($_view['entry']['field_sets'][$field['id']]) && in_array($value, explode("\n", $_view['entry']['field_sets'][$field['id']]))) ? e(' checked="checked"') : '' ?>> <?php t($value) ?></label><br>
                                                     <?php endforeach ?>
                                                 </div>
                                                 <?php elseif ($field['kind'] === 'image' || $field['kind'] === 'file') : ?>
 
-                                                <div class="field upload" id="field_<?php t($_view[$_view['type']['code']]['id'] . '_' . $field['id']) ?>" data-upload="<?php t(MAIN_FILE) ?>/admin/file_upload?_type=json&amp;target=field&amp;key=field_<?php t($_view[$_view['type']['code']]['id'] . '_' . $field['id']) ?>&amp;format=<?php t($field['kind']) ?>">
+                                                <div class="field upload" id="field_<?php t($_view['entry']['id'] . '_' . $field['id']) ?>" data-upload="<?php t(MAIN_FILE) ?>/admin/file_upload?_type=json&amp;target=field&amp;key=field_<?php t($_view['entry']['id'] . '_' . $field['id']) ?>&amp;format=<?php t($field['kind']) ?>">
                                                     <button type="button">ファイル選択</button>
-                                                    <input type="file" name="field_<?php t($_view[$_view['type']['code']]['id'] . '_' . $field['id']) ?>">
-                                                    <p><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=file&amp;target=field&amp;key=field_<?php t($_view[$_view['type']['code']]['id'] . '_' . $field['id']) ?>&amp;format=<?php t($field['kind']) ?><?php $_view[$_view['type']['code']]['id'] ? t('&id=' . $_view[$_view['type']['code']]['id']) : '' ?>"></p>
+                                                    <input type="file" name="field_<?php t($_view['entry']['id'] . '_' . $field['id']) ?>">
+                                                    <p><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=file&amp;target=field&amp;key=field_<?php t($_view['entry']['id'] . '_' . $field['id']) ?>&amp;format=<?php t($field['kind']) ?><?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></p>
                                                     <ul>
-                                                        <li><a href="<?php t(MAIN_FILE) ?>/admin/file_delete?target=field&amp;key=field_<?php t($_view[$_view['type']['code']]['id'] . '_' . $field['id']) ?>&amp;format=<?php t($field['kind']) ?><?php $_view[$_view['type']['code']]['id'] ? t('&id=' . $_view[$_view['type']['code']]['id']) : '' ?>" id="field_<?php t($_view[$_view['type']['code']]['id'] . '_' . $field['id']) ?>_delete" class="token" data-token="<?php t($_view['token']) ?>">削除</a></li>
+                                                        <li><a href="<?php t(MAIN_FILE) ?>/admin/file_delete?target=field&amp;key=field_<?php t($_view['entry']['id'] . '_' . $field['id']) ?>&amp;format=<?php t($field['kind']) ?><?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>" id="field_<?php t($_view['entry']['id'] . '_' . $field['id']) ?>_delete" class="token" data-token="<?php t($_view['token']) ?>">削除</a></li>
                                                     </ul>
                                                 </div>
                                                 <?php endif ?>

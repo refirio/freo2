@@ -37,7 +37,6 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th class="text-nowrap">ID</th>
                                             <th class="text-nowrap">コード</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">並び替え</th>
@@ -46,7 +45,6 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th class="text-nowrap">ID</th>
                                             <th class="text-nowrap">コード</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">並び替え</th>
@@ -56,7 +54,6 @@
                                     <tbody>
                                         <?php foreach ($_view['categories'] as $category) : ?>
                                         <tr id="sort_<?php h($category['id']) ?>">
-                                            <td><?php h($category['id']) ?></td>
                                             <td><?php h(truncate($category['code'], 50)) ?></td>
                                             <td><?php h(truncate($category['name'], 50)) ?></td>
                                             <td><span class="handle text-nowrap">並び替え</span></td>
