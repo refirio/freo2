@@ -36,7 +36,7 @@
                             </div>
                             <?php endif ?>
 
-                            <form action="<?php t(MAIN_FILE) ?>/admin/entry_form<?php $_view['entry']['id'] ? t('?id=' . $_view['entry']['id']) : '' ?>" method="post" class="register validate">
+                            <form action="<?php t(MAIN_FILE) ?>/admin/page_form<?php $_view['entry']['id'] ? t('?id=' . $_view['entry']['id']) : '' ?>" method="post" class="register validate">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <input type="hidden" name="id" value="<?php t($_view['entry']['id']) ?>">
                                 <input type="hidden" name="type_id" value="<?php t($_view['type']['id']) ?>">
@@ -46,14 +46,6 @@
                                         登録
                                     </div>
                                     <div class="card-body">
-                                        <div class="form-group mb-2">
-                                            <label class="fw-bold">カテゴリ</label>
-                                            <div id="validate_category_sets">
-                                                <?php foreach ($_view['categories'] as $category) : ?>
-                                                <label><input type="checkbox" name="category_sets[]" value="<?php t($category['id']) ?>" class="form-check-input"<?php in_array($category['id'], array_column($_view['entry']['category_sets'], 'category_id')) ? e(' checked="checked"') : '' ?>> <?php t($category['name']) ?></label><br>
-                                                <?php endforeach ?>
-                                            </div>
-                                        </div>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">公開 <span class="badge bg-danger">必須</span></label>
                                             <select name="public" class="form-select" style="width: 200px;">
@@ -124,7 +116,7 @@
                             </form>
 
                             <?php if (!empty($_GET['id'])) : ?>
-                            <form action="<?php t(MAIN_FILE) ?>/admin/entry_delete" method="post" class="delete">
+                            <form action="<?php t(MAIN_FILE) ?>/admin/page_delete" method="post" class="delete">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <input type="hidden" name="id" value="<?php t($_view['entry']['id']) ?>">
                                 <div class="card shadow-sm mb-3">

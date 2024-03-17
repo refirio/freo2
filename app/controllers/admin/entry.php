@@ -9,7 +9,7 @@ if (isset($_GET['page'])) {
     $_SESSION['bulk']['entry'] = [];
 }
 
-// 記事を取得
+// エントリーを取得
 $_view['entries'] = model('select_entries', [
     'where'    => 'types.code = ' . db_escape('entry'),
     'order_by' => 'entries.datetime DESC, entries.id',

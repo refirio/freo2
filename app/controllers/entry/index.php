@@ -2,7 +2,7 @@
 
 import('app/services/entry.php');
 
-// 記事の絞り込み
+// エントリーの絞り込み
 $filters = model('filter_entries', $_GET, [
     'associate' => true,
 ]);
@@ -34,7 +34,7 @@ if (isset($_GET['page'])) {
     $_GET['page'] = 1;
 }
 
-// 記事を取得
+// エントリーを取得
 $_view['entries'] = service_entry_select_published('entry', [
     'where'    => $filters['where'],
     'order_by' => 'entries.datetime DESC, entries.id',
@@ -59,7 +59,7 @@ $_view['categories'] = model('select_categories', [
     'order_by' => 'sort, id',
 ]);
 
-// 月ごとの記事数を取得
+// 月ごとのエントリー数を取得
 $_view['entry_archives'] = service_entry_select_published('entry', [
     'select'   => 'DATE_FORMAT(entries.datetime, ' . db_escape('%Y-%m-%d') . ') AS month, COUNT(DISTINCT entries.id) AS count',
     'group_by' => 'month',

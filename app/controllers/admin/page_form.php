@@ -16,17 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 入力データを整理
     $post = [
         'entry' => model('normalize_entries', [
-            'id'            => isset($_POST['id'])            ? $_POST['id']            : '',
-            'type_id'       => isset($_POST['type_id'])       ? $_POST['type_id']       : '',
-            'public'        => isset($_POST['public'])        ? $_POST['public']        : '',
-            'public_begin'  => isset($_POST['public_begin'])  ? $_POST['public_begin']  : '',
-            'public_end'    => isset($_POST['public_end'])    ? $_POST['public_end']    : '',
-            'datetime'      => isset($_POST['datetime'])      ? $_POST['datetime']      : '',
-            'code'          => isset($_POST['code'])          ? $_POST['code']          : '',
-            'title'         => isset($_POST['title'])         ? $_POST['title']         : '',
-            'text'          => isset($_POST['text'])          ? $_POST['text']          : '',
-            'field_sets'    => isset($_POST['field_sets'])    ? $_POST['field_sets']    : [],
-            'category_sets' => isset($_POST['category_sets']) ? $_POST['category_sets'] : [],
+            'id'           => isset($_POST['id'])           ? $_POST['id']           : '',
+            'type_id'      => isset($_POST['type_id'])      ? $_POST['type_id']      : '',
+            'public'       => isset($_POST['public'])       ? $_POST['public']       : '',
+            'public_begin' => isset($_POST['public_begin']) ? $_POST['public_begin'] : '',
+            'public_end'   => isset($_POST['public_end'])   ? $_POST['public_end']   : '',
+            'datetime'     => isset($_POST['datetime'])     ? $_POST['datetime']     : '',
+            'code'         => isset($_POST['code'])         ? $_POST['code']         : '',
+            'title'        => isset($_POST['title'])        ? $_POST['title']        : '',
+            'text'         => isset($_POST['text'])         ? $_POST['text']         : '',
+            'field_sets'   => isset($_POST['field_sets'])   ? $_POST['field_sets']   : [],
         ]),
     ];
 
@@ -47,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['post']['entry'] = $post['entry'];
 
                 // フォワード
-                forward('/admin/entry_post');
+                forward('/admin/page_post');
             } else {
                 $_view['entry'] = $post['entry'];
 
@@ -62,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $entries = model('select_entries', [
             'where' => [
-                'entries.id = :id AND types.code = ' . db_escape('entry'),
+                'entries.id = :id AND types.code = ' . db_escape('page'),
                 [
                     'id' => $_GET['id'],
                 ],
@@ -132,17 +131,9 @@ if ((empty($_POST['view']) || $_POST['view'] !== 'preview')) {
 
 // 型を取得
 $types = model('select_types', [
-    'where' => 'code = ' . db_escape('entry'),
+    'where' => 'code = ' . db_escape('page'),
 ]);
 $_view['type'] = $types[0];
-
-// カテゴリを取得
-$_view['categories'] = model('select_categories', [
-    'where'    => 'categories.type_id = ' . intval($_view['type']['id']),
-    'order_by' => 'categories.sort, categories.id',
-], [
-    'associate' => true,
-]);
 
 // フィールドを取得
 $_view['fields'] = model('select_fields', [
@@ -154,7 +145,7 @@ $_view['fields'] = model('select_fields', [
 
 // タイトル
 if (empty($_GET['id'])) {
-    $_view['title'] = '記事登録';
+    $_view['title'] = 'ページ登録';
 } else {
-    $_view['title'] = '記事編集';
+    $_view['title'] = 'ページ編集';
 }

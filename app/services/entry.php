@@ -3,7 +3,7 @@
 import('app/services/log.php');
 
 /**
- * 公開記事の取得
+ * 公開エントリーの取得
  *
  * @param string $type
  * @param array  $queries
@@ -13,7 +13,7 @@ import('app/services/log.php');
  */
 function service_entry_select_published($type, $queries, $options = [])
 {
-    // 公開記事の絞り込み
+    // 公開エントリーの絞り込み
     if (empty($queries['where'])) {
         $where1 = 'TRUE';
         $where2 = [];
@@ -30,7 +30,7 @@ function service_entry_select_published($type, $queries, $options = [])
 
     $queries['where'] = [$where1, $where2];
 
-    // 記事を取得
+    // エントリーを取得
     $entries = model('select_entries', $queries, [
         'associate' => true,
     ]);
@@ -38,7 +38,7 @@ function service_entry_select_published($type, $queries, $options = [])
     return $entries;
 }
 /**
- * 記事の登録
+ * エントリーの登録
  *
  * @param array $queries
  * @param array $options
@@ -50,7 +50,7 @@ function service_entry_insert($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'entries', 'insert');
 
-    // 記事を登録
+    // エントリーを登録
     $resource = model('insert_entries', $queries, $options);
     if (!$resource) {
         error('データを登録できません。');
@@ -60,7 +60,7 @@ function service_entry_insert($queries, $options = [])
 }
 
 /**
- * 記事の編集
+ * エントリーの編集
  *
  * @param array $queries
  * @param array $options
@@ -96,7 +96,7 @@ function service_entry_update($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'entries', 'update');
 
-    // 記事を編集
+    // エントリーを編集
     $resource = model('update_entries', $queries, $options);
     if (!$resource) {
         error('データを編集できません。');
@@ -106,7 +106,7 @@ function service_entry_update($queries, $options = [])
 }
 
 /**
- * 記事の削除
+ * エントリーの削除
  *
  * @param array $queries
  * @param array $options
@@ -118,7 +118,7 @@ function service_entry_delete($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'entries', 'delete');
 
-    // 記事を削除
+    // エントリーを削除
     $resource = model('delete_entries', $queries, $options);
     if (!$resource) {
         error('データを削除できません。');

@@ -10,7 +10,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     error('不正なアクセスです。');
 }
 
-// 記事を取得
+// エントリーを取得
 $entries = service_entry_select_published('entry', [
     'where' => [
         'entries.id = :id',

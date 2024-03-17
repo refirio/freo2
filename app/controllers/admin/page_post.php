@@ -10,7 +10,7 @@ if (forward() === null) {
 // 投稿データを確認
 if (empty($_SESSION['post'])) {
     // リダイレクト
-    redirect('/admin/entry_form');
+    redirect('/admin/page_form');
 }
 
 // アップロードファイル
@@ -55,9 +55,8 @@ if (empty($_SESSION['post']['entry']['id'])) {
             'text'         => $_SESSION['post']['entry']['text'],
         ],
     ], [
-        'field_sets'    => $_SESSION['post']['entry']['field_sets'],
-        'category_sets' => $_SESSION['post']['entry']['category_sets'],
-        'files'         => $files,
+        'field_sets' => $_SESSION['post']['entry']['field_sets'],
+        'files'      => $files,
     ]);
     if (!$resource) {
         error('データを登録できません。');
@@ -82,11 +81,10 @@ if (empty($_SESSION['post']['entry']['id'])) {
             ],
         ],
     ], [
-        'id'            => intval($_SESSION['post']['entry']['id']),
-        'update'        => $_SESSION['update']['entry'],
-        'field_sets'    => $_SESSION['post']['entry']['field_sets'],
-        'category_sets' => $_SESSION['post']['entry']['category_sets'],
-        'files'         => $files,
+        'id'         => intval($_SESSION['post']['entry']['id']),
+        'update'     => $_SESSION['update']['entry'],
+        'field_sets' => $_SESSION['post']['entry']['field_sets'],
+        'files'      => $files,
     ]);
     if (!$resource) {
         error('データを編集できません。');
@@ -102,4 +100,4 @@ unset($_SESSION['file']);
 unset($_SESSION['update']);
 
 // リダイレクト
-redirect('/admin/entry?ok=post');
+redirect('/admin/page?ok=post');

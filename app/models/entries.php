@@ -4,7 +4,7 @@ import('app/services/storage.php');
 import('libs/plugins/validator.php');
 
 /**
- * 記事の取得
+ * エントリーの取得
  *
  * @param array $queries
  * @param array $options
@@ -38,7 +38,7 @@ function select_entries($queries, $options = [])
         }
         $queries['where'] = 'entries.deleted IS NULL AND (' . $queries['where'] . ')';
     } else {
-        // 記事を取得
+        // エントリーを取得
         $queries['from'] = DATABASE_PREFIX . 'entries';
 
         // 削除済みデータは取得しない
@@ -98,7 +98,7 @@ function select_entries($queries, $options = [])
 }
 
 /**
- * 記事の登録
+ * エントリーの登録
  *
  * @param array $queries
  * @param array $options
@@ -192,7 +192,7 @@ function insert_entries($queries, $options = [])
 }
 
 /**
- * 記事の編集
+ * エントリーの編集
  *
  * @param array $queries
  * @param array $options
@@ -314,7 +314,7 @@ function update_entries($queries, $options = [])
 }
 
 /**
- * 記事の削除
+ * エントリーの削除
  *
  * @param array $queries
  * @param array $options
@@ -400,7 +400,7 @@ function delete_entries($queries, $options = [])
 }
 
 /**
- * 記事の正規化
+ * エントリーの正規化
  *
  * @param array $queries
  * @param array $options
@@ -444,7 +444,7 @@ function normalize_entries($queries, $options = [])
 }
 
 /**
- * 記事の検証
+ * エントリーの検証
  *
  * @param array $queries
  * @param array $options
@@ -593,7 +593,7 @@ function validate_entries($queries, $options = [])
 }
 
 /**
- * 記事の絞り込み
+ * エントリーの絞り込み
  *
  * @param array $queries
  * @param array $options
@@ -858,7 +858,7 @@ function remove_entries($id, $files)
 }
 
 /**
- * 記事の表示用データ作成
+ * エントリーの表示用データ作成
  *
  * @param array $data
  *
@@ -891,7 +891,7 @@ function view_entries($data)
 }
 
 /**
- * 記事の初期値
+ * エントリーの初期値
  *
  * @return array
  */

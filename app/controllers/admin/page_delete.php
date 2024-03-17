@@ -33,7 +33,7 @@ if (!empty($_POST['id'])) {
     db_commit();
 
     // リダイレクト
-    redirect('/admin/entry?ok=delete');
+    redirect('/admin/page?ok=delete');
 } elseif (!empty($_POST['list'])) {
     // トランザクションを開始
     db_transaction();
@@ -53,8 +53,8 @@ if (!empty($_POST['id'])) {
     unset($_SESSION['bulk']);
 
     // リダイレクト
-    redirect('/admin/entry?page=' . intval($_POST['page']) . '&ok=delete');
+    redirect('/admin/page?ok=delete');
 } else {
     // リダイレクト
-    redirect('/admin/entry?warning=delete');
+    redirect('/admin/page?warning=delete');
 }
