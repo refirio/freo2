@@ -25,10 +25,8 @@ if (isset($_POST['_type']) && $_POST['_type'] === 'json') {
 } elseif (!empty($_SESSION['bulk']['contact'])) {
     // 処理対象を取得
     $_view['contacts'] = model('select_contacts', [
-        'where'    => 'contacts.id IN(' . implode(',', array_map('db_escape', array_keys($_SESSION['bulk']['contact']))) . ')',
-        'order_by' => 'contacts.id DESC',
-    ], [
-        'associate' => true,
+        'where'    => 'id IN(' . implode(',', array_map('db_escape', array_keys($_SESSION['bulk']['contact']))) . ')',
+        'order_by' => 'id DESC',
     ]);
     $_view['contact_bulks'] = array_keys($_SESSION['bulk']['contact']);
 

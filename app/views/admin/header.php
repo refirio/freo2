@@ -66,15 +66,21 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link<?php if (preg_match('/^page(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/page">
+                                    <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
+                                    ページ管理
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link<?php if (preg_match('/^category(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/category">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
                                     カテゴリ管理
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link<?php if (preg_match('/^page(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/page">
+                                <a class="nav-link<?php if (preg_match('/^field(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/field">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
-                                    ページ管理
+                                    フィールド管理
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -130,12 +136,6 @@
                                 <a class="nav-link<?php if ($_REQUEST['_work'] == 'setting' && $_GET['target'] == 'mail' && empty($_GET['id'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/setting?target=mail">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-pencil-square"/></svg>
                                     メール設定
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link<?php if (preg_match('/^field(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/field">
-                                    <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
-                                    フィールド管理
                                 </a>
                             </li>
                             <?php if ($GLOBALS['authority']['power'] >= 3) : ?>

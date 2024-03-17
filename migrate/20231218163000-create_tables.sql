@@ -36,27 +36,41 @@ CREATE TABLE IF NOT EXISTS sessions(
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'セッション';
 
+CREATE TABLE IF NOT EXISTS types(
+    id       INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理キー',
+    created  DATETIME     NOT NULL                COMMENT '作成日時',
+    modified DATETIME     NOT NULL                COMMENT '更新日時',
+    deleted  DATETIME                             COMMENT '削除日時',
+    code     VARCHAR(255) NOT NULL                COMMENT 'コード',
+    name     VARCHAR(255) NOT NULL                COMMENT '名前',
+    sort     INT UNSIGNED NOT NULL                COMMENT '並び順',
+    PRIMARY KEY(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '型';
+
 CREATE TABLE IF NOT EXISTS entries(
     id           INT UNSIGNED        NOT NULL AUTO_INCREMENT COMMENT '代理キー',
     created      DATETIME            NOT NULL                COMMENT '作成日時',
     modified     DATETIME            NOT NULL                COMMENT '更新日時',
     deleted      DATETIME                                    COMMENT '削除日時',
+    type_id      INT UNSIGNED        NOT NULL                COMMENT '外部キー 型',
     public       TINYINT(1) UNSIGNED NOT NULL                COMMENT '公開',
     public_begin DATETIME                                    COMMENT '公開開始日時',
     public_end   DATETIME                                    COMMENT '公開終了日時',
     datetime     DATETIME            NOT NULL                COMMENT '日時',
+    code         VARCHAR(255)        NOT NULL                COMMENT 'コード',
     title        VARCHAR(255)        NOT NULL                COMMENT 'タイトル',
     text         TEXT                                        COMMENT '本文',
     picture      VARCHAR(80)                                 COMMENT '画像',
     thumbnail    VARCHAR(80)                                 COMMENT 'サムネイル',
     PRIMARY KEY(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '記事';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'エントリー';
 
 CREATE TABLE IF NOT EXISTS categories(
     id       INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理キー',
     created  DATETIME     NOT NULL                COMMENT '作成日時',
     modified DATETIME     NOT NULL                COMMENT '更新日時',
     deleted  DATETIME                             COMMENT '削除日時',
+    type_id INT UNSIGNED  NOT NULL                COMMENT '外部キー 型',
     code     VARCHAR(255) NOT NULL                COMMENT 'コード',
     name     VARCHAR(255) NOT NULL                COMMENT '名前',
     sort     INT UNSIGNED NOT NULL                COMMENT '並び順',
@@ -68,33 +82,16 @@ CREATE TABLE IF NOT EXISTS category_sets(
     entry_id    INT UNSIGNED NOT NULL COMMENT '外部キー 記事'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'カテゴリ ひも付け';
 
-CREATE TABLE IF NOT EXISTS pages(
-    id           INT UNSIGNED        NOT NULL AUTO_INCREMENT COMMENT '代理キー',
-    created      DATETIME            NOT NULL                COMMENT '作成日時',
-    modified     DATETIME            NOT NULL                COMMENT '更新日時',
-    deleted      DATETIME                                    COMMENT '削除日時',
-    public       TINYINT(1) UNSIGNED NOT NULL                COMMENT '公開',
-    public_begin DATETIME                                    COMMENT '公開開始日時',
-    public_end   DATETIME                                    COMMENT '公開終了日時',
-    datetime     DATETIME            NOT NULL                COMMENT '日時',
-    title        VARCHAR(255)        NOT NULL                COMMENT 'タイトル',
-    code         VARCHAR(255)        NOT NULL UNIQUE         COMMENT 'コード',
-    text         TEXT                                        COMMENT '本文',
-    picture      VARCHAR(80)                                 COMMENT '画像',
-    thumbnail    VARCHAR(80)                                 COMMENT 'サムネイル',
-    PRIMARY KEY(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'ページ';
-
 CREATE TABLE IF NOT EXISTS fields(
     id         INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理キー',
     created    DATETIME     NOT NULL                COMMENT '作成日時',
     modified   DATETIME     NOT NULL                COMMENT '更新日時',
     deleted    DATETIME                             COMMENT '削除日時',
+    type_id    INT UNSIGNED NOT NULL                COMMENT '外部キー 型',
     name       VARCHAR(255) NOT NULL                COMMENT '名前',
-    type       VARCHAR(80)  NOT NULL                COMMENT '種類',
+    kind       VARCHAR(80)  NOT NULL                COMMENT '種類',
     validation VARCHAR(80)                          COMMENT 'バリデーション',
     text       TEXT                                 COMMENT 'テキスト',
-    target     VARCHAR(80)  NOT NULL                COMMENT '対象',
     sort       INT UNSIGNED NOT NULL                COMMENT '並び順',
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'フィールド';
@@ -102,7 +99,6 @@ CREATE TABLE IF NOT EXISTS fields(
 CREATE TABLE IF NOT EXISTS field_sets(
     field_id INT UNSIGNED NOT NULL COMMENT '外部キー フィールド',
     entry_id INT UNSIGNED          COMMENT '外部キー 記事',
-    page_id  INT UNSIGNED          COMMENT '外部キー ページ',
     text     TEXT                  COMMENT 'テキスト'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'フィールド ひも付け';
 

@@ -21,10 +21,14 @@ function select_entries($queries, $options = [])
     if ($options['associate'] === true) {
         // 関連するデータを取得
         if (!isset($queries['select'])) {
-            $queries['select'] = 'DISTINCT entries.*';
+            $queries['select'] = 'DISTINCT entries.*, '
+                               . 'types.code AS type_code, '
+                               . 'types.name AS type_name, '
+                               . 'types.sort AS type_sort';
         }
 
         $queries['from'] = DATABASE_PREFIX . 'entries AS entries '
+                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'types AS types ON entries.type_id = types.id '
                          . 'LEFT JOIN ' . DATABASE_PREFIX . 'field_sets AS field_sets ON entries.id = field_sets.entry_id '
                          . 'LEFT JOIN ' . DATABASE_PREFIX . 'category_sets AS category_sets ON entries.id = category_sets.entry_id';
 
@@ -231,7 +235,7 @@ function update_entries($queries, $options = [])
         // フィールドを編集
         $fields = model('select_fields', [
             'select' => 'id',
-            'where'  => 'type != \'image\' AND type != \'file\' && target = \'entry\'',
+            'where'  => 'kind != ' . db_escape('image') . ' AND kind != ' . db_escape('file'),
         ]);
         if (empty($fields)) {
             $field_ids = [0];
@@ -449,7 +453,18 @@ function normalize_entries($queries, $options = [])
  */
 function validate_entries($queries, $options = [])
 {
+    $options = [
+        'duplicate' => isset($options['duplicate']) ? $options['duplicate'] : true,
+    ];
+
     $messages = [];
+
+    // 外部キー 型
+    if (isset($queries['type_id'])) {
+        if (!validator_required($queries['type_id'])) {
+            $messages['type_id'] = '型が入力されていません。';
+        }
+    }
 
     // 公開
     if (isset($queries['public'])) {
@@ -483,6 +498,47 @@ function validate_entries($queries, $options = [])
         }
     }
 
+    // コード
+    if (isset($queries['code'])) {
+        if (!validator_required($queries['code'])) {
+            $messages['code'] = 'コードが入力されていません。';
+        } elseif (!validator_regexp($queries['code'], '^[\w\-\/]+$')) {
+            $messages['code'] = 'コードは半角英数字で入力してください。';
+        } elseif (!validator_between($queries['code'], 2, 80)) {
+            $messages['code'] = 'コードは2文字以上80文字以内で入力してください。';
+        } elseif ($options['duplicate'] === true) {
+            if (empty($queries['id'])) {
+                $entries = db_select([
+                    'select' => 'id',
+                    'from'   => DATABASE_PREFIX . 'entries',
+                    'where'  => [
+                        'type_id = :type_id AND code = :code',
+                        [
+                            'type_id' => $queries['type_id'],
+                            'code'    => $queries['code'],
+                        ],
+                    ],
+                ]);
+            } else {
+                $entries = db_select([
+                    'select' => 'id',
+                    'from'   => DATABASE_PREFIX . 'entries',
+                    'where'  => [
+                        'type_id = :type_id AND id != :id AND code = :code',
+                        [
+                            'type_id' => $queries['type_id'],
+                            'id'      => $queries['id'],
+                            'code'    => $queries['code'],
+                        ],
+                    ],
+                ]);
+            }
+            if (!empty($entries)) {
+                $messages['code'] = '入力されたコードはすでに使用されています。';
+            }
+        }
+    }
+
     // タイトル
     if (isset($queries['title'])) {
         if (!validator_required($queries['title'])) {
@@ -505,9 +561,9 @@ function validate_entries($queries, $options = [])
         // フィールドを取得
         $fields = model('select_fields', [
             'where'    => [
-                'target = :target',
+                'type_id = :type_id',
                 [
-                    'target' => 'entry',
+                    'type_id' => $queries['type_id'],
                 ],
             ],
             'order_by' => 'sort, id',
@@ -518,15 +574,15 @@ function validate_entries($queries, $options = [])
             if (isset($queries['field_sets'][$field['id']])) {
                 if ($field['validation'] === 'required' && !validator_required($queries['field_sets'][$field['id']])) {
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'が入力されていません。';
-                } elseif ($field['type'] === 'number' && $queries['field_sets'][$field['id']] !== '' && !validator_decimal($queries['field_sets'][$field['id']])) {
+                } elseif ($field['kind'] === 'number' && $queries['field_sets'][$field['id']] !== '' && !validator_decimal($queries['field_sets'][$field['id']])) {
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'は数値で入力してください。';
-                } elseif ($field['type'] === 'alphabet' && $queries['field_sets'][$field['id']] !== '' && !validator_alpha_dash($queries['field_sets'][$field['id']])) {
+                } elseif ($field['kind'] === 'alphabet' && $queries['field_sets'][$field['id']] !== '' && !validator_alpha_dash($queries['field_sets'][$field['id']])) {
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'は英数字で入力してください。';
-                } elseif (($field['type'] === 'text' || $field['type'] === 'number' || $field['type'] === 'alphabet') && !validator_max_length($queries['field_sets'][$field['id']], 100)) {
+                } elseif (($field['kind'] === 'text' || $field['kind'] === 'number' || $field['kind'] === 'alphabet') && !validator_max_length($queries['field_sets'][$field['id']], 100)) {
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'は100文字以内で入力してください。';
-                } elseif (($field['type'] === 'textarea') && !validator_max_length($queries['field_sets'][$field['id']], 2000)) {
+                } elseif (($field['kind'] === 'textarea') && !validator_max_length($queries['field_sets'][$field['id']], 2000)) {
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'は2000文字以内で入力してください。';
-                } elseif (($field['type'] === 'select' || $field['type'] === 'radio' || $field['type'] === 'checkbox') && $queries['field_sets'][$field['id']] && !validator_list(explode("\n", $queries['field_sets'][$field['id']]), array_fill_keys(explode("\n", $field['text']), 1))) {
+                } elseif (($field['kind'] === 'select' || $field['kind'] === 'radio' || $field['kind'] === 'checkbox') && $queries['field_sets'][$field['id']] && !validator_list(explode("\n", $queries['field_sets'][$field['id']]), array_fill_keys(explode("\n", $field['text']), 1))) {
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'の値が不正です。';
                 }
             }
@@ -581,7 +637,7 @@ function filter_entries($queries, $options = [])
         // 年月を取得
         if (isset($queries['archive'])) {
             if ($queries['archive'] !== '') {
-                $wheres[] = 'DATE_FORMAT(entries.datetime, \'%Y-%m\') = ' . db_escape($queries['archive']);
+                $wheres[] = 'DATE_FORMAT(entries.datetime, ' . db_escape('%Y-%m') . ') = ' . db_escape($queries['archive']);
                 $pagers[] = 'archive=' . rawurlencode($queries['archive']);
             }
         }
@@ -591,6 +647,14 @@ function filter_entries($queries, $options = [])
             if ($queries['datetime'] !== '') {
                 $wheres[] = 'entries.datetime = ' . db_escape($queries['datetime']);
                 $pagers[] = 'datetime=' . rawurlencode($queries['datetime']);
+            }
+        }
+
+        // 型を取得
+        if (isset($queries['type_id'])) {
+            if ($queries['type_id'] !== '') {
+                $wheres[] = 'entries.type_id = ' . db_escape($queries['type_id']);
+                $pagers[] = 'type_id=' . rawurlencode($queries['type_id']);
             }
         }
 
@@ -693,8 +757,8 @@ function save_entries($id, $files)
 /**
  * ファイルの削除
  *
- * @param string $id
- * @param array  $files
+ * @param int   $id
+ * @param array $files
  *
  * @return void
  */
@@ -838,11 +902,13 @@ function default_entries()
         'created'       => localdate('Y-m-d H:i:s'),
         'modified'      => localdate('Y-m-d H:i:s'),
         'deleted'       => null,
+        'type_id'       => 0,
         'public'        => 1,
         'public_begin'  => null,
         'public_end'    => null,
         'datetime'      => localdate('Y-m-d H:00'),
         'title'         => '',
+        'code'          => '',
         'text'          => null,
         'picture'       => null,
         'thumbnail'     => null,

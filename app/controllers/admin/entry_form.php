@@ -17,10 +17,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $post = [
         'entry' => model('normalize_entries', [
             'id'            => isset($_POST['id'])            ? $_POST['id']            : '',
+            'type_id'       => isset($_POST['type_id'])       ? $_POST['type_id']       : '',
             'public'        => isset($_POST['public'])        ? $_POST['public']        : '',
             'public_begin'  => isset($_POST['public_begin'])  ? $_POST['public_begin']  : '',
             'public_end'    => isset($_POST['public_end'])    ? $_POST['public_end']    : '',
             'datetime'      => isset($_POST['datetime'])      ? $_POST['datetime']      : '',
+            'code'          => isset($_POST['code'])          ? $_POST['code']          : '',
             'title'         => isset($_POST['title'])         ? $_POST['title']         : '',
             'text'          => isset($_POST['text'])          ? $_POST['text']          : '',
             'field_sets'    => isset($_POST['field_sets'])    ? $_POST['field_sets']    : [],
@@ -60,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $entries = model('select_entries', [
             'where' => [
-                'entries.id = :id',
+                'entries.id = :id AND types.code = ' . db_escape('entry'),
                 [
                     'id' => $_GET['id'],
                 ],
@@ -84,11 +86,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $field_sets = model('select_field_sets', [
                 'select' => 'field_sets.field_id, field_sets.text',
                 'where'  => [
-                    'field_sets.entry_id = :entry_id AND (fields.type = \'image\' OR fields.type = \'file\') AND fields.target = \'entry\'',
+                    'field_sets.entry_id = :entry_id AND (fields.kind = ' . db_escape('image') . ' OR fields.kind = ' . db_escape('file') . ')',
                     [
                         'entry_id' => $_GET['id'],
-                    ]
-                ]
+                    ],
+                ],
             ], [
                 'associate' => true,
             ]);
@@ -128,20 +130,26 @@ if ((empty($_POST['view']) || $_POST['view'] !== 'preview')) {
     $_view['entry'] = model('view_entries', $_view['entry']);
 }
 
+// 型を取得
+$types = model('select_types', [
+    'where' => 'code = ' . db_escape('entry'),
+]);
+$_view['type'] = $types[0];
+
 // カテゴリを取得
 $_view['categories'] = model('select_categories', [
-    'order_by' => 'sort, id',
+    'where'    => 'categories.type_id = ' . intval($_view['type']['id']),
+    'order_by' => 'categories.sort, categories.id',
+], [
+    'associate' => true,
 ]);
 
 // フィールドを取得
 $_view['fields'] = model('select_fields', [
-    'where'    => [
-        'target = :target',
-        [
-            'target' => 'entry',
-        ],
-    ],
-    'order_by' => 'sort, id',
+    'where'    => 'fields.type_id = ' . intval($_view['type']['id']),
+    'order_by' => 'fields.sort, fields.id',
+], [
+    'associate' => true,
 ]);
 
 // タイトル

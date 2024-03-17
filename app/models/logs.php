@@ -23,7 +23,9 @@ function select_logs($queries, $options = [])
             $queries['select'] = 'logs.*, '
                                . 'users.id AS user_id, '
                                . 'users.username AS user_username, '
-                               . 'users.name AS user_name';
+                               . 'users.authority_id AS user_authority_id, '
+                               . 'users.name AS user_name, '
+                               . 'users.email AS user_email';
         }
 
         $queries['from'] = DATABASE_PREFIX . 'logs AS logs '

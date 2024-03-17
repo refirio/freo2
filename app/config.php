@@ -40,16 +40,9 @@ $GLOBALS['config']['options'] = [
             1 => '公開',
         ],
     ],
-    'page' => [
-        // 公開
-        'publics' => [
-            0 => '非公開',
-            1 => '公開',
-        ],
-    ],
     'field' => [
         // 種類
-        'types' => [
+        'kinds' => [
             'text'     => '一行入力',
             'number'   => '数字入力',
             'alphabet' => '英数字入力',
@@ -66,11 +59,6 @@ $GLOBALS['config']['options'] = [
             'none'     => 'なし',
             'required' => '必須',
         ],
-        // 対象
-        'targets' => [
-            'entry' => '記事',
-            'page'  => 'ページ',
-        ],
     ],
 ];
 
@@ -81,7 +69,6 @@ $GLOBALS['config']['storage_url'] = null;
 /* ファイルアップロード先 */
 $GLOBALS['config']['file_targets'] = [
     'entry' => 'files/entries/',
-    'page'  => 'files/pages/',
     'field' => 'files/fields/',
 ];
 

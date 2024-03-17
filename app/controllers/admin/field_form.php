@@ -15,11 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $post = [
         'field' => model('normalize_fields', [
             'id'         => isset($_POST['id'])         ? $_POST['id']         : '',
+            'type_id'    => isset($_POST['type_id'])    ? $_POST['type_id']    : '',
             'name'       => isset($_POST['name'])       ? $_POST['name']       : '',
-            'type'       => isset($_POST['type'])       ? $_POST['type']       : '',
+            'kind'       => isset($_POST['kind'])       ? $_POST['kind']       : '',
             'validation' => isset($_POST['validation']) ? $_POST['validation'] : '',
             'text'       => isset($_POST['text'])       ? $_POST['text']       : '',
-            'target'     => isset($_POST['target'])     ? $_POST['target']     : '',
         ]),
     ];
 
@@ -50,11 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $fields = model('select_fields', [
             'where' => [
-                'id = :id',
+                'fields.id = :id',
                 [
                     'id' => $_GET['id'],
                 ],
             ],
+        ], [
+            'associate' => true,
         ]);
         if (empty($fields)) {
             warning('編集データが見つかりません。');
@@ -71,6 +73,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['update']['field'] = localdate('Y-m-d H:i:s');
     }
 }
+
+// 型を取得
+$_view['types'] = model('select_types', [
+    'order_by' => 'sort, id',
+]);
 
 // タイトル
 if (empty($_GET['id'])) {

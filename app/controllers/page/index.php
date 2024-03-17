@@ -1,6 +1,6 @@
 <?php
 
-import('app/services/page.php');
+import('app/services/entry.php');
 
 // 表示対象を取得
 if (isset($_params[1])) {
@@ -11,9 +11,9 @@ if (!isset($_GET['code'])) {
 }
 
 // ページを取得
-$pages = service_page_select_published([
+$pages = service_entry_select_published('page', [
     'where' => [
-        'pages.code = :code',
+        'entries.code = :code',
         [
             'code' => $_GET['code'],
         ],
@@ -28,7 +28,7 @@ if (empty($pages)) {
 }
 
 // ページを取得
-$_view['pages'] = service_page_select_published([]);
+$_view['pages'] = service_entry_select_published('page', []);
 
 // タイトル
 $_view['title'] = 'ページ';

@@ -6,9 +6,8 @@ if (is_file(MAIN_PATH . MAIN_APPLICATION_PATH . 'app/config.local.php')) {
     import('app/config.local.php');
 }
 
-// 設定
-$settings = model('select_settings', [
-]);
+// 設定を取得
+$settings = model('select_settings', []);
 $GLOBALS['setting'] = [];
 foreach ($settings as $setting) {
     $GLOBALS['setting'][$setting['id']] = $setting['value'];
@@ -17,7 +16,7 @@ foreach ($settings as $setting) {
 // 読み込み
 import('app/services/user.php');
 import('app/services/storage.php');
-import('app/services/page.php');
+import('app/services/entry.php');
 import('libs/plugins/loader.php');
 
 // ストレージ利用準備
@@ -101,10 +100,10 @@ if (!preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
     // ページURLの省略
     if ($GLOBALS['setting']['page_url_omission']) {
         if ($_params[0] !== 'page') {
-            $pages = service_page_select_published([
+            $pages = service_entry_select_published('page', [
                 'select' => 'id',
                 'where'  => [
-                    'pages.code = :code',
+                    'entries.code = :code',
                     [
                         'code' => implode('/', $_params),
                     ],

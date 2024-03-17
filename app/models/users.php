@@ -125,8 +125,8 @@ function delete_users($queries, $options = [])
             'update' => DATABASE_PREFIX . 'users AS users',
             'set'    => [
                 'deleted'  => localdate('Y-m-d H:i:s'),
-                'username' => ['CONCAT(\'DELETED ' . localdate('YmdHis') . ' \', username)'],
-                'email'    => ['CONCAT(\'DELETED ' . localdate('YmdHis') . ' \', email)'],
+                'username' => ['CONCAT(' . db_escape('DELETED ' . localdate('YmdHis') . ' ') . ', username)'],
+                'email'    => ['CONCAT(' . db_escape('DELETED ' . localdate('YmdHis') . ' ') . ', email)'],
             ],
             'where'  => isset($queries['where']) ? $queries['where'] : '',
             'limit'  => isset($queries['limit']) ? $queries['limit'] : '',

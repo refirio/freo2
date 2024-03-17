@@ -20,7 +20,12 @@ $files = [
 ];
 $fields = model('select_fields', [
     'select' => 'id',
-    'where'  => '(type = \'image\' OR type = \'file\') AND target = \'entry\'',
+    'where'  => [
+        'type_id = :type_id AND (kind = ' . db_escape('image') . ' OR kind = ' . db_escape('file') . ')',
+        [
+            'type_id' => $_SESSION['post']['entry']['type_id'],
+        ],
+    ],
 ]);
 if (!empty($fields)) {
     foreach ($fields as $field) {
@@ -40,10 +45,12 @@ if (empty($_SESSION['post']['entry']['id'])) {
     // 記事を登録
     $resource = service_entry_insert([
         'values' => [
+            'type_id'      => $_SESSION['post']['entry']['type_id'],
             'public'       => $_SESSION['post']['entry']['public'],
             'public_begin' => $_SESSION['post']['entry']['public_begin'],
             'public_end'   => $_SESSION['post']['entry']['public_end'],
             'datetime'     => $_SESSION['post']['entry']['datetime'],
+            'code'         => $_SESSION['post']['entry']['code'],
             'title'        => $_SESSION['post']['entry']['title'],
             'text'         => $_SESSION['post']['entry']['text'],
         ],
@@ -59,10 +66,12 @@ if (empty($_SESSION['post']['entry']['id'])) {
     // 記事を編集
     $resource = service_entry_update([
         'set'  => [
+            'type_id'      => $_SESSION['post']['entry']['type_id'],
             'public'       => $_SESSION['post']['entry']['public'],
             'public_begin' => $_SESSION['post']['entry']['public_begin'],
             'public_end'   => $_SESSION['post']['entry']['public_end'],
             'datetime'     => $_SESSION['post']['entry']['datetime'],
+            'code'         => $_SESSION['post']['entry']['code'],
             'title'        => $_SESSION['post']['entry']['title'],
             'text'         => $_SESSION['post']['entry']['text'],
         ],

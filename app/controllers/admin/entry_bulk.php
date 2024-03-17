@@ -34,7 +34,9 @@ if (isset($_POST['_type']) && $_POST['_type'] === 'json') {
 
     // カテゴリを取得
     $categories = model('select_categories', [
-        'order_by' => 'sort, id',
+        'order_by' => 'categories.sort, categories.id',
+    ], [
+        'associate' => true,
     ]);
     $category_sets = [];
     foreach ($categories as $category) {

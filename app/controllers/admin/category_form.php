@@ -14,9 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 入力データを整理
     $post = [
         'category' => model('normalize_categories', [
-            'id'   => isset($_POST['id'])   ? $_POST['id']   : '',
-            'code' => isset($_POST['code']) ? $_POST['code'] : '',
-            'name' => isset($_POST['name']) ? $_POST['name'] : '',
+            'id'      => isset($_POST['id'])      ? $_POST['id']      : '',
+            'type_id' => isset($_POST['type_id']) ? $_POST['type_id'] : '',
+            'code'    => isset($_POST['code'])    ? $_POST['code']    : '',
+            'name'    => isset($_POST['name'])    ? $_POST['name']    : '',
         ]),
     ];
 
@@ -47,11 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $categories = model('select_categories', [
             'where' => [
-                'id = :id',
+                'categories.id = :id AND types.code = ' . db_escape('entry'),
                 [
                     'id' => $_GET['id'],
                 ],
             ],
+        ], [
+            'associate' => true,
         ]);
         if (empty($categories)) {
             warning('編集データが見つかりません。');
@@ -68,6 +71,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['update']['category'] = localdate('Y-m-d H:i:s');
     }
 }
+
+// 型を取得
+$types = model('select_types', [
+    'where' => 'code = ' . db_escape('entry'),
+]);
+$_view['type'] = $types[0];
 
 // タイトル
 if (empty($_GET['id'])) {

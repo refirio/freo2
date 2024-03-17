@@ -3,16 +3,17 @@
 import('app/services/log.php');
 
 /**
- * 公開済み記事の取得
+ * 公開記事の取得
  *
- * @param array $queries
- * @param array $options
+ * @param string $type
+ * @param array  $queries
+ * @param array  $options
  *
  * @return resource
  */
-function service_entry_select_published($queries, $options = [])
+function service_entry_select_published($type, $queries, $options = [])
 {
-    // 公開済み記事の絞り込み
+    // 公開記事の絞り込み
     if (empty($queries['where'])) {
         $where1 = 'TRUE';
         $where2 = [];
@@ -23,8 +24,9 @@ function service_entry_select_published($queries, $options = [])
         $where1 = $queries['where'][0];
         $where2 = $queries['where'][1];
     }
-    $where1 .= ' AND entries.public = 1 AND (entries.public_begin IS NULL OR entries.public_begin <= :now) AND (entries.public_end IS NULL OR entries.public_end >= :now)';
-    $where2['now'] = localdate('Y-m-d H:i:s');
+    $where1 .= ' AND types.code = :type_code AND entries.public = 1 AND (entries.public_begin IS NULL OR entries.public_begin <= :now) AND (entries.public_end IS NULL OR entries.public_end >= :now)';
+    $where2['type_code'] = $type;
+    $where2['now']       = localdate('Y-m-d H:i:s');
 
     $queries['where'] = [$where1, $where2];
 

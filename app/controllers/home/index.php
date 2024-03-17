@@ -4,9 +4,9 @@ import('app/services/entry.php');
 
 if ($GLOBALS['setting']['page_home_code']) {
     // ページを取得
-    $pages = service_page_select_published([
+    $pages = service_entry_select_published('page', [
         'where' => [
-            'pages.code = :code',
+            'entries.code = :code',
             [
                 'code' => $GLOBALS['setting']['page_home_code'],
             ],
@@ -20,7 +20,7 @@ if ($GLOBALS['setting']['page_home_code']) {
 }
 
 // 記事を取得
-$_view['entries'] = service_entry_select_published([
+$_view['entries'] = service_entry_select_published('entry', [
     'order_by' => 'entries.datetime DESC, entries.id',
     'limit'    => $GLOBALS['config']['limits']['entry'],
 ]);

@@ -33,10 +33,20 @@
                                             <input type="text" name="name" size="30" value="<?php t($_view['field']['name']) ?>" class="form-control">
                                         </div>
                                         <div class="form-group mb-2">
+                                            <label class="fw-bold">対象 <span class="badge bg-danger">必須</span></label>
+                                            <select name="type_id" class="form-select" style="width: 200px;">
+                                                <option value=""></option>
+                                                <?php foreach ($_view['types'] as $type) : ?>
+                                                <option value="<?php t($type['id']) ?>"<?php $type['id'] == $_view['field']['type_id'] ? e(' selected="selected"') : '' ?>><?php t($type['name']) ?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-2">
                                             <label class="fw-bold">種類 <span class="badge bg-danger">必須</span></label>
-                                            <select name="type" class="form-select" style="width: 200px;">
-                                                <?php foreach ($GLOBALS['config']['options']['field']['types'] as $key => $value) : ?>
-                                                <option value="<?php t($key) ?>"<?php $key == $_view['field']['type'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
+                                            <select name="kind" class="form-select" style="width: 200px;">
+                                                <option value=""></option>
+                                                <?php foreach ($GLOBALS['config']['options']['field']['kinds'] as $key => $value) : ?>
+                                                <option value="<?php t($key) ?>"<?php $key == $_view['field']['kind'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
                                                 <?php endforeach ?>
                                             </select>
                                         </div>
@@ -51,14 +61,6 @@
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">テキスト</label>
                                             <textarea name="text" rows="5" cols="50" class="form-control"><?php t($_view['field']['text']) ?></textarea>
-                                        </div>
-                                        <div class="form-group mb-2">
-                                            <label class="fw-bold">対象 <span class="badge bg-danger">必須</span></label>
-                                            <select name="target" class="form-select" style="width: 200px;">
-                                                <?php foreach ($GLOBALS['config']['options']['field']['targets'] as $key => $value) : ?>
-                                                <option value="<?php t($key) ?>"<?php $key == $_view['field']['target'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
-                                                <?php endforeach ?>
-                                            </select>
                                         </div>
                                         <div class="form-group mt-4">
                                             <button type="submit" class="btn btn-primary px-4">登録</button>

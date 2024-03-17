@@ -11,6 +11,7 @@ if (isset($_GET['page'])) {
 
 // 記事を取得
 $_view['entries'] = model('select_entries', [
+    'where'    => 'types.code = ' . db_escape('entry'),
     'order_by' => 'entries.datetime DESC, entries.id',
     'limit'    => [
         ':offset, :limit',
@@ -25,6 +26,7 @@ $_view['entries'] = model('select_entries', [
 
 $entry_count = model('select_entries', [
     'select' => 'COUNT(DISTINCT entries.id) AS count',
+    'where'  => 'types.code = ' . db_escape('entry'),
 ], [
     'associate' => true,
 ]);

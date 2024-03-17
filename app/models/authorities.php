@@ -184,10 +184,6 @@ function normalize_authorities($queries, $options = [])
  */
 function validate_authorities($queries, $options = [])
 {
-    $options = [
-        'duplicate' => isset($options['duplicate']) ? $options['duplicate'] : true,
-    ];
-
     $messages = [];
 
     // 名前

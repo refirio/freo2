@@ -21,10 +21,11 @@ if (empty($_SESSION['post']['field']['id'])) {
     $resource = service_field_insert([
         'values' => [
             'name'       => $_SESSION['post']['field']['name'],
-            'type'       => $_SESSION['post']['field']['type'],
+            'type_id'    => $_SESSION['post']['field']['type_id'],
+            'name'       => $_SESSION['post']['field']['name'],
+            'kind'       => $_SESSION['post']['field']['kind'],
             'validation' => $_SESSION['post']['field']['validation'],
             'text'       => $_SESSION['post']['field']['text'],
-            'target'     => $_SESSION['post']['field']['target'],
             'sort'       => $_SESSION['post']['field']['sort'],
         ],
     ]);
@@ -36,10 +37,11 @@ if (empty($_SESSION['post']['field']['id'])) {
     $resource = service_field_update([
         'set'   => [
             'name'       => $_SESSION['post']['field']['name'],
-            'type'       => $_SESSION['post']['field']['type'],
+            'type_id'    => $_SESSION['post']['field']['type_id'],
+            'name'       => $_SESSION['post']['field']['name'],
+            'kind'       => $_SESSION['post']['field']['kind'],
             'validation' => $_SESSION['post']['field']['validation'],
             'text'       => $_SESSION['post']['field']['text'],
-            'target'     => $_SESSION['post']['field']['target'],
         ],
         'where' => [
             'id = :id',

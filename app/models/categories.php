@@ -13,15 +13,40 @@ import('libs/plugins/validator.php');
 function select_categories($queries, $options = [])
 {
     $queries = db_placeholder($queries);
+    $options = [
+        'associate' => isset($options['associate']) ? $options['associate'] : false,
+    ];
 
-    // カテゴリを取得
-    $queries['from'] = DATABASE_PREFIX . 'categories';
+    if ($options['associate'] === true) {
+        // 関連するデータを取得
+        if (!isset($queries['select'])) {
+            $queries['select'] = 'DISTINCT categories.*, '
+                               . 'types.code AS type_code, '
+                               . 'types.name AS type_name, '
+                               . 'types.sort AS type_sort';
+        }
 
-    // 削除済みデータは取得しない
-    if (!isset($queries['where'])) {
-        $queries['where'] = 'TRUE';
+        $queries['from'] = DATABASE_PREFIX . 'categories AS categories '
+                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'types AS types ON categories.type_id = types.id;';
+
+        // 削除済みデータは取得しない
+        if (!isset($queries['where'])) {
+            $queries['where'] = 'TRUE';
+        }
+        $queries['where'] = 'categories.deleted IS NULL AND (' . $queries['where'] . ')';
+    } else {
+        // 関連するデータを取得
+        $queries = db_placeholder($queries);
+
+        // カテゴリを取得
+        $queries['from'] = DATABASE_PREFIX . 'categories';
+
+        // 削除済みデータは取得しない
+        if (!isset($queries['where'])) {
+            $queries['where'] = 'TRUE';
+        }
+        $queries['where'] = 'deleted IS NULL AND (' . $queries['where'] . ')';
     }
-    $queries['where'] = 'deleted IS NULL AND (' . $queries['where'] . ')';
 
     // データを取得
     $results = db_select($queries);

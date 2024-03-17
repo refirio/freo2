@@ -56,11 +56,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $users = model('select_users', [
             'where' => [
-                'id = :id',
+                'users.id = :id',
                 [
                     'id' => $_GET['id'],
                 ],
             ],
+        ], [
+            'associate' => true,
         ]);
         if (empty($users)) {
             warning('編集データが見つかりません。');

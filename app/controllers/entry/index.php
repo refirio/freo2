@@ -35,7 +35,7 @@ if (isset($_GET['page'])) {
 }
 
 // 記事を取得
-$_view['entries'] = service_entry_select_published([
+$_view['entries'] = service_entry_select_published('entry', [
     'where'    => $filters['where'],
     'order_by' => 'entries.datetime DESC, entries.id',
     'limit'    => [
@@ -47,25 +47,7 @@ $_view['entries'] = service_entry_select_published([
     ],
 ]);
 
-
-/*
-// 記事を取得
-$_view['entries'] = model('select_entries', [
-    'where'    => $where,
-    'order_by' => 'entries.datetime DESC, entries.id',
-    'limit'    => [
-        ':offset, :limit',
-        [
-            'offset' => $GLOBALS['config']['limits']['entry'] * ($_GET['page'] - 1),
-            'limit'  => $GLOBALS['config']['limits']['entry'],
-        ],
-    ],
-], [
-    'associate' => true,
-]);
-*/
-
-$entry_count = service_entry_select_published([
+$entry_count = service_entry_select_published('entry', [
     'select' => 'COUNT(DISTINCT entries.id) AS count',
     'where'  => $filters['where'],
 ]);
@@ -78,8 +60,8 @@ $_view['categories'] = model('select_categories', [
 ]);
 
 // 月ごとの記事数を取得
-$_view['entry_archives'] = service_entry_select_published([
-    'select'   => 'DATE_FORMAT(entries.datetime, \'%Y-%m-%d\') AS month, COUNT(DISTINCT entries.id) AS count',
+$_view['entry_archives'] = service_entry_select_published('entry', [
+    'select'   => 'DATE_FORMAT(entries.datetime, ' . db_escape('%Y-%m-%d') . ') AS month, COUNT(DISTINCT entries.id) AS count',
     'group_by' => 'month',
     'order_by' => 'month DESC',
 ]);

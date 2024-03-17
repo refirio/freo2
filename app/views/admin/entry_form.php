@@ -39,6 +39,7 @@
                             <form action="<?php t(MAIN_FILE) ?>/admin/entry_form<?php $_view['entry']['id'] ? t('?id=' . $_view['entry']['id']) : '' ?>" method="post" class="register validate">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <input type="hidden" name="id" value="<?php t($_view['entry']['id']) ?>">
+                                <input type="hidden" name="type_id" value="<?php t($_view['type']['id']) ?>">
                                 <input type="hidden" name="view" value="">
                                 <div class="card shadow-sm mb-3">
                                     <div class="card-header">
@@ -73,11 +74,15 @@
                                             <label class="fw-bold">日時 <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="datetime" size="30" value="<?php t($_view['entry']['datetime']) ?>" autocomplete="off" class="form-control" style="width: 200px;">
                                         </div>
-                                        <?php if ($GLOBALS['setting']['entry_use_text']) : ?>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">コード <span class="badge bg-danger">必須</span></label>
+                                            <input type="text" name="code" size="30" value="<?php t($_view['entry']['code']) ?>" class="form-control">
+                                        </div>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">タイトル <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="title" size="30" value="<?php t($_view['entry']['title']) ?>" class="form-control">
                                         </div>
+                                        <?php if ($GLOBALS['setting']['entry_use_text']) : ?>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">本文</label>
                                             <textarea name="text" rows="10" cols="50" class="form-control editor"><?php t($_view['entry']['text']) ?></textarea>
@@ -109,6 +114,7 @@
                                             </div>
                                         </div>
                                         <?php endif ?>
+                                        <!-- 後からpage用に別のviewを作るので、別ファイルのままにしておく -->
                                         <?php import('app/views/admin/field_set.php') ?>
                                         <div class="form-group mt-4">
                                             <button type="button" class="btn btn-primary px-4 preview">確認</button>

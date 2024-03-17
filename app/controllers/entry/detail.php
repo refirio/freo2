@@ -11,7 +11,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 
 // 記事を取得
-$entries = service_entry_select_published([
+$entries = service_entry_select_published('entry', [
     'where' => [
         'entries.id = :id',
         [

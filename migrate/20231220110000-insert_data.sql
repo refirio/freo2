@@ -4,6 +4,9 @@ INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '管理者', 3);
 INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '投稿者', 2);
 INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '閲覧者', 1);
 
+INSERT INTO types VALUES(NULL, NOW(), NOW(), NULL, 'entry', '記事', 1);
+INSERT INTO types VALUES(NULL, NOW(), NOW(), NULL, 'page', 'ページ', 2);
+
 INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'initial', '読み込み開始', NULL, 1);
 INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'ready', '読み込み完了', NULL, 2);
 INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'menu', 'メニュー', NULL, 3);

@@ -19,11 +19,11 @@ function select_field_sets($queries, $options = [])
         // 関連するデータを取得
         if (!isset($queries['select'])) {
             $queries['select'] = 'field_sets.*, '
+                               . 'fields.type_id AS field_type_id, '
                                . 'fields.name AS field_name, '
-                               . 'fields.type AS field_type, '
+                               . 'fields.kind AS field_kind, '
                                . 'fields.validation AS field_validation, '
                                . 'fields.text AS field_text, '
-                               . 'fields.target AS field_target, '
                                . 'fields.sort AS field_sort';
         }
 

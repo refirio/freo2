@@ -2,7 +2,10 @@
 
 // カテゴリを取得
 $_view['categories'] = model('select_categories', [
-    'order_by' => 'sort, id',
+    'where'    => 'types.code = ' . db_escape('entry'),
+    'order_by' => 'categories.sort, categories.id',
+], [
+    'associate' => true,
 ]);
 
 // タイトル

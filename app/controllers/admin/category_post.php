@@ -20,9 +20,10 @@ if (empty($_SESSION['post']['category']['id'])) {
     // カテゴリを登録
     $resource = service_category_insert([
         'values' => [
-            'code' => $_SESSION['post']['category']['code'],
-            'name' => $_SESSION['post']['category']['name'],
-            'sort' => $_SESSION['post']['category']['sort'],
+            'type_id' => $_SESSION['post']['category']['type_id'],
+            'code'    => $_SESSION['post']['category']['code'],
+            'name'    => $_SESSION['post']['category']['name'],
+            'sort'    => $_SESSION['post']['category']['sort'],
         ],
     ]);
     if (!$resource) {
@@ -32,8 +33,9 @@ if (empty($_SESSION['post']['category']['id'])) {
     // カテゴリを編集
     $resource = service_category_update([
         'set'   => [
-            'code' => $_SESSION['post']['category']['code'],
-            'name' => $_SESSION['post']['category']['name'],
+            'type_id' => $_SESSION['post']['category']['type_id'],
+            'code'    => $_SESSION['post']['category']['code'],
+            'name'    => $_SESSION['post']['category']['name'],
         ],
         'where' => [
             'id = :id',

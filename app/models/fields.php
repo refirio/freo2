@@ -13,15 +13,39 @@ import('libs/plugins/validator.php');
 function select_fields($queries, $options = [])
 {
     $queries = db_placeholder($queries);
+    $options = [
+        'associate' => isset($options['associate']) ? $options['associate'] : false,
+    ];
 
-    // フィールドを取得
-    $queries['from'] = DATABASE_PREFIX . 'fields';
+    if ($options['associate'] === true) {
+        // 関連するデータを取得
+        if (!isset($queries['select'])) {
+            $queries['select'] = 'DISTINCT fields.*, '
+                               . 'types.code AS type_code, '
+                               . 'types.name AS type_name, '
+                               . 'types.sort AS type_sort';
+        }
 
-    // 削除済みデータは取得しない
-    if (!isset($queries['where'])) {
-        $queries['where'] = 'TRUE';
+        $queries['from'] = DATABASE_PREFIX . 'fields AS fields '
+                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'types AS types ON fields.type_id = types.id';
+
+        // 削除済みデータは取得しない
+        if (!isset($queries['where'])) {
+            $queries['where'] = 'TRUE';
+        }
+        $queries['where'] = 'fields.deleted IS NULL AND (' . $queries['where'] . ')';
+    } else {
+        // 記事を取得
+        $queries['from'] = DATABASE_PREFIX . 'fields';
+
+        // 削除済みデータは取得しない
+        if (!isset($queries['where'])) {
+            $queries['where'] = 'TRUE';
+        }
+        $queries['where'] = 'deleted IS NULL AND (' . $queries['where'] . ')';
     }
-    $queries['where'] = 'deleted IS NULL AND (' . $queries['where'] . ')';
+    //debug($queries);
+    //exit;
 
     // データを取得
     $results = db_select($queries);
@@ -211,6 +235,13 @@ function validate_fields($queries, $options = [])
 {
     $messages = [];
 
+    // 外部キー 型
+    if (isset($queries['type_id'])) {
+        if (!validator_required($queries['type_id'])) {
+            $messages['type_id'] = '型が入力されていません。';
+        }
+    }
+
     // 名前
     if (isset($queries['name'])) {
         if (!validator_required($queries['name'])) {
@@ -221,11 +252,11 @@ function validate_fields($queries, $options = [])
     }
 
     // 種類
-    if (isset($queries['type'])) {
-        if (!validator_required($queries['type'])) {
-            $messages['type'] = '種類が入力されていません。';
-        } elseif (!validator_list($queries['type'], $GLOBALS['config']['options']['field']['types'])) {
-            $messages['type'] = '種類の値が不正です。';
+    if (isset($queries['kind'])) {
+        if (!validator_required($queries['kind'])) {
+            $messages['kind'] = '種類が入力されていません。';
+        } elseif (!validator_list($queries['kind'], $GLOBALS['config']['options']['field']['kinds'])) {
+            $messages['kind'] = '種類の値が不正です。';
         }
     }
 
@@ -242,15 +273,6 @@ function validate_fields($queries, $options = [])
         if (!validator_required($queries['text'])) {
         } elseif (!validator_max_length($queries['text'], 5000)) {
             $messages['text'] = 'テキストは5000文字以内で入力してください。';
-        }
-    }
-
-    // 対象
-    if (isset($queries['target'])) {
-        if (!validator_required($queries['target'])) {
-            $messages['target'] = '対象が入力されていません。';
-        } elseif (!validator_list($queries['target'], $GLOBALS['config']['options']['field']['targets'])) {
-            $messages['target'] = '対象の値が不正です。';
         }
     }
 
@@ -280,11 +302,11 @@ function default_fields()
         'created'    => localdate('Y-m-d H:i:s'),
         'modified'   => localdate('Y-m-d H:i:s'),
         'deleted'    => null,
+        'type_id'    => 0,
         'name'       => '',
-        'type'       => '',
+        'kind'       => '',
         'validation' => null,
         'text'       => null,
-        'target'     => '',
         'sort'       => 0,
     ];
 }

@@ -11,64 +11,7 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
                         <div class="card-body">
-                            <p><a href="<?php t(MAIN_FILE) ?>/admin/page_form" class="btn btn-primary">ページ登録</a></p>
-                            <?php if (isset($_GET['ok'])) : ?>
-                            <div class="alert alert-success">
-                                <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
-                                <?php if ($_GET['ok'] === 'post') : ?>
-                                ページを登録しました。
-                                <?php elseif ($_GET['ok'] === 'delete') : ?>
-                                ページを削除しました。
-                                <?php endif ?>
-                            </div>
-                            <?php elseif (isset($_GET['warning'])) : ?>
-                            <div class="alert alert-danger">
-                                <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
-                                <?php if ($_GET['warning'] === 'delete') : ?>
-                                ページが選択されていません。
-                                <?php endif ?>
-                            </div>
-                            <?php endif ?>
-
-                            <form action="<?php t(MAIN_FILE) ?>/admin/page_bulk" method="post" class="bulk">
-                                <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
-                                <input type="hidden" name="page" value="<?php t($_GET['page']) ?>">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-nowrap"><label><input type="checkbox" name="" value="" class="bulks"></label></th>
-                                            <th class="text-nowrap">ID</th>
-                                            <th class="text-nowrap">コード</th>
-                                            <th class="text-nowrap">タイトル</th>
-                                            <th class="text-nowrap">公開</th>
-                                            <th class="text-nowrap">作業</th>
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th class="text-nowrap"><label><input type="checkbox" name="" value="" class="bulks"></label></th>
-                                            <th class="text-nowrap">ID</th>
-                                            <th class="text-nowrap">コード</th>
-                                            <th class="text-nowrap">タイトル</th>
-                                            <th class="text-nowrap">公開</th>
-                                            <th class="text-nowrap">作業</th>
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
-                                        <?php foreach ($_view['pages'] as $page) : ?>
-                                        <tr>
-                                            <td><input type="checkbox" name="bulks[]" value="<?php h($page['id']) ?>"<?php isset($_SESSION['bulk']['page'][$page['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
-                                            <td><?php h($page['id']) ?></td>
-                                            <td><?php h(truncate($page['code'], 50)) ?></td>
-                                            <td><?php h(truncate($page['title'], 50)) ?></td>
-                                            <td><?php h($GLOBALS['config']['options']['page']['publics'][$page['public']]) ?></td>
-                                            <td><a href="<?php t(MAIN_FILE) ?>/admin/page_form?id=<?php t($page['id']) ?>" class="btn btn-primary text-nowrap">編集</a></td>
-                                        </tr>
-                                        <?php endforeach ?>
-                                    </tbody>
-                                </table>
-                                <p><input type="submit" value="一括削除" class="btn btn-danger"></p>
-                            </form>
+                            <p>ページ。</p>
                         </div>
                     </div>
                 </main>

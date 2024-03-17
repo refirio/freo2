@@ -38,9 +38,9 @@
                                     <thead>
                                         <tr>
                                             <th class="text-nowrap">ID</th>
+                                            <th class="text-nowrap">対象</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">種類</th>
-                                            <th class="text-nowrap">対象</th>
                                             <th class="text-nowrap">並び替え</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
@@ -48,9 +48,9 @@
                                     <tfoot>
                                         <tr>
                                             <th class="text-nowrap">ID</th>
+                                            <th class="text-nowrap">対象</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">種類</th>
-                                            <th class="text-nowrap">対象</th>
                                             <th class="text-nowrap">並び替え</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
@@ -59,9 +59,9 @@
                                         <?php foreach ($_view['fields'] as $field) : ?>
                                         <tr id="sort_<?php h($field['id']) ?>">
                                             <td><?php h($field['id']) ?></td>
+                                            <td><?php h($field['type_name']) ?></td>
                                             <td><?php h(truncate($field['name'], 50)) ?></td>
-                                            <td><?php h($GLOBALS['config']['options']['field']['types'][$field['type']]) ?></td>
-                                            <td><?php h($GLOBALS['config']['options']['field']['targets'][$field['target']]) ?></td>
+                                            <td><?php h($GLOBALS['config']['options']['field']['kinds'][$field['kind']]) ?></td>
                                             <td><span class="handle text-nowrap">並び替え</span></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/field_form?id=<?php t($field['id']) ?>" class="btn btn-primary">編集</a></td>
                                         </tr>
