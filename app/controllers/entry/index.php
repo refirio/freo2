@@ -61,7 +61,7 @@ $_view['categories'] = model('select_categories', [
 
 // 月ごとのエントリー数を取得
 $_view['entry_archives'] = service_entry_select_published('entry', [
-    'select'   => 'DATE_FORMAT(entries.datetime, ' . db_escape('%Y-%m-%d') . ') AS month, COUNT(DISTINCT entries.id) AS count',
+    'select'   => 'DATE_FORMAT(entries.datetime, ' . db_escape('%Y-%m') . ') AS month, COUNT(DISTINCT entries.id) AS count',
     'group_by' => 'month',
     'order_by' => 'month DESC',
 ]);
