@@ -18,8 +18,6 @@ $entries = service_entry_select_published('entry', [
             'code' => $_GET['code'],
         ],
     ],
-], [
-    'associate' => true,
 ]);
 if (empty($entries)) {
     warning('記事が見つかりません。');

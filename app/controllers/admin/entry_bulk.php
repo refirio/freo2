@@ -31,19 +31,6 @@ if (isset($_POST['_type']) && $_POST['_type'] === 'json') {
         'associate' => true,
     ]);
     $_view['entry_bulks'] = array_keys($_SESSION['bulk']['entry']);
-
-    // カテゴリを取得
-    $categories = model('select_categories', [
-        'order_by' => 'categories.sort, categories.id',
-    ], [
-        'associate' => true,
-    ]);
-    $category_sets = [];
-    foreach ($categories as $category) {
-        $category_sets[$category['id']] = $category;
-    }
-    $_view['category_sets'] = $category_sets;
-    $_view['categories']    = $categories;
 }
 
 // タイトル

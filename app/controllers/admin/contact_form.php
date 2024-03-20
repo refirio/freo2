@@ -54,13 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $contacts = model('select_contacts', [
             'where' => [
-                'contacts.id = :id',
+                'id = :id',
                 [
                     'id' => $_GET['id'],
                 ],
             ],
-        ], [
-            'associate' => true,
         ]);
         if (empty($contacts)) {
             warning('編集データが見つかりません。');
@@ -94,11 +92,6 @@ if ((empty($_POST['view']) || $_POST['view'] !== 'preview')) {
     // お問い合わせの表示用データ作成
     $_view['contact'] = model('view_contacts', $_view['contact']);
 }
-
-// カテゴリを取得
-$_view['categories'] = model('select_categories', [
-    'order_by' => 'sort, id',
-]);
 
 // タイトル
 if (empty($_GET['id'])) {

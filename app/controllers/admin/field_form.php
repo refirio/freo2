@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $fields = model('select_fields', [
             'where' => [
-                'fields.id = :id',
+                'fields.id = :id AND types.code = ' . db_escape('entry'),
                 [
                     'id' => $_GET['id'],
                 ],

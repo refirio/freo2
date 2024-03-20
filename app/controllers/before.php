@@ -101,15 +101,13 @@ if (!preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
     if ($GLOBALS['setting']['page_url_omission']) {
         if ($_params[0] !== 'page') {
             $pages = service_entry_select_published('page', [
-                'select' => 'id',
+                'select' => 'entries.id',
                 'where'  => [
                     'entries.code = :code',
                     [
                         'code' => implode('/', $_params),
                     ],
                 ],
-            ], [
-                'associate' => true,
             ]);
             if (!empty($pages)) {
                 array_unshift($_params, 'page');

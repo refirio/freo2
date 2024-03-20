@@ -18,8 +18,6 @@ $pages = service_entry_select_published('page', [
             'code' => $_GET['code'],
         ],
     ],
-], [
-    'associate' => true,
 ]);
 if (empty($pages)) {
     warning('ページが見つかりません。');

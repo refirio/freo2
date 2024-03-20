@@ -11,8 +11,6 @@ if ($GLOBALS['setting']['page_home_code']) {
                 'code' => $GLOBALS['setting']['page_home_code'],
             ],
         ],
-    ], [
-        'associate' => true,
     ]);
     if (!empty($pages)) {
         $_view['page'] = $pages[0];
