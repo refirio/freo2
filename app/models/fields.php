@@ -44,8 +44,6 @@ function select_fields($queries, $options = [])
         }
         $queries['where'] = 'deleted IS NULL AND (' . $queries['where'] . ')';
     }
-    //debug($queries);
-    //exit;
 
     // データを取得
     $results = db_select($queries);

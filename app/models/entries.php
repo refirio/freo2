@@ -144,40 +144,13 @@ function insert_entries($queries, $options = [])
     $entry_id = db_last_insert_id();
 
     if (isset($options['field_sets'])) {
-        // フィールドを登録
-        foreach ($options['field_sets'] as $field_id => $text) {
-            if ($text === '') {
-                continue;
-            }
-            if (is_array($text)) {
-                $text = implode("\n", $text);
-            }
-            $resource = model('insert_field_sets', [
-                'values' => [
-                    'field_id' => $field_id,
-                    'entry_id' => $entry_id,
-                    'text'     => $text,
-                ],
-            ]);
-            if (!$resource) {
-                return $resource;
-            }
-        }
+        // 関連するフィールドを登録
+        model('insert_field_entries', $entry_id, $options['field_sets']);
     }
 
     if (isset($options['category_sets'])) {
-        // カテゴリを登録
-        foreach ($options['category_sets'] as $category_id) {
-            $resource = model('insert_category_sets', [
-                'values' => [
-                    'category_id' => $category_id,
-                    'entry_id'    => $entry_id,
-                ],
-            ]);
-            if (!$resource) {
-                return $resource;
-            }
-        }
+        // 関連するカテゴリを登録
+        model('insert_category_entries', $entry_id, $options['category_sets']);
     }
 
     if (!empty($options['files'])) {
@@ -232,74 +205,13 @@ function update_entries($queries, $options = [])
     $id = $options['id'];
 
     if (isset($options['field_sets'])) {
-        // フィールドを編集
-        $fields = model('select_fields', [
-            'select' => 'id',
-            'where'  => 'kind != ' . db_escape('image') . ' AND kind != ' . db_escape('file'),
-        ]);
-        if (empty($fields)) {
-            $field_ids = [0];
-        } else {
-            $field_ids = array_column($fields, 'id');
-        }
-
-        $resource = model('delete_field_sets', [
-            'where' => [
-                'field_id IN(' . implode(',', $field_ids) . ') AND entry_id = :id',
-                [
-                    'id' => $id,
-                ],
-            ],
-        ]);
-        if (!$resource) {
-            return $resource;
-        }
-
-        foreach ($options['field_sets'] as $field_id => $text) {
-            if ($text === '') {
-                continue;
-            }
-            if (is_array($text)) {
-                $text = implode("\n", $text);
-            }
-            $resource = model('insert_field_sets', [
-                'values' => [
-                    'field_id' => $field_id,
-                    'entry_id' => $id,
-                    'text'     => $text,
-                ],
-            ]);
-            if (!$resource) {
-                return $resource;
-            }
-        }
+        // 関連するフィールドを編集
+        model('update_field_entries', $id, $options['field_sets']);
     }
 
     if (isset($options['category_sets'])) {
-        // カテゴリを編集
-        $resource = model('delete_category_sets', [
-            'where' => [
-                'entry_id = :id',
-                [
-                    'id' => $id,
-                ],
-            ],
-        ]);
-        if (!$resource) {
-            return $resource;
-        }
-
-        foreach ($options['category_sets'] as $category_id) {
-            $resource = model('insert_category_sets', [
-                'values' => [
-                    'category_id' => $category_id,
-                    'entry_id'    => $id,
-                ],
-            ]);
-            if (!$resource) {
-                return $resource;
-            }
-        }
+        // 関連するカテゴリを編集
+        model('update_category_entries', $id, $options['category_sets']);
     }
 
     if (!empty($options['files'])) {
@@ -693,6 +605,150 @@ function filter_entries($queries, $options = [])
     }
 
     return $results;
+}
+
+/**
+ * 関連するフィールドを登録
+ *
+ * @param int   $entry_id
+ * @param array $field_sets
+ *
+ * @return void
+ */
+function insert_field_entries($entry_id, $field_sets)
+{
+    // フィールドを登録
+    foreach ($field_sets as $field_id => $text) {
+        if ($text === '') {
+            continue;
+        }
+        if (is_array($text)) {
+            $text = implode("\n", $text);
+        }
+        $resource = model('insert_field_sets', [
+            'values' => [
+                'field_id' => $field_id,
+                'entry_id' => $entry_id,
+                'text'     => $text,
+            ],
+        ]);
+        if (!$resource) {
+            return $resource;
+        }
+    }
+}
+
+/**
+ * 関連するカテゴリを登録
+ *
+ * @param int   $entry_id
+ * @param array $category_sets
+ *
+ * @return void
+ */
+function insert_category_entries($entry_id, $category_sets)
+{
+    // カテゴリを登録
+    foreach ($category_sets as $category_id) {
+        $resource = model('insert_category_sets', [
+            'values' => [
+                'category_id' => $category_id,
+                'entry_id'    => $entry_id,
+            ],
+        ]);
+        if (!$resource) {
+            return $resource;
+        }
+    }
+}
+
+/**
+ * 関連するフィールドを編集
+ *
+ * @param int   $entry_id
+ * @param array $field_sets
+ *
+ * @return void
+ */
+function update_field_entries($entry_id, $field_sets)
+{
+    // フィールドを編集
+    $fields = model('select_fields', [
+        'select' => 'id',
+        'where'  => 'kind != ' . db_escape('image') . ' AND kind != ' . db_escape('file'),
+    ]);
+    if (empty($fields)) {
+        $field_ids = [0];
+    } else {
+        $field_ids = array_column($fields, 'id');
+    }
+
+    $resource = model('delete_field_sets', [
+        'where' => [
+            'field_id IN(' . implode(',', $field_ids) . ') AND entry_id = :id',
+            [
+                'id' => $entry_id,
+            ],
+        ],
+    ]);
+    if (!$resource) {
+        return $resource;
+    }
+
+    foreach ($field_sets as $field_id => $text) {
+        if ($text === '') {
+            continue;
+        }
+        if (is_array($text)) {
+            $text = implode("\n", $text);
+        }
+        $resource = model('insert_field_sets', [
+            'values' => [
+                'field_id' => $field_id,
+                'entry_id' => $entry_id,
+                'text'     => $text,
+            ],
+        ]);
+        if (!$resource) {
+            return $resource;
+        }
+    }
+}
+
+/**
+ * 関連するカテゴリを編集
+ *
+ * @param int   $id
+ * @param array $category_sets
+ *
+ * @return void
+ */
+function update_category_entries($entry_id, $category_sets)
+{
+    // カテゴリを編集
+    $resource = model('delete_category_sets', [
+        'where' => [
+            'entry_id = :id',
+            [
+                'id' => $entry_id,
+            ],
+        ],
+    ]);
+    if (!$resource) {
+        return $resource;
+    }
+
+    foreach ($category_sets as $category_id) {
+        $resource = model('insert_category_sets', [
+            'values' => [
+                'category_id' => $category_id,
+                'entry_id'    => $entry_id,
+            ],
+        ]);
+        if (!$resource) {
+            return $resource;
+        }
+    }
 }
 
 /**
