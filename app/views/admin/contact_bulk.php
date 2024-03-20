@@ -56,7 +56,7 @@
                                     <tr>
                                         <td><?php h($contact['id']) ?></td>
                                         <td><?php h(truncate($contact['title'], 50)) ?></td>
-                                        <td><?php h(localdate('Ymd', $contact['datetime']) == localdate('Ymd') ? localdate('H:i:s', $contact['datetime']) : localdate('Y-m-d', $contact['datetime'])) ?></td>
+                                        <td><?php h(localdate('Ymd', $contact['datetime']) == localdate('Ymd') ? localdate('H:i:s', $contact['datetime']) : localdate('Y/m/d', $contact['datetime'])) ?></td>
                                         <td><?php h($GLOBALS['config']['options']['contact']['publics'][$contact['public']]) ?></td>
                                         <td>
                                             <?php foreach ($contact['category_sets'] as $category_sets) : ?>

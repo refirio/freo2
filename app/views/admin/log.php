@@ -37,7 +37,7 @@
                                 <tbody>
                                     <?php foreach ($_view['logs'] as $log) : list($environment, $browser, $os) = environment_useragent($log['agent']) ?>
                                     <tr>
-                                        <td><?php h(localdate('Ymd', $log['created']) == localdate('Ymd') ? localdate('H:i:s', $log['created']) : localdate('Y-m-d', $log['created'])) ?></td>
+                                        <td><?php h(localdate('Ymd', $log['created']) == localdate('Ymd') ? localdate('H:i:s', $log['created']) : localdate('Y/m/d', $log['created'])) ?></td>
                                         <td><?php h($log['user_username']) ?></td>
                                         <td class="d-none d-md-table-cell"><?php h($log['user_name']) ?></td>
                                         <td><?php h($log['ip']) ?></td>

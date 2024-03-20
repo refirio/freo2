@@ -58,7 +58,7 @@
                                         <td><?php h($_view['authority_sets'][$user['authority_id']]) ?></td>
                                         <td><?php h($user['name']) ?></td>
                                         <td class="d-none d-md-table-cell"><?php h($user['email']) ?></td>
-                                        <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $user['loggedin']) == localdate('Ymd') ? localdate('H:i:s', $user['loggedin']) : localdate('Y-m-d', $user['loggedin'])) ?></td>
+                                        <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $user['loggedin']) == localdate('Ymd') ? localdate('H:i:s', $user['loggedin']) : localdate('Y/m/d', $user['loggedin'])) ?></td>
                                         <td><a href="<?php t(MAIN_FILE) ?>/admin/user_form?id=<?php t($user['id']) ?>" class="btn btn-primary">編集</a></td>
                                     </tr>
                                     <?php endforeach ?>

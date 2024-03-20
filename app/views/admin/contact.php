@@ -51,7 +51,7 @@
                                         <?php foreach ($_view['contacts'] as $contact) : ?>
                                         <tr>
                                             <td><input type="checkbox" name="bulks[]" value="<?php h($contact['id']) ?>"<?php isset($_SESSION['bulk']['contact'][$contact['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
-                                            <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $contact['created']) == localdate('Ymd') ? localdate('H:i:s', $contact['created']) : localdate('Y-m-d', $contact['created'])) ?></td>
+                                            <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $contact['created']) == localdate('Ymd') ? localdate('H:i:s', $contact['created']) : localdate('Y/m/d', $contact['created'])) ?></td>
                                             <td><?php h(truncate($contact['name'], 50)) ?></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/contact_form?id=<?php t($contact['id']) ?>" class="btn btn-primary text-nowrap">編集</a></td>
                                         </tr>
