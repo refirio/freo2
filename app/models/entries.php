@@ -182,10 +182,10 @@ function insert_entries($queries, $options = [])
 
     if (!empty($options['files'])) {
         // 関連するファイルを削除
-        model('remove_entries', $entry_id, $options['files']);
+        model('remove_file_entries', $entry_id, $options['files']);
 
         // 関連するファイルを保存
-        model('save_entries', $entry_id, $options['files']);
+        model('save_file_entries', $entry_id, $options['files']);
     }
 
     return $resource;
@@ -304,10 +304,10 @@ function update_entries($queries, $options = [])
 
     if (!empty($options['files'])) {
         // 関連するファイルを削除
-        model('remove_entries', $id, $options['files']);
+        model('remove_file_entries', $id, $options['files']);
 
         // 関連するファイルを保存
-        model('save_entries', $id, $options['files']);
+        model('save_file_entries', $id, $options['files']);
     }
 
     return $resource;
@@ -326,9 +326,9 @@ function delete_entries($queries, $options = [])
     $queries = db_placeholder($queries);
     $options = [
         'softdelete' => isset($options['softdelete']) ? $options['softdelete'] : true,
-        'field'      => isset($options['field'])      ? $options['field']      : false,
-        'category'   => isset($options['category'])   ? $options['category']   : false,
-        'file'       => isset($options['file'])       ? $options['file']       : false,
+        'field'      => isset($options['field'])      ? $options['field']      : true,
+        'category'   => isset($options['category'])   ? $options['category']   : true,
+        'file'       => isset($options['file'])       ? $options['file']       : true,
     ];
 
     // 削除するデータのIDを取得
@@ -339,9 +339,20 @@ function delete_entries($queries, $options = [])
         'limit'  => isset($queries['limit']) ? $queries['limit'] : '',
     ]);
 
-    $deletes = [];
+    $ids = [];
     foreach ($entries as $entry) {
-        $deletes[] = intval($entry['id']);
+        $ids[] = intval($entry['id']);
+    }
+
+    // 削除する関連データのIDを取得
+    $fields = model('select_fields', [
+        'select' => 'id',
+        'where'  => 'kind = ' . db_escape('image') . ' OR kind = ' . db_escape('file'),
+    ]);
+    if (empty($fields)) {
+        $field_ids = [0];
+    } else {
+        $field_ids = array_column($fields, 'id');
     }
 
     if ($options['softdelete'] === true) {
@@ -372,7 +383,7 @@ function delete_entries($queries, $options = [])
     if ($options['field'] === true) {
         // 関連するフィールドを削除
         $resource = model('delete_field_sets', [
-            'where' => 'entry_id IN(' . implode(',', array_map('db_escape', $deletes)) . ')',
+            'where' => 'entry_id IN(' . implode(',', array_map('db_escape', $ids)) . ')',
         ]);
         if (!$resource) {
             return $resource;
@@ -382,7 +393,7 @@ function delete_entries($queries, $options = [])
     if ($options['category'] === true) {
         // 関連するカテゴリを削除
         $resource = model('delete_category_sets', [
-            'where' => 'entry_id IN(' . implode(',', array_map('db_escape', $deletes)) . ')',
+            'where' => 'entry_id IN(' . implode(',', array_map('db_escape', $ids)) . ')',
         ]);
         if (!$resource) {
             return $resource;
@@ -391,8 +402,12 @@ function delete_entries($queries, $options = [])
 
     if ($options['file'] === true) {
         // 関連するファイルを削除
-        foreach ($deletes as $delete) {
-            service_storage_remove($GLOBALS['config']['file_targets']['entry'] . $delete . '/');
+        foreach ($ids as $id) {
+            service_storage_remove($GLOBALS['config']['file_targets']['entry'] . $id . '/');
+
+            foreach ($field_ids as $field_id) {
+                service_storage_remove($GLOBALS['config']['file_targets']['field'] . $id . '_' . $field_id . '/');
+            }
         }
     }
 
@@ -688,7 +703,7 @@ function filter_entries($queries, $options = [])
  *
  * @return void
  */
-function save_entries($id, $files)
+function save_file_entries($id, $files)
 {
     foreach (array_keys($files) as $file) {
         if (preg_match('/^field__(.*)$/', $file, $matches)) {
@@ -762,7 +777,7 @@ function save_entries($id, $files)
  *
  * @return void
  */
-function remove_entries($id, $files)
+function remove_file_entries($id, $files)
 {
     foreach (array_keys($files) as $file) {
         if (preg_match('/^field__(.*)$/', $file, $matches)) {

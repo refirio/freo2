@@ -119,19 +119,6 @@ function delete_menus($queries, $options = [])
         'softdelete' => isset($options['softdelete']) ? $options['softdelete'] : true,
     ];
 
-    // 削除するデータのIDを取得
-    $menus = db_select([
-        'select' => 'id',
-        'from'   => DATABASE_PREFIX . 'menus AS menus',
-        'where'  => isset($queries['where']) ? $queries['where'] : '',
-        'limit'  => isset($queries['limit']) ? $queries['limit'] : '',
-    ]);
-
-    $deletes = [];
-    foreach ($menus as $menu) {
-        $deletes[] = intval($menu['id']);
-    }
-
     if ($options['softdelete'] === true) {
         // データを編集
         $resource = db_update([

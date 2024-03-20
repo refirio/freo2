@@ -119,19 +119,6 @@ function delete_contacts($queries, $options = [])
         'softdelete' => isset($options['softdelete']) ? $options['softdelete'] : true,
     ];
 
-    // 削除するデータのIDを取得
-    $contacts = db_select([
-        'select' => 'id',
-        'from'   => DATABASE_PREFIX . 'contacts AS contacts',
-        'where'  => isset($queries['where']) ? $queries['where'] : '',
-        'limit'  => isset($queries['limit']) ? $queries['limit'] : '',
-    ]);
-
-    $deletes = [];
-    foreach ($contacts as $contact) {
-        $deletes[] = intval($contact['id']);
-    }
-
     if ($options['softdelete'] === true) {
         // データを編集
         $resource = db_update([

@@ -153,15 +153,15 @@ function delete_categories($queries, $options = [])
         'limit'  => isset($queries['limit']) ? $queries['limit'] : '',
     ]);
 
-    $deletes = [];
+    $ids = [];
     foreach ($categories as $category) {
-        $deletes[] = intval($category['id']);
+        $ids[] = intval($category['id']);
     }
 
     if ($options['associate'] === true) {
         // 関連するデータを削除
         $resource = model('delete_category_sets', [
-            'where' => 'category_id IN(' . implode($deletes) . ')',
+            'where' => 'category_id IN(' . implode($ids) . ')',
         ]);
         if (!$resource) {
             return $resource;

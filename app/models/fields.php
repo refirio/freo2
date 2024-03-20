@@ -152,16 +152,16 @@ function delete_fields($queries, $options = [])
         'limit'  => isset($queries['limit']) ? $queries['limit'] : '',
     ]);
 
-    $deletes = [];
+    $ids = [];
     foreach ($fields as $field) {
-        $deletes[] = intval($field['id']);
+        $ids[] = intval($field['id']);
     }
 
     if ($options['associate'] === true) {
 /*
         // 関連するデータを削除
         $resource = model('delete_field_sets', [
-            'where' => 'field_id IN(' . implode($deletes) . ')',
+            'where' => 'field_id IN(' . implode($ids) . ')',
         ]);
         if (!$resource) {
             return $resource;

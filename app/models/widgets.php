@@ -119,19 +119,6 @@ function delete_widgets($queries, $options = [])
         'softdelete' => isset($options['softdelete']) ? $options['softdelete'] : true,
     ];
 
-    // 削除するデータのIDを取得
-    $widgets = db_select([
-        'select' => 'id',
-        'from'   => DATABASE_PREFIX . 'widgets AS widgets',
-        'where'  => isset($queries['where']) ? $queries['where'] : '',
-        'limit'  => isset($queries['limit']) ? $queries['limit'] : '',
-    ]);
-
-    $deletes = [];
-    foreach ($widgets as $widget) {
-        $deletes[] = intval($widget['id']);
-    }
-
     if ($options['softdelete'] === true) {
         // データを編集
         $resource = db_update([
