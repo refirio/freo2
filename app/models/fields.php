@@ -156,7 +156,6 @@ function delete_fields($queries, $options = [])
     }
 
     if ($options['associate'] === true) {
-/*
         // 関連するデータを削除
         $resource = model('delete_field_sets', [
             'where' => 'field_id IN(' . implode($ids) . ')',
@@ -164,7 +163,6 @@ function delete_fields($queries, $options = [])
         if (!$resource) {
             return $resource;
         }
-*/
     }
 
     if ($options['softdelete'] === true) {

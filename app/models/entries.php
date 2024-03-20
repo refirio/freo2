@@ -633,7 +633,7 @@ function insert_field_entries($entry_id, $field_sets)
             ],
         ]);
         if (!$resource) {
-            return $resource;
+            error('データを登録できません。');
         }
     }
 }
@@ -657,7 +657,7 @@ function insert_category_entries($entry_id, $category_sets)
             ],
         ]);
         if (!$resource) {
-            return $resource;
+            error('データを登録できません。');
         }
     }
 }
@@ -692,7 +692,7 @@ function update_field_entries($entry_id, $field_sets)
         ],
     ]);
     if (!$resource) {
-        return $resource;
+        error('データを削除できません。');
     }
 
     foreach ($field_sets as $field_id => $text) {
@@ -710,7 +710,7 @@ function update_field_entries($entry_id, $field_sets)
             ],
         ]);
         if (!$resource) {
-            return $resource;
+            error('データを登録できません。');
         }
     }
 }
@@ -735,7 +735,7 @@ function update_category_entries($entry_id, $category_sets)
         ],
     ]);
     if (!$resource) {
-        return $resource;
+        error('データを削除できません。');
     }
 
     foreach ($category_sets as $category_id) {
@@ -746,7 +746,7 @@ function update_category_entries($entry_id, $category_sets)
             ],
         ]);
         if (!$resource) {
-            return $resource;
+            error('データを登録できません。');
         }
     }
 }
@@ -796,7 +796,7 @@ function save_file_entries($id, $files)
                             ],
                         ]);
                         if (!$resource) {
-                            return $resource;
+                            error('データを登録できません。');
                         }
                     } else {
                         $resource = db_update([
@@ -880,7 +880,7 @@ function remove_file_entries($id, $files)
                             ],
                         ]);
                         if (!$resource) {
-                            return $resource;
+                            error('データを削除できません。');
                         }
                     }
                 }
