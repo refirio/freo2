@@ -26,4 +26,8 @@ if (empty($entries)) {
 }
 
 // タイトル
-$_view['title'] = '記事';
+if (isset($_view['entry']['title'])) {
+    $_view['title'] = $_view['entry']['title'];
+} else {
+    $_view['title'] = '記事';
+}

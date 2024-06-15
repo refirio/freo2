@@ -59,3 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // お問い合わせの表示用データ作成
 $_view['contact'] = model('view_contacts', $_view['contact']);
+
+// タイトル
+$_view['title'] = 'お問い合わせ';

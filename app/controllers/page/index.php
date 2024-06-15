@@ -29,4 +29,8 @@ if (empty($pages)) {
 $_view['pages'] = service_entry_select_published('page', []);
 
 // タイトル
-$_view['title'] = 'ページ';
+if (isset($_view['page']['title'])) {
+    $_view['title'] = $_view['page']['title'];
+} else {
+    $_view['title'] = 'ページ';
+}
