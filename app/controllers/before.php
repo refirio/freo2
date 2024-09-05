@@ -2,10 +2,6 @@
 
 import('app/config.php');
 
-if (is_file(MAIN_PATH . MAIN_APPLICATION_PATH . 'app/config.local.php')) {
-    import('app/config.local.php');
-}
-
 // 設定を取得
 $settings = model('select_settings', []);
 $GLOBALS['setting'] = [];

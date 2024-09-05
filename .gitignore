@@ -2,7 +2,6 @@ Thumbs.db
 .DS_Store
 
 /config.php
-/app/config.local.php
 /database/
 /files/entries/
 /files/fields/
