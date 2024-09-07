@@ -76,7 +76,7 @@ if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
     }
 }
 
-if (service_storage_exist($file)) {
+if ($file && service_storage_exist($file)) {
     foreach (array_keys($GLOBALS['config']['file_permissions'][$_GET['format']]) as $permission) {
         if (isset($result[$_GET['key']])) {
             $value = $result[$_GET['key']];

@@ -32,7 +32,6 @@
 
                             <form action="<?php t(MAIN_FILE) ?>/admin/page_bulk" method="post" class="bulk">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
-                                <input type="hidden" name="page" value="<?php t($_GET['page']) ?>">
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
