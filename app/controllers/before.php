@@ -30,7 +30,7 @@ if ($GLOBALS['config']['storage_type'] === 's3') {
 service_storage_init($config);
 
 // オートログイン
-if (!preg_match('/^(index|logout)$/', $_REQUEST['_work'])) {
+if (!preg_match('/^(admin)$/', $_REQUEST['_mode']) || !preg_match('/^(index|logout)$/', $_REQUEST['_work'])) {
     if (empty($_SESSION['auth']['user']) || localdate() - $_SESSION['auth']['user']['time'] > $GLOBALS['config']['login_expire']) {
         if (!empty($_COOKIE['auth']['session'])) {
             list($session, $user_id) = service_user_login($_COOKIE['auth']['session']);
