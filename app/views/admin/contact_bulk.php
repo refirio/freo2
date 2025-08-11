@@ -36,33 +36,23 @@
                                 <thead>
                                     <tr>
                                         <th class="text-nowrap">ID</th>
-                                        <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">日時</th>
-                                        <th class="text-nowrap">公開</th>
-                                        <th class="text-nowrap">カテゴリ</th>
+                                        <th class="text-nowrap">名前</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th class="text-nowrap">ID</th>
-                                        <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">日時</th>
-                                        <th class="text-nowrap">公開</th>
-                                        <th class="text-nowrap">カテゴリ</th>
+                                        <th class="text-nowrap">名前</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
                                     <?php foreach ($_view['contacts'] as $contact) : ?>
                                     <tr>
                                         <td><?php h($contact['id']) ?></td>
-                                        <td><?php h(truncate($contact['title'], 50)) ?></td>
-                                        <td><?php h(localdate('Ymd', $contact['datetime']) == localdate('Ymd') ? localdate('H:i:s', $contact['datetime']) : localdate('Y/m/d', $contact['datetime'])) ?></td>
-                                        <td><?php h($GLOBALS['config']['options']['contact']['publics'][$contact['public']]) ?></td>
-                                        <td>
-                                            <?php foreach ($contact['category_sets'] as $category_sets) : ?>
-                                            <div class="text-nowrap"><?php h($category_sets['category_name']) ?></div>
-                                            <?php endforeach ?>
-                                        </td>
+                                        <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $contact['created']) == localdate('Ymd') ? localdate('H:i:s', $contact['created']) : localdate('Y/m/d', $contact['created'])) ?></td>
+                                        <td><?php h(truncate($contact['name'], 50)) ?></td>
                                     </tr>
                                     <?php endforeach ?>
                                 </tbody>
