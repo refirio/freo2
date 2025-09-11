@@ -1,7 +1,7 @@
 <?php
 
-import('libs/plugins/mail.php');
-import('libs/plugins/string.php');
+import('libs/modules/mail.php');
+import('libs/modules/string.php');
 
 /**
  * メールの送信

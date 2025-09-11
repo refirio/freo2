@@ -1,6 +1,6 @@
 <?php
 
-import('libs/plugins/validator.php');
+import('libs/modules/validator.php');
 
 /**
  * お問い合わせの取得

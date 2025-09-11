@@ -13,7 +13,7 @@ foreach ($settings as $setting) {
 import('app/services/user.php');
 import('app/services/storage.php');
 import('app/services/entry.php');
-import('libs/plugins/loader.php');
+import('libs/modules/loader.php');
 
 // ストレージ利用準備
 $config = [];

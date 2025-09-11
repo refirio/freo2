@@ -2,7 +2,7 @@
 
 import('app/services/session.php');
 import('app/services/log.php');
-import('libs/plugins/cookie.php');
+import('libs/modules/cookie.php');
 
 /**
  * ユーザの登録

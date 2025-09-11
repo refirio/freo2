@@ -1,6 +1,6 @@
 <?php
 
-import('libs/plugins/file.php');
+import('libs/modules/file.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ワンタイムトークン

@@ -1,6 +1,6 @@
 <?php
 
-import('libs/plugins/validator.php');
+import('libs/modules/validator.php');
 
 /**
  * ユーザの取得

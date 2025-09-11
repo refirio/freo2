@@ -1567,8 +1567,8 @@ function about()
     echo "<dd><code>" . MAIN_APPLICATION_PATH . 'app/controllers/' . "</code></dd>\n";
     echo "<dt>path to core libraries</dt>\n";
     echo "<dd><code>" . MAIN_LIBRARY_PATH . 'libs/cores/' . "</code></dd>\n";
-    echo "<dt>path to plugins</dt>\n";
-    echo "<dd><code>" . MAIN_LIBRARY_PATH . 'libs/plugins/' . "</code></dd>\n";
+    echo "<dt>path to modules</dt>\n";
+    echo "<dd><code>" . MAIN_LIBRARY_PATH . 'libs/modules/' . "</code></dd>\n";
     echo "</dl>\n";
 
     if (DATABASE_TYPE) {

@@ -1,7 +1,7 @@
 <?php
 
 import('app/services/user.php');
-import('libs/plugins/hash.php');
+import('libs/modules/hash.php');
 
 // フォワードを確認
 if (forward() === null) {

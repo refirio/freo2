@@ -8,12 +8,12 @@
 function service_storage_init($config = [])
 {
     if ($GLOBALS['config']['storage_type'] === 's3') {
-        import('libs/plugins/s3.php');
+        import('libs/modules/s3.php');
 
         s3_init($config);
     } elseif ($GLOBALS['config']['storage_type'] === 'file') {
-        import('libs/plugins/file.php');
-        import('libs/plugins/directory.php');
+        import('libs/modules/file.php');
+        import('libs/modules/directory.php');
     }
 }
 

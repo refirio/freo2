@@ -1,6 +1,6 @@
 <?php
 
-import('libs/plugins/environment.php');
+import('libs/modules/environment.php');
 
 // ページを取得
 if (isset($_GET['page'])) {

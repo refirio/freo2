@@ -1,7 +1,7 @@
 <?php
 
 import('app/services/storage.php');
-import('libs/plugins/validator.php');
+import('libs/modules/validator.php');
 
 /**
  * エントリーの取得

@@ -3,7 +3,7 @@
 import('app/services/user.php');
 import('app/services/session.php');
 import('app/services/log.php');
-import('libs/plugins/hash.php');
+import('libs/modules/hash.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ログイン失敗回数とパスワードのソルトを取得
