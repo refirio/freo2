@@ -87,6 +87,8 @@
     color: #FFFFFF;
 }
 .sidebar .nav-item .nav-link {
+    padding-top: 5px;
+    padding-bottom: 3px;
     font-weight: 500;
     color: #FFFFFF;
 }

@@ -11,7 +11,6 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading">メニュー</div>
                         <div class="card-body">
-                            <h3 class="h5">コンテンツ</h3>
                             <ul>
                                 <li><a href="<?php t(MAIN_FILE) ?>/admin/entry">記事管理</a></li>
                                 <li><a href="<?php t(MAIN_FILE) ?>/admin/page">ページ管理</a></li>

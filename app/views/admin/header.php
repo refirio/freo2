@@ -44,7 +44,7 @@
         <div class="container-fluid">
             <div class="row">
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
-                    <div class="sidebar-sticky pt-3">
+                    <div class="sidebar-sticky pt-3 pb-5">
                         <h2 class="d-none">メニュー</h2>
                         <ul class="nav flex-column">
                             <li class="nav-item">
@@ -109,36 +109,11 @@
                             </li>
                         </ul>
 
-                        <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
+                        <?php if ($GLOBALS['authority']['power'] >= 3) : ?>
                         <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
                             <span>システム</span>
                         </h6>
                         <ul class="nav flex-column mb-2">
-                            <li class="nav-item">
-                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'setting' && $_GET['target'] == 'basis' && empty($_GET['id'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/setting?target=basis">
-                                    <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-pencil-square"/></svg>
-                                    基本設定
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'setting' && $_GET['target'] == 'entry' && empty($_GET['id'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/setting?target=entry">
-                                    <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-pencil-square"/></svg>
-                                    記事設定
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'setting' && $_GET['target'] == 'page' && empty($_GET['id'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/setting?target=page">
-                                    <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-pencil-square"/></svg>
-                                    ページ設定
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'setting' && $_GET['target'] == 'mail' && empty($_GET['id'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/setting?target=mail">
-                                    <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-pencil-square"/></svg>
-                                    メール設定
-                                </a>
-                            </li>
-                            <?php if ($GLOBALS['authority']['power'] >= 3) : ?>
                             <li class="nav-item">
                                 <a class="nav-link<?php if (preg_match('/^user(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/user">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
@@ -151,7 +126,12 @@
                                     ログ一覧
                                 </a>
                             </li>
-                            <?php endif ?>
+                            <li class="nav-item">
+                                <a class="nav-link<?php if (preg_match('/^setting(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/setting">
+                                    <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
+                                    設定
+                                </a>
+                            </li>
                         </ul>
                         <?php endif ?>
                     </div>
