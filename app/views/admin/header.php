@@ -132,6 +132,12 @@
                                     設定
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'system') : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/system">
+                                    <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
+                                    システム情報
+                                </a>
+                            </li>
                         </ul>
                         <?php endif ?>
                     </div>

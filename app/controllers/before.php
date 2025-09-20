@@ -1,5 +1,6 @@
 <?php
 
+import('app/version.php');
 import('app/config.php');
 
 // 設定項目を定義
