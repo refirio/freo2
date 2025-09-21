@@ -1,0 +1,31 @@
+<?php
+
+// ユーザを取得
+$users = model('select_users', [
+    'where' => [
+        'id = :id',
+        [
+            'id' => $_SESSION['auth']['user']['id'],
+        ],
+    ],
+]);
+
+// 権限を取得
+$authorities = model('select_authorities', [
+    'where' => [
+        'id = :id',
+        [
+            'id' => $users[0]['authority_id'],
+        ],
+    ],
+]);
+$GLOBALS['authority'] = $authorities[0];
+
+// 権限を確認
+if ($GLOBALS['authority']['power'] >= 1) {
+    // リダイレクト
+    redirect('/admin/');
+}
+
+// タイトル
+$_view['title'] = 'ホーム';

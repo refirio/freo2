@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+/********* 全体 *****************************************************/
+
+body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #EEEEEE;
+}
+a {
+    color: #212121;
+}

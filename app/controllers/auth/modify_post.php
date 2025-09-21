@@ -11,7 +11,7 @@ if (forward() === null) {
 // 投稿データを確認
 if (empty($_SESSION['post'])) {
     // リダイレクト
-    redirect('/admin/modify');
+    redirect('/auth/modify');
 }
 
 // パスワードのソルトを作成
@@ -54,4 +54,4 @@ unset($_SESSION['post']);
 unset($_SESSION['update']);
 
 // リダイレクト
-redirect('/admin/modify_complete');
+redirect('/auth/modify_complete');

@@ -13,7 +13,7 @@
     </head>
     <body>
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm">
-            <h1 class="navbar-brand col-md-3 col-lg-2 me-0 text-center"><a href="<?php t(MAIN_FILE) ?>/admin/home"><?php h($GLOBALS['setting']['title']) ?></a></h1>
+            <h1 class="navbar-brand col-md-3 col-lg-2 me-0 text-center"><a href="<?php t(MAIN_FILE) ?>/admin/"><?php h($GLOBALS['setting']['title']) ?></a></h1>
             <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -33,8 +33,8 @@
                             <?php h($_view['_user']['name'] ? $_view['_user']['name'] : $_view['_user']['username']) ?>さん
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end mx-2" style="position: absolute;">
-                            <li><a class="dropdown-item" href="<?php t(MAIN_FILE) ?>/admin/modify">ユーザ情報編集</a></li>
-                            <li><a class="dropdown-item" href="<?php t(MAIN_FILE) ?>/admin/logout">ログアウト</a></li>
+                            <li><a class="dropdown-item" href="<?php t(MAIN_FILE) ?>/auth/modify">ユーザ情報編集</a></li>
+                            <li><a class="dropdown-item" href="<?php t(MAIN_FILE) ?>/auth/logout">ログアウト</a></li>
                         </ul>
                     </div>
                 </div>
@@ -48,13 +48,14 @@
                         <h2 class="d-none">メニュー</h2>
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'home') : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/home">
+                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'home') : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-clipboard-data"/></svg>
                                     ホーム
                                 </a>
                             </li>
                         </ul>
 
+                        <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
                         <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
                             <span>コンテンツ</span>
                         </h3>
@@ -96,6 +97,7 @@
                                 </a>
                             </li>
                         </ul>
+                        <?php endif ?>
 
                         <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
                             <span>お問い合わせ</span>

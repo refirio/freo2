@@ -17,4 +17,4 @@ if (isset($_GET['referer'])) {
 }
 
 // リダイレクト
-redirect('/admin/' . $referer);
+redirect('/auth/' . $referer);

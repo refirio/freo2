@@ -129,7 +129,7 @@ if ($GLOBALS['config']['storage_type'] === 's3') {
 service_storage_init($config);
 
 // オートログイン
-if (!preg_match('/^(admin)$/', $_REQUEST['_mode']) || !preg_match('/^(index|logout)$/', $_REQUEST['_work'])) {
+if (!preg_match('/^(auth)$/', $_REQUEST['_mode']) || !preg_match('/^(index|logout)$/', $_REQUEST['_work'])) {
     if (empty($_SESSION['auth']['user']) || localdate() - $_SESSION['auth']['user']['time'] > $GLOBALS['config']['login_expire']) {
         if (!empty($_COOKIE['auth']['session'])) {
             list($session, $user_id) = service_user_login($_COOKIE['auth']['session']);
@@ -143,7 +143,7 @@ if (!preg_match('/^(admin)$/', $_REQUEST['_mode']) || !preg_match('/^(index|logo
     }
 }
 
-// ユーザ存在確認
+// ユーザを確認
 if (!empty($_SESSION['auth']['user']['id'])) {
     $users = model('select_users', [
         'where' => [
@@ -157,7 +157,7 @@ if (!empty($_SESSION['auth']['user']['id'])) {
         unset($_SESSION['auth']['user']);
 
         // リダイレクト
-        redirect('/admin/');
+        redirect('/auth/home');
     } else {
         // 権限を取得
         $authorities = model('select_authorities', [
@@ -171,18 +171,22 @@ if (!empty($_SESSION['auth']['user']['id'])) {
         $GLOBALS['authority'] = $authorities[0];
 
         // 権限を確認
-        if ($GLOBALS['authority']['power'] <= 2) {
-            if (preg_match('/^(admin)$/', $_REQUEST['_mode']) && !preg_match('/^modify(_|$)/', $_REQUEST['_work'])) {
-                if (preg_match('/^user(_|$)/', $_REQUEST['_work']) || preg_match('/^log$/', $_REQUEST['_work'])) {
+        if ($GLOBALS['authority']['power'] == 2) {
+            if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
+                if (!preg_match('/^(index|entry|page|category|field|menu|widget|contact|file)(_|$)/', $_REQUEST['_work'])) {
+                    error('不正なアクセスです。');
+                }
+            }
+        } elseif ($GLOBALS['authority']['power'] == 1) {
+            if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
+                if (!preg_match('/^(index|contact|contact_view)(_|$)/', $_REQUEST['_work'])) {
                     error('不正なアクセスです。');
                 }
             }
         }
-        if ($GLOBALS['authority']['power'] <= 1) {
-            if (preg_match('/^(admin)$/', $_REQUEST['_mode']) && !preg_match('/^modify(_|$)/', $_REQUEST['_work'])) {
-                if (preg_match('/^setting(_|$)/', $_REQUEST['_work']) || preg_match('/_/', $_REQUEST['_work'])) {
-                    error('不正なアクセスです。');
-                }
+        if (preg_match('/^(auth)$/', $_REQUEST['_mode'])) {
+            if (!preg_match('/^(index|home|modify|logout)(_|$)/', $_REQUEST['_work'])) {
+                error('不正なアクセスです。');
             }
         }
 

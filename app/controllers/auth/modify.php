@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['post']['user'] = $post['user'];
 
             // リダイレクト
-            redirect('/admin/modify_preview');
+            redirect('/auth/modify_preview');
         } else {
             $_view['user'] = $post['user'];
 

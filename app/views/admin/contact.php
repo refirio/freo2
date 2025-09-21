@@ -14,7 +14,9 @@
                             <?php if (isset($_GET['ok'])) : ?>
                             <div class="alert alert-success">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
-                                <?php if ($_GET['ok'] === 'delete') : ?>
+                                <?php if ($_GET['ok'] === 'post') : ?>
+                                お問い合わせを登録しました。
+                                <?php elseif ($_GET['ok'] === 'delete') : ?>
                                 お問い合わせを削除しました。
                                 <?php endif ?>
                             </div>
@@ -33,7 +35,9 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
                                             <th class="text-nowrap"><label><input type="checkbox" name="" value="" class="bulks"></label></th>
+                                            <?php endif ?>
                                             <th class="text-nowrap d-none d-md-table-cell">日時</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">作業</th>
@@ -41,7 +45,9 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
                                             <th class="text-nowrap"><label><input type="checkbox" name="" value="" class="bulks"></label></th>
+                                            <?php endif ?>
                                             <th class="text-nowrap d-none d-md-table-cell">日時</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">作業</th>
@@ -50,15 +56,24 @@
                                     <tbody>
                                         <?php foreach ($_view['contacts'] as $contact) : ?>
                                         <tr>
+                                            <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
                                             <td><input type="checkbox" name="bulks[]" value="<?php h($contact['id']) ?>"<?php isset($_SESSION['bulk']['contact'][$contact['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
+                                            <?php endif ?>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $contact['created']) == localdate('Ymd') ? localdate('H:i:s', $contact['created']) : localdate('Y/m/d', $contact['created'])) ?></td>
                                             <td><?php h(truncate($contact['name'], 50)) ?></td>
-                                            <td><a href="<?php t(MAIN_FILE) ?>/admin/contact_form?id=<?php t($contact['id']) ?>" class="btn btn-primary text-nowrap">編集</a></td>
+                                            <td>
+                                                <a href="<?php t(MAIN_FILE) ?>/admin/contact_view?id=<?php t($contact['id']) ?>" class="btn btn-primary text-nowrap">表示</a>
+                                                <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
+                                                <a href="<?php t(MAIN_FILE) ?>/admin/contact_form?id=<?php t($contact['id']) ?>" class="btn btn-primary text-nowrap">編集</a>
+                                                <?php endif ?>
+                                            </td>
                                         </tr>
                                         <?php endforeach ?>
                                     </tbody>
                                 </table>
+                                <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
                                 <p><input type="submit" value="一括削除" class="btn btn-danger"></p>
+                                <?php endif ?>
                                 <?php if ($_view['contact_page'] > 1) : ?>
                                     <ul class="pagination" style="justify-content: flex-end;">
                                         <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=1" class="page-link">&laquo;</a></li>

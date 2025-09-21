@@ -3,7 +3,7 @@
 // 投稿データを確認
 if (empty($_SESSION['post'])) {
     // リダイレクト
-    redirect('/admin/modify');
+    redirect('/auth/modify');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($warnings)) {
         // フォワード
-        forward('/admin/modify_post');
+        forward('/auth/modify_post');
     } else {
         $_view['warnings'] = $warnings;
     }

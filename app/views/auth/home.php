@@ -1,0 +1,25 @@
+<?php import('app/views/auth/header.php') ?>
+
+        <main class="col-6 mx-auto">
+            <div class="mb-4 text-center">
+                <h1 class="h3">
+                    マイページ
+                </h1>
+            </div>
+
+            <div class="card shadow-sm mb-3">
+                <div class="card-header heading"><?php h($_view['title']) ?></div>
+                <div class="card-body">
+                    <p>ようこそ、<?php h($_view['_user']['name'] ? $_view['_user']['name'] : $_view['_user']['username']) ?>さん</p>
+                    <ul>
+                        <li><a href="<?php t(MAIN_FILE) ?>/auth/modify">ユーザ情報編集</a></li>
+                        <li><a href="<?php t(MAIN_FILE) ?>/auth/logout">ログアウト</a></li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+        <div class="text-center">
+            <a href="<?php t(MAIN_FILE) ?>/">トップページ</a>
+        </div>
+
+<?php import('app/views/auth/footer.php') ?>

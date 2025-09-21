@@ -3,6 +3,7 @@ INSERT INTO users VALUES(NULL, NOW(), NOW(), NULL, 'admin', '7463f5f0110ccf10c33
 INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '管理者', 3);
 INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '投稿者', 2);
 INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '閲覧者', 1);
+INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, 'ゲスト', 0);
 
 INSERT INTO types VALUES(NULL, NOW(), NOW(), NULL, 'entry', '記事', 1);
 INSERT INTO types VALUES(NULL, NOW(), NOW(), NULL, 'page', 'ページ', 2);

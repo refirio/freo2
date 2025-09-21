@@ -1,0 +1,36 @@
+<?php import('app/views/auth/header.php') ?>
+
+        <main class="form-login text-center">
+            <form action="<?php t(MAIN_FILE) ?>/auth/<?php empty($_GET['referer']) ? '' : t('?referer=' . rawurlencode($_GET['referer'])) ?>" method="post">
+                <h1 class="mb-4"><?php h($GLOBALS['setting']['title']) ?></h1>
+
+                <?php if (isset($_view['warnings'])) : ?>
+                <div class="alert alert-danger">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
+                    <?php foreach ($_view['warnings'] as $warning) : ?>
+                    <?php h($warning) ?>
+                    <?php endforeach ?>
+                </div>
+                <?php endif ?>
+
+                <div class="form-floating">
+                    <input type="text" name="username" size="30" value="<?php t($_view['user']['username']) ?>" class="form-control" id="username" placeholder="ユーザ名">
+                    <label for="loginUsername">ユーザ名</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" name="password" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control" id="password" placeholder="パスワード">
+                    <label for="loginPassword">パスワード</label>
+                </div>
+                <div class="form-group mt-2">
+                    <label><input type="checkbox" name="session" value="keep" class="form-check-input"<?php isset($_view['user']['session']) ? e('checked="checked"') : '' ?>> ログイン状態を記憶する</label>
+                </div>
+                <div class="form-group mt-2">
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">ログイン</button>
+                </div>
+                <div class="form-group mt-4">
+                    <a href="<?php t(MAIN_FILE) ?>/">トップページ</a>
+                </div>
+            </form>
+        </main>
+
+<?php import('app/views/auth/footer.php') ?>
