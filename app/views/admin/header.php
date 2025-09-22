@@ -48,7 +48,7 @@
                         <h2 class="d-none">メニュー</h2>
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'home') : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/">
+                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'index') : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-clipboard-data"/></svg>
                                     ホーム
                                 </a>

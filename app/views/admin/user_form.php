@@ -43,7 +43,7 @@
                                             <input type="text" name="username" size="30" value="<?php t($_view['user']['username']) ?>" class="form-control">
                                         </div>
                                         <div class="form-group mb-2">
-                                            <label class="fw-bold">パスワード<?php if (empty($_GET['id'])) : ?>（変更したい場合のみ入力）<?php else : ?> <span class="badge bg-danger">必須</span><?php endif ?></label>
+                                            <label class="fw-bold">パスワード<?php if (empty($_GET['id'])) : ?> <span class="badge bg-danger">必須</span><?php else : ?>（変更したい場合のみ入力）<?php endif ?></label>
                                             <input type="password" name="password" size="30" value="" class="form-control">
                                         </div>
                                         <div class="form-group mb-2">
@@ -51,7 +51,7 @@
                                             <input type="password" name="password_confirm" size="30" value="" class="form-control">
                                         </div>
                                         <div class="form-group mb-2">
-                                            <label class="fw-bold">ユーザ名</label>
+                                            <label class="fw-bold">名前</label>
                                             <input type="text" name="name" size="30" value="<?php t($_view['user']['name']) ?>" class="form-control">
                                         </div>
                                         <div class="form-group mb-2">
