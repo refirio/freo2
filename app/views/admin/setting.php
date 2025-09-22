@@ -29,10 +29,9 @@
 
                             <?php if (empty($_view['contents'])) : ?>
                             <ul>
-                                <li><a href="<?php t(MAIN_FILE) ?>/admin/setting?target=basis">基本設定</a></li>
-                                <li><a href="<?php t(MAIN_FILE) ?>/admin/setting?target=entry">記事設定</a></li>
-                                <li><a href="<?php t(MAIN_FILE) ?>/admin/setting?target=page">ページ設定</a></li>
-                                <li><a href="<?php t(MAIN_FILE) ?>/admin/setting?target=mail">メール設定</a></li>
+                                <?php foreach ($GLOBALS['setting_titles'] as $key => $title) : ?>
+                                <li><a href="<?php t(MAIN_FILE) ?>/admin/setting?target=<?php t($key) ?>"><?php h($title) ?></a></li>
+                                <?php endforeach ?>
                             </ul>
                             <?php else : ?>
                             <form action="<?php t(MAIN_FILE) ?>/admin/setting?target=<?php t($_GET['target']) ?>" method="post" class="register validate">
