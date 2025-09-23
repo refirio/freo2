@@ -7,18 +7,6 @@ $filters = model('filter_entries', $_GET, [
     'associate' => true,
 ]);
 
-/*
-if ($filters['where'] !== '') {
-    $filters['where'] .= ' AND ';
-}
-$where = [
-    $filters['where'] . 'entries.public = 1 && (entries.public_begin IS NULL OR entries.public_begin <= :now) && (entries.public_end IS NULL OR entries.public_end >= :now)',
-    [
-        'now' => localdate('Y-m-d H:i:s'),
-    ],
-];
-*/
-
 // 検索用文字列を初期化
 if (!isset($_GET['category_sets'])) {
     $_GET['category_sets'] = [];

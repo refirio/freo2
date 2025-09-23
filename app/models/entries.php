@@ -435,8 +435,8 @@ function validate_entries($queries, $options = [])
 
     // 公開
     if (isset($queries['public'])) {
-        if (!validator_boolean($queries['public'])) {
-            $messages['public'] = '公開の書式が不正です。';
+        if (!validator_list($queries['public'], $GLOBALS['config']['options']['entry']['publics'])) {
+            $messages['public'] = '公開の値が不正です。';
         }
     }
 
@@ -1074,7 +1074,7 @@ function default_entries()
         'modified'       => localdate('Y-m-d H:i:s'),
         'deleted'        => null,
         'type_id'        => 0,
-        'public'         => 1,
+        'public'         => 'all',
         'public_begin'   => null,
         'public_end'     => null,
         'datetime'       => localdate('Y-m-d H:00'),

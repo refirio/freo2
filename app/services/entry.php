@@ -24,7 +24,8 @@ function service_entry_select_published($type, $queries, $options = [])
         $where1 = $queries['where'][0];
         $where2 = $queries['where'][1];
     }
-    $where1 .= ' AND types.code = :type_code AND entries.public = 1 AND (entries.public_begin IS NULL OR entries.public_begin <= :now) AND (entries.public_end IS NULL OR entries.public_end >= :now)';
+    $where1 .= ' AND types.code = :type_code AND entries.public = :public AND (entries.public_begin IS NULL OR entries.public_begin <= :now) AND (entries.public_end IS NULL OR entries.public_end >= :now)';
+    $where2['public']    = 'all'; // 仮指定
     $where2['type_code'] = $type;
     $where2['now']       = localdate('Y-m-d H:i:s');
 
