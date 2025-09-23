@@ -13,6 +13,15 @@ import('app/services/log.php');
  */
 function service_entry_select_published($type, $queries, $options = [])
 {
+    static $authority_power = null;
+    static $attributes = null;
+    if ($authority_power === null && isset($GLOBALS['authority']['power'])) {
+        $authority_power = $GLOBALS['authority']['power'];
+    }
+    if ($attributes === null && isset($GLOBALS['attributes'])) {
+        $attributes = $GLOBALS['attributes'];
+    }
+
     // 公開エントリーの絞り込み
     if (empty($queries['where'])) {
         $where1 = 'TRUE';
@@ -24,8 +33,19 @@ function service_entry_select_published($type, $queries, $options = [])
         $where1 = $queries['where'][0];
         $where2 = $queries['where'][1];
     }
-    $where1 .= ' AND types.code = :type_code AND entries.public = :public AND (entries.public_begin IS NULL OR entries.public_begin <= :now) AND (entries.public_end IS NULL OR entries.public_end >= :now)';
-    $where2['public']    = 'all'; // 仮指定
+
+    if ($authority_power >= 1) {
+        // 閲覧者以上: 「非公開」以外のエントリーを表示
+        $public = ' AND entries.public != ' . db_escape('none');
+    } elseif ($authority_power === 0) {
+        // ゲスト: 「全体に公開」のエントリー、もしくは「登録ユーザに公開」のエントリー、もしくは「指定の属性に公開」で指定の属性を持つエントリーを表示
+        $public = ' AND (entries.public = ' . db_escape('all') . ' OR entries.public = ' . db_escape('user') . ' OR (entries.public = ' . db_escape('attribute') . ' AND attribute_sets.attribute_id IN(' . implode(',', $attributes) . ')))';
+    } else {
+        // ユーザ登録なし: 「全体に公開」のエントリーを表示
+        $public = ' AND entries.public = ' . db_escape('all');
+    }
+
+    $where1 .= ' AND types.code = :type_code' . $public . ' AND (entries.public_begin IS NULL OR entries.public_begin <= :now) AND (entries.public_end IS NULL OR entries.public_end >= :now)';
     $where2['type_code'] = $type;
     $where2['now']       = localdate('Y-m-d H:i:s');
 

@@ -93,6 +93,17 @@ if (!empty($_SESSION['auth']['user']['id'])) {
             }
         }
 
+        // 属性を取得
+        $attribute_sets = model('select_attribute_sets', [
+            'where' => [
+                'user_id = :user_id',
+                [
+                    'user_id' => $_SESSION['auth']['user']['id'],
+                ],
+            ],
+        ]);
+        $GLOBALS['attributes'] = array_column($attribute_sets, 'attribute_id');
+
         // ユーザ情報を取得
         $_view['_user'] = $users[0];
     }

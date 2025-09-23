@@ -184,16 +184,16 @@ $(document).ready(function() {
      */
     $('select[name=public]').on('change', function() {
         console.log($(this).val());
-        if ($(this).val() == 1) {
-            $('.for-public').show();
-        } else {
+        if ($(this).val() == 'none') {
             $('.for-public').hide();
+        } else {
+            $('.for-public').show();
         }
     });
-    if ($('select[name=public]').val() == 1) {
-        $('.for-public').show();
-    } else {
+    if ($('select[name=public]').val() == 'none') {
         $('.for-public').hide();
+    } else {
+        $('.for-public').show();
     }
 
     /*

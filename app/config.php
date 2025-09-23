@@ -36,9 +36,9 @@ $GLOBALS['config']['options'] = app_config('APP_OPTIONS', [
     'entry' => [
         // 公開
         'publics' => [
-            'all'       => '全体',
-            'user'      => '登録ユーザ',
-            'attribute' => '指定の属性',
+            'all'       => '全体に公開',
+            'user'      => '登録ユーザに公開',
+            'attribute' => '指定の属性に公開',
             'none'      => '非公開',
         ],
     ],
