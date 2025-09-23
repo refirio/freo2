@@ -62,6 +62,7 @@
                                             <label class="fw-bold">公開終了日時</label>
                                             <input type="text" name="public_end" size="30" value="<?php t($_view['entry']['public_end']) ?>" autocomplete="off" class="form-control" style="width: 200px;">
                                         </div>
+                                        <?php if (!empty($_view['attributes'])) : ?>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">属性</label>
                                             <div id="validate_attribute_sets">
@@ -70,6 +71,7 @@
                                                 <?php endforeach ?>
                                             </div>
                                         </div>
+                                        <?php endif ?>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">日時 <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="datetime" size="30" value="<?php t($_view['entry']['datetime']) ?>" autocomplete="off" class="form-control" style="width: 200px;">

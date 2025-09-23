@@ -58,6 +58,7 @@
                                                 <?php endforeach ?>
                                             </select>
                                         </div>
+                                        <?php if (!empty($_view['attributes'])) : ?>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">属性</label>
                                             <div id="validate_attribute_sets">
@@ -66,6 +67,7 @@
                                                 <?php endforeach ?>
                                             </div>
                                         </div>
+                                        <?php endif ?>
                                         <div class="form-group mt-4">
                                             <button type="submit" class="btn btn-primary px-4">登録</button>
                                         </div>
