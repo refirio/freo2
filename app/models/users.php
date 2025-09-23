@@ -182,7 +182,21 @@ function delete_users($queries, $options = [])
     $queries = db_placeholder($queries);
     $options = [
         'softdelete' => isset($options['softdelete']) ? $options['softdelete'] : true,
+        'attribute'  => isset($options['attribute'])  ? $options['attribute']  : true,
     ];
+
+    // 削除するデータのIDを取得
+    $users = db_select([
+        'select' => 'id',
+        'from'   => DATABASE_PREFIX . 'users AS users',
+        'where'  => isset($queries['where']) ? $queries['where'] : '',
+        'limit'  => isset($queries['limit']) ? $queries['limit'] : '',
+    ]);
+
+    $ids = [];
+    foreach ($users as $user) {
+        $ids[] = intval($user['id']);
+    }
 
     if ($options['softdelete'] === true) {
         // データを編集
@@ -205,6 +219,16 @@ function delete_users($queries, $options = [])
             'delete_from' => DATABASE_PREFIX . 'users AS users',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
+        ]);
+        if (!$resource) {
+            return $resource;
+        }
+    }
+
+    if ($options['attribute'] === true) {
+        // 関連する属性を削除
+        $resource = model('delete_attribute_sets', [
+            'where' => 'user_id IN(' . implode(',', array_map('db_escape', $ids)) . ')',
         ]);
         if (!$resource) {
             return $resource;

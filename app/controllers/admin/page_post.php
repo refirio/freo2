@@ -55,8 +55,9 @@ if (empty($_SESSION['post']['entry']['id'])) {
             'text'         => $_SESSION['post']['entry']['text'],
         ],
     ], [
-        'field_sets' => $_SESSION['post']['entry']['field_sets'],
-        'files'      => $files,
+        'field_sets'     => $_SESSION['post']['entry']['field_sets'],
+        'attribute_sets' => $_SESSION['post']['entry']['attribute_sets'],
+        'files'          => $files,
     ]);
     if (!$resource) {
         error('データを登録できません。');
@@ -81,10 +82,11 @@ if (empty($_SESSION['post']['entry']['id'])) {
             ],
         ],
     ], [
-        'id'         => intval($_SESSION['post']['entry']['id']),
-        'update'     => $_SESSION['update']['entry'],
-        'field_sets' => $_SESSION['post']['entry']['field_sets'],
-        'files'      => $files,
+        'id'             => intval($_SESSION['post']['entry']['id']),
+        'update'         => $_SESSION['update']['entry'],
+        'field_sets'     => $_SESSION['post']['entry']['field_sets'],
+        'attribute_sets' => $_SESSION['post']['entry']['attribute_sets'],
+        'files'          => $files,
     ]);
     if (!$resource) {
         error('データを編集できません。');

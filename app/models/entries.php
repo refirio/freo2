@@ -30,7 +30,8 @@ function select_entries($queries, $options = [])
         $queries['from'] = DATABASE_PREFIX . 'entries AS entries '
                          . 'LEFT JOIN ' . DATABASE_PREFIX . 'types AS types ON entries.type_id = types.id '
                          . 'LEFT JOIN ' . DATABASE_PREFIX . 'field_sets AS field_sets ON entries.id = field_sets.entry_id '
-                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'category_sets AS category_sets ON entries.id = category_sets.entry_id';
+                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'category_sets AS category_sets ON entries.id = category_sets.entry_id '
+                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'attribute_sets AS attribute_sets ON entries.id = attribute_sets.entry_id';
 
         // 削除済みデータは取得しない
         if (!isset($queries['where'])) {
@@ -80,6 +81,18 @@ function select_entries($queries, $options = [])
                 $categories[$category_set['entry_id']][] = $category_set;
             }
 
+            // 属性を取得
+            $attribute_sets = model('select_attribute_sets', [
+                'where' => 'attribute_sets.entry_id IN(' . implode(',', array_map('db_escape', $id_columns)) . ')',
+            ], [
+                'associate' => true,
+            ]);
+
+            $attributes = [];
+            foreach ($attribute_sets as $attribute_set) {
+                $attributes[$attribute_set['entry_id']][] = $attribute_set;
+            }
+
             // 関連するデータを結合
             for ($i = 0; $i < count($results); $i++) {
                 if (!isset($fields[$results[$i]['id']])) {
@@ -88,8 +101,12 @@ function select_entries($queries, $options = [])
                 if (!isset($categories[$results[$i]['id']])) {
                     $categories[$results[$i]['id']] = [];
                 }
-                $results[$i]['field_sets']    = $fields[$results[$i]['id']];
-                $results[$i]['category_sets'] = $categories[$results[$i]['id']];
+                if (!isset($attributes[$results[$i]['id']])) {
+                    $attributes[$results[$i]['id']] = [];
+                }
+                $results[$i]['field_sets']     = $fields[$results[$i]['id']];
+                $results[$i]['category_sets']  = $categories[$results[$i]['id']];
+                $results[$i]['attribute_sets'] = $attributes[$results[$i]['id']];
             }
         }
     }
@@ -109,9 +126,10 @@ function insert_entries($queries, $options = [])
 {
     $queries = db_placeholder($queries);
     $options = [
-        'field_sets'    => isset($options['field_sets'])    ? $options['field_sets']    : [],
-        'category_sets' => isset($options['category_sets']) ? $options['category_sets'] : [],
-        'files'         => isset($options['files'])         ? $options['files']         : [],
+        'field_sets'     => isset($options['field_sets'])     ? $options['field_sets']     : [],
+        'category_sets'  => isset($options['category_sets'])  ? $options['category_sets']  : [],
+        'attribute_sets' => isset($options['attribute_sets']) ? $options['attribute_sets'] : [],
+        'files'          => isset($options['files'])          ? $options['files']          : [],
     ];
 
     // 初期値を取得
@@ -153,6 +171,11 @@ function insert_entries($queries, $options = [])
         model('insert_category_entries', $entry_id, $options['category_sets']);
     }
 
+    if (isset($options['attribute_sets'])) {
+        // 関連する属性を登録
+        model('insert_attribute_entries', $entry_id, $options['attribute_sets']);
+    }
+
     if (!empty($options['files'])) {
         // 関連するファイルを削除
         model('remove_file_entries', $entry_id, $options['files']);
@@ -176,10 +199,11 @@ function update_entries($queries, $options = [])
 {
     $queries = db_placeholder($queries);
     $options = [
-        'id'            => isset($options['id'])            ? $options['id']            : null,
-        'field_sets'    => isset($options['field_sets'])    ? $options['field_sets']    : [],
-        'category_sets' => isset($options['category_sets']) ? $options['category_sets'] : [],
-        'files'         => isset($options['files'])         ? $options['files']         : [],
+        'id'             => isset($options['id'])             ? $options['id']             : null,
+        'field_sets'     => isset($options['field_sets'])     ? $options['field_sets']     : [],
+        'category_sets'  => isset($options['category_sets'])  ? $options['category_sets']  : [],
+        'attribute_sets' => isset($options['attribute_sets']) ? $options['attribute_sets'] : [],
+        'files'          => isset($options['files'])          ? $options['files']          : [],
     ];
 
     // 初期値を取得
@@ -214,6 +238,11 @@ function update_entries($queries, $options = [])
         model('update_category_entries', $id, $options['category_sets']);
     }
 
+    if (isset($options['attribute_sets'])) {
+        // 関連する属性を編集
+        model('update_attribute_entries', $id, $options['attribute_sets']);
+    }
+
     if (!empty($options['files'])) {
         // 関連するファイルを削除
         model('remove_file_entries', $id, $options['files']);
@@ -240,6 +269,7 @@ function delete_entries($queries, $options = [])
         'softdelete' => isset($options['softdelete']) ? $options['softdelete'] : true,
         'field'      => isset($options['field'])      ? $options['field']      : true,
         'category'   => isset($options['category'])   ? $options['category']   : true,
+        'attribute'  => isset($options['attribute'])  ? $options['attribute']  : true,
         'file'       => isset($options['file'])       ? $options['file']       : true,
     ];
 
@@ -305,6 +335,16 @@ function delete_entries($queries, $options = [])
     if ($options['category'] === true) {
         // 関連するカテゴリを削除
         $resource = model('delete_category_sets', [
+            'where' => 'entry_id IN(' . implode(',', array_map('db_escape', $ids)) . ')',
+        ]);
+        if (!$resource) {
+            return $resource;
+        }
+    }
+
+    if ($options['attribute'] === true) {
+        // 関連する属性を削除
+        $resource = model('delete_attribute_sets', [
             'where' => 'entry_id IN(' . implode(',', array_map('db_escape', $ids)) . ')',
         ]);
         if (!$resource) {
@@ -663,6 +703,30 @@ function insert_category_entries($entry_id, $category_sets)
 }
 
 /**
+ * 関連する属性を登録
+ *
+ * @param int   $entry_id
+ * @param array $attribute_sets
+ *
+ * @return void
+ */
+function insert_attribute_entries($entry_id, $attribute_sets)
+{
+    // 属性を登録
+    foreach ($attribute_sets as $attribute_id) {
+        $resource = model('insert_attribute_sets', [
+            'values' => [
+                'attribute_id' => $attribute_id,
+                'entry_id'     => $entry_id,
+            ],
+        ]);
+        if (!$resource) {
+            error('データを登録できません。');
+        }
+    }
+}
+
+/**
  * 関連するフィールドを編集
  *
  * @param int   $entry_id
@@ -743,6 +807,42 @@ function update_category_entries($entry_id, $category_sets)
             'values' => [
                 'category_id' => $category_id,
                 'entry_id'    => $entry_id,
+            ],
+        ]);
+        if (!$resource) {
+            error('データを登録できません。');
+        }
+    }
+}
+
+/**
+ * 関連する属性を編集
+ *
+ * @param int   $id
+ * @param array $attribute_sets
+ *
+ * @return void
+ */
+function update_attribute_entries($entry_id, $attribute_sets)
+{
+    // 属性を編集
+    $resource = model('delete_attribute_sets', [
+        'where' => [
+            'entry_id = :id',
+            [
+                'id' => $entry_id,
+            ],
+        ],
+    ]);
+    if (!$resource) {
+        error('データを削除できません。');
+    }
+
+    foreach ($attribute_sets as $attribute_id) {
+        $resource = model('insert_attribute_sets', [
+            'values' => [
+                'attribute_id' => $attribute_id,
+                'entry_id'     => $entry_id,
             ],
         ]);
         if (!$resource) {
@@ -969,21 +1069,22 @@ function view_entries($data)
 function default_entries()
 {
     return [
-        'id'            => null,
-        'created'       => localdate('Y-m-d H:i:s'),
-        'modified'      => localdate('Y-m-d H:i:s'),
-        'deleted'       => null,
-        'type_id'       => 0,
-        'public'        => 1,
-        'public_begin'  => null,
-        'public_end'    => null,
-        'datetime'      => localdate('Y-m-d H:00'),
-        'title'         => '',
-        'code'          => '',
-        'text'          => null,
-        'picture'       => null,
-        'thumbnail'     => null,
-        'field_sets'    => [],
-        'category_sets' => [],
+        'id'             => null,
+        'created'        => localdate('Y-m-d H:i:s'),
+        'modified'       => localdate('Y-m-d H:i:s'),
+        'deleted'        => null,
+        'type_id'        => 0,
+        'public'         => 1,
+        'public_begin'   => null,
+        'public_end'     => null,
+        'datetime'       => localdate('Y-m-d H:00'),
+        'title'          => '',
+        'code'           => '',
+        'text'           => null,
+        'picture'        => null,
+        'thumbnail'      => null,
+        'field_sets'     => [],
+        'category_sets'  => [],
+        'attribute_sets' => [],
     ];
 }

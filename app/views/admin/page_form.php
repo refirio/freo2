@@ -63,6 +63,14 @@
                                             <input type="text" name="public_end" size="30" value="<?php t($_view['entry']['public_end']) ?>" autocomplete="off" class="form-control" style="width: 200px;">
                                         </div>
                                         <div class="form-group mb-2">
+                                            <label class="fw-bold">属性</label>
+                                            <div id="validate_attribute_sets">
+                                                <?php foreach ($_view['attributes'] as $attribute) : ?>
+                                                <label><input type="checkbox" name="attribute_sets[]" value="<?php t($attribute['id']) ?>" class="form-check-input"<?php in_array($attribute['id'], array_column($_view['entry']['attribute_sets'], 'attribute_id')) ? e(' checked="checked"') : '' ?>> <?php t($attribute['name']) ?></label><br>
+                                                <?php endforeach ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mb-2">
                                             <label class="fw-bold">日時 <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="datetime" size="30" value="<?php t($_view['entry']['datetime']) ?>" autocomplete="off" class="form-control" style="width: 200px;">
                                         </div>
