@@ -13,18 +13,64 @@ import('libs/modules/validator.php');
 function select_users($queries, $options = [])
 {
     $queries = db_placeholder($queries);
+    $options = [
+        'associate' => isset($options['associate']) ? $options['associate'] : false,
+    ];
 
-    // ユーザを取得
-    $queries['from'] = DATABASE_PREFIX . 'users';
+    if ($options['associate'] === true) {
+        // 関連するデータを取得
+        if (!isset($queries['select'])) {
+            $queries['select'] = 'DISTINCT users.*';
+        }
 
-    // 削除済みデータは取得しない
-    if (!isset($queries['where'])) {
-        $queries['where'] = 'TRUE';
+        $queries['from'] = DATABASE_PREFIX . 'users AS users '
+                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'attribute_sets AS attribute_sets ON users.id = attribute_sets.user_id';
+
+        // 削除済みデータは取得しない
+        if (!isset($queries['where'])) {
+            $queries['where'] = 'TRUE';
+        }
+        $queries['where'] = 'users.deleted IS NULL AND (' . $queries['where'] . ')';
+    } else {
+        // ユーザを取得
+        $queries['from'] = DATABASE_PREFIX . 'users';
+
+        // 削除済みデータは取得しない
+        if (!isset($queries['where'])) {
+            $queries['where'] = 'TRUE';
+        }
+        $queries['where'] = 'deleted IS NULL AND (' . $queries['where'] . ')';
     }
-    $queries['where'] = 'deleted IS NULL AND (' . $queries['where'] . ')';
 
     // データを取得
     $results = db_select($queries);
+
+    // 関連するデータを取得
+    if ($options['associate'] === true) {
+        $id_columns = array_column($results, 'id');
+
+        if (!empty($id_columns)) {
+            // 属性を取得
+            $attribute_sets = model('select_attribute_sets', [
+                'where' => 'attribute_sets.user_id IN(' . implode(',', array_map('db_escape', $id_columns)) . ')',
+            ], [
+                'associate' => true,
+            ]);
+
+            $attributes = [];
+            foreach ($attribute_sets as $attribute_set) {
+                $attributes[$attribute_set['user_id']][] = $attribute_set;
+            }
+
+            // 関連するデータを結合
+            for ($i = 0; $i < count($results); $i++) {
+                if (!isset($attributes[$results[$i]['id']])) {
+                    $attributes[$results[$i]['id']] = [];
+                }
+                $results[$i]['attribute_sets'] = $attributes[$results[$i]['id']];
+            }
+        }
+    }
 
     return $results;
 }
@@ -40,6 +86,9 @@ function select_users($queries, $options = [])
 function insert_users($queries, $options = [])
 {
     $queries = db_placeholder($queries);
+    $options = [
+        'attribute_sets' => isset($options['attribute_sets']) ? $options['attribute_sets'] : [],
+    ];
 
     // 初期値を取得
     $defaults = model('default_users');
@@ -65,6 +114,14 @@ function insert_users($queries, $options = [])
     $resource = db_insert($queries);
     if (!$resource) {
         return $resource;
+    }
+
+    // IDを取得
+    $user_id = db_last_insert_id();
+
+    if (isset($options['attribute_sets'])) {
+        // 関連する属性を登録
+        model('insert_attribute_users', $user_id, $options['attribute_sets']);
     }
 
     return $resource;
@@ -99,6 +156,14 @@ function update_users($queries, $options = [])
     $resource = db_update($queries);
     if (!$resource) {
         return $resource;
+    }
+
+    // IDを取得
+    $id = $options['id'];
+
+    if (isset($options['attribute_sets'])) {
+        // 関連する属性を編集
+        model('update_attribute_users', $id, $options['attribute_sets']);
     }
 
     return $resource;
@@ -291,6 +356,66 @@ function validate_users($queries, $options = [])
 }
 
 /**
+ * 関連する属性を登録
+ *
+ * @param int   $user_id
+ * @param array $attribute_sets
+ *
+ * @return void
+ */
+function insert_attribute_users($user_id, $attribute_sets)
+{
+    // 属性を登録
+    foreach ($attribute_sets as $attribute_id) {
+        $resource = model('insert_attribute_sets', [
+            'values' => [
+                'attribute_id' => $attribute_id,
+                'user_id'      => $user_id,
+            ],
+        ]);
+        if (!$resource) {
+            error('データを登録できません。');
+        }
+    }
+}
+
+/**
+ * 関連する属性を編集
+ *
+ * @param int   $id
+ * @param array $attribute_sets
+ *
+ * @return void
+ */
+function update_attribute_users($user_id, $attribute_sets)
+{
+    // 属性を編集
+    $resource = model('delete_attribute_sets', [
+        'where' => [
+            'user_id = :id',
+            [
+                'id' => $user_id,
+            ],
+        ],
+    ]);
+    if (!$resource) {
+        error('データを削除できません。');
+    }
+
+    foreach ($attribute_sets as $attribute_id) {
+        $resource = model('insert_attribute_sets', [
+            'values' => [
+                'attribute_id' => $attribute_id,
+                'user_id'      => $user_id,
+            ],
+        ]);
+        if (!$resource) {
+            error('データを登録できません。');
+        }
+    }
+}
+
+/**
  * ユーザの初期値
  *
  * @return array
@@ -298,18 +423,19 @@ function validate_users($queries, $options = [])
 function default_users()
 {
     return [
-        'id'            => null,
-        'created'       => localdate('Y-m-d H:i:s'),
-        'modified'      => localdate('Y-m-d H:i:s'),
-        'deleted'       => null,
-        'username'      => '',
-        'password'      => '',
-        'password_salt' => '',
-        'authority_id'  => 0,
-        'name'          => null,
-        'email'         => '',
-        'loggedin'      => null,
-        'failed'        => null,
-        'failed_last'   => null,
+        'id'             => null,
+        'created'        => localdate('Y-m-d H:i:s'),
+        'modified'       => localdate('Y-m-d H:i:s'),
+        'deleted'        => null,
+        'username'       => '',
+        'password'       => '',
+        'password_salt'  => '',
+        'authority_id'   => 0,
+        'name'           => null,
+        'email'          => '',
+        'loggedin'       => null,
+        'failed'         => null,
+        'failed_last'    => null,
+        'attribute_sets' => [],
     ];
 }

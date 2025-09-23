@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'authority_id'     => isset($_POST['authority_id'])     ? $_POST['authority_id']     : '',
             'name'             => isset($_POST['name'])             ? $_POST['name']             : '',
             'email'            => isset($_POST['email'])            ? $_POST['email']            : '',
+            'attribute_sets'   => isset($_POST['attribute_sets'])   ? $_POST['attribute_sets']   : [],
         ]),
     ];
 
@@ -56,11 +57,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $users = model('select_users', [
             'where' => [
-                'id = :id',
+                'users.id = :id',
                 [
                     'id' => $_GET['id'],
                 ],
             ],
+        ], [
+            'associate' => true,
         ]);
         if (empty($users)) {
             warning('編集データが見つかりません。');
@@ -81,6 +84,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // 権限を取得
 $_view['authorities'] = model('select_authorities', [
     'order_by' => 'power DESC, id',
+]);
+
+// 属性を取得
+$_view['attributes'] = model('select_attributes', [
+    'order_by' => 'sort, id',
 ]);
 
 // タイトル

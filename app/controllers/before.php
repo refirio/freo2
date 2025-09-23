@@ -76,7 +76,7 @@ if (!empty($_SESSION['auth']['user']['id'])) {
         // 権限を確認
         if ($GLOBALS['authority']['power'] == 2) {
             if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
-                if (!preg_match('/^(index|entry|page|category|field|menu|widget|contact|file)(_|$)/', $_REQUEST['_work'])) {
+                if (!preg_match('/^(index|entry|page|category|field|attribute|menu|widget|contact|file)(_|$)/', $_REQUEST['_work'])) {
                     error('不正なアクセスです。');
                 }
             }

@@ -30,15 +30,6 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group mb-2">
-                                            <label class="fw-bold">権限 <span class="badge bg-danger">必須</span></label>
-                                            <select name="authority_id" class="form-select" style="width: 200px;">
-                                                <option value=""></option>
-                                                <?php foreach ($_view['authorities'] as $authority) : ?>
-                                                <option value="<?php t($authority['id']) ?>"<?php $authority['id'] == $_view['user']['authority_id'] ? e(' selected="selected"') : '' ?>><?php t($authority['name']) ?></option>
-                                                <?php endforeach ?>
-                                            </select>
-                                        </div>
-                                        <div class="form-group mb-2">
                                             <label class="fw-bold">ユーザ名 <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="username" size="30" value="<?php t($_view['user']['username']) ?>" class="form-control">
                                         </div>
@@ -57,6 +48,23 @@
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">メールアドレス <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="email" size="30" value="<?php t($_view['user']['email']) ?>" class="form-control">
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">権限 <span class="badge bg-danger">必須</span></label>
+                                            <select name="authority_id" class="form-select" style="width: 200px;">
+                                                <option value=""></option>
+                                                <?php foreach ($_view['authorities'] as $authority) : ?>
+                                                <option value="<?php t($authority['id']) ?>"<?php $authority['id'] == $_view['user']['authority_id'] ? e(' selected="selected"') : '' ?>><?php t($authority['name']) ?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">属性</label>
+                                            <div id="validate_attribute_sets">
+                                                <?php foreach ($_view['attributes'] as $attribute) : ?>
+                                                <label><input type="checkbox" name="attribute_sets[]" value="<?php t($attribute['id']) ?>" class="form-check-input"<?php in_array($attribute['id'], array_column($_view['user']['attribute_sets'], 'attribute_id')) ? e(' checked="checked"') : '' ?>> <?php t($attribute['name']) ?></label><br>
+                                                <?php endforeach ?>
+                                            </div>
                                         </div>
                                         <div class="form-group mt-4">
                                             <button type="submit" class="btn btn-primary px-4">登録</button>

@@ -102,6 +102,22 @@ CREATE TABLE IF NOT EXISTS field_sets(
     text     TEXT                  COMMENT 'テキスト'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'フィールド ひも付け';
 
+CREATE TABLE IF NOT EXISTS attributes(
+    id       INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理キー',
+    created  DATETIME     NOT NULL                COMMENT '作成日時',
+    modified DATETIME     NOT NULL                COMMENT '更新日時',
+    deleted  DATETIME                             COMMENT '削除日時',
+    name     VARCHAR(255) NOT NULL                COMMENT '名前',
+    sort     INT UNSIGNED NOT NULL                COMMENT '並び順',
+    PRIMARY KEY(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '属性';
+
+CREATE TABLE IF NOT EXISTS attribute_sets(
+    attribute_id INT UNSIGNED NOT NULL COMMENT '外部キー 属性',
+    user_id      INT UNSIGNED          COMMENT '外部キー ユーザ',
+    entry_id     INT UNSIGNED          COMMENT '外部キー 記事'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '属性 ひも付け';
+
 CREATE TABLE IF NOT EXISTS menus(
     id       INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理キー',
     created  DATETIME     NOT NULL                COMMENT '作成日時',

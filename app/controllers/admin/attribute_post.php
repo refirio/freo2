@@ -1,0 +1,59 @@
+<?php
+
+import('app/services/attribute.php');
+
+// フォワードを確認
+if (forward() === null) {
+    error('不正なアクセスです。');
+}
+
+// 投稿データを確認
+if (empty($_SESSION['post'])) {
+    // リダイレクト
+    redirect('/admin/attribute_form');
+}
+
+// トランザクションを開始
+db_transaction();
+
+if (empty($_SESSION['post']['attribute']['id'])) {
+    // 属性を登録
+    $resource = service_attribute_insert([
+        'values' => [
+            'name' => $_SESSION['post']['attribute']['name'],
+            'sort' => $_SESSION['post']['attribute']['sort'],
+        ],
+    ]);
+    if (!$resource) {
+        error('データを登録できません。');
+    }
+} else {
+    // 属性を編集
+    $resource = service_attribute_update([
+        'set'   => [
+            'name' => $_SESSION['post']['attribute']['name'],
+        ],
+        'where' => [
+            'id = :id',
+            [
+                'id' => $_SESSION['post']['attribute']['id'],
+            ],
+        ],
+    ], [
+        'id'     => intval($_SESSION['post']['attribute']['id']),
+        'update' => $_SESSION['update']['attribute'],
+    ]);
+    if (!$resource) {
+        error('データを編集できません。');
+    }
+}
+
+// トランザクションを終了
+db_commit();
+
+// 投稿セッションを初期化
+unset($_SESSION['post']);
+unset($_SESSION['update']);
+
+// リダイレクト
+redirect('/admin/attribute?ok=post');

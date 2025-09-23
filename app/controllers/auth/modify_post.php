@@ -17,6 +17,17 @@ if (empty($_SESSION['post'])) {
 // パスワードのソルトを作成
 $password_salt = hash_salt();
 
+// 属性を取得
+$attribute_sets = model('select_attribute_sets', [
+    'where' => [
+        'user_id = :id',
+        [
+            'id' => $_SESSION['auth']['user']['id'],
+        ],
+    ],
+]);
+$attribute_sets = array_column($attribute_sets, 'attribute_id');
+
 // トランザクションを開始
 db_transaction();
 
@@ -39,8 +50,9 @@ $resource = service_user_update([
         ],
     ],
 ], [
-    'id'     => intval($_SESSION['auth']['user']['id']),
-    'update' => $_SESSION['update']['user'],
+    'id'             => intval($_SESSION['auth']['user']['id']),
+    'update'         => $_SESSION['update']['user'],
+    'attribute_sets' => $attribute_sets,
 ]);
 if (!$resource) {
     error('データを編集できません。');

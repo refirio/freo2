@@ -34,9 +34,9 @@
                                 <thead>
                                     <tr>
                                         <th class="text-nowrap">ユーザ名</th>
-                                        <th class="text-nowrap">権限</th>
                                         <th class="text-nowrap">名前</th>
                                         <th class="text-nowrap d-none d-md-table-cell">メールアドレス</th>
+                                        <th class="text-nowrap">権限</th>
                                         <th class="text-nowrap d-none d-md-table-cell">最終ログイン日時</th>
                                         <th class="text-nowrap">作業</th>
                                     </tr>
@@ -44,9 +44,9 @@
                                 <tfoot>
                                     <tr>
                                         <th class="text-nowrap">ユーザ名</th>
-                                        <th class="text-nowrap">権限</th>
                                         <th class="text-nowrap">名前</th>
                                         <th class="text-nowrap d-none d-md-table-cell">メールアドレス</th>
+                                        <th class="text-nowrap">権限</th>
                                         <th class="text-nowrap d-none d-md-table-cell">最終ログイン日時</th>
                                         <th class="text-nowrap">作業</th>
                                     </tr>
@@ -55,9 +55,9 @@
                                     <?php foreach ($_view['users'] as $user) : ?>
                                     <tr>
                                         <td><?php h($user['username']) ?></td>
-                                        <td><?php h($_view['authority_sets'][$user['authority_id']]) ?></td>
                                         <td><?php h($user['name']) ?></td>
                                         <td class="d-none d-md-table-cell"><?php h($user['email']) ?></td>
+                                        <td><?php h($_view['authority_sets'][$user['authority_id']]) ?></td>
                                         <td class="d-none d-md-table-cell">
                                             <?php if (empty($user['loggedin'])) : ?>
                                                 -

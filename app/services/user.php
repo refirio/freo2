@@ -37,8 +37,9 @@ function service_user_insert($queries, $options = [])
 function service_user_update($queries, $options = [])
 {
     $options = [
-        'id'     => isset($options['id'])     ? $options['id']     : null,
-        'update' => isset($options['update']) ? $options['update'] : null,
+        'id'             => isset($options['id'])             ? $options['id']             : null,
+        'update'         => isset($options['update'])         ? $options['update']         : null,
+        'attribute_sets' => isset($options['attribute_sets']) ? $options['attribute_sets'] : [],
     ];
 
     // 最終編集日時を確認
