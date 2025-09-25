@@ -50,7 +50,7 @@ if (!preg_match('/^(auth)$/', $_REQUEST['_mode']) || !preg_match('/^(index|logou
 if (!empty($_SESSION['auth']['user']['id'])) {
     $users = model('select_users', [
         'where' => [
-            'id = :id',
+            'id = :id AND enabled = 1',
             [
                 'id' => $_SESSION['auth']['user']['id'],
             ],
@@ -132,6 +132,7 @@ if (!preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
 
     // メニューを取得
     $menus = model('select_menus', [
+        'where'    => 'enabled = 1',
         'order_by' => 'sort, id',
     ]);
     $_view['menus'] = [];

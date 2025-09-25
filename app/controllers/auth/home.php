@@ -3,7 +3,7 @@
 // ユーザを取得
 $users = model('select_users', [
     'where' => [
-        'id = :id',
+        'id = :id AND enabled = 1',
         [
             'id' => $_SESSION['auth']['user']['id'],
         ],

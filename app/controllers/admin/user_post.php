@@ -28,6 +28,7 @@ if (empty($_SESSION['post']['user']['id'])) {
             'password'      => hash_crypt($_SESSION['post']['user']['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']),
             'password_salt' => $password_salt,
             'authority_id'  => $_SESSION['post']['user']['authority_id'],
+            'enabled'       => $_SESSION['post']['user']['enabled'],
             'name'          => $_SESSION['post']['user']['name'],
             'email'         => $_SESSION['post']['user']['email'],
         ],
@@ -42,6 +43,7 @@ if (empty($_SESSION['post']['user']['id'])) {
     $sets = [
         'username'     => $_SESSION['post']['user']['username'],
         'authority_id' => $_SESSION['post']['user']['authority_id'],
+        'enabled'      => $_SESSION['post']['user']['enabled'],
         'name'         => $_SESSION['post']['user']['name'],
         'email'        => $_SESSION['post']['user']['email'],
     ];

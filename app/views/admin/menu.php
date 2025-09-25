@@ -39,6 +39,7 @@
                                         <tr>
                                             <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap">URL</th>
+                                            <th class="text-nowrap">有効</th>
                                             <th class="text-nowrap">並び替え</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
@@ -47,6 +48,7 @@
                                         <tr>
                                             <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap">URL</th>
+                                            <th class="text-nowrap">有効</th>
                                             <th class="text-nowrap">並び替え</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
@@ -56,6 +58,7 @@
                                         <tr id="sort_<?php h($menu['id']) ?>">
                                             <td><?php h(truncate($menu['title'], 50)) ?></td>
                                             <td><?php h(truncate($menu['url'], 50)) ?></td>
+                                            <td><?php h($GLOBALS['config']['options']['menu']['enabled'][$menu['enabled']]) ?></td>
                                             <td><span class="handle text-nowrap">並び替え</span></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/menu_form?id=<?php t($menu['id']) ?>" class="btn btn-primary">編集</a></td>
                                         </tr>

@@ -152,7 +152,7 @@ function service_user_login($session_id)
                     'loggedin' => localdate('Y-m-d H:i:s'),
                 ],
                 'where' => [
-                    'id = :id',
+                    'id = :id AND enabled = 1',
                     [
                         'id' => $users[0]['user_id'],
                     ],

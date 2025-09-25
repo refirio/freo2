@@ -38,6 +38,7 @@
                                         <th class="text-nowrap d-none d-md-table-cell">メールアドレス</th>
                                         <th class="text-nowrap">権限</th>
                                         <th class="text-nowrap d-none d-md-table-cell">最終ログイン日時</th>
+                                        <th class="text-nowrap">有効</th>
                                         <th class="text-nowrap">作業</th>
                                     </tr>
                                 </thead>
@@ -48,6 +49,7 @@
                                         <th class="text-nowrap d-none d-md-table-cell">メールアドレス</th>
                                         <th class="text-nowrap">権限</th>
                                         <th class="text-nowrap d-none d-md-table-cell">最終ログイン日時</th>
+                                        <th class="text-nowrap">有効</th>
                                         <th class="text-nowrap">作業</th>
                                     </tr>
                                 </tfoot>
@@ -65,6 +67,7 @@
                                                 <?php h(localdate('Ymd', $user['loggedin']) == localdate('Ymd') ? localdate('H:i:s', $user['loggedin']) : localdate('Y/m/d', $user['loggedin'])) ?>
                                             <?php endif ?>
                                         </td>
+                                        <td><?php h($GLOBALS['config']['options']['user']['enabled'][$user['enabled']]) ?></td>
                                         <td><a href="<?php t(MAIN_FILE) ?>/admin/user_form?id=<?php t($user['id']) ?>" class="btn btn-primary">編集</a></td>
                                     </tr>
                                     <?php endforeach ?>

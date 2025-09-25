@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $users = model('select_users', [
         'select' => 'password_salt, failed, failed_last',
         'where'  => [
-            'username = :username',
+            'enabled = 1 AND username = :username',
             [
                 'username' => $_POST['username'],
             ],
@@ -34,7 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $users = model('select_users', [
         'select' => 'id',
         'where'  => [
-            'username = :username AND password = :password',
+            'enabled = 1 AND username = :username AND password = :password',
             [
                 'username' => $_POST['username'],
                 'password' => hash_crypt($_POST['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']),
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'failed_last' => localdate('Y-m-d H:i:s'),
             ],
             'where' => [
-                'username = :username',
+                'enabled = 1 AND username = :username',
                 [
                     'username' => $_POST['username'],
                 ],
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     'failed_last' => null,
                 ],
                 'where' => [
-                    'username = :username',
+                    'enabled = 1 AND username = :username',
                     [
                         'username' => $_POST['username'],
                     ],

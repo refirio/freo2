@@ -20,9 +20,10 @@ if (empty($_SESSION['post']['menu']['id'])) {
     // メニューを登録
     $resource = service_menu_insert([
         'values' => [
-            'title' => $_SESSION['post']['menu']['title'],
-            'url'   => $_SESSION['post']['menu']['url'],
-            'sort'  => $_SESSION['post']['menu']['sort'],
+            'enabled' => $_SESSION['post']['menu']['enabled'],
+            'title'   => $_SESSION['post']['menu']['title'],
+            'url'     => $_SESSION['post']['menu']['url'],
+            'sort'    => $_SESSION['post']['menu']['sort'],
         ],
     ]);
     if (!$resource) {
@@ -32,8 +33,9 @@ if (empty($_SESSION['post']['menu']['id'])) {
     // メニューを編集
     $resource = service_menu_update([
         'set'   => [
-            'title' => $_SESSION['post']['menu']['title'],
-            'url'   => $_SESSION['post']['menu']['url'],
+            'enabled' => $_SESSION['post']['menu']['enabled'],
+            'title'   => $_SESSION['post']['menu']['title'],
+            'url'     => $_SESSION['post']['menu']['url'],
         ],
         'where' => [
             'id = :id',

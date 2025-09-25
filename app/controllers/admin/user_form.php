@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'password'         => isset($_POST['password'])         ? $_POST['password']         : '',
             'password_confirm' => isset($_POST['password_confirm']) ? $_POST['password_confirm'] : '',
             'authority_id'     => isset($_POST['authority_id'])     ? $_POST['authority_id']     : '',
+            'enabled'          => isset($_POST['enabled'])          ? $_POST['enabled']          : '',
             'name'             => isset($_POST['name'])             ? $_POST['name']             : '',
             'email'            => isset($_POST['email'])            ? $_POST['email']            : '',
             'attribute_sets'   => isset($_POST['attribute_sets'])   ? $_POST['attribute_sets']   : [],

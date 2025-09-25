@@ -33,6 +33,13 @@ $GLOBALS['config']['pagers'] = app_config('APP_PAGERS', [
 
 /* オプション項目 */
 $GLOBALS['config']['options'] = app_config('APP_OPTIONS', [
+    'user' => [
+        // 有効
+        'enabled' => [
+            1 => '有効',
+            0 => '無効',
+        ],
+    ],
     'entry' => [
         // 公開
         'publics' => [
@@ -60,6 +67,13 @@ $GLOBALS['config']['options'] = app_config('APP_OPTIONS', [
         'validations' => [
             'none'     => 'なし',
             'required' => '必須',
+        ],
+    ],
+    'menu' => [
+        // 有効
+        'enabled' => [
+            1 => '有効',
+            0 => '無効',
         ],
     ],
 ]);

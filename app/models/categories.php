@@ -248,7 +248,7 @@ function validate_categories($queries, $options = [])
             $messages['code'] = 'コードは2文字以上80文字以内で入力してください。';
         } elseif ($options['duplicate'] === true) {
             if (empty($queries['id'])) {
-                $users = db_select([
+                $categories = db_select([
                     'select' => 'id',
                     'from'   => DATABASE_PREFIX . 'categories',
                     'where'  => [
@@ -259,7 +259,7 @@ function validate_categories($queries, $options = [])
                     ],
                 ]);
             } else {
-                $users = db_select([
+                $categories = db_select([
                     'select' => 'id',
                     'from'   => DATABASE_PREFIX . 'categories',
                     'where'  => [
@@ -271,7 +271,7 @@ function validate_categories($queries, $options = [])
                     ],
                 ]);
             }
-            if (!empty($users)) {
+            if (!empty($categories)) {
                 $messages['code'] = '入力されたコードはすでに使用されています。';
             }
         }

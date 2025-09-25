@@ -1,17 +1,18 @@
 CREATE TABLE IF NOT EXISTS users(
-    id            INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理キー',
-    created       DATETIME     NOT NULL                COMMENT '作成日時',
-    modified      DATETIME     NOT NULL                COMMENT '更新日時',
-    deleted       DATETIME                             COMMENT '削除日時',
-    username      VARCHAR(80)  NOT NULL UNIQUE         COMMENT 'ユーザ名',
-    password      VARCHAR(80)  NOT NULL                COMMENT 'パスワード',
-    password_salt VARCHAR(80)  NOT NULL                COMMENT 'パスワードのソルト',
-    authority_id  INT UNSIGNED NOT NULL                COMMENT '外部キー 権限',
-    name          VARCHAR(255)                         COMMENT '名前',
-    email         VARCHAR(255) NOT NULL UNIQUE         COMMENT 'メールアドレス',
-    loggedin      DATETIME                             COMMENT '最終ログイン日時',
-    failed        INT UNSIGNED                         COMMENT 'ログイン失敗回数',
-    failed_last   DATETIME                             COMMENT '最終ログイン失敗日時',
+    id            INT UNSIGNED        NOT NULL AUTO_INCREMENT COMMENT '代理キー',
+    created       DATETIME            NOT NULL                COMMENT '作成日時',
+    modified      DATETIME            NOT NULL                COMMENT '更新日時',
+    deleted       DATETIME                                    COMMENT '削除日時',
+    username      VARCHAR(80)         NOT NULL UNIQUE         COMMENT 'ユーザ名',
+    password      VARCHAR(80)         NOT NULL                COMMENT 'パスワード',
+    password_salt VARCHAR(80)         NOT NULL                COMMENT 'パスワードのソルト',
+    authority_id  INT UNSIGNED        NOT NULL                COMMENT '外部キー 権限',
+    enabled       TINYINT(1) UNSIGNED NOT NULL                COMMENT '有効',
+    name          VARCHAR(255)                                COMMENT '名前',
+    email         VARCHAR(255)        NOT NULL UNIQUE         COMMENT 'メールアドレス',
+    loggedin      DATETIME                                    COMMENT '最終ログイン日時',
+    failed        INT UNSIGNED                                COMMENT 'ログイン失敗回数',
+    failed_last   DATETIME                                    COMMENT '最終ログイン失敗日時',
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'ユーザ';
 
@@ -119,13 +120,14 @@ CREATE TABLE IF NOT EXISTS attribute_sets(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '属性 ひも付け';
 
 CREATE TABLE IF NOT EXISTS menus(
-    id       INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理キー',
-    created  DATETIME     NOT NULL                COMMENT '作成日時',
-    modified DATETIME     NOT NULL                COMMENT '更新日時',
-    deleted  DATETIME                             COMMENT '削除日時',
-    title    VARCHAR(255) NOT NULL                COMMENT 'タイトル',
-    url      VARCHAR(255) NOT NULL                COMMENT 'URL',
-    sort     INT UNSIGNED NOT NULL                COMMENT '並び順',
+    id       INT UNSIGNED        NOT NULL AUTO_INCREMENT COMMENT '代理キー',
+    created  DATETIME            NOT NULL                COMMENT '作成日時',
+    modified DATETIME            NOT NULL                COMMENT '更新日時',
+    deleted  DATETIME                                    COMMENT '削除日時',
+    enabled  TINYINT(1) UNSIGNED NOT NULL                COMMENT '有効',
+    title    VARCHAR(255)        NOT NULL                COMMENT 'タイトル',
+    url      VARCHAR(255)        NOT NULL                COMMENT 'URL',
+    sort     INT UNSIGNED        NOT NULL                COMMENT '並び順',
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'メニュー';
 

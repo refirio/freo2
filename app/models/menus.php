@@ -189,6 +189,13 @@ function validate_menus($queries, $options = [])
 
     $messages = [];
 
+    // 有効
+    if (isset($queries['enabled'])) {
+        if (!validator_boolean($queries['enabled'])) {
+            $messages['enabled'] = '有効の書式が不正です。';
+        }
+    }
+
     // タイトル
     if (isset($queries['title'])) {
         if (!validator_required($queries['title'])) {
@@ -233,6 +240,7 @@ function default_menus()
         'created'  => localdate('Y-m-d H:i:s'),
         'modified' => localdate('Y-m-d H:i:s'),
         'deleted'  => null,
+        'enabled'  => 1,
         'title'    => '',
         'url'      => '',
         'sort'     => 0,

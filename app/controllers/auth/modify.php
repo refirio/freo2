@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 初期データを取得
     $users = model('select_users', [
         'where' => [
-            'id = :id',
+            'id = :id AND enabled = 1',
             [
                 'id' => $_SESSION['auth']['user']['id'],
             ],

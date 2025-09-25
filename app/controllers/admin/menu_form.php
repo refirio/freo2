@@ -14,9 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 入力データを整理
     $post = [
         'menu' => model('normalize_menus', [
-            'id'    => isset($_POST['id'])    ? $_POST['id']    : '',
-            'title' => isset($_POST['title']) ? $_POST['title'] : '',
-            'url'   => isset($_POST['url'])   ? $_POST['url']   : '',
+            'id'      => isset($_POST['id'])      ? $_POST['id']      : '',
+            'enabled' => isset($_POST['enabled']) ? $_POST['enabled'] : '',
+            'title'   => isset($_POST['title'])   ? $_POST['title']   : '',
+            'url'     => isset($_POST['url'])     ? $_POST['url']     : '',
         ]),
     ];
 

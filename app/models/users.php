@@ -254,6 +254,13 @@ function validate_users($queries, $options = [])
 
     $messages = [];
 
+    // 有効
+    if (isset($queries['enabled'])) {
+        if (!validator_boolean($queries['enabled'])) {
+            $messages['enabled'] = '有効の書式が不正です。';
+        }
+    }
+
     // ユーザ名
     if (isset($queries['username'])) {
         if (!validator_required($queries['username'])) {
@@ -451,6 +458,7 @@ function default_users()
         'created'        => localdate('Y-m-d H:i:s'),
         'modified'       => localdate('Y-m-d H:i:s'),
         'deleted'        => null,
+        'enabled'        => 1,
         'username'       => '',
         'password'       => '',
         'password_salt'  => '',

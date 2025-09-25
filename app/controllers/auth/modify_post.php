@@ -44,7 +44,7 @@ if (!empty($_SESSION['post']['user']['password'])) {
 $resource = service_user_update([
     'set'   => $sets,
     'where' => [
-        'id = :id',
+        'id = :id AND enabled = 1',
         [
             'id' => $_SESSION['auth']['user']['id'],
         ],

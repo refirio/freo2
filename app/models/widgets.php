@@ -199,7 +199,7 @@ function validate_widgets($queries, $options = [])
             $messages['code'] = 'コードは2文字以上80文字以内で入力してください。';
         } elseif ($options['duplicate'] === true) {
             if (empty($queries['id'])) {
-                $users = db_select([
+                $widgets = db_select([
                     'select' => 'id',
                     'from'   => DATABASE_PREFIX . 'widgets',
                     'where'  => [
@@ -210,7 +210,7 @@ function validate_widgets($queries, $options = [])
                     ],
                 ]);
             } else {
-                $users = db_select([
+                $widgets = db_select([
                     'select' => 'id',
                     'from'   => DATABASE_PREFIX . 'widgets',
                     'where'  => [
@@ -222,7 +222,7 @@ function validate_widgets($queries, $options = [])
                     ],
                 ]);
             }
-            if (!empty($users)) {
+            if (!empty($widgets)) {
                 $messages['code'] = '入力されたコードはすでに使用されています。';
             }
         }
