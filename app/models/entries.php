@@ -433,6 +433,13 @@ function validate_entries($queries, $options = [])
         }
     }
 
+    // 承認
+    if (isset($queries['approved'])) {
+        if (!validator_boolean($queries['approved'])) {
+            $messages['approved'] = '承認の書式が不正です。';
+        }
+    }
+
     // 公開
     if (isset($queries['public'])) {
         if (!validator_list($queries['public'], $GLOBALS['config']['options']['entry']['publics'])) {
@@ -1074,6 +1081,7 @@ function default_entries()
         'modified'       => localdate('Y-m-d H:i:s'),
         'deleted'        => null,
         'type_id'        => 0,
+        'approved'       => 1,
         'public'         => 'all',
         'public_begin'   => null,
         'public_end'     => null,

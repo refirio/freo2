@@ -1,0 +1,48 @@
+<?php
+
+import('app/services/entry.php');
+
+// ワンタイムトークン
+if (!token('check')) {
+    error('不正な操作が検出されました。送信内容を確認して再度実行してください。');
+}
+
+// アクセス元
+if (empty($_SERVER['HTTP_REFERER']) || !preg_match('/^' . preg_quote($GLOBALS['config']['http_url'], '/') . '/', $_SERVER['HTTP_REFERER'])) {
+    error('不正なアクセスです。');
+}
+
+// 権限
+if ($GLOBALS['authority']['power'] < 3) {
+    error('不正なアクセスです。');
+}
+
+if (!empty($_POST['id'])) {
+    // トランザクションを開始
+    db_transaction();
+
+    // エントリーを編集
+    $resource = service_entry_update([
+        'set'  => [
+            'approved' => $_POST['approved'],
+        ],
+        'where' => [
+            'id = :id',
+            [
+                'id' => $_POST['id'],
+            ],
+        ],
+    ]);
+    if (!$resource) {
+        error('データを編集できません。');
+    }
+
+    // トランザクションを終了
+    db_commit();
+
+    // リダイレクト
+    redirect('/admin/page?ok=approve');
+} else {
+    // リダイレクト
+    redirect('/admin/page?warning=approve');
+}

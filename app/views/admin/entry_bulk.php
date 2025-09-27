@@ -38,6 +38,7 @@
                                         <th class="text-nowrap">コード</th>
                                         <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">日時</th>
+                                        <th class="text-nowrap">承認</th>
                                         <th class="text-nowrap">公開</th>
                                         <th class="text-nowrap">カテゴリ</th>
                                     </tr>
@@ -47,6 +48,7 @@
                                         <th class="text-nowrap">コード</th>
                                         <th class="text-nowrap">タイトル</th>
                                         <th class="text-nowrap">日時</th>
+                                        <th class="text-nowrap">承認</th>
                                         <th class="text-nowrap">公開</th>
                                         <th class="text-nowrap">カテゴリ</th>
                                     </tr>
@@ -57,6 +59,7 @@
                                         <td><?php h(truncate($entry['code'], 50)) ?></td>
                                         <td><?php h(truncate($entry['title'], 50)) ?></td>
                                         <td><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
+                                        <td><?php h($GLOBALS['config']['options']['entry']['approved'][$entry['approved']]) ?></td>
                                         <td><?php h($GLOBALS['config']['options']['entry']['publics'][$entry['public']]) ?></td>
                                         <td>
                                             <?php foreach ($entry['category_sets'] as $category_sets) : ?>

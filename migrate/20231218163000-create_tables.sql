@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS entries(
     modified     DATETIME            NOT NULL                COMMENT '更新日時',
     deleted      DATETIME                                    COMMENT '削除日時',
     type_id      INT UNSIGNED        NOT NULL                COMMENT '外部キー 型',
+    approved     TINYINT(1) UNSIGNED NOT NULL                COMMENT '承認',
     public       VARCHAR(20)         NOT NULL                COMMENT '公開',
     public_begin DATETIME                                    COMMENT '公開開始日時',
     public_end   DATETIME                                    COMMENT '公開終了日時',

@@ -136,6 +136,31 @@
                             </form>
 
                             <?php if (!empty($_GET['id'])) : ?>
+                            <?php if ($GLOBALS['authority']['power'] >= 3) : ?>
+                            <form action="<?php t(MAIN_FILE) ?>/admin/entry_approve" method="post" class="approve">
+                                <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
+                                <input type="hidden" name="id" value="<?php t($_view['entry']['id']) ?>">
+                                <?php if ($_view['entry']['approved'] === 1) : ?>
+                                <input type="hidden" name="approved" value="0">
+                                <?php else : ?>
+                                <input type="hidden" name="approved" value="1">
+                                <?php endif ?>
+                                <div class="card shadow-sm mb-3">
+                                    <div class="card-header">
+                                        承認
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <?php if ($_view['entry']['approved'] === 1) : ?>
+                                            <button type="submit" class="btn btn-warning px-4">未承認にする</button>
+                                            <?php else : ?>
+                                            <button type="submit" class="btn btn-warning px-4">承認済にする</button>
+                                            <?php endif ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <?php endif ?>
                             <form action="<?php t(MAIN_FILE) ?>/admin/entry_delete" method="post" class="delete">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <input type="hidden" name="id" value="<?php t($_view['entry']['id']) ?>">

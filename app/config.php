@@ -41,6 +41,11 @@ $GLOBALS['config']['options'] = app_config('APP_OPTIONS', [
         ],
     ],
     'entry' => [
+        // 承認
+        'approved' => [
+            1 => '承認済',
+            0 => '未承認',
+        ],
         // 公開
         'publics' => [
             'all'       => '全体に公開',

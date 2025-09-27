@@ -17,6 +17,8 @@
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                                 <?php if ($_GET['ok'] === 'post') : ?>
                                 ページを登録しました。
+                                <?php elseif ($_GET['ok'] === 'approve') : ?>
+                                記事の承認を変更しました。
                                 <?php elseif ($_GET['ok'] === 'delete') : ?>
                                 ページを削除しました。
                                 <?php endif ?>
@@ -39,6 +41,7 @@
                                             <th class="text-nowrap">コード</th>
                                             <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap d-none d-md-table-cell">日時</th>
+                                            <th class="text-nowrap">承認</th>
                                             <th class="text-nowrap">公開</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
@@ -49,6 +52,7 @@
                                             <th class="text-nowrap">コード</th>
                                             <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap d-none d-md-table-cell">日時</th>
+                                            <th class="text-nowrap">承認</th>
                                             <th class="text-nowrap">公開</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
@@ -60,6 +64,7 @@
                                             <td><?php h(truncate($entry['code'], 50)) ?></td>
                                             <td><?php h(truncate($entry['title'], 50)) ?></td>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
+                                            <td><?php h($GLOBALS['config']['options']['entry']['approved'][$entry['approved']]) ?></td>
                                             <td><?php h($GLOBALS['config']['options']['entry']['publics'][$entry['public']]) ?></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/page_form?id=<?php t($entry['id']) ?>" class="btn btn-primary text-nowrap">編集</a></td>
                                         </tr>

@@ -125,6 +125,22 @@ $(document).ready(function() {
     });
 
     /*
+     * 承認確認
+     */
+    $('a.approve').on('click', function() {
+        return window.confirm('本当に承認を変更してもよろしいですか？');
+    });
+    $('form.approve').on('submit', function() {
+        if (window.confirm('本当に承認を変更してもよろしいですか？')) {
+            return true;
+        } else {
+            $(this).find(':submit').removeAttr('disabled');
+
+            return false;
+        }
+    });
+
+    /*
      * 削除確認
      */
     $('a.delete').on('click', function() {

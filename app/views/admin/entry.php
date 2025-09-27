@@ -17,6 +17,8 @@
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                                 <?php if ($_GET['ok'] === 'post') : ?>
                                 記事を登録しました。
+                                <?php elseif ($_GET['ok'] === 'approve') : ?>
+                                記事の承認を変更しました。
                                 <?php elseif ($_GET['ok'] === 'delete') : ?>
                                 記事を削除しました。
                                 <?php endif ?>
@@ -40,6 +42,7 @@
                                             <th class="text-nowrap">コード</th>
                                             <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap d-none d-md-table-cell">日時</th>
+                                            <th class="text-nowrap">承認</th>
                                             <th class="text-nowrap">公開</th>
                                             <th class="text-nowrap d-none d-md-table-cell">カテゴリ</th>
                                             <th class="text-nowrap">作業</th>
@@ -51,6 +54,7 @@
                                             <th class="text-nowrap">コード</th>
                                             <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap d-none d-md-table-cell">日時</th>
+                                            <th class="text-nowrap">承認</th>
                                             <th class="text-nowrap">公開</th>
                                             <th class="text-nowrap d-none d-md-table-cell">カテゴリ</th>
                                             <th class="text-nowrap">作業</th>
@@ -63,6 +67,7 @@
                                             <td><?php h(truncate($entry['code'], 50)) ?></td>
                                             <td><?php h(truncate($entry['title'], 50)) ?></td>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
+                                            <td><?php h($GLOBALS['config']['options']['entry']['approved'][$entry['approved']]) ?></td>
                                             <td><?php h($GLOBALS['config']['options']['entry']['publics'][$entry['public']]) ?></td>
                                             <td class="d-none d-md-table-cell">
                                                 <?php foreach ($entry['category_sets'] as $category_sets) : ?>
