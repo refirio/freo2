@@ -13,6 +13,9 @@ if (empty($_SESSION['post'])) {
     redirect('/admin/page_form');
 }
 
+// 承認
+$approve = $GLOBALS['setting']['page_use_approve'] ? 0 : 1;
+
 // アップロードファイル
 $files = [
     'picture'   => isset($_SESSION['file']['entry']['picture'])   ? $_SESSION['file']['entry']['picture']   : [],
@@ -46,6 +49,7 @@ if (empty($_SESSION['post']['entry']['id'])) {
     $resource = service_entry_insert([
         'values' => [
             'type_id'      => $_SESSION['post']['entry']['type_id'],
+            'approved'     => $approve,
             'public'       => $_SESSION['post']['entry']['public'],
             'public_begin' => $_SESSION['post']['entry']['public_begin'],
             'public_end'   => $_SESSION['post']['entry']['public_end'],

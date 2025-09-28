@@ -126,7 +126,7 @@
                             </form>
 
                             <?php if (!empty($_GET['id'])) : ?>
-                            <?php if ($GLOBALS['authority']['power'] >= 3) : ?>
+                            <?php if ($GLOBALS['setting']['page_use_approve'] && $GLOBALS['authority']['power'] >= 3) : ?>
                             <form action="<?php t(MAIN_FILE) ?>/admin/page_approve" method="post" class="approve">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <input type="hidden" name="id" value="<?php t($_view['entry']['id']) ?>">

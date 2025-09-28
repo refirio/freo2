@@ -16,10 +16,12 @@ INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'page', '下層ページ', 
 
 INSERT INTO settings VALUES('title', 'Example');
 INSERT INTO settings VALUES('description', 'サイトの概要。');
+INSERT INTO settings VALUES('entry_use_approve', 0);
 INSERT INTO settings VALUES('entry_use_text', 1);
 INSERT INTO settings VALUES('entry_use_picture', 1);
 INSERT INTO settings VALUES('entry_use_thumbnail', 1);
 INSERT INTO settings VALUES('entry_default_code', 'YmdHis');
+INSERT INTO settings VALUES('page_use_approve', 0);
 INSERT INTO settings VALUES('page_use_text', 1);
 INSERT INTO settings VALUES('page_use_picture', 1);
 INSERT INTO settings VALUES('page_use_thumbnail', 1);

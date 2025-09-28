@@ -21,6 +21,11 @@ $GLOBALS['setting_contents'] = [
         ],
     ],
     'entry' => [
+        'entry_use_approve' => [
+            'name'     => '記事の承認',
+            'type'     => 'boolean',
+            'required' => false,
+        ],
         'entry_use_text' => [
             'name'     => '本文の入力',
             'type'     => 'boolean',
@@ -43,6 +48,11 @@ $GLOBALS['setting_contents'] = [
         ],
     ],
     'page'  => [
+        'page_use_approve' => [
+            'name'     => 'ページの承認',
+            'type'     => 'boolean',
+            'required' => false,
+        ],
         'page_use_text' => [
             'name'     => '本文の入力',
             'type'     => 'boolean',
