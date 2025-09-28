@@ -10,8 +10,8 @@
 
                     <?php if ($_view['page']['picture'] || $_view['page']['thumbnail']) : ?>
                     <div class="images">
-                        <?php if ($_view['page']['picture']) : ?><div class="image"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_targets']['page'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>" alt=""></div><?php endif ?>
-                        <?php if ($_view['page']['thumbnail']) : ?><div class="image"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_targets']['page'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt=""></div><?php endif ?>
+                        <?php if ($_view['page']['picture']) : ?><div class="image"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>" alt=""></div><?php endif ?>
+                        <?php if ($_view['page']['thumbnail']) : ?><div class="image"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt=""></div><?php endif ?>
                     </div>
                     <?php endif ?>
                     <?php endif ?>
@@ -21,7 +21,7 @@
                         <li>
                             <time datetime="<?php h(localdate('Y-m-d', $entry['datetime'])) ?>" class="datetime"><?php h(localdate('Y.m.d', $entry['datetime'])) ?></time>
                             <a href="<?php t(MAIN_FILE) ?>/entry/detail/<?php h($entry['code']) ?>"><?php h($entry['title']) ?></a>
-                            <span class="text"><?php h(truncate(strip_tags($entry['text']), 100)) ?></span>
+                            <span class="text"><?php h(truncate(strip_tags($entry['text'] ?? ''), 100)) ?></span>
                         </li>
                         <?php endforeach ?>
                     </ul>

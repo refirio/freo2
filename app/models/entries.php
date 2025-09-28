@@ -355,10 +355,10 @@ function delete_entries($queries, $options = [])
     if ($options['file'] === true) {
         // 関連するファイルを削除
         foreach ($ids as $id) {
-            service_storage_remove($GLOBALS['config']['file_targets']['entry'] . $id . '/');
+            service_storage_remove($GLOBALS['config']['file_target']['entry'] . $id . '/');
 
             foreach ($field_ids as $field_id) {
-                service_storage_remove($GLOBALS['config']['file_targets']['field'] . $id . '_' . $field_id . '/');
+                service_storage_remove($GLOBALS['config']['file_target']['field'] . $id . '_' . $field_id . '/');
             }
         }
     }
@@ -442,7 +442,7 @@ function validate_entries($queries, $options = [])
 
     // 公開
     if (isset($queries['public'])) {
-        if (!validator_list($queries['public'], $GLOBALS['config']['options']['entry']['publics'])) {
+        if (!validator_list($queries['public'], $GLOBALS['config']['option']['entry']['public'])) {
             $messages['public'] = '公開の値が不正です。';
         }
     }
@@ -884,7 +884,7 @@ function save_file_entries($id, $files)
         }
         if (empty($files[$file]['delete']) && !empty($files[$file]['name'])) {
             if (preg_match('/(.*)\.(.*)$/', $files[$file]['name'], $matches)) {
-                $directory = $GLOBALS['config']['file_targets'][$target] . $key . '/';
+                $directory = $GLOBALS['config']['file_target'][$target] . $key . '/';
                 //$suffix    = $file === 'thumbnail' ? '_thumbnail' : '';
                 $suffix    = '';
                 $filename  = rawurlencode($matches[1]) . $suffix . '.' . $matches[2];
@@ -971,11 +971,11 @@ function remove_file_entries($id, $files)
                 if (!empty($field_sets)) {
                     $field_set = $field_sets[0];
 
-                    if (service_storage_exist($GLOBALS['config']['file_targets']['field'] . $key . '/' . $field_set['text'])) {
-                        //if (is_file($GLOBALS['config']['file_targets']['field'] . intval($id) . '/thumbnail_' . $field_set['text'])) {
-                        //    unlink($GLOBALS['config']['file_targets']['field'] . intval($id) . '/thumbnail_' . $field_set['text']);
+                    if (service_storage_exist($GLOBALS['config']['file_target']['field'] . $key . '/' . $field_set['text'])) {
+                        //if (is_file($GLOBALS['config']['file_target']['field'] . intval($id) . '/thumbnail_' . $field_set['text'])) {
+                        //    unlink($GLOBALS['config']['file_target']['field'] . intval($id) . '/thumbnail_' . $field_set['text']);
                         //}
-                        service_storage_remove($GLOBALS['config']['file_targets']['field'] . $key . '/' . $field_set['text']);
+                        service_storage_remove($GLOBALS['config']['file_target']['field'] . $key . '/' . $field_set['text']);
 
                         $resource = model('delete_field_sets', [
                             'where' => [
@@ -1008,11 +1008,11 @@ function remove_file_entries($id, $files)
                     $entry = $entries[0];
                 }
 
-                if (service_storage_exist($GLOBALS['config']['file_targets']['entry'] . intval($id) . '/' . $entry[$file])) {
-                    //if (is_file($GLOBALS['config']['file_targets']['entry'] . intval($id) . '/thumbnail_' . $entry[$file])) {
-                    //    unlink($GLOBALS['config']['file_targets']['entry'] . intval($id) . '/thumbnail_' . $entry[$file]);
+                if (service_storage_exist($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $entry[$file])) {
+                    //if (is_file($GLOBALS['config']['file_target']['entry'] . intval($id) . '/thumbnail_' . $entry[$file])) {
+                    //    unlink($GLOBALS['config']['file_target']['entry'] . intval($id) . '/thumbnail_' . $entry[$file]);
                     //}
-                    service_storage_remove($GLOBALS['config']['file_targets']['entry'] . intval($id) . '/' . $entry[$file]);
+                    service_storage_remove($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $entry[$file]);
 
                     $resource = db_update([
                         'update' => DATABASE_PREFIX . 'entries',

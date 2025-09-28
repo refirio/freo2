@@ -27,10 +27,10 @@ $content = null;
 if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
     if (isset($_SESSION['file'][$_GET['target']][$_GET['key']]['name']) && isset($_SESSION['file'][$_GET['target']][$_GET['key']]['data'])) {
         // セッションからファイルを取得
-        foreach (array_keys($GLOBALS['config']['file_permissions'][$_GET['format']]) as $permission) {
-            if (preg_match($GLOBALS['config']['file_permissions'][$_GET['format']][$permission]['regexp'], $_SESSION['file'][$_GET['target']][$_GET['key']]['name'])) {
+        foreach (array_keys($GLOBALS['config']['file_permission'][$_GET['format']]) as $permission) {
+            if (preg_match($GLOBALS['config']['file_permission'][$_GET['format']][$permission]['regexp'], $_SESSION['file'][$_GET['target']][$_GET['key']]['name'])) {
                 // マイムタイプ
-                $mime = $GLOBALS['config']['file_permissions'][$_GET['format']][$permission]['mime'];
+                $mime = $GLOBALS['config']['file_permission'][$_GET['format']][$permission]['mime'];
 
                 break;
             }
@@ -54,7 +54,7 @@ if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
             $result = $results[0];
         }
 
-        $file = $GLOBALS['config']['file_targets'][$_GET['target']] . intval($_GET['id']) . '/' . $result[$_GET['key']];
+        $file = $GLOBALS['config']['file_target'][$_GET['target']] . intval($_GET['id']) . '/' . $result[$_GET['key']];
     } elseif ($_GET['target'] === 'field' && isset($_GET['id'])) {
         // 登録内容からファイルを取得
         list($target, $id, $key) = explode('_', $_GET['key']);
@@ -71,21 +71,21 @@ if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
         if (!empty($results)) {
             $result = $results[0];
 
-            $file = $GLOBALS['config']['file_targets']['field'] . $result['entry_id'] . '_' . $result['field_id'] . '/' . $result['text'];
+            $file = $GLOBALS['config']['file_target']['field'] . $result['entry_id'] . '_' . $result['field_id'] . '/' . $result['text'];
         }
     }
 }
 
 if ($file && service_storage_exist($file)) {
-    foreach (array_keys($GLOBALS['config']['file_permissions'][$_GET['format']]) as $permission) {
+    foreach (array_keys($GLOBALS['config']['file_permission'][$_GET['format']]) as $permission) {
         if (isset($result[$_GET['key']])) {
             $value = $result[$_GET['key']];
         } else {
             $value = $result['text'];
         }
-        if (preg_match($GLOBALS['config']['file_permissions'][$_GET['format']][$permission]['regexp'], $value)) {
+        if (preg_match($GLOBALS['config']['file_permission'][$_GET['format']][$permission]['regexp'], $value)) {
             // マイムタイプ
-            $mime = $GLOBALS['config']['file_permissions'][$_GET['format']][$permission]['mime'];
+            $mime = $GLOBALS['config']['file_permission'][$_GET['format']][$permission]['mime'];
 
             break;
         }
@@ -119,10 +119,10 @@ if (isset($_GET['_type']) && $_GET['_type'] === 'json') {
     }
     if ($content === null) {
         $mime    = 'image/png';
-        $content = file_get_contents($GLOBALS['config']['file_dummies'][$_GET['format']]);
-    } elseif (!empty($GLOBALS['config']['file_alternatives'][$_GET['format']])) {
+        $content = file_get_contents($GLOBALS['config']['file_dummy'][$_GET['format']]);
+    } elseif (!empty($GLOBALS['config']['file_alternative'][$_GET['format']])) {
         $mime    = 'image/png';
-        $content = file_get_contents($GLOBALS['config']['file_alternatives'][$_GET['format']]);
+        $content = file_get_contents($GLOBALS['config']['file_alternative'][$_GET['format']]);
     }
 
     header('Content-type: ' . $mime);

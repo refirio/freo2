@@ -67,7 +67,7 @@
                                                 <?php h(localdate('Ymd', $user['loggedin']) == localdate('Ymd') ? localdate('H:i:s', $user['loggedin']) : localdate('Y/m/d', $user['loggedin'])) ?>
                                             <?php endif ?>
                                         </td>
-                                        <td><?php h($GLOBALS['config']['options']['user']['enabled'][$user['enabled']]) ?></td>
+                                        <td><?php h($GLOBALS['config']['option']['user']['enabled'][$user['enabled']]) ?></td>
                                         <td><a href="<?php t(MAIN_FILE) ?>/admin/user_form?id=<?php t($user['id']) ?>" class="btn btn-primary">編集</a></td>
                                     </tr>
                                     <?php endforeach ?>
@@ -79,7 +79,7 @@
                                     <?php for ($i = 1; $i <= $_view['user_page']; $i++) : ?>
                                     <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/user?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                                     <?php endfor ?>
-                                    <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/user?page=<?php t(ceil($_view['user_count'] / $GLOBALS['config']['limits']['user'])) ?>" class="page-link">&raquo;</a></li>
+                                    <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/user?page=<?php t(ceil($_view['user_count'] / $GLOBALS['config']['limit']['user'])) ?>" class="page-link">&raquo;</a></li>
                                 </ul>
                             <?php endif ?>
                         </div>

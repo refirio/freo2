@@ -29,7 +29,7 @@
 
                             <?php if (empty($_view['contents'])) : ?>
                             <ul>
-                                <?php foreach ($GLOBALS['setting_titles'] as $key => $title) : ?>
+                                <?php foreach ($GLOBALS['setting_title'] as $key => $title) : ?>
                                 <li><a href="<?php t(MAIN_FILE) ?>/admin/setting?target=<?php t($key) ?>"><?php h($title) ?></a></li>
                                 <?php endforeach ?>
                             </ul>

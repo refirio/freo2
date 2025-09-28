@@ -1,7 +1,7 @@
 <?php
 
 // 設定項目を定義
-$GLOBALS['setting_titles'] = [
+$GLOBALS['setting_title'] = [
     'basis' => '基本設定',
     'entry' => '記事設定',
     'page'  => 'ページ設定',

@@ -45,7 +45,7 @@
                                             <label class="fw-bold">種類 <span class="badge bg-danger">必須</span></label>
                                             <select name="kind" class="form-select" style="width: 200px;">
                                                 <option value=""></option>
-                                                <?php foreach ($GLOBALS['config']['options']['field']['kinds'] as $key => $value) : ?>
+                                                <?php foreach ($GLOBALS['config']['option']['field']['kind'] as $key => $value) : ?>
                                                 <option value="<?php t($key) ?>"<?php $key == $_view['field']['kind'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
                                                 <?php endforeach ?>
                                             </select>
@@ -53,7 +53,7 @@
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">バリデーション</label>
                                             <select name="validation" class="form-select" style="width: 200px;">
-                                                <?php foreach ($GLOBALS['config']['options']['field']['validations'] as $key => $value) : ?>
+                                                <?php foreach ($GLOBALS['config']['option']['field']['validation'] as $key => $value) : ?>
                                                 <option value="<?php t($key) ?>"<?php $key == $_view['field']['validation'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
                                                 <?php endforeach ?>
                                             </select>

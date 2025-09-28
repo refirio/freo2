@@ -77,4 +77,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $_view['contents'] = $setting_contents;
 
 // タイトル
-$_view['title'] = isset($_GET['target']) ? $GLOBALS['setting_titles'][$_GET['target']] : '設定';
+$_view['title'] = isset($_GET['target']) ? $GLOBALS['setting_title'][$_GET['target']] : '設定';

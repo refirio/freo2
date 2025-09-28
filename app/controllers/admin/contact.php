@@ -15,8 +15,8 @@ $_view['contacts'] = model('select_contacts', [
     'limit'    => [
         ':offset, :limit',
         [
-            'offset' => $GLOBALS['config']['limits']['contact'] * ($_GET['page'] - 1),
-            'limit'  => $GLOBALS['config']['limits']['contact'],
+            'offset' => $GLOBALS['config']['limit']['contact'] * ($_GET['page'] - 1),
+            'limit'  => $GLOBALS['config']['limit']['contact'],
         ],
     ],
 ], [
@@ -29,7 +29,7 @@ $contact_count = model('select_contacts', [
     'associate' => true,
 ]);
 $_view['contact_count'] = $contact_count[0]['count'];
-$_view['contact_page']  = ceil($contact_count[0]['count'] / $GLOBALS['config']['limits']['contact']);
+$_view['contact_page']  = ceil($contact_count[0]['count'] / $GLOBALS['config']['limit']['contact']);
 
 // タイトル
 $_view['title'] = 'お問い合わせ管理';

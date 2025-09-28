@@ -58,7 +58,7 @@
                                         <tr id="sort_<?php h($field['id']) ?>">
                                             <td><?php h($field['type_name']) ?></td>
                                             <td><?php h(truncate($field['name'], 50)) ?></td>
-                                            <td><?php h($GLOBALS['config']['options']['field']['kinds'][$field['kind']]) ?></td>
+                                            <td><?php h($GLOBALS['config']['option']['field']['kind'][$field['kind']]) ?></td>
                                             <td><span class="handle text-nowrap">並び替え</span></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/field_form?id=<?php t($field['id']) ?>" class="btn btn-primary">編集</a></td>
                                         </tr>

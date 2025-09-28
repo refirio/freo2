@@ -251,7 +251,7 @@ function validate_fields($queries, $options = [])
     if (isset($queries['kind'])) {
         if (!validator_required($queries['kind'])) {
             $messages['kind'] = '種類が入力されていません。';
-        } elseif (!validator_list($queries['kind'], $GLOBALS['config']['options']['field']['kinds'])) {
+        } elseif (!validator_list($queries['kind'], $GLOBALS['config']['option']['field']['kind'])) {
             $messages['kind'] = '種類の値が不正です。';
         }
     }
@@ -259,7 +259,7 @@ function validate_fields($queries, $options = [])
     // バリデーション
     if (isset($queries['validation'])) {
         if (!validator_required($queries['validation'])) {
-        } elseif (!validator_list($queries['validation'], $GLOBALS['config']['options']['field']['validations'])) {
+        } elseif (!validator_list($queries['validation'], $GLOBALS['config']['option']['field']['validation'])) {
             $messages['validation'] = 'バリデーションの値が不正です。';
         }
     }

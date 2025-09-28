@@ -69,9 +69,9 @@
                                             <td><?php h(truncate($entry['title'], 50)) ?></td>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
                                             <?php if ($GLOBALS['setting']['page_use_approve']) : ?>
-                                            <td><?php h($GLOBALS['config']['options']['entry']['approved'][$entry['approved']]) ?></td>
+                                            <td><?php h($GLOBALS['config']['option']['entry']['approved'][$entry['approved']]) ?></td>
                                             <?php endif ?>
-                                            <td><?php h($GLOBALS['config']['options']['entry']['publics'][$entry['public']]) ?></td>
+                                            <td><?php h($GLOBALS['config']['option']['entry']['public'][$entry['public']]) ?></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/page_form?id=<?php t($entry['id']) ?>" class="btn btn-primary text-nowrap">編集</a></td>
                                         </tr>
                                         <?php endforeach ?>

@@ -16,8 +16,8 @@ $_view['entries'] = model('select_entries', [
     'limit'    => [
         ':offset, :limit',
         [
-            'offset' => $GLOBALS['config']['limits']['entry'] * ($_GET['page'] - 1),
-            'limit'  => $GLOBALS['config']['limits']['entry'],
+            'offset' => $GLOBALS['config']['limit']['entry'] * ($_GET['page'] - 1),
+            'limit'  => $GLOBALS['config']['limit']['entry'],
         ],
     ],
 ], [
@@ -31,7 +31,7 @@ $entry_count = model('select_entries', [
     'associate' => true,
 ]);
 $_view['entry_count'] = $entry_count[0]['count'];
-$_view['entry_page']  = ceil($entry_count[0]['count'] / $GLOBALS['config']['limits']['entry']);
+$_view['entry_page']  = ceil($entry_count[0]['count'] / $GLOBALS['config']['limit']['entry']);
 
 // タイトル
 $_view['title'] = '記事管理';

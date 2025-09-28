@@ -59,8 +59,8 @@
                                         <td><?php h(truncate($entry['code'], 50)) ?></td>
                                         <td><?php h(truncate($entry['title'], 50)) ?></td>
                                         <td><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
-                                        <td><?php h($GLOBALS['config']['options']['entry']['approved'][$entry['approved']]) ?></td>
-                                        <td><?php h($GLOBALS['config']['options']['entry']['publics'][$entry['public']]) ?></td>
+                                        <td><?php h($GLOBALS['config']['option']['entry']['approved'][$entry['approved']]) ?></td>
+                                        <td><?php h($GLOBALS['config']['option']['entry']['public'][$entry['public']]) ?></td>
                                         <td>
                                             <?php foreach ($entry['category_sets'] as $category_sets) : ?>
                                             <div class="text-nowrap"><?php h($category_sets['category_name']) ?></div>

@@ -16,7 +16,7 @@ $GLOBALS['config']['http_path'] = app_config('APP_HTTP_PATH', dirname($_SERVER['
 $GLOBALS['config']['hash_salt'] = app_config('APP_HASH_SALT', 'RKH7X92N4P');
 
 /* 表示件数 */
-$GLOBALS['config']['limits'] = app_config('APP_LIMITS', [
+$GLOBALS['config']['limit'] = app_config('APP_LIMIT', [
     'entry'   => 10,
     'contact' => 10,
     'user'    => 10,
@@ -24,7 +24,7 @@ $GLOBALS['config']['limits'] = app_config('APP_LIMITS', [
 ]);
 
 /* ページャーの幅 */
-$GLOBALS['config']['pagers'] = app_config('APP_PAGERS', [
+$GLOBALS['config']['pager'] = app_config('APP_PAGER', [
     'entry'   => 5,
     'contact' => 5,
     'user'    => 5,
@@ -32,7 +32,7 @@ $GLOBALS['config']['pagers'] = app_config('APP_PAGERS', [
 ]);
 
 /* オプション項目 */
-$GLOBALS['config']['options'] = app_config('APP_OPTIONS', [
+$GLOBALS['config']['option'] = app_config('APP_OPTION', [
     'user' => [
         // 有効
         'enabled' => [
@@ -47,7 +47,7 @@ $GLOBALS['config']['options'] = app_config('APP_OPTIONS', [
             0 => '未承認',
         ],
         // 公開
-        'publics' => [
+        'public' => [
             'all'       => '全体に公開',
             'user'      => '登録ユーザに公開',
             'attribute' => '指定の属性に公開',
@@ -56,7 +56,7 @@ $GLOBALS['config']['options'] = app_config('APP_OPTIONS', [
     ],
     'field' => [
         // 種類
-        'kinds' => [
+        'kind' => [
             'text'     => '一行入力',
             'number'   => '数字入力',
             'alphabet' => '英数字入力',
@@ -69,7 +69,7 @@ $GLOBALS['config']['options'] = app_config('APP_OPTIONS', [
             'file'     => 'ファイルアップロード',
         ],
         // バリデーション
-        'validations' => [
+        'validation' => [
             'none'     => 'なし',
             'required' => '必須',
         ],
@@ -88,13 +88,13 @@ $GLOBALS['config']['storage_type'] = app_config('APP_STORAGE_TYPE', 'file');
 $GLOBALS['config']['storage_url'] = app_config('APP_STORAGE_URL', null);
 
 /* ファイルアップロード先 */
-$GLOBALS['config']['file_targets'] = app_config('APP_FILE_TARGETS', [
+$GLOBALS['config']['file_target'] = app_config('APP_FILE_TARGET', [
     'entry' => 'files/entries/',
     'field' => 'files/fields/',
 ]);
 
 /* ファイルアップロード許可 */
-$GLOBALS['config']['file_permissions'] = app_config('APP_FILE_PERMISSIONS', [
+$GLOBALS['config']['file_permission'] = app_config('APP_FILE_PERMISSION', [
     'file'  => [
     ],
     'image' => [
@@ -120,13 +120,13 @@ $GLOBALS['config']['file_permissions'] = app_config('APP_FILE_PERMISSIONS', [
 ]);
 
 /* 代替ファイル */
-$GLOBALS['config']['file_alternatives'] = app_config('APP_FILE_ALTERNATIVES', [
+$GLOBALS['config']['file_alternative'] = app_config('APP_FILE_ALTERNATIVE', [
     'file'  => 'img/admin/file.png',
     'image' => null,
 ]);
 
 /* ダミー画像ファイル */
-$GLOBALS['config']['file_dummies'] = app_config('APP_FILE_DUMMIES', [
+$GLOBALS['config']['file_dummy'] = app_config('APP_FILE_DUMMY', [
     'file'  => 'img/admin/no_file.png',
     'image' => 'img/admin/no_file.png',
 ]);

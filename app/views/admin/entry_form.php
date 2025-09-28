@@ -23,7 +23,7 @@
                                 <dt>サムネイル</dt>
                                     <dd><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=thumbnail&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></dd>
                                 <dt>公開</dt>
-                                    <dd><?php h($GLOBALS['config']['options']['entry']['publics'][$_view['entry']['public']]) ?></dd>
+                                    <dd><?php h($GLOBALS['config']['option']['entry']['public'][$_view['entry']['public']]) ?></dd>
                             </dl>
                             <p><a href="#" class="close">閉じる</a></p>
                         <?php else : ?>
@@ -59,7 +59,7 @@
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">公開 <span class="badge bg-danger">必須</span></label>
                                             <select name="public" class="form-select" style="width: 200px;">
-                                                <?php foreach ($GLOBALS['config']['options']['entry']['publics'] as $key => $value) : ?>
+                                                <?php foreach ($GLOBALS['config']['option']['entry']['public'] as $key => $value) : ?>
                                                 <option value="<?php t($key) ?>"<?php $key == $_view['entry']['public'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
                                                 <?php endforeach ?>
                                             </select>

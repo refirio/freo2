@@ -59,7 +59,7 @@
                                     <?php for ($i = 1; $i <= $_view['log_page']; $i++) : ?>
                                     <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/log?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                                     <?php endfor ?>
-                                    <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/log?page=<?php t(ceil($_view['log_count'] / $GLOBALS['config']['limits']['log'])) ?>" class="page-link">&raquo;</a></li>
+                                    <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/log?page=<?php t(ceil($_view['log_count'] / $GLOBALS['config']['limit']['log'])) ?>" class="page-link">&raquo;</a></li>
                                 </ul>
                             <?php endif ?>
                         </div>

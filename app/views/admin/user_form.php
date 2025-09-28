@@ -71,7 +71,7 @@
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">有効 <span class="badge bg-danger">必須</span></label>
                                             <select name="enabled" class="form-select" style="width: 200px;">
-                                                <?php foreach ($GLOBALS['config']['options']['user']['enabled'] as $key => $value) : ?>
+                                                <?php foreach ($GLOBALS['config']['option']['user']['enabled'] as $key => $value) : ?>
                                                 <option value="<?php t($key) ?>"<?php $key == $_view['user']['enabled'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
                                                 <?php endforeach ?>
                                             </select>
