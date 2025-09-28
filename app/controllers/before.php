@@ -74,22 +74,30 @@ if (!empty($_SESSION['auth']['user']['id'])) {
         $GLOBALS['authority'] = $authorities[0];
 
         // 権限を確認
-        if ($GLOBALS['authority']['power'] == 2) {
+        if ($GLOBALS['authority']['power'] == 3) {
+            // 管理者（全権限を持つ）
+        } elseif ($GLOBALS['authority']['power'] == 2) {
+            // 投稿者
             if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
                 if (!preg_match('/^(index|entry|page|category|field|attribute|menu|widget|contact|file)(_|$)/', $_REQUEST['_work'])) {
                     error('不正なアクセスです。');
                 }
             }
         } elseif ($GLOBALS['authority']['power'] == 1) {
+            // 閲覧者
             if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
                 if (!preg_match('/^(index|contact|contact_view)(_|$)/', $_REQUEST['_work'])) {
                     error('不正なアクセスです。');
                 }
             }
-        }
-        if (preg_match('/^(auth)$/', $_REQUEST['_mode'])) {
-            if (!preg_match('/^(index|home|modify|logout)(_|$)/', $_REQUEST['_work'])) {
+        } else {
+            // ゲスト
+            if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
                 error('不正なアクセスです。');
+            } elseif (preg_match('/^(auth)$/', $_REQUEST['_mode'])) {
+                if (!preg_match('/^(index|home|modify|logout)(_|$)/', $_REQUEST['_work'])) {
+                    error('不正なアクセスです。');
+                }
             }
         }
 

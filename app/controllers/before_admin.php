@@ -1,7 +1,7 @@
 <?php
 
 // ログイン確認
-if (empty($_SESSION['auth']['user'])) {
+if (empty($_SESSION['auth']['user']['id'])) {
     $referer = '/' . implode('/', $_params);
 
     if (isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING'] !== '') {
