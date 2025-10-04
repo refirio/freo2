@@ -49,38 +49,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 } else {
     // 初期データを取得
-    if (empty($_GET['id'])) {
-        $_view['contact'] = model('default_contacts');
-    } else {
-        $contacts = model('select_contacts', [
-            'where' => [
-                'id = :id',
-                [
-                    'id' => $_GET['id'],
-                ],
+    $contacts = model('select_contacts', [
+        'where' => [
+            'id = :id',
+            [
+                'id' => $_GET['id'],
             ],
-        ]);
-        if (empty($contacts)) {
-            warning('編集データが見つかりません。');
-        } else {
-            $_view['contact'] = $contacts[0];
-        }
-    }
-
-    if (isset($_GET['_type']) && $_GET['_type'] === 'json') {
-        // お問い合わせ情報を取得
-        header('Content-Type: application/json; charset=' . MAIN_CHARSET);
-
-        echo json_encode([
-            'status' => 'OK',
-            'data'   => $_view,
-        ]);
-
-        exit;
+        ],
+    ]);
+    if (empty($contacts)) {
+        warning('編集データが見つかりません。');
     } else {
-        // 投稿セッションを初期化
-        unset($_SESSION['post']);
+        $_view['contact'] = $contacts[0];
     }
+
+    // 投稿セッションを初期化
+    unset($_SESSION['post']);
 
     // 編集開始日時を記録
     if (!empty($_GET['id'])) {
@@ -88,14 +72,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-if ((empty($_POST['view']) || $_POST['view'] !== 'preview')) {
-    // お問い合わせの表示用データ作成
-    $_view['contact'] = model('view_contacts', $_view['contact']);
-}
-
 // タイトル
-if (empty($_GET['id'])) {
-    $_view['title'] = 'お問い合わせ登録';
-} else {
-    $_view['title'] = 'お問い合わせ編集';
-}
+$_view['title'] = 'お問い合わせ編集';

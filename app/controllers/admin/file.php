@@ -104,6 +104,7 @@ if (isset($_GET['_type']) && $_GET['_type'] === 'json') {
         list($width, $height) = getimagesize('data:application/octet-stream;base64,' . base64_encode($content));
     }
 
+    // JSON形式で出力
     header('Content-Type: application/json; charset=' . MAIN_CHARSET);
 
     echo json_encode([
@@ -125,6 +126,7 @@ if (isset($_GET['_type']) && $_GET['_type'] === 'json') {
         $content = file_get_contents($GLOBALS['config']['file_alternative'][$_GET['format']]);
     }
 
+    // ファイルを出力
     header('Content-type: ' . $mime);
 
     echo $content;

@@ -80,6 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($_GET['_type']) && $_GET['_type'] === 'json') {
+        // アップロードファイルを確認
         $files = [
             'picture'   => $_view['entry']['picture']   ? file_mimetype($_view['entry']['picture'])   : null,
             'thumbnail' => $_view['entry']['thumbnail'] ? file_mimetype($_view['entry']['thumbnail']) : null,
@@ -105,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
 
-        // エントリー情報を取得
+        // JSON形式で出力
         header('Content-Type: application/json; charset=' . MAIN_CHARSET);
 
         echo json_encode([

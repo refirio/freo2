@@ -51,16 +51,10 @@ function select_users($queries, $options = [])
 
         if (!empty($id_columns)) {
             // 属性を取得
-            $attribute_sets = model('select_attribute_sets', [
-                'where' => 'attribute_sets.user_id IN(' . implode(',', array_map('db_escape', $id_columns)) . ')',
-            ], [
-                'associate' => true,
-            ]);
-
-            $attributes = [];
-            foreach ($attribute_sets as $attribute_set) {
-                $attributes[$attribute_set['user_id']][] = $attribute_set;
-            }
+            $attributes = app_dataset(
+                'attribute_sets.user_id', $id_columns,
+                'user_id', null
+            );
 
             // 関連するデータを結合
             for ($i = 0; $i < count($results); $i++) {
@@ -120,8 +114,8 @@ function insert_users($queries, $options = [])
     $user_id = db_last_insert_id();
 
     if (isset($options['attribute_sets'])) {
-        // 関連する属性を登録
-        model('insert_attribute_users', $user_id, $options['attribute_sets']);
+        // 関連する属性を更新
+        model('set_attribute_users', $user_id, $options['attribute_sets']);
     }
 
     return $resource;
@@ -162,8 +156,8 @@ function update_users($queries, $options = [])
     $id = $options['id'];
 
     if (isset($options['attribute_sets'])) {
-        // 関連する属性を編集
-        model('update_attribute_users', $id, $options['attribute_sets']);
+        // 関連する属性を更新
+        model('set_attribute_users', $id, $options['attribute_sets']);
     }
 
     return $resource;
@@ -387,38 +381,14 @@ function validate_users($queries, $options = [])
 }
 
 /**
- * 関連する属性を登録
- *
- * @param int   $user_id
- * @param array $attribute_sets
- *
- * @return void
- */
-function insert_attribute_users($user_id, $attribute_sets)
-{
-    // 属性を登録
-    foreach ($attribute_sets as $attribute_id) {
-        $resource = model('insert_attribute_sets', [
-            'values' => [
-                'attribute_id' => $attribute_id,
-                'user_id'      => $user_id,
-            ],
-        ]);
-        if (!$resource) {
-            error('データを登録できません。');
-        }
-    }
-}
-
-/**
- * 関連する属性を編集
+ * 関連する属性を更新
  *
  * @param int   $id
  * @param array $attribute_sets
  *
  * @return void
  */
-function update_attribute_users($user_id, $attribute_sets)
+function set_attribute_users($user_id, $attribute_sets)
 {
     // 属性を編集
     $resource = model('delete_attribute_sets', [

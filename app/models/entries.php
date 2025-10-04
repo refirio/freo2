@@ -58,40 +58,22 @@ function select_entries($queries, $options = [])
 
         if (!empty($id_columns)) {
             // フィールドを取得
-            $field_sets = model('select_field_sets', [
-                'where' => 'field_sets.entry_id IN(' . implode(',', array_map('db_escape', $id_columns)) . ')',
-            ], [
-                'associate' => true,
-            ]);
-
-            $fields = [];
-            foreach ($field_sets as $field_set) {
-                $fields[$field_set['entry_id']][$field_set['field_id']] = $field_set['text'];
-            }
+            $fields = app_dataset(
+                'field_sets.entry_id', $id_columns,
+                'entry_id.field_id', 'text'
+            );
 
             // カテゴリを取得
-            $category_sets = model('select_category_sets', [
-                'where' => 'category_sets.entry_id IN(' . implode(',', array_map('db_escape', $id_columns)) . ')',
-            ], [
-                'associate' => true,
-            ]);
-
-            $categories = [];
-            foreach ($category_sets as $category_set) {
-                $categories[$category_set['entry_id']][] = $category_set;
-            }
+            $categories = app_dataset(
+                'category_sets.entry_id', $id_columns,
+                'entry_id', null
+            );
 
             // 属性を取得
-            $attribute_sets = model('select_attribute_sets', [
-                'where' => 'attribute_sets.entry_id IN(' . implode(',', array_map('db_escape', $id_columns)) . ')',
-            ], [
-                'associate' => true,
-            ]);
-
-            $attributes = [];
-            foreach ($attribute_sets as $attribute_set) {
-                $attributes[$attribute_set['entry_id']][] = $attribute_set;
-            }
+            $attributes = app_dataset(
+                'attribute_sets.entry_id', $id_columns,
+                'entry_id', null
+            );
 
             // 関連するデータを結合
             for ($i = 0; $i < count($results); $i++) {
@@ -162,18 +144,18 @@ function insert_entries($queries, $options = [])
     $entry_id = db_last_insert_id();
 
     if (isset($options['field_sets'])) {
-        // 関連するフィールドを登録
-        model('insert_field_entries', $entry_id, $options['field_sets']);
+        // 関連するフィールドを更新
+        model('set_field_entries', $entry_id, $options['field_sets']);
     }
 
     if (isset($options['category_sets'])) {
-        // 関連するカテゴリを登録
-        model('insert_category_entries', $entry_id, $options['category_sets']);
+        // 関連するカテゴリを更新
+        model('set_category_entries', $entry_id, $options['category_sets']);
     }
 
     if (isset($options['attribute_sets'])) {
-        // 関連する属性を登録
-        model('insert_attribute_entries', $entry_id, $options['attribute_sets']);
+        // 関連する属性を更新
+        model('set_attribute_entries', $entry_id, $options['attribute_sets']);
     }
 
     if (!empty($options['files'])) {
@@ -229,18 +211,18 @@ function update_entries($queries, $options = [])
     $id = $options['id'];
 
     if (isset($options['field_sets'])) {
-        // 関連するフィールドを編集
-        model('update_field_entries', $id, $options['field_sets']);
+        // 関連するフィールドを更新
+        model('set_field_entries', $id, $options['field_sets']);
     }
 
     if (isset($options['category_sets'])) {
-        // 関連するカテゴリを編集
-        model('update_category_entries', $id, $options['category_sets']);
+        // 関連するカテゴリを更新
+        model('set_category_entries', $id, $options['category_sets']);
     }
 
     if (isset($options['attribute_sets'])) {
-        // 関連する属性を編集
-        model('update_attribute_entries', $id, $options['attribute_sets']);
+        // 関連する属性を更新
+        model('set_attribute_entries', $id, $options['attribute_sets']);
     }
 
     if (!empty($options['files'])) {
@@ -655,93 +637,14 @@ function filter_entries($queries, $options = [])
 }
 
 /**
- * 関連するフィールドを登録
+ * 関連するフィールドを更新
  *
  * @param int   $entry_id
  * @param array $field_sets
  *
  * @return void
  */
-function insert_field_entries($entry_id, $field_sets)
-{
-    // フィールドを登録
-    foreach ($field_sets as $field_id => $text) {
-        if ($text === '') {
-            continue;
-        }
-        if (is_array($text)) {
-            $text = implode("\n", $text);
-        }
-        $resource = model('insert_field_sets', [
-            'values' => [
-                'field_id' => $field_id,
-                'entry_id' => $entry_id,
-                'text'     => $text,
-            ],
-        ]);
-        if (!$resource) {
-            error('データを登録できません。');
-        }
-    }
-}
-
-/**
- * 関連するカテゴリを登録
- *
- * @param int   $entry_id
- * @param array $category_sets
- *
- * @return void
- */
-function insert_category_entries($entry_id, $category_sets)
-{
-    // カテゴリを登録
-    foreach ($category_sets as $category_id) {
-        $resource = model('insert_category_sets', [
-            'values' => [
-                'category_id' => $category_id,
-                'entry_id'    => $entry_id,
-            ],
-        ]);
-        if (!$resource) {
-            error('データを登録できません。');
-        }
-    }
-}
-
-/**
- * 関連する属性を登録
- *
- * @param int   $entry_id
- * @param array $attribute_sets
- *
- * @return void
- */
-function insert_attribute_entries($entry_id, $attribute_sets)
-{
-    // 属性を登録
-    foreach ($attribute_sets as $attribute_id) {
-        $resource = model('insert_attribute_sets', [
-            'values' => [
-                'attribute_id' => $attribute_id,
-                'entry_id'     => $entry_id,
-            ],
-        ]);
-        if (!$resource) {
-            error('データを登録できません。');
-        }
-    }
-}
-
-/**
- * 関連するフィールドを編集
- *
- * @param int   $entry_id
- * @param array $field_sets
- *
- * @return void
- */
-function update_field_entries($entry_id, $field_sets)
+function set_field_entries($entry_id, $field_sets)
 {
     // フィールドを編集
     $fields = model('select_fields', [
@@ -787,14 +690,14 @@ function update_field_entries($entry_id, $field_sets)
 }
 
 /**
- * 関連するカテゴリを編集
+ * 関連するカテゴリを更新
  *
  * @param int   $id
  * @param array $category_sets
  *
  * @return void
  */
-function update_category_entries($entry_id, $category_sets)
+function set_category_entries($entry_id, $category_sets)
 {
     // カテゴリを編集
     $resource = model('delete_category_sets', [
@@ -823,14 +726,14 @@ function update_category_entries($entry_id, $category_sets)
 }
 
 /**
- * 関連する属性を編集
+ * 関連する属性を更新
  *
  * @param int   $id
  * @param array $attribute_sets
  *
  * @return void
  */
-function update_attribute_entries($entry_id, $attribute_sets)
+function set_attribute_entries($entry_id, $attribute_sets)
 {
     // 属性を編集
     $resource = model('delete_attribute_sets', [
