@@ -141,18 +141,14 @@ $_view['type'] = $types[0];
 
 // カテゴリを取得
 $_view['categories'] = model('select_categories', [
-    'where'    => 'categories.type_id = ' . intval($_view['type']['id']),
-    'order_by' => 'categories.sort, categories.id',
-], [
-    'associate' => true,
+    'where'    => 'type_id = ' . intval($_view['type']['id']),
+    'order_by' => 'sort, id',
 ]);
 
 // フィールドを取得
 $_view['fields'] = model('select_fields', [
-    'where'    => 'fields.type_id = ' . intval($_view['type']['id']),
-    'order_by' => 'fields.sort, fields.id',
-], [
-    'associate' => true,
+    'where'    => 'type_id = ' . intval($_view['type']['id']),
+    'order_by' => 'sort, id',
 ]);
 
 // 属性を取得

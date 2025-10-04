@@ -27,7 +27,7 @@ function select_categories($queries, $options = [])
         }
 
         $queries['from'] = DATABASE_PREFIX . 'categories AS categories '
-                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'types AS types ON categories.type_id = types.id;';
+                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'types AS types ON categories.type_id = types.id';
 
         // 削除済みデータは取得しない
         if (!isset($queries['where'])) {
