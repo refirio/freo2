@@ -19,7 +19,7 @@
             </div>
         </main>
         <div class="text-center">
-            <a href="<?php t(MAIN_FILE) ?>/">トップページ</a>
+            <a href="<?php t(MAIN_FILE) ?>/">トップページへ戻る</a>
         </div>
 
 <?php import('app/views/auth/footer.php') ?>

@@ -56,7 +56,6 @@
                                 </div>
                             </form>
 
-                            <?php if (!empty($_GET['id'])) : ?>
                             <form action="<?php t(MAIN_FILE) ?>/admin/contact_delete" method="post" class="delete">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <input type="hidden" name="id" value="<?php t($_view['contact']['id']) ?>">
@@ -71,7 +70,6 @@
                                     </div>
                                 </div>
                             </form>
-                            <?php endif ?>
                         </div>
                     </div>
                 </main>

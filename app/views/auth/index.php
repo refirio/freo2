@@ -28,7 +28,7 @@
                     <button class="w-100 btn btn-lg btn-primary" type="submit">ログイン</button>
                 </div>
                 <div class="form-group mt-4">
-                    <a href="<?php t(MAIN_FILE) ?>/">トップページ</a>
+                    <a href="<?php t(MAIN_FILE) ?>/">トップページへ戻る</a>
                 </div>
             </form>
         </main>
