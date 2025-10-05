@@ -22,7 +22,7 @@ function service_entry_select_published($type, $queries, $options = [])
         $attributes = $GLOBALS['attributes'];
     }
 
-    // 公開エントリーの絞り込み
+    // エントリーの絞り込み
     if (empty($queries['where'])) {
         $where1 = 'TRUE';
         $where2 = [];
@@ -39,10 +39,10 @@ function service_entry_select_published($type, $queries, $options = [])
         $public = ' AND entries.public != ' . db_escape('none');
     } elseif ($authority_power === 0) {
         // ゲスト: 「全体に公開」のエントリー、もしくは「登録ユーザに公開」のエントリー、もしくは「指定の属性に公開」で指定の属性を持つエントリーを表示
-        $public = ' AND (entries.public = ' . db_escape('all') . ' OR entries.public = ' . db_escape('user') . ' OR (entries.public = ' . db_escape('attribute') . ' AND attribute_sets.attribute_id IN(' . implode(',', $attributes) . ')))';
+        $public = ' AND (entries.public = ' . db_escape('all') . ' OR entries.public = ' . db_escape('user') . ' OR (entries.public = ' . db_escape('attribute') . ' AND attribute_sets.attribute_id IN(' . implode(',', $attributes) . ') OR entries.public = ' . db_escape('password') . '))';
     } else {
         // ユーザ登録なし: 「全体に公開」のエントリーを表示
-        $public = ' AND entries.public = ' . db_escape('all');
+        $public = ' AND (entries.public = ' . db_escape('all') . ' OR entries.public = ' . db_escape('password') . ')';
     }
 
     $where1 .= ' AND types.code = :type_code' . $public . ' AND entries.approved = 1 AND (entries.public_begin IS NULL OR entries.public_begin <= :now) AND (entries.public_end IS NULL OR entries.public_end >= :now)';
@@ -55,6 +55,19 @@ function service_entry_select_published($type, $queries, $options = [])
     $entries = model('select_entries', $queries, [
         'associate' => true,
     ]);
+
+    // エントリーの表示制限
+    $temps = [];
+    foreach ($entries as $entry) {
+        if ($entry['public'] === 'password' && empty($_SESSION['entry_passwords'][$entry['id']])) {
+            $entry['title']     = $GLOBALS['setting']['restricted_password_title'] . $entry['title'];
+            $entry['text']      = $GLOBALS['setting']['restricted_password_text'];
+            $entry['picture']   = null;
+            $entry['thumbnail'] = null;
+        }
+        $temps[] = $entry;
+    }
+    $entries = $temps;
 
     return $entries;
 }

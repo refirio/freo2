@@ -51,6 +51,7 @@ $GLOBALS['config']['option'] = app_config('APP_OPTION', [
             'all'       => '全体に公開',
             'user'      => '登録ユーザに公開',
             'attribute' => '指定の属性に公開',
+            'password'  => 'パスワード認証で公開',
             'none'      => '非公開',
         ],
     ],

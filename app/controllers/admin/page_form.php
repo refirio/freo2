@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'public'         => isset($_POST['public'])         ? $_POST['public']         : '',
             'public_begin'   => isset($_POST['public_begin'])   ? $_POST['public_begin']   : '',
             'public_end'     => isset($_POST['public_end'])     ? $_POST['public_end']     : '',
+            'password'       => isset($_POST['password'])       ? $_POST['password']       : '',
             'datetime'       => isset($_POST['datetime'])       ? $_POST['datetime']       : '',
             'code'           => isset($_POST['code'])           ? $_POST['code']           : '',
             'title'          => isset($_POST['title'])          ? $_POST['title']          : '',

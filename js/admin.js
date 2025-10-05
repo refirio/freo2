@@ -183,17 +183,26 @@ $(document).ready(function() {
      * 公開
      */
     $('select[name=public]').on('change', function() {
-        console.log($(this).val());
         if ($(this).val() == 'none') {
             $('.for-public').hide();
+            $('.for-password').hide();
+        } else if ($(this).val() == 'password') {
+            $('.for-public').show();
+            $('.for-password').show();
         } else {
             $('.for-public').show();
+            $('.for-password').hide();
         }
     });
     if ($('select[name=public]').val() == 'none') {
         $('.for-public').hide();
+        $('.for-password').hide();
+    } else if ($('select[name=public]').val() == 'password') {
+        $('.for-public').show();
+        $('.for-password').show();
     } else {
         $('.for-public').show();
+        $('.for-password').hide();
     }
 
     /*

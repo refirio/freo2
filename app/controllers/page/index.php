@@ -25,8 +25,22 @@ if (empty($pages)) {
     $_view['page'] = $pages[0];
 }
 
-// ページを取得
-$_view['pages'] = service_entry_select_published('page', []);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // ワンタイムトークン
+    if (!token('check')) {
+        error('不正なアクセスです。');
+    }
+
+    // パスワード認証
+    if ($_POST['password'] === $pages[0]['password']) {
+        $_SESSION['entry_passwords'][$pages[0]['id']] = true;
+
+        // リダイレクト
+        redirect('/page/' . $pages[0]['code']);
+    } else {
+        warning('パスワードが違います。');
+    }
+}
 
 // タイトル
 if (isset($_view['page']['title'])) {

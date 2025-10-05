@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS entries(
     public       VARCHAR(20)         NOT NULL                COMMENT '公開',
     public_begin DATETIME                                    COMMENT '公開開始日時',
     public_end   DATETIME                                    COMMENT '公開終了日時',
+    password     VARCHAR(80)                                 COMMENT 'パスワード',
     datetime     DATETIME            NOT NULL                COMMENT '日時',
     code         VARCHAR(255)        NOT NULL                COMMENT 'コード',
     title        VARCHAR(255)        NOT NULL                COMMENT 'タイトル',

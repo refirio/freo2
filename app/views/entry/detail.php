@@ -12,14 +12,30 @@
                     </ul>
                     <?php endif ?>
 
+                    <?php if (!empty($_view['entry']['text'])) : ?>
                     <div class="text">
                         <?php e($_view['entry']['text']) ?>
                     </div>
+                    <?php endif ?>
 
-                    <?php if ($_view['entry']['picture'] || $_view['entry']['thumbnail']) : ?>
+                    <?php if ($_view['entry']['public'] === 'password' && empty($_SESSION['entry_passwords'][$_view['entry']['id']])) : ?>
+                    <form action="<?php t(MAIN_FILE) ?>/entry/detail/<?php t($_view['entry']['code']) ?>" method="post">
+                        <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
+                        <input type="hidden" name="view" value="">
+                        <div class="form-group mb-2">
+                            <label>パスワード</label>
+                            <input type="password" name="password" value="" class="form-control">
+                        </div>
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary px-4">認証</button>
+                        </div>
+                    </form>
+                    <?php endif ?>
+
+                    <?php if (!empty($_view['entry']['picture']) || !empty($_view['entry']['thumbnail'])) : ?>
                     <div class="images">
-                        <?php if ($_view['entry']['picture']) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['picture']) ?>" alt="" class="img-fluid"></div><?php endif ?>
-                        <?php if ($_view['entry']['thumbnail']) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['thumbnail']) ?>" alt="" class="img-fluid"></div><?php endif ?>
+                        <?php if (!empty($_view['entry']['picture'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['picture']) ?>" alt="" class="img-fluid"></div><?php endif ?>
+                        <?php if (!empty($_view['entry']['thumbnail'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['thumbnail']) ?>" alt="" class="img-fluid"></div><?php endif ?>
                     </div>
                     <?php endif ?>
                 </main>

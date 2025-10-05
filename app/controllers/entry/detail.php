@@ -25,6 +25,23 @@ if (empty($entries)) {
     $_view['entry'] = $entries[0];
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // ワンタイムトークン
+    if (!token('check')) {
+        error('不正なアクセスです。');
+    }
+
+    // パスワード認証
+    if ($_POST['password'] === $entries[0]['password']) {
+        $_SESSION['entry_passwords'][$entries[0]['id']] = true;
+
+        // リダイレクト
+        redirect('/entry/detail/' . $entries[0]['code']);
+    } else {
+        warning('パスワードが違います。');
+    }
+}
+
 // タイトル
 if (isset($_view['entry']['title'])) {
     $_view['title'] = $_view['entry']['title'];

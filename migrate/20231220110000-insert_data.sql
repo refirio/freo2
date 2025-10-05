@@ -28,6 +28,8 @@ INSERT INTO settings VALUES('page_use_thumbnail', 1);
 INSERT INTO settings VALUES('page_default_code', NULL);
 INSERT INTO settings VALUES('page_home_code', NULL);
 INSERT INTO settings VALUES('page_url_omission', NULL);
+INSERT INTO settings VALUES('restricted_password_title', '要認証: ');
+INSERT INTO settings VALUES('restricted_password_text', '<p>パスワード認証により公開されます。</p>');
 INSERT INTO settings VALUES('mail_to', 'admin@example.com');
 INSERT INTO settings VALUES('mail_subject_admin', 'Webサイトからお問い合わせがありました');
 INSERT INTO settings VALUES('mail_subject_user', 'お問い合わせありがとうございます');

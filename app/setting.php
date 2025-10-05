@@ -2,10 +2,11 @@
 
 // 設定項目を定義
 $GLOBALS['setting_title'] = [
-    'basis' => '基本設定',
-    'entry' => '記事設定',
-    'page'  => 'ページ設定',
-    'mail'  => 'メール設定',
+    'basis'      => '基本設定',
+    'entry'      => '記事設定',
+    'page'       => 'ページ設定',
+    'restricted' => '制限設定',
+    'mail'       => 'メール設定',
 ];
 $GLOBALS['setting_contents'] = [
     'basis' => [
@@ -82,6 +83,18 @@ $GLOBALS['setting_contents'] = [
             'name'     => 'ページURLの省略',
             'type'     => 'boolean',
             'required' => false,
+        ],
+    ],
+    'restricted'  => [
+        'restricted_password_title' => [
+            'name'     => 'パスワード認証で制限されたタイトルの先頭に付与する文字列',
+            'type'     => 'text',
+            'required' => false,
+        ],
+        'restricted_password_text' => [
+            'name'     => 'パスワード認証で制限された本文に表示する文言',
+            'type'     => 'text',
+            'required' => true,
         ],
     ],
     'mail'  => [

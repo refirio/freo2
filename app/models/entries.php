@@ -445,6 +445,16 @@ function validate_entries($queries, $options = [])
         }
     }
 
+    // パスワード
+    if (isset($queries['password'])) {
+        if (!validator_required($queries['password'])) {
+        } elseif (!validator_regexp($queries['password'], '^[\w\-\/]+$')) {
+            $messages['password'] = 'パスワードは半角英数字で入力してください。';
+        } elseif (!validator_between($queries['password'], 1, 20)) {
+            $messages['password'] = 'パスワードは1文字以上20文字以内で入力してください。';
+        }
+    }
+
     // 日時
     if (isset($queries['datetime'])) {
         if (!validator_required($queries['datetime'])) {
@@ -988,6 +998,7 @@ function default_entries()
         'public'         => 'all',
         'public_begin'   => null,
         'public_end'     => null,
+        'password'       => null,
         'datetime'       => localdate('Y-m-d H:00'),
         'title'          => '',
         'code'           => '',
