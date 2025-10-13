@@ -23,14 +23,17 @@
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 mb-3 ps-3 pe-0 d-md-block sidebar collapse">
                     <div class="sidebar-sticky">
                         <h2 class="h4 mb-3">Menu</h2>
+                        <?php if (!empty($_view['menus'])) : ?>
                         <ul>
                             <?php foreach ($_view['menus'] as $menu) : ?>
                             <li><a href="<?php h($menu['url']) ?>"><?php h($menu['title']) ?></a></li>
                             <?php endforeach ?>
                         </ul>
+                        <?php endif ?>
                         <ul>
                             <li><a href="<?php t(MAIN_FILE) ?>/entry/">記事一覧</a></li>
                             <li><a href="<?php t(MAIN_FILE) ?>/contact/">お問い合わせ</a></li>
+                            <li><a href="<?php t(MAIN_FILE) ?>/auth/">ログイン</a></li>
                         </ul>
                         <?php e($_view['widgets']['menu']) ?>
                     </div>

@@ -45,5 +45,6 @@
         <script src="<?php t($GLOBALS['config']['http_path']) ?><?php t(loader_js('common.js')) ?>"></script>
         <script src="<?php t($GLOBALS['config']['http_path']) ?><?php t(loader_js('admin.js')) ?>"></script>
         <?php isset($_view['script']) ? e($_view['script']) : '' ?>
+        <?php import('app/views/test.php') ?>
     </body>
 </html>
