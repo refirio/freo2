@@ -125,6 +125,7 @@ function delete_widgets($queries, $options = [])
             'update' => DATABASE_PREFIX . 'widgets AS widgets',
             'set'    => [
                 'deleted' => localdate('Y-m-d H:i:s'),
+                'code'    => ['CONCAT(\'DELETED ' . localdate('YmdHis') . ' \', code)'],
             ],
             'where'  => isset($queries['where']) ? $queries['where'] : '',
             'limit'  => isset($queries['limit']) ? $queries['limit'] : '',
@@ -165,6 +166,7 @@ function normalize_widgets($queries, $options = [])
             $widgets = db_select([
                 'select' => 'MAX(sort) AS sort',
                 'from'   => DATABASE_PREFIX . 'widgets',
+                'where'  => 'deleted IS NULL',
             ]);
             $queries['sort'] = $widgets[0]['sort'] + 1;
         }
@@ -203,7 +205,7 @@ function validate_widgets($queries, $options = [])
                     'select' => 'id',
                     'from'   => DATABASE_PREFIX . 'widgets',
                     'where'  => [
-                        'code = :code',
+                        'deleted IS NULL AND code = :code',
                         [
                             'code' => $queries['code'],
                         ],
@@ -214,7 +216,7 @@ function validate_widgets($queries, $options = [])
                     'select' => 'id',
                     'from'   => DATABASE_PREFIX . 'widgets',
                     'where'  => [
-                        'id != :id AND code = :code',
+                        'id != :id AND deleted IS NULL AND code = :code',
                         [
                             'id'   => $queries['id'],
                             'code' => $queries['code'],

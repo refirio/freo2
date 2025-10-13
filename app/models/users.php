@@ -269,7 +269,7 @@ function validate_users($queries, $options = [])
                     'select' => 'id',
                     'from'   => DATABASE_PREFIX . 'users',
                     'where'  => [
-                        'username = :username',
+                        'deleted IS NULL AND username = :username',
                         [
                             'username' => $queries['username'],
                         ],
@@ -280,7 +280,7 @@ function validate_users($queries, $options = [])
                     'select' => 'id',
                     'from'   => DATABASE_PREFIX . 'users',
                     'where'  => [
-                        'id != :id AND username = :username',
+                        'id != :id AND deleted IS NULL AND username = :username',
                         [
                             'id'       => $queries['id'],
                             'username' => $queries['username'],

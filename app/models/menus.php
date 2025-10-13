@@ -165,6 +165,7 @@ function normalize_menus($queries, $options = [])
             $menus = db_select([
                 'select' => 'MAX(sort) AS sort',
                 'from'   => DATABASE_PREFIX . 'menus',
+                'where'  => 'deleted IS NULL',
             ]);
             $queries['sort'] = $menus[0]['sort'] + 1;
         }

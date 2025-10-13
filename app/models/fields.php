@@ -211,6 +211,7 @@ function normalize_fields($queries, $options = [])
             $fields = db_select([
                 'select' => 'MAX(sort) AS sort',
                 'from'   => DATABASE_PREFIX . 'fields',
+                'where'  => 'deleted IS NULL',
             ]);
             $queries['sort'] = $fields[0]['sort'] + 1;
         }

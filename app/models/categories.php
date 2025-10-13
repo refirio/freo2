@@ -174,6 +174,7 @@ function delete_categories($queries, $options = [])
             'update' => DATABASE_PREFIX . 'categories AS categories',
             'set'    => [
                 'deleted' => localdate('Y-m-d H:i:s'),
+                'code'    => ['CONCAT(\'DELETED ' . localdate('YmdHis') . ' \', code)'],
             ],
             'where'  => isset($queries['where']) ? $queries['where'] : '',
             'limit'  => isset($queries['limit']) ? $queries['limit'] : '',
@@ -214,6 +215,7 @@ function normalize_categories($queries, $options = [])
             $categories = db_select([
                 'select' => 'MAX(sort) AS sort',
                 'from'   => DATABASE_PREFIX . 'categories',
+                'where'  => 'deleted IS NULL',
             ]);
             $queries['sort'] = $categories[0]['sort'] + 1;
         }
@@ -252,7 +254,7 @@ function validate_categories($queries, $options = [])
                     'select' => 'id',
                     'from'   => DATABASE_PREFIX . 'categories',
                     'where'  => [
-                        'code = :code',
+                        'deleted IS NULL AND code = :code',
                         [
                             'code' => $queries['code'],
                         ],
@@ -263,7 +265,7 @@ function validate_categories($queries, $options = [])
                     'select' => 'id',
                     'from'   => DATABASE_PREFIX . 'categories',
                     'where'  => [
-                        'id != :id AND code = :code',
+                        'id != :id AND deleted IS NULL AND code = :code',
                         [
                             'id'   => $queries['id'],
                             'code' => $queries['code'],

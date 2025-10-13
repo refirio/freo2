@@ -285,6 +285,7 @@ function delete_entries($queries, $options = [])
             'update' => DATABASE_PREFIX . 'entries AS entries',
             'set'    => [
                 'deleted' => localdate('Y-m-d H:i:s'),
+                'code'    => ['CONCAT(\'DELETED ' . localdate('YmdHis') . ' \', code)'],
             ],
             'where'  => isset($queries['where']) ? $queries['where'] : '',
             'limit'  => isset($queries['limit']) ? $queries['limit'] : '',
@@ -478,7 +479,7 @@ function validate_entries($queries, $options = [])
                     'select' => 'id',
                     'from'   => DATABASE_PREFIX . 'entries',
                     'where'  => [
-                        'type_id = :type_id AND code = :code',
+                        'type_id = :type_id AND deleted IS NULL AND code = :code',
                         [
                             'type_id' => $queries['type_id'],
                             'code'    => $queries['code'],
@@ -490,7 +491,7 @@ function validate_entries($queries, $options = [])
                     'select' => 'id',
                     'from'   => DATABASE_PREFIX . 'entries',
                     'where'  => [
-                        'type_id = :type_id AND id != :id AND code = :code',
+                        'type_id = :type_id AND id != :id AND deleted IS NULL AND code = :code',
                         [
                             'type_id' => $queries['type_id'],
                             'id'      => $queries['id'],
@@ -909,7 +910,7 @@ function remove_file_entries($id, $files)
                     'select' => $file,
                     'from'   => DATABASE_PREFIX . 'entries',
                     'where'  => [
-                        'id = :id',
+                        'id = :id AND deleted IS NULL',
                         [
                             'id' => $id,
                         ],

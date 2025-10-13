@@ -165,6 +165,7 @@ function normalize_attributes($queries, $options = [])
             $attributes = db_select([
                 'select' => 'MAX(sort) AS sort',
                 'from'   => DATABASE_PREFIX . 'attributes',
+                'where'  => 'deleted IS NULL',
             ]);
             $queries['sort'] = $attributes[0]['sort'] + 1;
         }
