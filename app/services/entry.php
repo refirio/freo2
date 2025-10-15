@@ -39,7 +39,7 @@ function service_entry_select_published($type, $queries, $options = [])
         $public = ' AND entries.public != ' . db_escape('none');
     } elseif ($authority_power === 0) {
         // ゲスト: 「全体に公開」のエントリー、もしくは「登録ユーザに公開」のエントリー、もしくは「指定の属性に公開」で指定の属性を持つエントリーを表示
-        $public = ' AND (entries.public = ' . db_escape('all') . ' OR entries.public = ' . db_escape('user') . ' OR (entries.public = ' . db_escape('attribute') . ' AND attribute_sets.attribute_id IN(' . implode(',', $attributes) . ') OR entries.public = ' . db_escape('password') . '))';
+        $public = ' AND (entries.public = ' . db_escape('all') . ' OR entries.public = ' . db_escape('user') . ' OR (entries.public = ' . db_escape('attribute') . ' AND attribute_sets.attribute_id IN(' . ($attributes ? implode(',', $attributes) : 0) . ')) OR entries.public = ' . db_escape('password') . ')';
     } else {
         // ユーザ登録なし: 「全体に公開」のエントリーを表示
         $public = ' AND (entries.public = ' . db_escape('all') . ' OR entries.public = ' . db_escape('password') . ')';
@@ -59,7 +59,7 @@ function service_entry_select_published($type, $queries, $options = [])
     // エントリーの表示制限
     $temps = [];
     foreach ($entries as $entry) {
-        if ($entry['public'] === 'password' && empty($_SESSION['entry_passwords'][$entry['id']])) {
+        if (isset($entry['id']) && $entry['public'] === 'password' && empty($_SESSION['entry_passwords'][$entry['id']])) {
             $entry['title']     = $GLOBALS['setting']['restricted_password_title'] . $entry['title'];
             $entry['text']      = $GLOBALS['setting']['restricted_password_text'];
             $entry['picture']   = null;

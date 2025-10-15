@@ -28,6 +28,12 @@
                     <button class="w-100 btn btn-lg btn-primary" type="submit">ログイン</button>
                 </div>
                 <div class="form-group mt-4">
+                    <a href="<?php t(MAIN_FILE) ?>/auth/password">パスワード再発行</a>
+                </div>
+                <div class="form-group mt-1">
+                    <a href="<?php t(MAIN_FILE) ?>/auth/register">ユーザ登録</a>
+                </div>
+                <div class="form-group mt-4">
                     <a href="<?php t(MAIN_FILE) ?>/">トップページへ戻る</a>
                 </div>
             </form>

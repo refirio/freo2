@@ -59,7 +59,13 @@
                                         <td><?php h($user['username']) ?></td>
                                         <td><?php h($user['name']) ?></td>
                                         <td class="d-none d-md-table-cell"><?php h($user['email']) ?></td>
-                                        <td><?php h($_view['authority_sets'][$user['authority_id']]) ?></td>
+                                        <td>
+                                            <?php if (empty($user['authority_id'])) : ?>
+                                                -
+                                            <?php else : ?>
+                                                <?php h($_view['authority_sets'][$user['authority_id']]) ?>
+                                            <?php endif ?>
+                                        </td>
                                         <td class="d-none d-md-table-cell">
                                             <?php if (empty($user['loggedin'])) : ?>
                                                 -

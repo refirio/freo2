@@ -3,7 +3,7 @@
         <main class="col-6 mx-auto">
             <div class="mb-4 text-center">
                 <h1 class="h3">
-                    ユーザ情報
+                    パスワード再発行
                 </h1>
             </div>
 
@@ -19,31 +19,24 @@
                     </div>
                     <?php endif ?>
 
-                    <form action="<?php t(MAIN_FILE) ?>/auth/modify" method="post" class="register validate">
+                    <form action="<?php t(MAIN_FILE) ?>/auth/password_form" method="post" class="register validate">
+                        <input type="hidden" name="key" value="<?php t($_view['key']) ?>">
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <div class="card-body">
                             <div class="form-group mb-2">
-                                <label class="fw-bold">ユーザ名 <span class="badge bg-danger">必須</span></label>
-                                <input type="text" name="username" size="30" value="<?php t($_view['user']['username']) ?>" class="form-control">
+                                <label class="fw-bold">暗証コード</label>
+                                <input type="text" name="token_code" size="30" value="<?php t($_view['user']['token_code']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">パスワード（変更したい場合のみ入力）</label>
+                                <label class="fw-bold">パスワード</label>
                                 <input type="password" name="password" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
                                 <label class="fw-bold">パスワード確認（同じものをもう一度入力）</label>
                                 <input type="password" name="password_confirm" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
                             </div>
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">名前</label>
-                                <input type="text" name="name" size="30" value="<?php t($_view['user']['name']) ?>" class="form-control">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">メールアドレス <span class="badge bg-danger">必須</span></label>
-                                <input type="text" name="email" size="30" value="<?php t($_view['user']['email']) ?>" class="form-control">
-                            </div>
                             <div class="form-group mt-4">
-                                <button type="submit" class="btn btn-primary px-4">確認</button>
+                                <button type="submit" class="btn btn-primary px-4">登録</button>
                             </div>
                         </div>
                     </form>
@@ -51,11 +44,7 @@
             </div>
         </main>
         <div class="text-center">
-            <?php if ($GLOBALS['authority']['power'] >= 1) : ?>
-            <a href="<?php t(MAIN_FILE) ?>/admin/">管理ページへ戻る</a>
-            <?php else : ?>
             <a href="<?php t(MAIN_FILE) ?>/">トップページへ戻る</a>
-            <?php endif ?>
         </div>
 
 <?php import('app/views/auth/footer.php') ?>

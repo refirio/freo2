@@ -24,13 +24,14 @@ if (empty($_SESSION['post']['user']['id'])) {
     // ユーザを登録
     $resource = service_user_insert([
         'values' => [
-            'username'      => $_SESSION['post']['user']['username'],
-            'password'      => hash_crypt($_SESSION['post']['user']['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']),
-            'password_salt' => $password_salt,
-            'authority_id'  => $_SESSION['post']['user']['authority_id'],
-            'enabled'       => $_SESSION['post']['user']['enabled'],
-            'name'          => $_SESSION['post']['user']['name'],
-            'email'         => $_SESSION['post']['user']['email'],
+            'username'       => $_SESSION['post']['user']['username'],
+            'password'       => hash_crypt($_SESSION['post']['user']['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']),
+            'password_salt'  => $password_salt,
+            'authority_id'   => $_SESSION['post']['user']['authority_id'],
+            'enabled'        => $_SESSION['post']['user']['enabled'],
+            'name'           => $_SESSION['post']['user']['name'],
+            'email'          => $_SESSION['post']['user']['email'],
+            'email_verified' => 1,
         ],
     ], [
         'attribute_sets' => $_SESSION['post']['user']['attribute_sets'],

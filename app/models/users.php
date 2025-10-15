@@ -377,6 +377,28 @@ function validate_users($queries, $options = [])
         }
     }
 
+    // 暗証コード
+    if (isset($queries['token_code'])) {
+        if (!validator_required($queries['token_code'])) {
+            $messages['token_code'] = '暗証コードが入力されていません。';
+        } else {
+            $users = db_select([
+                'select' => 'id',
+                'from'   => DATABASE_PREFIX . 'users',
+                'where'  => [
+                    'email = :email AND token_code = :token_code',
+                    [
+                        'email'      => $queries['key'],
+                        'token_code' => $queries['token_code'],
+                    ],
+                ],
+            ]);
+            if (empty($users)) {
+                $messages['token_code'] = '暗証コードが違います。';
+            }
+        }
+    }
+
     return $messages;
 }
 
@@ -435,9 +457,13 @@ function default_users()
         'authority_id'   => 0,
         'name'           => null,
         'email'          => '',
+        'email_verified' => 0,
         'loggedin'       => null,
         'failed'         => null,
         'failed_last'    => null,
+        'token'          => null,
+        'token_code'     => null,
+        'token_expire'   => null,
         'attribute_sets' => [],
     ];
 }

@@ -3,7 +3,7 @@
         <main class="col-6 mx-auto">
             <div class="mb-4 text-center">
                 <h1 class="h3">
-                    ユーザ情報
+                    ユーザ登録
                 </h1>
             </div>
 
@@ -19,7 +19,7 @@
                     </div>
                     <?php endif ?>
 
-                    <form action="<?php t(MAIN_FILE) ?>/auth/modify" method="post" class="register validate">
+                    <form action="<?php t(MAIN_FILE) ?>/auth/register" method="post" class="register validate">
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <div class="card-body">
                             <div class="form-group mb-2">
@@ -27,11 +27,11 @@
                                 <input type="text" name="username" size="30" value="<?php t($_view['user']['username']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">パスワード（変更したい場合のみ入力）</label>
+                                <label class="fw-bold">パスワード <span class="badge bg-danger">必須</span></label>
                                 <input type="password" name="password" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">パスワード確認（同じものをもう一度入力）</label>
+                                <label class="fw-bold">パスワード確認（同じものをもう一度入力） <span class="badge bg-danger">必須</span></label>
                                 <input type="password" name="password_confirm" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
@@ -51,11 +51,7 @@
             </div>
         </main>
         <div class="text-center">
-            <?php if ($GLOBALS['authority']['power'] >= 1) : ?>
-            <a href="<?php t(MAIN_FILE) ?>/admin/">管理ページへ戻る</a>
-            <?php else : ?>
             <a href="<?php t(MAIN_FILE) ?>/">トップページへ戻る</a>
-            <?php endif ?>
         </div>
 
 <?php import('app/views/auth/footer.php') ?>

@@ -1,4 +1,4 @@
-INSERT INTO users VALUES(NULL, NOW(), NOW(), NULL, 'admin', '7463f5f0110ccf10c3327984e9a64e37', 'fec4c34788722a9e7445a950818adac4', 1, 1, '管理者', 'admin@example.com', NULL, NULL, NULL);
+INSERT INTO users VALUES(NULL, NOW(), NOW(), NULL, 'admin', '7463f5f0110ccf10c3327984e9a64e37', 'fec4c34788722a9e7445a950818adac4', 1, 1, '管理者', 'admin@example.com', 1, NULL, NULL, NULL, NULL, NULL, NULL);
 
 INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '管理者', 3);
 INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '投稿者', 2);
