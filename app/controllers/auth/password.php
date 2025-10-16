@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_view['token_code'] = $users[0]['token_code'];
 
             $to      = $users[0]['email'];
-            $subject = $GLOBALS['config']['mail_subjects']['password/send'];
+            $subject = $GLOBALS['setting']['mail_password_subject'];
             $message = view('mail/password/send.php', true);
             $headers = $GLOBALS['config']['mail_headers'];
 

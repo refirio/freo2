@@ -14,8 +14,8 @@
                         </dl>
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <div class="form-group mt-4">
-                            <button type="button" class="btn btn-primary px-4" onclick="window.location.href='<?php t(MAIN_FILE) ?>/contact/?referer=preview'">戻る</button>
-                            <button type="submit" class="btn btn-primary px-4">送信する</button>
+                            <a href="<?php t(MAIN_FILE) ?>/contact/?referer=preview" class="btn btn-secondary px-4">修正</a>
+                            <button type="submit" class="btn btn-primary px-4">送信</button>
                         </div>
                     </form>
                 </main>

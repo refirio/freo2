@@ -98,23 +98,43 @@ $GLOBALS['setting_contents'] = [
         ],
     ],
     'mail'  => [
+        'mail_from' => [
+            'name'     => 'メールの送信元',
+            'type'     => 'text',
+            'required' => true,
+        ],
         'mail_to' => [
             'name'     => 'メールの送信先',
             'type'     => 'text',
             'required' => true,
         ],
-        'mail_subject_admin' => [
-            'name'     => 'メールの件名（管理者用）',
+        'mail_body_begin' => [
+            'name'     => 'メール本文の冒頭',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'mail_body_end' => [
+            'name'     => 'メール本文の末尾',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'mail_verify_subject' => [
+            'name'     => 'メールアドレス存在確認',
             'type'     => 'text',
             'required' => true,
         ],
-        'mail_subject_user' => [
-            'name'     => 'メールの件名（自動返信）',
+        'mail_password_subject' => [
+            'name'     => 'パスワード再設定',
             'type'     => 'text',
             'required' => true,
         ],
-        'mail_from' => [
-            'name'     => 'メールの送信元',
+        'mail_contact_subject' => [
+            'name'     => 'お問い合わせありがとうございます',
+            'type'     => 'text',
+            'required' => true,
+        ],
+        'mail_contact_subject_admin' => [
+            'name'     => 'お問い合わせがありました',
             'type'     => 'text',
             'required' => true,
         ],

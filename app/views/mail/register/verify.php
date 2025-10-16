@@ -1,6 +1,6 @@
 <?php e($GLOBALS['setting']['mail_body_begin']) ?>
 
-認証コード
-<?php e($_view['token_code']) ?><?php e("\n") ?>
+メールアドレス存在確認用URL
+<?php e($_view['url']) ?><?php e("\n") ?>
 
 <?php e($GLOBALS['setting']['mail_body_end']) ?>

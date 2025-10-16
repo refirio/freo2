@@ -30,7 +30,16 @@ INSERT INTO settings VALUES('page_home_code', NULL);
 INSERT INTO settings VALUES('page_url_omission', NULL);
 INSERT INTO settings VALUES('restricted_password_title', '要認証: ');
 INSERT INTO settings VALUES('restricted_password_text', '<p>パスワード認証により公開されます。</p>');
-INSERT INTO settings VALUES('mail_to', 'admin@example.com');
-INSERT INTO settings VALUES('mail_subject_admin', 'Webサイトからお問い合わせがありました');
-INSERT INTO settings VALUES('mail_subject_user', 'お問い合わせありがとうございます');
 INSERT INTO settings VALUES('mail_from', 'auto@example.com');
+INSERT INTO settings VALUES('mail_to', 'admin@example.com');
+INSERT INTO settings VALUES('mail_body_begin', '※このメールは送信専用アドレスから配信しています。
+　返信いただいても返答はできません。
+');
+INSERT INTO settings VALUES('mail_body_end', '━━━━━━━━━━━━━━━━━━━━━━━━━
+Example
+E-mail : admin@example.com
+━━━━━━━━━━━━━━━━━━━━━━━━━');
+INSERT INTO settings VALUES('mail_verify_subject', 'メールアドレス存在確認');
+INSERT INTO settings VALUES('mail_password_subject', 'パスワード再設定');
+INSERT INTO settings VALUES('mail_contact_subject', 'お問い合わせありがとうございます');
+INSERT INTO settings VALUES('mail_contact_subject_admin', 'お問い合わせがありました');

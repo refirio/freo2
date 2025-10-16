@@ -65,8 +65,8 @@ $users = model('select_users', [
 $_view['url'] = $GLOBALS['config']['http_url'] . '/auth/register_verify?key=' . rawurlencode($users[0]['email']) . '&token=' . $users[0]['token'];
 
 $to      = $users[0]['email'];
-$subject = $GLOBALS['config']['mail_subjects']['register/send'];
-$message = view('mail/register/send.php', true);
+$subject = $GLOBALS['setting']['mail_verify_subject'];
+$message = view('mail/register/verify.php', true);
 $headers = $GLOBALS['config']['mail_headers'];
 
 // メールを送信

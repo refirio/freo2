@@ -1,3 +1,5 @@
+<?php e($GLOBALS['setting']['mail_body_begin']) ?>
+
 ホームページから以下のお問い合わせがありました。
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -12,3 +14,5 @@
 <?php e($_SESSION['post']['contact']['message']) ?><?php e("\n") ?>
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+<?php e($GLOBALS['setting']['mail_body_end']) ?>

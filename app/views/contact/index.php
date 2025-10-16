@@ -32,7 +32,7 @@
                             <?php if ($GLOBALS['config']['recaptcha_enable'] == true) : ?>
                             <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
                             <?php endif ?>
-                            <button type="submit" class="btn btn-primary px-4">確認画面へ</button>
+                            <button type="submit" class="btn btn-primary px-4">確認</button>
                         </div>
                     </form>
 

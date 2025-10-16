@@ -34,7 +34,7 @@ db_commit();
 
 // メールを送信（管理者用）
 $to      = $GLOBALS['setting']['mail_to'];
-$subject = $GLOBALS['setting']['mail_subject_admin'];
+$subject = $GLOBALS['setting']['mail_contact_subject_admin'];
 $message = view('mail/contact/send_admin.php', true);
 $headers = [
     'From' => $GLOBALS['setting']['mail_from'],
@@ -46,7 +46,7 @@ if (service_mail_send($to, $subject, $message, $headers) === false) {
 
 // メールを送信（自動返信）
 $to      = $_SESSION['post']['contact']['email'];
-$subject = $GLOBALS['setting']['mail_subject_user'];
+$subject = $GLOBALS['setting']['mail_contact_subject'];
 $message = view('mail/contact/send_user.php', true);
 $headers = [
     'From' => $GLOBALS['setting']['mail_from'],
