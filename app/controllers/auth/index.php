@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $users = model('select_users', [
         'select' => 'password_salt, failed, failed_last',
         'where'  => [
-            'enabled = 1 AND username = :username',
+            'username = :username',
             [
                 'username' => $_POST['username'],
             ],
@@ -32,9 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // パスワード認証
     $users = model('select_users', [
-        'select' => 'id',
+        'select' => 'id, enabled',
         'where'  => [
-            'enabled = 1 AND username = :username AND password = :password',
+            'username = :username AND password = :password',
             [
                 'username' => $_POST['username'],
                 'password' => hash_crypt($_POST['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']),
@@ -72,9 +72,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // パスワード認証成功
         $id      = $users[0]['id'];
+        $enabled = $users[0]['enabled'];
         $success = true;
 
-        if ($success) {
+        if (!$enabled) {
+            // アカウント有効化前
+            $_view['user'] = $_POST;
+
+            $_view['warnings'] = ['アカウントが有効化されていません。'];
+        } elseif ($success) {
             // 認証成功
             $_SESSION['auth']['user'] = [
                 'id'   => $id,
