@@ -1606,7 +1606,7 @@ function db_migrate()
                             $migration['sql'] = regexp_replace("(\r|\n)", '', $migration['sql']);
                             $migration['sql'] = regexp_replace("\s+", ' ', $migration['sql']);
 
-                            $migrate .= truncate($migration['sql'], 80, '') . ' ... ' . $em_begin . $migration['result'] . $em_end;
+                            $migrate .= t(truncate($migration['sql'], 80, ''), true) . ' ... ' . $em_begin . $migration['result'] . $em_end;
                             if ($migration['result'] == 'OK') {
                                 $migrate .= ' (';
                                 $migrate .= $migration['affected'] ? $migration['affected'] . ' rows affected. ' : '';
@@ -1652,7 +1652,7 @@ function db_migrate()
                 $migration['sql'] = regexp_replace("\s+", ' ', $migration['sql']);
                 $migration['sql'] = regexp_replace("(\r|\n)", '', $migration['sql']);
 
-                $migrate .= truncate($migration['sql'], 80, '') . ' ... ' . $em_begin . $migration['result'] . $em_end;
+                $migrate .= t(truncate($migration['sql'], 80, ''), true) . ' ... ' . $em_begin . $migration['result'] . $em_end;
                 $migrate .= ' (';
                 $migrate .= $migration['affected'] ? $migration['affected'] . ' rows affected. ' : '';
                 $migrate .= $migration['time'] . ' sec.)';
