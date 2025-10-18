@@ -1,7 +1,6 @@
 <?php
 
 import('app/services/user.php');
-import('app/services/mail.php');
 import('libs/modules/hash.php');
 
 // フォワードを確認
@@ -60,19 +59,6 @@ $users = model('select_users', [
         ],
     ],
 ]);
-
-// 認証用URLを作成
-$_view['url'] = $GLOBALS['config']['http_url'] . '/auth/register_verify?key=' . rawurlencode($users[0]['email']) . '&token=' . $users[0]['token'];
-
-$to      = $users[0]['email'];
-$subject = $GLOBALS['setting']['mail_verify_subject'];
-$message = view('mail/register/verify.php', true);
-$headers = $GLOBALS['config']['mail_headers'];
-
-// メールを送信
-if (service_mail_send($to, $subject, $message, $headers) === false) {
-    error('メールを送信できません。');
-}
 
 // トランザクションを終了
 db_commit();

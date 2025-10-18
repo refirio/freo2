@@ -29,4 +29,4 @@ if (!$resource) {
 db_commit();
 
 // リダイレクト
-redirect('/auth/register_verified');
+redirect('/auth/email_verified');

@@ -95,7 +95,7 @@ if (!empty($_SESSION['auth']['user']['id'])) {
             if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
                 error('不正なアクセスです。');
             } elseif (preg_match('/^(auth)$/', $_REQUEST['_mode'])) {
-                if (!preg_match('/^(index|home|modify|logout)(_|$)/', $_REQUEST['_work'])) {
+                if (!preg_match('/^(index|home|modify|email|logout)(_|$)/', $_REQUEST['_work'])) {
                     error('不正なアクセスです。');
                 }
             }
