@@ -4,7 +4,7 @@
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-2">
                         <h1 class="h3">
                             <svg class="bi flex-shrink-0" width="24" height="24" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-pencil-square"/></svg>
-                            コンテンツ
+                            システム
                         </h1>
                     </div>
 

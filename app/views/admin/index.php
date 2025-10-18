@@ -14,7 +14,7 @@
                             <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
                             <h3 class="h5">コンテンツ</h3>
                             <ul>
-                                <li><a href="<?php t(MAIN_FILE) ?>/admin/entry">記事管理</a></li>
+                                <li><a href="<?php t(MAIN_FILE) ?>/admin/entry">エントリー管理</a></li>
                                 <li><a href="<?php t(MAIN_FILE) ?>/admin/page">ページ管理</a></li>
                                 <li><a href="<?php t(MAIN_FILE) ?>/admin/category">カテゴリ管理</a></li>
                                 <li><a href="<?php t(MAIN_FILE) ?>/admin/field">フィールド管理</a></li>
@@ -22,7 +22,7 @@
                                 <li><a href="<?php t(MAIN_FILE) ?>/admin/widget">ウィジェット管理</a></li>
                             </ul>
                             <?php endif ?>
-                            <h3 class="h5">お問い合わせ</h3>
+                            <h3 class="h5">コミュニケーション</h3>
                             <ul>
                                 <li><a href="<?php t(MAIN_FILE) ?>/admin/contact">お問い合わせ管理</a></li>
                             </ul>

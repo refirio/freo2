@@ -30,6 +30,10 @@ INSERT INTO settings VALUES('page_home_code', NULL);
 INSERT INTO settings VALUES('page_url_omission', NULL);
 INSERT INTO settings VALUES('restricted_password_title', '要認証: ');
 INSERT INTO settings VALUES('restricted_password_text', '<p>パスワード認証により公開されます。</p>');
+INSERT INTO settings VALUES('menu_auth', 1);
+INSERT INTO settings VALUES('menu_admin_field', 1);
+INSERT INTO settings VALUES('menu_admin_menu', 1);
+INSERT INTO settings VALUES('menu_admin_widget', 1);
 INSERT INTO settings VALUES('mail_from', 'auto@example.com');
 INSERT INTO settings VALUES('mail_to', 'admin@example.com');
 INSERT INTO settings VALUES('mail_body_begin', '※このメールは送信専用アドレスから配信しています。

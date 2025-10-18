@@ -11,23 +11,23 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
                         <div class="card-body">
-                            <p><a href="<?php t(MAIN_FILE) ?>/admin/entry_form" class="btn btn-primary">記事登録</a></p>
+                            <p><a href="<?php t(MAIN_FILE) ?>/admin/entry_form" class="btn btn-primary">エントリー登録</a></p>
                             <?php if (isset($_GET['ok'])) : ?>
                             <div class="alert alert-success">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                                 <?php if ($_GET['ok'] === 'post') : ?>
-                                記事を登録しました。
+                                エントリーを登録しました。
                                 <?php elseif ($_GET['ok'] === 'approve') : ?>
-                                記事の承認を変更しました。
+                                エントリーの承認を変更しました。
                                 <?php elseif ($_GET['ok'] === 'delete') : ?>
-                                記事を削除しました。
+                                エントリーを削除しました。
                                 <?php endif ?>
                             </div>
                             <?php elseif (isset($_GET['warning'])) : ?>
                             <div class="alert alert-danger">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                                 <?php if ($_GET['warning'] === 'delete') : ?>
-                                記事が選択されていません。
+                                エントリーが選択されていません。
                                 <?php endif ?>
                             </div>
                             <?php endif ?>

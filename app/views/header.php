@@ -31,9 +31,11 @@
                         </ul>
                         <?php endif ?>
                         <ul>
-                            <li><a href="<?php t(MAIN_FILE) ?>/entry/">記事一覧</a></li>
+                            <li><a href="<?php t(MAIN_FILE) ?>/entry/">エントリー</a></li>
                             <li><a href="<?php t(MAIN_FILE) ?>/contact/">お問い合わせ</a></li>
+                            <?php if ($GLOBALS['setting']['menu_auth']) : ?>
                             <li><a href="<?php t(MAIN_FILE) ?>/auth/">ログイン</a></li>
+                            <?php endif ?>
                         </ul>
                         <?php e($_view['widgets']['menu']) ?>
                     </div>

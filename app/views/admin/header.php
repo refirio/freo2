@@ -63,7 +63,7 @@
                             <li class="nav-item">
                                 <a class="nav-link<?php if (preg_match('/^entry(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/entry">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
-                                    記事管理
+                                    エントリー管理
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -78,29 +78,35 @@
                                     カテゴリ管理
                                 </a>
                             </li>
+                            <?php if ($GLOBALS['setting']['menu_admin_field']) : ?>
                             <li class="nav-item">
                                 <a class="nav-link<?php if (preg_match('/^field(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/field">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
                                     フィールド管理
                                 </a>
                             </li>
+                            <?php endif ?>
+                            <?php if ($GLOBALS['setting']['menu_admin_menu']) : ?>
                             <li class="nav-item">
                                 <a class="nav-link<?php if (preg_match('/^menu(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/menu">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
                                     メニュー管理
                                 </a>
                             </li>
+                            <?php endif ?>
+                            <?php if ($GLOBALS['setting']['menu_admin_widget']) : ?>
                             <li class="nav-item">
                                 <a class="nav-link<?php if (preg_match('/^widget(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/widget">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
                                     ウィジェット管理
                                 </a>
                             </li>
+                            <?php endif ?>
                         </ul>
                         <?php endif ?>
 
                         <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
-                            <span>お問い合わせ</span>
+                            <span>コミュニケーション</span>
                         </h3>
                         <ul class="nav flex-column mb-2">
                             <li class="nav-item">
@@ -141,9 +147,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'system') : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/system">
+                                <a class="nav-link<?php if ($_REQUEST['_work'] == 'version') : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/version">
                                     <svg class="bi flex-shrink-0" width="16" height="16" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
-                                    システム情報
+                                    バージョン情報
                                 </a>
                             </li>
                         </ul>

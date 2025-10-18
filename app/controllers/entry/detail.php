@@ -20,7 +20,7 @@ $entries = service_entry_select_published('entry', [
     ],
 ]);
 if (empty($entries)) {
-    warning('記事が見つかりません。');
+    warning('エントリーが見つかりません。');
 } else {
     $_view['entry'] = $entries[0];
 }
@@ -46,5 +46,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 if (isset($_view['entry']['title'])) {
     $_view['title'] = $_view['entry']['title'];
 } else {
-    $_view['title'] = '記事';
+    $_view['title'] = 'エントリー';
 }

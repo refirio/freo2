@@ -3,9 +3,10 @@
 // 設定項目を定義
 $GLOBALS['setting_title'] = [
     'basis'      => '基本設定',
-    'entry'      => '記事設定',
+    'entry'      => 'エントリー設定',
     'page'       => 'ページ設定',
     'restricted' => '制限設定',
+    'menu'       => 'メニュー設定',
     'mail'       => 'メール設定',
 ];
 $GLOBALS['setting_contents'] = [
@@ -23,7 +24,7 @@ $GLOBALS['setting_contents'] = [
     ],
     'entry' => [
         'entry_use_approve' => [
-            'name'     => '記事の承認',
+            'name'     => 'エントリーの承認',
             'type'     => 'boolean',
             'required' => false,
         ],
@@ -95,6 +96,28 @@ $GLOBALS['setting_contents'] = [
             'name'     => 'パスワード認証で制限された本文に表示する文言',
             'type'     => 'text',
             'required' => true,
+        ],
+    ],
+    'menu' => [
+        'menu_auth' => [
+            'name'     => 'ユーザメニューに「ログイン」を表示',
+            'type'     => 'boolean',
+            'required' => false,
+        ],
+        'menu_admin_field' => [
+            'name'     => '管理メニューに「フィールド」を表示',
+            'type'     => 'boolean',
+            'required' => false,
+        ],
+        'menu_admin_menu' => [
+            'name'     => '管理メニューに「メニュー」を表示',
+            'type'     => 'boolean',
+            'required' => false,
+        ],
+        'menu_admin_widget' => [
+            'name'     => '管理メニューに「ウィジェット」を表示',
+            'type'     => 'boolean',
+            'required' => false,
         ],
     ],
     'mail'  => [

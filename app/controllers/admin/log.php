@@ -32,4 +32,4 @@ $_view['log_count'] = $log_count[0]['count'];
 $_view['log_page']  = ceil($log_count[0]['count'] / $GLOBALS['config']['limit']['log']);
 
 // タイトル
-$_view['title'] = 'ログ確認';
+$_view['title'] = 'ログ一覧';

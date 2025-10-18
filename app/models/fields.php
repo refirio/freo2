@@ -35,7 +35,7 @@ function select_fields($queries, $options = [])
         }
         $queries['where'] = 'fields.deleted IS NULL AND (' . $queries['where'] . ')';
     } else {
-        // 記事を取得
+        // エントリーを取得
         $queries['from'] = DATABASE_PREFIX . 'fields';
 
         // 削除済みデータは取得しない

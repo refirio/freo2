@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS categories(
 
 CREATE TABLE IF NOT EXISTS category_sets(
     category_id INT UNSIGNED NOT NULL COMMENT '外部キー カテゴリ',
-    entry_id    INT UNSIGNED NOT NULL COMMENT '外部キー 記事'
+    entry_id    INT UNSIGNED NOT NULL COMMENT '外部キー エントリー'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'カテゴリ ひも付け';
 
 CREATE TABLE IF NOT EXISTS fields(
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS fields(
 
 CREATE TABLE IF NOT EXISTS field_sets(
     field_id INT UNSIGNED NOT NULL COMMENT '外部キー フィールド',
-    entry_id INT UNSIGNED          COMMENT '外部キー 記事',
+    entry_id INT UNSIGNED          COMMENT '外部キー エントリー',
     text     TEXT                  COMMENT 'テキスト'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'フィールド ひも付け';
 
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS attributes(
 CREATE TABLE IF NOT EXISTS attribute_sets(
     attribute_id INT UNSIGNED NOT NULL COMMENT '外部キー 属性',
     user_id      INT UNSIGNED          COMMENT '外部キー ユーザ',
-    entry_id     INT UNSIGNED          COMMENT '外部キー 記事'
+    entry_id     INT UNSIGNED          COMMENT '外部キー エントリー'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '属性 ひも付け';
 
 CREATE TABLE IF NOT EXISTS menus(

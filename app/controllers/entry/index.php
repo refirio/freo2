@@ -55,4 +55,4 @@ $_view['entry_archives'] = service_entry_select_published('entry', [
 ]);
 
 // タイトル
-$_view['title'] = '記事';
+$_view['title'] = 'エントリー';

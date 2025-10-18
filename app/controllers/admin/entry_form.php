@@ -159,7 +159,7 @@ $_view['attributes'] = model('select_attributes', [
 
 // タイトル
 if (empty($_GET['id'])) {
-    $_view['title'] = '記事登録';
+    $_view['title'] = 'エントリー登録';
 } else {
-    $_view['title'] = '記事編集';
+    $_view['title'] = 'エントリー編集';
 }

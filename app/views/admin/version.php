@@ -9,7 +9,7 @@
                     </div>
 
                     <div class="card shadow-sm mb-3">
-                        <div class="card-header heading">システム情報</div>
+                        <div class="card-header heading">バージョン情報</div>
                         <div class="card-body">
                             <div class="card shadow-sm mb-3">
                                 <div class="card-header">

@@ -18,7 +18,7 @@
                                 <?php if ($_GET['ok'] === 'post') : ?>
                                 ページを登録しました。
                                 <?php elseif ($_GET['ok'] === 'approve') : ?>
-                                記事の承認を変更しました。
+                                ページの承認を変更しました。
                                 <?php elseif ($_GET['ok'] === 'delete') : ?>
                                 ページを削除しました。
                                 <?php endif ?>
