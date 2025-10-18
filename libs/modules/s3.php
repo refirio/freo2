@@ -6,8 +6,7 @@
 
 *******************************************************************************/
 
-import('_aws-sdk/vendor/autoload.php');
-//import('libs/vendor/autoload.php');
+import('libs/vendor/autoload.php');
 
 use Aws\S3\S3Client;
 use Aws\S3\Exception\S3Exception;
