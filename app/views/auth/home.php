@@ -25,6 +25,9 @@
                     <p>ようこそ、<?php h($_view['_user']['name'] ? $_view['_user']['name'] : $_view['_user']['username']) ?>さん</p>
                     <ul>
                         <li><a href="<?php t(MAIN_FILE) ?>/auth/modify">ユーザ情報編集</a></li>
+                        <?php if ($GLOBALS['authority']['power'] == 0 && !empty($GLOBALS['setting']['user_use_register'])) : ?>
+                        <li><a href="<?php t(MAIN_FILE) ?>/auth/leave">ユーザ情報削除</a></li>
+                        <?php endif ?>
                         <li><a href="<?php t(MAIN_FILE) ?>/auth/logout">ログアウト</a></li>
                     </ul>
                 </div>
