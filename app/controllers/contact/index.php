@@ -55,6 +55,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     // 初期データを取得
     $_view['contact'] = model('default_contacts');
+
+    if (!empty($_SESSION['auth']['user']['id'])) {
+        // ユーザを取得
+        $users = model('select_users', [
+            'where' => [
+                'id = :id AND enabled = 1',
+                [
+                    'id' => $_SESSION['auth']['user']['id'],
+                ],
+            ],
+        ]);
+
+        $_view['contact']['name']  = $users[0]['name'];
+        $_view['contact']['email'] = $users[0]['email'];
+    }
 }
 
 // お問い合わせの表示用データ作成

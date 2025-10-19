@@ -84,6 +84,11 @@ function service_entry_insert($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'entries', 'insert');
 
+    // ユーザ
+    if (!empty($_SESSION['auth']['user']['id'])) {
+        $queries['values']['user_id'] = $_SESSION['auth']['user']['id'];
+    }
+
     // エントリーを登録
     $resource = model('insert_entries', $queries, $options);
     if (!$resource) {

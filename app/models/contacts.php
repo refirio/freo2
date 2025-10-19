@@ -223,6 +223,7 @@ function default_contacts()
         'created'  => localdate('Y-m-d H:i:s'),
         'modified' => localdate('Y-m-d H:i:s'),
         'deleted'  => null,
+        'user_id'  => null,
         'name'     => '',
         'email'    => '',
         'message'  => '',
