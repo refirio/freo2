@@ -30,9 +30,11 @@
                 <div class="form-group mt-4">
                     <a href="<?php t(MAIN_FILE) ?>/auth/password">パスワード再発行</a>
                 </div>
+                <?php if (!empty($GLOBALS['setting']['user_use_register'])) : ?>
                 <div class="form-group mt-1">
                     <a href="<?php t(MAIN_FILE) ?>/auth/register">ユーザ登録</a>
                 </div>
+                <?php endif ?>
                 <div class="form-group mt-4">
                     <a href="<?php t(MAIN_FILE) ?>/">トップページへ戻る</a>
                 </div>

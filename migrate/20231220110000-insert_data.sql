@@ -16,18 +16,20 @@ INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'page', '下層ページ', 
 
 INSERT INTO settings VALUES('title', 'Example');
 INSERT INTO settings VALUES('description', 'サイトの概要。');
-INSERT INTO settings VALUES('entry_use_approve', 0);
+INSERT INTO settings VALUES('entry_use_approve', NULL);
 INSERT INTO settings VALUES('entry_use_text', 1);
 INSERT INTO settings VALUES('entry_use_picture', 1);
 INSERT INTO settings VALUES('entry_use_thumbnail', 1);
 INSERT INTO settings VALUES('entry_default_code', 'YmdHis');
-INSERT INTO settings VALUES('page_use_approve', 0);
+INSERT INTO settings VALUES('page_use_approve', NULL);
 INSERT INTO settings VALUES('page_use_text', 1);
 INSERT INTO settings VALUES('page_use_picture', 1);
 INSERT INTO settings VALUES('page_use_thumbnail', 1);
 INSERT INTO settings VALUES('page_default_code', NULL);
 INSERT INTO settings VALUES('page_home_code', NULL);
 INSERT INTO settings VALUES('page_url_omission', NULL);
+INSERT INTO settings VALUES('user_use_approve', NULL);
+INSERT INTO settings VALUES('user_use_register', NULL);
 INSERT INTO settings VALUES('restricted_password_title', '要認証: ');
 INSERT INTO settings VALUES('restricted_password_text', '<p>パスワード認証により公開されます。</p>');
 INSERT INTO settings VALUES('menu_auth', 1);

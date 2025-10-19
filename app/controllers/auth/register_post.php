@@ -3,6 +3,11 @@
 import('app/services/user.php');
 import('libs/modules/hash.php');
 
+// 機能の利用を確認
+if (empty($GLOBALS['setting']['user_use_register'])) {
+    error('訪問者によるユーザ新規登録は許可されていません。');
+}
+
 // フォワードを確認
 if (forward() === null) {
     error('不正なアクセスです。');
@@ -28,6 +33,9 @@ $authorities = model('select_authorities', [
 ]);
 $authority_id = $authorities[0]['id'];
 
+// 有効
+$enabled = $GLOBALS['setting']['user_use_approve'] ? 0 : 1;
+
 // トランザクションを開始
 db_transaction();
 
@@ -38,6 +46,7 @@ $resource = service_user_insert([
         'password'      => hash_crypt($_SESSION['post']['user']['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']),
         'password_salt' => $password_salt,
         'authority_id'  => $authority_id,
+        'enabled'       => $enabled,
         'name'          => $_SESSION['post']['user']['name'],
         'email'         => $_SESSION['post']['user']['email'],
         'token'         => rand_string(),
