@@ -43,9 +43,11 @@ INSERT INTO settings VALUES('mail_body_begin', '※このメールは送信専�
 ');
 INSERT INTO settings VALUES('mail_body_end', '━━━━━━━━━━━━━━━━━━━━━━━━━
 Example
-E-mail : admin@example.com
+URL: https://www.example.com/
 ━━━━━━━━━━━━━━━━━━━━━━━━━');
+INSERT INTO settings VALUES('mail_register_subject', 'ユーザ登録完了');
 INSERT INTO settings VALUES('mail_verify_subject', 'メールアドレス存在確認');
 INSERT INTO settings VALUES('mail_password_subject', 'パスワード再設定');
+INSERT INTO settings VALUES('mail_leave_subject', 'ユーザ削除完了');
 INSERT INTO settings VALUES('mail_contact_subject', 'お問い合わせありがとうございます');
 INSERT INTO settings VALUES('mail_contact_subject_admin', 'お問い合わせがありました');

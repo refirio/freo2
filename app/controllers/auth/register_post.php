@@ -1,6 +1,7 @@
 <?php
 
 import('app/services/user.php');
+import('app/services/mail.php');
 import('libs/modules/hash.php');
 
 // 機能の利用を確認
@@ -58,7 +59,10 @@ if (!$resource) {
     error('データを登録できません。');
 }
 
-// メールアドレス認証用URLを通知
+// トランザクションを終了
+db_commit();
+
+// ユーザ情報を取得
 $users = model('select_users', [
     'select' => 'email, token',
     'where'  => [
@@ -69,8 +73,16 @@ $users = model('select_users', [
     ],
 ]);
 
-// トランザクションを終了
-db_commit();
+// ユーザ登録完了を通知
+$to      = $users[0]['email'];
+$subject = $GLOBALS['setting']['mail_register_subject'];
+$message = view('mail/register/send.php', true);
+$headers = $GLOBALS['config']['mail_headers'];
+
+// メールを送信
+if (service_mail_send($to, $subject, $message, $headers) === false) {
+    error('メールを送信できません。');
+}
 
 // 投稿セッションを初期化
 unset($_SESSION['post']);
