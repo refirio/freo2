@@ -58,7 +58,7 @@
                                     <tr>
                                         <td><?php h($user['username']) ?></td>
                                         <td><?php h($user['name']) ?></td>
-                                        <td class="d-none d-md-table-cell"><?php h($user['email']) ?></td>
+                                        <td class="d-none d-md-table-cell"><?php h($user['email']) ?><?php h($user['email_verified'] ? '' : '（未確認）') ?></td>
                                         <td>
                                             <?php if (empty($user['authority_id'])) : ?>
                                                 -

@@ -15,7 +15,11 @@
                             <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                             ユーザ情報を編集しました。
                         </div>
-                        <p><a href="<?php t(MAIN_FILE) ?>/auth/modify" class="btn btn-secondary">戻る</a><p>
+                        <?php if ($GLOBALS['authority']['power'] >= 1) : ?>
+                        <p><a href="<?php t(MAIN_FILE) ?>/admin/home" class="btn btn-secondary">戻る</a><p>
+                        <?php else : ?>
+                        <p><a href="<?php t(MAIN_FILE) ?>/auth/home" class="btn btn-secondary">戻る</a><p>
+                        <?php endif ?>
                     </div>
                 </div>
             </div>

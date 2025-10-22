@@ -16,6 +16,12 @@
                     <form action="<?php t(MAIN_FILE) ?>/contact/" method="post" class="register validate">
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <input type="hidden" name="view" value="">
+                        <?php if (!empty($_SESSION['auth']['user']['id'])) : ?>
+                        <div class="form-group mb-2">
+                            <label>ユーザ名</label>
+                            <input type="text" value="<?php h($_view['_user']['username']) ?>" readonly class="form-control">
+                        </div>
+                        <?php endif ?>
                         <div class="form-group mb-2">
                             <label>お名前 <span class="badge bg-danger">必須</span></label>
                             <input type="text" name="name" value="<?php t($_view['contact']['name']) ?>" class="form-control">
