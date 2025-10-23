@@ -4,13 +4,18 @@
                     <h2 class="h4 mb-3">Contact</h2>
                     <p>以下の内容で送信します。</p>
                     <form action="<?php t(MAIN_FILE) ?>/contact/preview" method="post">
-                        <dl>
-                            <dt>お名前</dt>
-                                <dd><?php h($_view['contact']['name']) ?></dd>
-                            <dt>メールアドレス</dt>
-                                <dd><?php h($_view['contact']['email']) ?></dd>
-                            <dt>お問い合わせ内容</dt>
-                                <dd><?php h($_view['contact']['message']) ?></dd>
+                        <dl class="row">
+                            <?php if (empty($_SESSION['auth']['user']['id'])) : ?>
+                            <dt class="col-sm-2">お名前</dt>
+                            <dd class="col-sm-10"><?php h($_view['contact']['name']) ?></dd>
+                            <dt class="col-sm-2">メールアドレス</dt>
+                            <dd class="col-sm-10"><?php h($_view['contact']['email']) ?></dd>
+                            <?php else : ?>
+                            <dt class="col-sm-2">お名前</dt>
+                            <dd class="col-sm-10"><?php h($_view['_user']['name']) ?></dd>
+                            <?php endif ?>
+                            <dt class="col-sm-2">お問い合わせ内容</dt>
+                            <dd class="col-sm-10"><?php h($_view['contact']['message']) ?></dd>
                         </dl>
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <div class="form-group mt-4">

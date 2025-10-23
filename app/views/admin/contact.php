@@ -39,6 +39,7 @@
                                             <th class="text-nowrap"><label><input type="checkbox" name="" value="" class="bulks"></label></th>
                                             <?php endif ?>
                                             <th class="text-nowrap d-none d-md-table-cell">日時</th>
+                                            <th class="text-nowrap">ユーザ名</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
@@ -49,6 +50,7 @@
                                             <th class="text-nowrap"><label><input type="checkbox" name="" value="" class="bulks"></label></th>
                                             <?php endif ?>
                                             <th class="text-nowrap d-none d-md-table-cell">日時</th>
+                                            <th class="text-nowrap">ユーザ名</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
@@ -60,6 +62,7 @@
                                             <td><input type="checkbox" name="bulks[]" value="<?php h($contact['id']) ?>"<?php isset($_SESSION['bulk']['contact'][$contact['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
                                             <?php endif ?>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $contact['created']) == localdate('Ymd') ? localdate('H:i:s', $contact['created']) : localdate('Y/m/d', $contact['created'])) ?></td>
+                                            <td><?php h($contact['user_id'] ? truncate($contact['user_username'], 50) : '') ?></td>
                                             <td><?php h(truncate($contact['name'], 50)) ?></td>
                                             <td>
                                                 <a href="<?php t(MAIN_FILE) ?>/admin/contact_view?id=<?php t($contact['id']) ?>" class="btn btn-primary text-nowrap">表示</a>

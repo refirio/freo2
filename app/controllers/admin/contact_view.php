@@ -3,11 +3,13 @@
 // お問い合わせを取得
 $contacts = model('select_contacts', [
     'where' => [
-        'id = :id',
+        'contacts.id = :id',
         [
             'id' => $_GET['id'],
         ],
     ],
+], [
+    'associate' => true,
 ]);
 if (empty($contacts)) {
     warning('表示データが見つかりません。');

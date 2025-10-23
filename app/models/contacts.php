@@ -13,15 +13,35 @@ import('libs/modules/validator.php');
 function select_contacts($queries, $options = [])
 {
     $queries = db_placeholder($queries);
+    $options = [
+        'associate' => isset($options['associate']) ? $options['associate'] : false,
+    ];
 
-    // お問い合わせを取得
-    $queries['from'] = DATABASE_PREFIX . 'contacts';
+    if ($options['associate'] === true) {
+        // 関連するデータを取得
+        if (!isset($queries['select'])) {
+            $queries['select'] = 'DISTINCT contacts.*, '
+                               . 'users.username AS user_username';
+        }
 
-    // 削除済みデータは取得しない
-    if (!isset($queries['where'])) {
-        $queries['where'] = 'TRUE';
+        $queries['from'] = DATABASE_PREFIX . 'contacts AS contacts '
+                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'users AS users ON contacts.user_id = users.id';
+
+        // 削除済みデータは取得しない
+        if (!isset($queries['where'])) {
+            $queries['where'] = 'TRUE';
+        }
+        $queries['where'] = 'contacts.deleted IS NULL AND (' . $queries['where'] . ')';
+    } else {
+        // お問い合わせを取得
+        $queries['from'] = DATABASE_PREFIX . 'contacts';
+
+        // 削除済みデータは取得しない
+        if (!isset($queries['where'])) {
+            $queries['where'] = 'TRUE';
+        }
+        $queries['where'] = 'deleted IS NULL AND (' . $queries['where'] . ')';
     }
-    $queries['where'] = 'deleted IS NULL AND (' . $queries['where'] . ')';
 
     // データを取得
     $results = db_select($queries);
