@@ -1,33 +1,22 @@
 @charset "utf-8";
 
-/********* 全体 *****************************************************/
+/********* 全体 ***************************************************************/
 
-html, body {
-    height: 100%;
-}
 body {
-    display: flex;
-    align-items: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
     background-color: #EEEEEE;
 }
 a {
     color: #212121;
 }
 
-/********* メインコンテンツ *****************************************/
+/********* メインコンテンツ ***************************************************/
 
 main.form-login {
     width: 100%;
-    max-width: 340px;
+    max-width: 320px;
     margin: auto;
-    padding: 15px;
 }
 
-main.form-login .form-floating:focus-within {
-    z-index: 2;
-}
 main.form-login input#username {
     margin-bottom: -1px;
     border-bottom-right-radius: 0;

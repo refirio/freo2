@@ -1,11 +1,11 @@
 <?php import('app/views/admin/header.php') ?>
 
-                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <main class="col-md-9 ms-sm-auto col-lg-10 mb-2 px-md-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-2">
-                        <h1 class="h3">
-                            <svg class="bi flex-shrink-0" width="24" height="24" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
+                        <h2 class="h3">
+                            <svg class="bi flex-shrink-0 me-1 mb-1" width="24" height="24"><use xlink:href="#symbol-file-text"/></svg>
                             コンテンツ
-                        </h1>
+                        </h2>
                     </div>
 
                     <div class="card shadow-sm mb-3">
@@ -38,7 +38,7 @@
                                     <thead>
                                         <tr>
                                             <th class="text-nowrap">タイトル</th>
-                                            <th class="text-nowrap">URL</th>
+                                            <th class="text-nowrap d-none d-md-table-cell">URL</th>
                                             <th class="text-nowrap">有効</th>
                                             <th class="text-nowrap">並び替え</th>
                                             <th class="text-nowrap">作業</th>
@@ -47,7 +47,7 @@
                                     <tfoot>
                                         <tr>
                                             <th class="text-nowrap">タイトル</th>
-                                            <th class="text-nowrap">URL</th>
+                                            <th class="text-nowrap d-none d-md-table-cell">URL</th>
                                             <th class="text-nowrap">有効</th>
                                             <th class="text-nowrap">並び替え</th>
                                             <th class="text-nowrap">作業</th>
@@ -57,7 +57,7 @@
                                         <?php foreach ($_view['menus'] as $menu) : ?>
                                         <tr id="sort_<?php h($menu['id']) ?>">
                                             <td><?php h(truncate($menu['title'], 50)) ?></td>
-                                            <td><?php h(truncate($menu['url'], 50)) ?></td>
+                                            <td class="d-none d-md-table-cell"><?php h(truncate($menu['url'], 50)) ?></td>
                                             <td><?php h($GLOBALS['config']['option']['menu']['enabled'][$menu['enabled']]) ?></td>
                                             <td><span class="handle text-nowrap">並び替え</span></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/menu_form?id=<?php t($menu['id']) ?>" class="btn btn-primary">編集</a></td>

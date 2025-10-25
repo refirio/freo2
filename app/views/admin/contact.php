@@ -1,11 +1,11 @@
 <?php import('app/views/admin/header.php') ?>
 
-                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <main class="col-md-9 ms-sm-auto col-lg-10 mb-2 px-md-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-2">
-                        <h1 class="h3">
-                            <svg class="bi flex-shrink-0" width="24" height="24" style="margin: 0 2px 4px 0;"><use xlink:href="#symbol-file-text"/></svg>
+                        <h2 class="h3">
+                            <svg class="bi flex-shrink-0 me-1 mb-1" width="24" height="24"><use xlink:href="#symbol-file-text"/></svg>
                             コミュニケーション
-                        </h1>
+                        </h2>
                     </div>
 
                     <div class="card shadow-sm mb-3">
@@ -78,7 +78,7 @@
                                 <p><input type="submit" value="一括削除" class="btn btn-danger"></p>
                                 <?php endif ?>
                                 <?php if ($_view['contact_page'] > 1) : ?>
-                                    <ul class="pagination" style="justify-content: flex-end;">
+                                    <ul class="pagination d-flex justify-content-end">
                                         <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=1" class="page-link">&laquo;</a></li>
                                         <?php for ($i = 1; $i <= $_view['contact_page']; $i++) : ?>
                                         <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>

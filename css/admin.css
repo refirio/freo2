@@ -1,68 +1,51 @@
 @charset "utf-8";
 
-/********* ナビゲーションバー ***************************************/
+/********* ヘッダー ***********************************************************/
+
+header h1 {
+    font-family: 'Roboto', sans-serif;
+}
+header h1 a {
+    text-decoration: none;
+    color: #222222;
+}
+
+/********* ナビゲーションバー *************************************************/
 
 .navbar {
     background-color: #FFFFFF;
-}
-.navbar h1.navbar-brand {
-    padding-top: 14px;
-    padding-bottom: 10px;
 }
 .navbar h1.navbar-brand a {
     color: #555555;
     font-weight: bold;
     text-decoration: none;
 }
-.navbar .navbar-toggler {
-    top: .22rem;
-    right: .22rem;
-}
 .navbar .navbar-toggler .navbar-toggler-icon {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
-.navbar .navbar-title {
-    color: #555555;
-    font-weight: bold;
-}
 .navbar .navbar-nav .nav-item .user .dropdown-toggle {
     color: #222222;
-    font-weight: bold;
     text-decoration: none;
 }
 @media (max-width: 767.98px) {
     .navbar .navbar-nav {
         width: 100%;
-        margin-top: 12px;
-        padding: 8px 6px;
         background-color: #555555;
         text-align: right;
-    }
-    .navbar h1.navbar-brand {
-        padding-left: 16px;
-        padding-bottom: 0;
     }
     .navbar .navbar-nav .nav-item .user .dropdown-toggle {
         color: #FFFFFF;
     }
 }
 
-/********* サイドバー ***********************************************/
+/********* サイドバー *********************************************************/
 
 .sidebar {
     position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
     z-index: 100;
     padding: 56px 0 0;
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
     background-color: #555555;
-}
-@media (max-width: 767.98px) {
-    .sidebar {
-        top: 2rem;
-    }
 }
 .sidebar .sidebar-sticky {
     position: -webkit-sticky;
@@ -71,15 +54,14 @@
     height: calc(100vh - 24px);
     overflow-x: hidden;
     overflow-y: auto;
-    padding-bottom: 24px;
 }
-.sidebar .sidebar-sticky::-webkit-scrollbar{
+.sidebar .sidebar-sticky::-webkit-scrollbar {
     width: 10px;
 }
-.sidebar .sidebar-sticky::-webkit-scrollbar-track{
+.sidebar .sidebar-sticky::-webkit-scrollbar-track {
     background-color: #EEEEEE;
 }
-.sidebar .sidebar-sticky::-webkit-scrollbar-thumb{
+.sidebar .sidebar-sticky::-webkit-scrollbar-thumb {
     background-color: #CCCCCC;
 }
 
@@ -87,9 +69,6 @@
     color: #FFFFFF;
 }
 .sidebar .nav-item .nav-link {
-    padding-top: 5px;
-    padding-bottom: 3px;
-    font-weight: 500;
     color: #FFFFFF;
 }
 .sidebar .nav-item .nav-link.active {
@@ -97,7 +76,7 @@
     color: #555555;
 }
 
-/********* メインコンテンツ *****************************************/
+/********* メインコンテンツ ***************************************************/
 
 body, main {
     background-color: #EEEEEE;
@@ -105,27 +84,6 @@ body, main {
 main .heading {
     background-color: #555555;
     color: #FFFFFF;
-}
-
-main .table {
-    margin: 20px 0;
-}
-
-main .upload button {
-    padding: 0;
-}
-
-@media (min-width: 767.99px) {
-    main .search .row > div:not(:last-child) {
-        padding-right: 0;
-    }
-}
-
-/* アラート */
-main .alert a {
-    font-weight: bold;
-    color: currentcolor;
-    text-decoration: underline;
 }
 
 /* 必須 */

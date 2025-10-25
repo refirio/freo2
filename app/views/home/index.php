@@ -1,6 +1,6 @@
 <?php import('app/views/header.php') ?>
 
-                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
                     <?php if (!empty($_view['page'])) : ?>
                     <h2 class="h4 mb-3"><?php h($_view['page']['title']) ?></h2>
 
@@ -20,7 +20,7 @@
                         <?php foreach ($_view['entries'] as $entry) : ?>
                         <li>
                             <time datetime="<?php h(localdate('Y-m-d', $entry['datetime'])) ?>" class="datetime"><?php h(localdate('Y.m.d', $entry['datetime'])) ?></time>
-                            <a href="<?php t(MAIN_FILE) ?>/entry/detail/<?php h($entry['code']) ?>"><?php h($entry['title']) ?></a>
+                            <a href="<?php t(MAIN_FILE) ?>/entry/detail/<?php h($entry['code']) ?>" class="px-2"><?php h($entry['title']) ?></a>
                             <span class="text"><?php h(truncate(strip_tags($entry['text'] ?? ''), 100)) ?></span>
                         </li>
                         <?php endforeach ?>

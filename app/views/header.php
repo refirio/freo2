@@ -12,9 +12,9 @@
         <?php isset($_view['link']) ? e($_view['link']) : '' ?>
     </head>
     <body>
-        <header class="navbar pt-0 pb-1 m-3">
-            <h1><a href="<?php t(MAIN_FILE) ?>/"><?php h($GLOBALS['setting']['title']) ?></a></h1>
-            <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <header class="navbar ms-3 pt-0 pb-1 m-3 me-1">
+            <h1 class="my-1 my-md-0"><a href="<?php t(MAIN_FILE) ?>/"><?php h($GLOBALS['setting']['title']) ?></a></h1>
+            <button class="navbar-toggler position-absolute top-0 end-0 d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         </header>

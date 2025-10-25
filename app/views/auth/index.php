@@ -1,6 +1,6 @@
 <?php import('app/views/auth/header.php') ?>
 
-        <main class="form-login text-center">
+        <main class="form-login my-5 text-center">
             <form action="<?php t(MAIN_FILE) ?>/auth/<?php empty($_GET['referer']) ? '' : t('?referer=' . rawurlencode($_GET['referer'])) ?>" method="post">
                 <h1 class="mb-4"><?php h($GLOBALS['setting']['title']) ?></h1>
 
