@@ -8,24 +8,41 @@
                         </h2>
                     </div>
 
-                    <div class="card shadow-sm mb-3">
-                        <div class="card-header heading">メニュー</div>
+                    <div class="dashboard card shadow-sm mb-3">
+                        <div class="card-header heading">ダッシュボード</div>
                         <div class="card-body">
                             <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
                             <h3 class="h5">コンテンツ</h3>
-                            <ul>
-                                <li><a href="<?php t(MAIN_FILE) ?>/admin/entry">エントリー管理</a></li>
-                                <li><a href="<?php t(MAIN_FILE) ?>/admin/page">ページ管理</a></li>
-                                <li><a href="<?php t(MAIN_FILE) ?>/admin/category">カテゴリ管理</a></li>
-                                <li><a href="<?php t(MAIN_FILE) ?>/admin/field">フィールド管理</a></li>
-                                <li><a href="<?php t(MAIN_FILE) ?>/admin/menu">メニュー管理</a></li>
-                                <li><a href="<?php t(MAIN_FILE) ?>/admin/widget">ウィジェット管理</a></li>
-                            </ul>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="card shadow-sm mb-3">
+                                        <div class="card-header">エントリー数</div>
+                                        <div class="card-body text-center">
+                                            <span class="fs-4"><a href="<?php t(MAIN_FILE) ?>/admin/entry"><?php h($_view['entry_count']) ?></a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card shadow-sm mb-3">
+                                        <div class="card-header">ページ数</div>
+                                        <div class="card-body text-center">
+                                            <span class="fs-4"><a href="<?php t(MAIN_FILE) ?>/admin/page"><?php h($_view['page_count']) ?></a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <?php endif ?>
                             <h3 class="h5">コミュニケーション</h3>
-                            <ul>
-                                <li><a href="<?php t(MAIN_FILE) ?>/admin/contact">お問い合わせ管理</a></li>
-                            </ul>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="card shadow-sm mb-3">
+                                        <div class="card-header">お問い合わせ数</div>
+                                        <div class="card-body text-center">
+                                            <span class="fs-4"><a href="<?php t(MAIN_FILE) ?>/admin/contact"><?php h($_view['contact_count']) ?></a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </main>
