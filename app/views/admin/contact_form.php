@@ -46,6 +46,14 @@
                                             <textarea name="message" rows="10" cols="50" class="form-control"><?php t($_view['contact']['message']) ?></textarea>
                                         </div>
                                         <div class="form-group mb-2">
+                                            <label class="fw-bold">状況 <span class="badge bg-danger">必須</span></label>
+                                            <select name="status" class="form-select" style="width: 200px;">
+                                                <?php foreach ($GLOBALS['config']['option']['contact']['status'] as $key => $value) : ?>
+                                                <option value="<?php t($key) ?>"<?php $key == $_view['contact']['status'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group mb-2">
                                             <label class="fw-bold">メモ</label>
                                             <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['contact']['memo']) ?></textarea>
                                         </div>

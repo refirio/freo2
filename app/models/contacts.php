@@ -208,6 +208,13 @@ function validate_contacts($queries, $options = [])
         }
     }
 
+    // 状況
+    if (isset($queries['status'])) {
+        if (!validator_list($queries['status'], $GLOBALS['config']['option']['contact']['status'])) {
+            $messages['status'] = '状況の値が不正です。[' . $queries['status'] . ']';
+        }
+    }
+
     // メモ
     if (isset($queries['memo'])) {
         if (!validator_required($queries['memo'])) {
@@ -247,6 +254,7 @@ function default_contacts()
         'name'     => '',
         'email'    => '',
         'message'  => '',
+        'status'   => 'opened',
         'memo'     => null,
     ];
 }

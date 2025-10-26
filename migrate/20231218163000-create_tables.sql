@@ -159,6 +159,7 @@ CREATE TABLE IF NOT EXISTS contacts(
     name     VARCHAR(255) NOT NULL                COMMENT '名前',
     email    VARCHAR(255) NOT NULL                COMMENT 'メールアドレス',
     message  TEXT         NOT NULL                COMMENT 'お問い合わせ内容',
+    status   VARCHAR(20)  NOT NULL                COMMENT '状況',
     memo     TEXT                                 COMMENT 'メモ',
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'お問い合わせ';

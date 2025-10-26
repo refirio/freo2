@@ -20,6 +20,9 @@ function service_contact_insert($queries, $options = [])
         $queries['values']['user_id'] = $_SESSION['auth']['user']['id'];
     }
 
+    // 状況
+    $queries['values']['status'] = 'opened';
+
     // お問い合わせを登録
     $resource = model('insert_contacts', $queries, $options);
     if (!$resource) {
