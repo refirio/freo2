@@ -46,113 +46,22 @@
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse top-0 bottom-0 start-0">
                     <div class="sidebar-sticky pt-3 pb-5">
                         <h2 class="d-none">メニュー</h2>
-                        <ul class="nav flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link py-1 fw-bold<?php if ($_REQUEST['_work'] == 'index') : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-clipboard-data"/></svg>
-                                    ホーム
-                                </a>
-                            </li>
-                        </ul>
-
-                        <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
+                        <?php foreach ($GLOBALS['menu_group']['admin'] as $menu_key => $menu_value) : if ($menu_value['show']) : ?>
+                        <?php if ($menu_key != 'home') : ?>
                         <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
-                            <span>コンテンツ</span>
+                            <span><?php t($menu_value['name']) ?></span>
                         </h3>
-                        <ul class="nav flex-column mb-2">
-                            <li class="nav-item">
-                                <a class="nav-link py-1 fw-bold<?php if (preg_match('/^entry(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/entry">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg>
-                                    エントリー管理
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-1 fw-bold<?php if (preg_match('/^page(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/page">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg>
-                                    ページ管理
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-1 fw-bold<?php if (preg_match('/^category(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/category">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg>
-                                    カテゴリ管理
-                                </a>
-                            </li>
-                            <?php if ($GLOBALS['setting']['menu_admin_field']) : ?>
-                            <li class="nav-item">
-                                <a class="nav-link py-1 fw-bold<?php if (preg_match('/^field(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/field">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg>
-                                    フィールド管理
-                                </a>
-                            </li>
-                            <?php endif ?>
-                            <?php if ($GLOBALS['setting']['menu_admin_menu']) : ?>
-                            <li class="nav-item">
-                                <a class="nav-link py-1 fw-bold<?php if (preg_match('/^menu(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/menu">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg>
-                                    メニュー管理
-                                </a>
-                            </li>
-                            <?php endif ?>
-                            <?php if ($GLOBALS['setting']['menu_admin_widget']) : ?>
-                            <li class="nav-item">
-                                <a class="nav-link py-1 fw-bold<?php if (preg_match('/^widget(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/widget">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg>
-                                    ウィジェット管理
-                                </a>
-                            </li>
-                            <?php endif ?>
-                        </ul>
                         <?php endif ?>
-
-                        <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
-                            <span>コミュニケーション</span>
-                        </h3>
                         <ul class="nav flex-column mb-2">
+                            <?php foreach ($GLOBALS['menu_contents']['admin'][$menu_key] as $work_key => $work_value) : if ($work_value['show']) : ?>
                             <li class="nav-item">
-                                <a class="nav-link py-1 fw-bold<?php if (preg_match('/^contact(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/contact">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg>
-                                    お問い合わせ管理
+                                <a class="nav-link py-1 fw-bold<?php if (preg_match($work_value['active'], $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE . $work_value['link']) ?>">
+                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="<?php t($work_value['icon']) ?>"/></svg>
+                                    <?php t($work_value['name']) ?>
                                 </a>
                             </li>
+                            <?php endif; endforeach ?>
                         </ul>
-
-                        <?php if ($GLOBALS['authority']['power'] >= 3) : ?>
-                        <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
-                            <span>システム</span>
-                        </h6>
-                        <ul class="nav flex-column mb-2">
-                            <li class="nav-item">
-                                <a class="nav-link py-1 fw-bold<?php if (preg_match('/^user(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/user">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg>
-                                    ユーザ管理
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-1 fw-bold<?php if (preg_match('/^attribute(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/attribute">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg>
-                                    属性管理
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-1 fw-bold<?php if ($_REQUEST['_work'] == 'log') : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/log">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg>
-                                    ログ一覧
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-1<?php if (preg_match('/^setting(_|$)/', $_REQUEST['_work'])) : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/setting">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg>
-                                    設定
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link py-1 fw-bold<?php if ($_REQUEST['_work'] == 'version') : ?> active<?php endif ?>" href="<?php t(MAIN_FILE) ?>/admin/version">
-                                    <svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg>
-                                    バージョン情報
-                                </a>
-                            </li>
-                        </ul>
-                        <?php endif ?>
+                        <?php endif; endforeach ?>
                     </div>
                 </nav>

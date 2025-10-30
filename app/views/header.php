@@ -8,7 +8,7 @@
         <link rel="alternate" href="<?php h($GLOBALS['config']['http_url']) ?>/entry/feed" type="application/rss+xml" title="RSS">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="<?php t($GLOBALS['config']['http_path']) ?><?php t(loader_css('common.css')) ?>">
-        <link rel="stylesheet" href="<?php t($GLOBALS['config']['http_path']) ?><?php t(loader_css('pages.css')) ?>">
+        <link rel="stylesheet" href="<?php t($GLOBALS['config']['http_path']) ?><?php t(loader_css('public.css')) ?>">
         <?php isset($_view['link']) ? e($_view['link']) : '' ?>
     </head>
     <body>
@@ -30,13 +30,20 @@
                             <?php endforeach ?>
                         </ul>
                         <?php endif ?>
+                        <?php foreach ($GLOBALS['menu_group']['public'] as $menu_key => $menu_value) : if ($menu_value['show']) : ?>
+                        <?php if ($menu_key != 'home') : ?>
+                        <h3 class="h5 mb-3"><?php t($menu_value['name']) ?></h3>
+                        <?php endif ?>
                         <ul>
-                            <li><a href="<?php t(MAIN_FILE) ?>/entry/">エントリー</a></li>
-                            <li><a href="<?php t(MAIN_FILE) ?>/contact/">お問い合わせ</a></li>
-                            <?php if ($GLOBALS['setting']['menu_auth']) : ?>
-                            <li><a href="<?php t(MAIN_FILE) ?>/auth/">ログイン</a></li>
-                            <?php endif ?>
+                            <?php foreach ($GLOBALS['menu_contents']['public'][$menu_key] as $work_key => $work_value) : if ($work_value['show']) : ?>
+                            <li>
+                                <a class="<?php if (preg_match($work_value['active'], $_REQUEST['_work'])) : ?>fw-bold<?php endif ?>" href="<?php t(MAIN_FILE . $work_value['link']) ?>">
+                                    <?php t($work_value['name']) ?>
+                                </a>
+                            </li>
+                            <?php endif; endforeach ?>
                         </ul>
+                        <?php endif; endforeach ?>
                         <?php e($_view['widgets']['menu']) ?>
                     </div>
                 </nav>
