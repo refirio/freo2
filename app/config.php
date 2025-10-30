@@ -182,3 +182,6 @@ $GLOBALS['config']['aws_bucket'] = app_config('APP_AWS_BUCKET', null);
 $GLOBALS['config']['recaptcha_enable'] = app_config('APP_RECAPTCHA_ENABLE', false);
 $GLOBALS['config']['recaptcha_site_key'] = app_config('APP_RECAPTCHA_SITE_KEY', null);
 $GLOBALS['config']['recaptcha_secret_key'] = app_config('APP_RECAPTCHA_SECRET_KEY', null);
+
+/* プラグイン格納ディレクトリ */
+$GLOBALS['config']['plugin_path'] = app_config('APP_PLUGIN_PATH', 'plugins/');
