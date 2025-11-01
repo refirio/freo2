@@ -11,24 +11,31 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
                         <div class="card-body">
-                            <dl class="row">
-                                <dt class="col-sm-2">日時</dt>
-                                <dd class="col-sm-10"><?php h($_view['contact']['created']) ?></dd>
-                                <?php if (!empty($_view['contact']['user_id'])) : ?>
-                                <dt class="col-sm-2">ユーザ名</dt>
-                                <dd class="col-sm-10"><?php h($_view['contact']['user_username']) ?></dd>
-                                <?php endif ?>
-                                <dt class="col-sm-2">名前</dt>
-                                <dd class="col-sm-10"><?php h($_view['contact']['name']) ?></dd>
-                                <dt class="col-sm-2">メールアドレス</dt>
-                                <dd class="col-sm-10"><?php h($_view['contact']['email']) ?></dd>
-                                <dt class="col-sm-2">お問い合わせ内容</dt>
-                                <dd class="col-sm-10"><?php h($_view['contact']['message']) ?></dd>
-                                <dt class="col-sm-2">状況</dt>
-                                <dd class="col-sm-10"><?php h($GLOBALS['config']['option']['contact']['status'][$_view['contact']['status']]) ?></dd>
-                                <dt class="col-sm-2">メモ</dt>
-                                <dd class="col-sm-10"><?php h($_view['contact']['memo']) ?></dd>
-                            </dl>
+                            <div class="card shadow-sm mb-3">
+                                <div class="card-header">
+                                    表示
+                                </div>
+                                <div class="card-body">
+                                    <dl class="row">
+                                        <dt class="col-sm-2">日時</dt>
+                                        <dd class="col-sm-10"><?php h($_view['contact']['created']) ?></dd>
+                                        <?php if (!empty($_view['contact']['user_id'])) : ?>
+                                        <dt class="col-sm-2">ユーザ名</dt>
+                                        <dd class="col-sm-10"><?php h($_view['contact']['user_username']) ?></dd>
+                                        <?php endif ?>
+                                        <dt class="col-sm-2">名前</dt>
+                                        <dd class="col-sm-10"><?php h($_view['contact']['name']) ?></dd>
+                                        <dt class="col-sm-2">メールアドレス</dt>
+                                        <dd class="col-sm-10"><?php h($_view['contact']['email']) ?></dd>
+                                        <dt class="col-sm-2">お問い合わせ内容</dt>
+                                        <dd class="col-sm-10"><?php h($_view['contact']['message']) ?></dd>
+                                        <dt class="col-sm-2">状況</dt>
+                                        <dd class="col-sm-10"><?php h($GLOBALS['config']['option']['contact']['status'][$_view['contact']['status']]) ?></dd>
+                                        <dt class="col-sm-2">メモ</dt>
+                                        <dd class="col-sm-10"><?php h($_view['contact']['memo']) ?></dd>
+                                    </dl>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </main>

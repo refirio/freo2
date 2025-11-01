@@ -174,7 +174,7 @@ $GLOBALS['menu_group'] = [
         ],
         'contents' => [
             'name' => 'コンテンツ',
-            'show' => $GLOBALS['authority']['power'] >= 2,
+            'show' => isset($GLOBALS['authority']) && $GLOBALS['authority']['power'] >= 2,
         ],
         'communication' => [
             'name' => 'コミュニケーション',
@@ -182,7 +182,7 @@ $GLOBALS['menu_group'] = [
         ],
         'system' => [
             'name' => 'システム',
-            'show' => $GLOBALS['authority']['power'] >= 3,
+            'show' => isset($GLOBALS['authority']) && $GLOBALS['authority']['power'] >= 3,
         ],
     ],
 ];
@@ -322,73 +322,67 @@ $GLOBALS['menu_contents'] = [
     ],
 ];
 
-// プラグイン
-if ($dh = opendir(MAIN_PATH . $GLOBALS['config']['plugin_path'])) {
-    while (($entry = readdir($dh)) !== false) {
-        if ($entry == '.' || $entry == '..') {
-            continue;
-        }
+// プラグインを取得
+$plugins = model('select_plugins', [
+    'where'    => 'enabled = 1',
+    'order_by' => 'code, id',
+]);
 
-        $target_dir = MAIN_PATH . $GLOBALS['config']['plugin_path'] . $entry . '/';
+// プラグインファイルを読み込み
+foreach ($plugins as $plugin) {
+    $target_dir = MAIN_PATH . $GLOBALS['config']['plugin_path'] . $plugin['code'] . '/';
 
-        if (!file_exists($target_dir . 'config.php')) {
-            continue;
-        }
-
-        import($target_dir . 'config.php');
-
-        if (is_file($target_dir . 'before.php')) {
-            import($target_dir . 'before.php');
-        }
-
-        $controller_dir = $target_dir . 'app/controllers/';
-        $view_dir       = $target_dir . 'app/views/';
-        $file           = $_REQUEST['_work'] . '.php';
-        $flag           = false;
-
-        if (isset($_params[0]) && is_file(MAIN_PATH . MAIN_APPLICATION_PATH . 'app/controllers/before_' . $_params[0] . '.php')) {
-            import('app/controllers/before_' . $_params[0] . '.php');
-        }
-
-        if (is_file($controller_dir . 'before.php')) {
-            import($controller_dir . 'before.php');
-        }
-        if (isset($_params[0]) && is_file($controller_dir . 'before_' . $_params[0] . '.php')) {
-            import($controller_dir . 'before_' . $_params[0] . '.php');
-        }
-
-        if (is_file($controller_dir . $_REQUEST['_mode'] . '/' . $file)) {
-            import($controller_dir . $_REQUEST['_mode'] . '/' . $file);
-
-            $flag = true;
-        } elseif (is_file($controller_dir . $_REQUEST['_mode'] . '/' . MAIN_DEFAULT_WORK . '.php')) {
-            import($controller_dir . $_REQUEST['_mode'] . '/' . MAIN_DEFAULT_WORK . '.php');
-
-            $flag = true;
-        }
-
-        if (is_file($view_dir . $_REQUEST['_mode'] . '/' . $file)) {
-            import($view_dir . $_REQUEST['_mode'] . '/' . $file);
-
-            $flag = true;
-        } elseif (is_file($view_dir . $_REQUEST['_mode'] . '/' . MAIN_DEFAULT_WORK . '.php')) {
-            import($view_dir . $_REQUEST['_mode'] . '/' . MAIN_DEFAULT_WORK . '.php');
-
-            $flag = true;
-        }
-
-        if ($flag) {
-            if (is_file(MAIN_PATH . MAIN_APPLICATION_PATH . 'app/controllers/after.php')) {
-                import('app/controllers/after.php');
-            }
-
-            exit;
-        }
-    }
-} else {
-    if (LOGGING_MESSAGE) {
-        logging('message', 'Opendir error: ' . $GLOBALS['config']['plugin_path']);
+    if (!file_exists($target_dir . 'config.php')) {
+        continue;
     }
 
-    error('Opendir error' . (DEBUG_LEVEL ? ': ' . $GLOBALS['config']['plugin_path'] : ''));
+    import($target_dir . 'config.php');
+
+    if (is_file($target_dir . 'before.php')) {
+        import($target_dir . 'before.php');
+    }
+
+    $controller_dir = $target_dir . 'app/controllers/';
+    $view_dir       = $target_dir . 'app/views/';
+    $file           = $_REQUEST['_work'] . '.php';
+    $flag           = false;
+
+    if (isset($_params[0]) && is_file(MAIN_PATH . MAIN_APPLICATION_PATH . 'app/controllers/before_' . $_params[0] . '.php')) {
+        import('app/controllers/before_' . $_params[0] . '.php');
+    }
+
+    if (is_file($controller_dir . 'before.php')) {
+        import($controller_dir . 'before.php');
+    }
+    if (isset($_params[0]) && is_file($controller_dir . 'before_' . $_params[0] . '.php')) {
+        import($controller_dir . 'before_' . $_params[0] . '.php');
+    }
+
+    if (is_file($controller_dir . $_REQUEST['_mode'] . '/' . $file)) {
+        import($controller_dir . $_REQUEST['_mode'] . '/' . $file);
+
+        $flag = true;
+    } elseif (is_file($controller_dir . $_REQUEST['_mode'] . '/' . MAIN_DEFAULT_WORK . '.php')) {
+        import($controller_dir . $_REQUEST['_mode'] . '/' . MAIN_DEFAULT_WORK . '.php');
+
+        $flag = true;
+    }
+
+    if (is_file($view_dir . $_REQUEST['_mode'] . '/' . $file)) {
+        import($view_dir . $_REQUEST['_mode'] . '/' . $file);
+
+        $flag = true;
+    } elseif (is_file($view_dir . $_REQUEST['_mode'] . '/' . MAIN_DEFAULT_WORK . '.php')) {
+        import($view_dir . $_REQUEST['_mode'] . '/' . MAIN_DEFAULT_WORK . '.php');
+
+        $flag = true;
+    }
+
+    if ($flag) {
+        if (is_file(MAIN_PATH . MAIN_APPLICATION_PATH . 'app/controllers/after.php')) {
+            import('app/controllers/after.php');
+        }
+
+        exit;
+    }
 }
