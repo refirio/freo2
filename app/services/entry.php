@@ -38,10 +38,10 @@ function service_entry_select_published($type, $queries, $options = [])
         // 閲覧者以上: 「非公開」以外のエントリーを表示
         $public = ' AND entries.public != ' . db_escape('none');
     } elseif ($authority_power === 0) {
-        // ゲスト: 「全体に公開」のエントリー、もしくは「登録ユーザに公開」のエントリー、もしくは「指定の属性に公開」で指定の属性を持つエントリーを表示
+        // ゲスト: 「全体に公開」のエントリー、もしくは「登録ユーザーに公開」のエントリー、もしくは「指定の属性に公開」で指定の属性を持つエントリーを表示
         $public = ' AND (entries.public = ' . db_escape('all') . ' OR entries.public = ' . db_escape('user') . ' OR (entries.public = ' . db_escape('attribute') . ' AND attribute_sets.attribute_id IN(' . ($attributes ? implode(',', $attributes) : 0) . ')) OR entries.public = ' . db_escape('password') . ')';
     } else {
-        // ユーザ登録なし: 「全体に公開」のエントリーを表示
+        // ユーザー登録なし: 「全体に公開」のエントリーを表示
         $public = ' AND (entries.public = ' . db_escape('all') . ' OR entries.public = ' . db_escape('password') . ')';
     }
 
@@ -84,7 +84,7 @@ function service_entry_insert($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'entries', 'insert');
 
-    // ユーザ
+    // ユーザー
     if (!empty($_SESSION['auth']['user']['id'])) {
         $queries['values']['user_id'] = $_SESSION['auth']['user']['id'];
     }

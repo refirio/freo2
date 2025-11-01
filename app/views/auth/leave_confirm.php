@@ -3,7 +3,7 @@
         <main class="col-11 col-md-6 mx-auto my-4">
             <div class="mb-4 text-center">
                 <h1 class="h3">
-                    ユーザ情報
+                    ユーザー情報
                 </h1>
             </div>
 
@@ -11,7 +11,7 @@
                 <div class="card-header heading"><?php h($_view['title']) ?></div>
                 <div class="card-body">
                     <div class="card-body">
-                        <p>本当にユーザ情報を削除してもよろしいですか？この操作は取り消すことができません。</p>
+                        <p>本当にユーザー情報を削除してもよろしいですか？この操作は取り消すことができません。</p>
                         <form action="<?php t(MAIN_FILE) ?>/auth/leave_confirm" method="post">
                             <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                             <div class="form-group mt-4">

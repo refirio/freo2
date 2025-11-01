@@ -21,7 +21,7 @@
                 <span class="px-2 float-end">
                     <button type="button" class="btn border position-relative" onclick="window.open('<?php t(MAIN_FILE) ?>/');">
                         <svg class="bi flex-shrink-0" width="20" height="20" style="margin: -6px 2px 0 0;"><use xlink:href="#symbol-box-arrow-up-right"/></svg>
-                        <span class="d-none d-lg-inline">ユーザ側ページ</span>
+                        <span class="d-none d-lg-inline">ユーザー側ページ</span>
                     </button>
                 </span>
             </div>
@@ -33,7 +33,7 @@
                             <?php h($_view['_user']['name'] ? $_view['_user']['name'] : $_view['_user']['username']) ?>さん
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end position-absolute mx-2">
-                            <li><a class="dropdown-item" href="<?php t(MAIN_FILE) ?>/auth/modify">ユーザ情報編集</a></li>
+                            <li><a class="dropdown-item" href="<?php t(MAIN_FILE) ?>/auth/modify">ユーザー情報編集</a></li>
                             <li><a class="dropdown-item" href="<?php t(MAIN_FILE) ?>/auth/logout">ログアウト</a></li>
                         </ul>
                     </div>

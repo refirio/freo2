@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group mb-2">
-                                            <label class="fw-bold">ユーザ名 <span class="badge bg-danger">必須</span></label>
+                                            <label class="fw-bold">ユーザー名 <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="username" size="30" value="<?php t($_view['user']['username']) ?>" class="form-control">
                                         </div>
                                         <div class="form-group mb-2">

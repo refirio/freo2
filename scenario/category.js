@@ -11,15 +11,15 @@ test.scenario = [
         form.find('input[name="password"]').val('abcd1234');
         form.find('button[type="submit"]').click();
     },
-    // カテゴリ管理ページに移動
+    // カテゴリー管理ページに移動
     function() {
-        $('a:contains("カテゴリ管理")')[0].click();
+        $('a:contains("カテゴリー管理")')[0].click();
     },
-    // カテゴリ登録ページに移動
+    // カテゴリー登録ページに移動
     function() {
-        $('a:contains("カテゴリ登録")')[0].click();
+        $('a:contains("カテゴリー登録")')[0].click();
     },
-    // カテゴリを登録
+    // カテゴリーを登録
     function() {
         var form = $('form:eq(0)');
 
@@ -27,11 +27,11 @@ test.scenario = [
         form.find('input[name="name"]').val('テスト1');
         form.find('button[type="submit"]').click();
     },
-    // カテゴリ編集ページに移動
+    // カテゴリー編集ページに移動
     function() {
         $('table:eq(0) a:eq(0)')[0].click();
     },
-    // カテゴリを編集
+    // カテゴリーを編集
     function() {
         var form = $('form:eq(0)');
 
@@ -39,11 +39,11 @@ test.scenario = [
         form.find('input[name="name"]').val('テスト2');
         form.find('button[type="submit"]').click();
     },
-    // カテゴリ編集ページに移動
+    // カテゴリー編集ページに移動
     function() {
         $('table:eq(0) a:eq(0)')[0].click();
     },
-    // カテゴリを削除
+    // カテゴリーを削除
     function() {
         var form = $('form:eq(1)');
 

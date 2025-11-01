@@ -30,7 +30,7 @@ if (isset($_POST['_type']) && $_POST['_type'] === 'json') {
     ]);
     $_view['contact_bulks'] = array_keys($_SESSION['bulk']['contact']);
 
-    // カテゴリを取得
+    // カテゴリーを取得
     $categories = model('select_categories', [
         'order_by' => 'sort, id',
     ]);

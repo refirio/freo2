@@ -63,7 +63,7 @@ function select_entries($queries, $options = [])
                 'entry_id.field_id', 'text'
             );
 
-            // カテゴリを取得
+            // カテゴリーを取得
             $categories = app_dataset(
                 'category_sets.entry_id', $id_columns,
                 'entry_id', null
@@ -149,7 +149,7 @@ function insert_entries($queries, $options = [])
     }
 
     if (isset($options['category_sets'])) {
-        // 関連するカテゴリを更新
+        // 関連するカテゴリーを更新
         model('set_category_entries', $entry_id, $options['category_sets']);
     }
 
@@ -216,7 +216,7 @@ function update_entries($queries, $options = [])
     }
 
     if (isset($options['category_sets'])) {
-        // 関連するカテゴリを更新
+        // 関連するカテゴリーを更新
         model('set_category_entries', $id, $options['category_sets']);
     }
 
@@ -316,7 +316,7 @@ function delete_entries($queries, $options = [])
     }
 
     if ($options['category'] === true) {
-        // 関連するカテゴリを削除
+        // 関連するカテゴリーを削除
         $resource = model('delete_category_sets', [
             'where' => 'entry_id IN(' . implode(',', array_map('db_escape', $ids)) . ')',
         ]);
@@ -589,7 +589,7 @@ function filter_entries($queries, $options = [])
             }
         }
 
-        // カテゴリを取得
+        // カテゴリーを取得
         if (isset($queries['category_sets'])) {
             if (is_array($queries['category_sets'])) {
                 $categories = [];
@@ -701,7 +701,7 @@ function set_field_entries($entry_id, $field_sets)
 }
 
 /**
- * 関連するカテゴリを更新
+ * 関連するカテゴリーを更新
  *
  * @param int   $id
  * @param array $category_sets
@@ -710,7 +710,7 @@ function set_field_entries($entry_id, $field_sets)
  */
 function set_category_entries($entry_id, $category_sets)
 {
-    // カテゴリを編集
+    // カテゴリーを編集
     $resource = model('delete_category_sets', [
         'where' => [
             'entry_id = :id',

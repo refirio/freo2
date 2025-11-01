@@ -5,7 +5,7 @@ import('app/services/log.php');
 import('libs/modules/cookie.php');
 
 /**
- * ユーザの登録
+ * ユーザーの登録
  *
  * @param array $queries
  * @param array $options
@@ -17,7 +17,7 @@ function service_user_insert($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'users', 'insert');
 
-    // ユーザを登録
+    // ユーザーを登録
     $resource = model('insert_users', $queries, $options);
     if (!$resource) {
         error('データを登録できません。');
@@ -27,7 +27,7 @@ function service_user_insert($queries, $options = [])
 }
 
 /**
- * ユーザの編集
+ * ユーザーの編集
  *
  * @param array $queries
  * @param array $options
@@ -61,7 +61,7 @@ function service_user_update($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'users', 'update');
 
-    // ユーザを編集
+    // ユーザーを編集
     $resource = update_users($queries, $options);
     if (!$resource) {
         error('データを編集できません。');
@@ -71,7 +71,7 @@ function service_user_update($queries, $options = [])
 }
 
 /**
- * ユーザの削除
+ * ユーザーの削除
  *
  * @param array $queries
  * @param array $options
@@ -83,7 +83,7 @@ function service_user_delete($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'users', 'delete');
 
-    // ユーザを削除
+    // ユーザーを削除
     $resource = model('delete_users', $queries, $options);
     if (!$resource) {
         error('データを削除できません。');
@@ -93,7 +93,7 @@ function service_user_delete($queries, $options = [])
 }
 
 /**
- * ユーザのログイン
+ * ユーザーのログイン
  *
  * @param string $session_id
  *
@@ -146,7 +146,7 @@ function service_user_login($session_id)
         }
 
         if ($users[0]['keep']) {
-            // ユーザを更新
+            // ユーザーを更新
             $resource = service_user_update([
                 'set'   => [
                     'loggedin' => localdate('Y-m-d H:i:s'),
@@ -171,7 +171,7 @@ function service_user_login($session_id)
 }
 
 /**
- * ユーザのセッション保持
+ * ユーザーのセッション保持
  *
  * @param string $old_session
  * @param string $new_session
@@ -256,7 +256,7 @@ function service_user_duration($old_session, $new_session, $user_id, $keep)
 }
 
 /**
- * ユーザのログアウト
+ * ユーザーのログアウト
  *
  * @param string $session_id
  * @param string $user_id

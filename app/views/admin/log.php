@@ -15,7 +15,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-nowrap">日時</th>
-                                        <th class="text-nowrap">ユーザ名</th>
+                                        <th class="text-nowrap">ユーザー名</th>
                                         <th class="text-nowrap d-none d-md-table-cell">名前</th>
                                         <th class="text-nowrap">IPアドレス</th>
                                         <th class="text-nowrap d-none d-md-table-cell">環境</th>
@@ -26,7 +26,7 @@
                                 <tfoot>
                                     <tr>
                                         <th class="text-nowrap">日時</th>
-                                        <th class="text-nowrap">ユーザ名</th>
+                                        <th class="text-nowrap">ユーザー名</th>
                                         <th class="text-nowrap d-none d-md-table-cell">名前</th>
                                         <th class="text-nowrap">IPアドレス</th>
                                         <th class="text-nowrap d-none d-md-table-cell">環境</th>

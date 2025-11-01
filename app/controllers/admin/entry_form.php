@@ -140,7 +140,7 @@ $types = model('select_types', [
 ]);
 $_view['type'] = $types[0];
 
-// カテゴリを取得
+// カテゴリーを取得
 $_view['categories'] = model('select_categories', [
     'where'    => 'type_id = ' . intval($_view['type']['id']),
     'order_by' => 'sort, id',

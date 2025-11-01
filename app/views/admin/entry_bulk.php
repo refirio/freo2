@@ -40,7 +40,7 @@
                                         <th class="text-nowrap">日時</th>
                                         <th class="text-nowrap">承認</th>
                                         <th class="text-nowrap">公開</th>
-                                        <th class="text-nowrap">カテゴリ</th>
+                                        <th class="text-nowrap">カテゴリー</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -50,7 +50,7 @@
                                         <th class="text-nowrap">日時</th>
                                         <th class="text-nowrap">承認</th>
                                         <th class="text-nowrap">公開</th>
-                                        <th class="text-nowrap">カテゴリ</th>
+                                        <th class="text-nowrap">カテゴリー</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>

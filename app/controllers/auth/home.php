@@ -1,6 +1,6 @@
 <?php
 
-// ユーザを取得
+// ユーザーを取得
 $users = model('select_users', [
     'where' => [
         'id = :id AND enabled = 1',

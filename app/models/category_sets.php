@@ -1,7 +1,7 @@
 <?php
 
 /**
- * カテゴリ ひも付けの取得
+ * カテゴリー ひも付けの取得
  *
  * @param array $queries
  * @param array $options
@@ -34,7 +34,7 @@ function select_category_sets($queries, $options = [])
         }
         $queries['where'] = 'categories.deleted IS NULL AND (' . $queries['where'] . ')';
     } else {
-        // ユーザを取得
+        // ユーザーを取得
         $queries['from'] = DATABASE_PREFIX . 'category_sets';
     }
 

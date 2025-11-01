@@ -81,7 +81,7 @@ $_view['type'] = $types[0];
 
 // タイトル
 if (empty($_GET['id'])) {
-    $_view['title'] = 'カテゴリ登録';
+    $_view['title'] = 'カテゴリー登録';
 } else {
-    $_view['title'] = 'カテゴリ編集';
+    $_view['title'] = 'カテゴリー編集';
 }

@@ -32,7 +32,7 @@ function select_attribute_sets($queries, $options = [])
         }
         $queries['where'] = 'attributes.deleted IS NULL AND (' . $queries['where'] . ')';
     } else {
-        // ユーザを取得
+        // ユーザーを取得
         $queries['from'] = DATABASE_PREFIX . 'attribute_sets';
     }
 

@@ -21,7 +21,7 @@ $password_salt = hash_salt();
 db_transaction();
 
 if (empty($_SESSION['post']['user']['id'])) {
-    // ユーザを登録
+    // ユーザーを登録
     $resource = service_user_insert([
         'values' => [
             'username'       => $_SESSION['post']['user']['username'],
@@ -43,7 +43,7 @@ if (empty($_SESSION['post']['user']['id'])) {
         error('データを登録できません。');
     }
 } else {
-    // ユーザを編集
+    // ユーザーを編集
     $sets = [
         'username'     => $_SESSION['post']['user']['username'],
         'authority_id' => $_SESSION['post']['user']['authority_id'],

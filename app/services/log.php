@@ -81,7 +81,7 @@ function service_log_record($message = null, $model = null, $exec = null)
         $recorded['exec'][$exec]   = true;
     }
 
-    // ユーザ
+    // ユーザー
     if (empty($_SESSION['auth']['user']['id'])) {
         $user_id = null;
     } else {
@@ -91,7 +91,7 @@ function service_log_record($message = null, $model = null, $exec = null)
     // IPアドレス
     $ip = clientip($GLOBALS['config']['proxy']);
 
-    // ユーザエージェント
+    // ユーザーエージェント
     if (empty($_SERVER['HTTP_USER_AGENT'])) {
         $agent = null;
     } else {

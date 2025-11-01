@@ -5,7 +5,7 @@ $GLOBALS['setting_title'] = [
     'basis'      => '基本設定',
     'entry'      => 'エントリー設定',
     'page'       => 'ページ設定',
-    'user'       => 'ユーザ設定',
+    'user'       => 'ユーザー設定',
     'restricted' => '制限設定',
     'menu'       => 'メニュー設定',
     'mail'       => 'メール設定',
@@ -89,12 +89,12 @@ $GLOBALS['setting_contents'] = [
     ],
     'user' => [
         'user_use_approve' => [
-            'name'     => 'ユーザの承認',
+            'name'     => 'ユーザーの承認',
             'type'     => 'boolean',
             'required' => false,
         ],
         'user_use_register' => [
-            'name'     => '訪問者によるユーザ新規登録',
+            'name'     => '訪問者によるユーザー新規登録',
             'type'     => 'boolean',
             'required' => false,
         ],
@@ -113,7 +113,7 @@ $GLOBALS['setting_contents'] = [
     ],
     'menu' => [
         'menu_auth' => [
-            'name'     => 'ユーザメニューに「ログイン」を表示',
+            'name'     => 'ユーザーメニューに「ログイン」を表示',
             'type'     => 'boolean',
             'required' => false,
         ],
@@ -155,7 +155,7 @@ $GLOBALS['setting_contents'] = [
             'required' => false,
         ],
         'mail_register_subject' => [
-            'name'     => 'ユーザ登録完了メールの件名',
+            'name'     => 'ユーザー登録完了メールの件名',
             'type'     => 'text',
             'required' => true,
         ],
@@ -170,7 +170,7 @@ $GLOBALS['setting_contents'] = [
             'required' => true,
         ],
         'mail_leave_subject' => [
-            'name'     => 'ユーザ削除完了メールの件名',
+            'name'     => 'ユーザー削除完了メールの件名',
             'type'     => 'text',
             'required' => true,
         ],

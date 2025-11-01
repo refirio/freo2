@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users(
     created        DATETIME            NOT NULL                COMMENT '作成日時',
     modified       DATETIME            NOT NULL                COMMENT '更新日時',
     deleted        DATETIME                                    COMMENT '削除日時',
-    username       VARCHAR(80)         NOT NULL UNIQUE         COMMENT 'ユーザ名',
+    username       VARCHAR(80)         NOT NULL UNIQUE         COMMENT 'ユーザー名',
     password       VARCHAR(80)         NOT NULL                COMMENT 'パスワード',
     password_salt  VARCHAR(80)         NOT NULL                COMMENT 'パスワードのソルト',
     authority_id   INT UNSIGNED        NOT NULL                COMMENT '外部キー 権限',
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS users(
     token_code     VARCHAR(80)                                 COMMENT '認証コード',
     token_expire   DATETIME                                    COMMENT '認証期限',
     PRIMARY KEY(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'ユーザ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'ユーザー';
 
 CREATE TABLE IF NOT EXISTS authorities(
     id       INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理キー',
@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS sessions(
     id       VARCHAR(255)        NOT NULL COMMENT 'セッションID',
     created  DATETIME            NOT NULL COMMENT '作成日時',
     modified DATETIME            NOT NULL COMMENT '更新日時',
-    user_id  INT UNSIGNED        NOT NULL COMMENT '外部キー ユーザ',
-    agent    VARCHAR(255)        NOT NULL COMMENT 'ユーザエージェント',
+    user_id  INT UNSIGNED        NOT NULL COMMENT '外部キー ユーザー',
+    agent    VARCHAR(255)        NOT NULL COMMENT 'ユーザーエージェント',
     keep     TINYINT(1) UNSIGNED NOT NULL COMMENT 'ログイン状態の保持',
     expire   DATETIME            NOT NULL COMMENT 'セッションの有効期限',
     PRIMARY KEY(id)
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS entries(
     created      DATETIME            NOT NULL                COMMENT '作成日時',
     modified     DATETIME            NOT NULL                COMMENT '更新日時',
     deleted      DATETIME                                    COMMENT '削除日時',
-    user_id      INT UNSIGNED                                COMMENT '外部キー ユーザ',
+    user_id      INT UNSIGNED                                COMMENT '外部キー ユーザー',
     type_id      INT UNSIGNED        NOT NULL                COMMENT '外部キー 型',
     approved     TINYINT(1) UNSIGNED NOT NULL                COMMENT '承認',
     public       VARCHAR(20)         NOT NULL                COMMENT '公開',
@@ -83,18 +83,18 @@ CREATE TABLE IF NOT EXISTS categories(
     created  DATETIME     NOT NULL                COMMENT '作成日時',
     modified DATETIME     NOT NULL                COMMENT '更新日時',
     deleted  DATETIME                             COMMENT '削除日時',
-    type_id INT UNSIGNED  NOT NULL                COMMENT '外部キー 型',
+    type_id  INT UNSIGNED NOT NULL                COMMENT '外部キー 型',
     code     VARCHAR(255) NOT NULL                COMMENT 'コード',
     name     VARCHAR(255) NOT NULL                COMMENT '名前',
     memo     TEXT                                 COMMENT 'メモ',
     sort     INT UNSIGNED NOT NULL                COMMENT '並び順',
     PRIMARY KEY(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'カテゴリ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'カテゴリー';
 
 CREATE TABLE IF NOT EXISTS category_sets(
-    category_id INT UNSIGNED NOT NULL COMMENT '外部キー カテゴリ',
+    category_id INT UNSIGNED NOT NULL COMMENT '外部キー カテゴリー',
     entry_id    INT UNSIGNED NOT NULL COMMENT '外部キー エントリー'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'カテゴリ ひも付け';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'カテゴリー ひも付け';
 
 CREATE TABLE IF NOT EXISTS fields(
     id         INT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '代理キー',
@@ -130,7 +130,7 @@ CREATE TABLE IF NOT EXISTS attributes(
 
 CREATE TABLE IF NOT EXISTS attribute_sets(
     attribute_id INT UNSIGNED NOT NULL COMMENT '外部キー 属性',
-    user_id      INT UNSIGNED          COMMENT '外部キー ユーザ',
+    user_id      INT UNSIGNED          COMMENT '外部キー ユーザー',
     entry_id     INT UNSIGNED          COMMENT '外部キー エントリー'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '属性 ひも付け';
 
@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS contacts(
     created  DATETIME     NOT NULL                COMMENT '作成日時',
     modified DATETIME     NOT NULL                COMMENT '更新日時',
     deleted  DATETIME                             COMMENT '削除日時',
-    user_id  INT UNSIGNED                         COMMENT '外部キー ユーザ',
+    user_id  INT UNSIGNED                         COMMENT '外部キー ユーザー',
     name     VARCHAR(255) NOT NULL                COMMENT '名前',
     email    VARCHAR(255) NOT NULL                COMMENT 'メールアドレス',
     message  TEXT         NOT NULL                COMMENT 'お問い合わせ内容',
@@ -196,9 +196,9 @@ CREATE TABLE IF NOT EXISTS logs(
     created  DATETIME     NOT NULL                COMMENT '作成日時',
     modified DATETIME     NOT NULL                COMMENT '更新日時',
     deleted  DATETIME                             COMMENT '削除日時',
-    user_id  INT UNSIGNED                         COMMENT '外部キー ユーザ',
+    user_id  INT UNSIGNED                         COMMENT '外部キー ユーザー',
     ip       VARCHAR(80)  NOT NULL                COMMENT 'IPアドレス',
-    agent    VARCHAR(255)                         COMMENT 'ユーザエージェント',
+    agent    VARCHAR(255)                         COMMENT 'ユーザーエージェント',
     page     VARCHAR(255) NOT NULL                COMMENT 'ページ',
     message  VARCHAR(255)                         COMMENT 'メッセージ',
     model    VARCHAR(80)                          COMMENT '対象モデル',

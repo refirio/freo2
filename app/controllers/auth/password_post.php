@@ -20,7 +20,7 @@ db_transaction();
 // パスワードのソルトを作成
 $password_salt = hash_salt();
 
-// ユーザを編集
+// ユーザーを編集
 $resource = service_user_update([
     'set'   => [
         'password'      => hash_crypt($_SESSION['post']['user']['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']),

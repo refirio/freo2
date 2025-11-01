@@ -3,7 +3,7 @@
 import('libs/modules/validator.php');
 
 /**
- * カテゴリの取得
+ * カテゴリーの取得
  *
  * @param array $queries
  * @param array $options
@@ -38,7 +38,7 @@ function select_categories($queries, $options = [])
         // 関連するデータを取得
         $queries = db_placeholder($queries);
 
-        // カテゴリを取得
+        // カテゴリーを取得
         $queries['from'] = DATABASE_PREFIX . 'categories';
 
         // 削除済みデータは取得しない
@@ -55,7 +55,7 @@ function select_categories($queries, $options = [])
 }
 
 /**
- * カテゴリの登録
+ * カテゴリーの登録
  *
  * @param array $queries
  * @param array $options
@@ -96,7 +96,7 @@ function insert_categories($queries, $options = [])
 }
 
 /**
- * カテゴリの編集
+ * カテゴリーの編集
  *
  * @param array $queries
  * @param array $options
@@ -130,7 +130,7 @@ function update_categories($queries, $options = [])
 }
 
 /**
- * カテゴリの削除
+ * カテゴリーの削除
  *
  * @param array $queries
  * @param array $options
@@ -198,7 +198,7 @@ function delete_categories($queries, $options = [])
 }
 
 /**
- * カテゴリの正規化
+ * カテゴリーの正規化
  *
  * @param array $queries
  * @param array $options
@@ -225,7 +225,7 @@ function normalize_categories($queries, $options = [])
 }
 
 /**
- * カテゴリの検証
+ * カテゴリーの検証
  *
  * @param array $queries
  * @param array $options
@@ -311,7 +311,7 @@ function validate_categories($queries, $options = [])
 }
 
 /**
- * カテゴリの初期値
+ * カテゴリーの初期値
  *
  * @return array
  */

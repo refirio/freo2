@@ -6,7 +6,7 @@ import('libs/modules/hash.php');
 
 // 機能の利用を確認
 if (empty($GLOBALS['setting']['user_use_register'])) {
-    error('訪問者によるユーザ新規登録は許可されていません。');
+    error('訪問者によるユーザー新規登録は許可されていません。');
 }
 
 // フォワードを確認
@@ -40,7 +40,7 @@ $enabled = $GLOBALS['setting']['user_use_approve'] ? 0 : 1;
 // トランザクションを開始
 db_transaction();
 
-// ユーザを登録
+// ユーザーを登録
 $resource = service_user_insert([
     'values' => [
         'username'      => $_SESSION['post']['user']['username'],
@@ -64,7 +64,7 @@ if (!$resource) {
 // トランザクションを終了
 db_commit();
 
-// ユーザ情報を取得
+// ユーザー情報を取得
 $users = model('select_users', [
     'select' => 'email, token',
     'where'  => [
@@ -75,7 +75,7 @@ $users = model('select_users', [
     ],
 ]);
 
-// ユーザ登録完了を通知
+// ユーザー登録完了を通知
 $to      = $users[0]['email'];
 $subject = $GLOBALS['setting']['mail_register_subject'];
 $message = view('mail/register/send.php', true);

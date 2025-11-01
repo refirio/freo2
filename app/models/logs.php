@@ -37,7 +37,7 @@ function select_logs($queries, $options = [])
         }
         $queries['where'] = 'logs.deleted IS NULL AND users.deleted IS NULL AND (' . $queries['where'] . ')';
     } else {
-        // ユーザを取得
+        // ユーザーを取得
         $queries['from'] = DATABASE_PREFIX . 'logs';
 
         // 削除済みデータは取得しない

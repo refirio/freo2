@@ -3,7 +3,7 @@
 import('app/services/log.php');
 
 /**
- * カテゴリの登録
+ * カテゴリーの登録
  *
  * @param array $queries
  * @param array $options
@@ -15,7 +15,7 @@ function service_category_insert($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'categories', 'insert');
 
-    // カテゴリを登録
+    // カテゴリーを登録
     $resource = model('insert_categories', $queries, $options);
     if (!$resource) {
         error('データを登録できません。');
@@ -25,7 +25,7 @@ function service_category_insert($queries, $options = [])
 }
 
 /**
- * カテゴリの編集
+ * カテゴリーの編集
  *
  * @param array $queries
  * @param array $options
@@ -58,7 +58,7 @@ function service_category_update($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'categories', 'update');
 
-    // カテゴリを編集
+    // カテゴリーを編集
     $resource = model('update_categories', $queries, $options);
     if (!$resource) {
         error('データを編集できません。');
@@ -68,7 +68,7 @@ function service_category_update($queries, $options = [])
 }
 
 /**
- * カテゴリの削除
+ * カテゴリーの削除
  *
  * @param array $queries
  * @param array $options
@@ -80,7 +80,7 @@ function service_category_delete($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'categories', 'delete');
 
-    // カテゴリを削除
+    // カテゴリーを削除
     $resource = model('delete_categories', $queries, $options);
     if (!$resource) {
         error('データを削除できません。');
@@ -90,7 +90,7 @@ function service_category_delete($queries, $options = [])
 }
 
 /**
- * カテゴリの並び順を一括変更
+ * カテゴリーの並び順を一括変更
  *
  * @param array $data
  *

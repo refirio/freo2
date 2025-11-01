@@ -1,6 +1,6 @@
 <?php
 
-// カテゴリを取得
+// カテゴリーを取得
 $_view['categories'] = model('select_categories', [
     'where'    => 'types.code = ' . db_escape('entry'),
     'order_by' => 'categories.sort, categories.id',
@@ -9,4 +9,4 @@ $_view['categories'] = model('select_categories', [
 ]);
 
 // タイトル
-$_view['title'] = 'カテゴリ管理';
+$_view['title'] = 'カテゴリー管理';

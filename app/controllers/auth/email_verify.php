@@ -5,7 +5,7 @@ import('app/services/user.php');
 // トランザクションを開始
 db_transaction();
 
-// ユーザを編集
+// ユーザーを編集
 $resource = service_user_update([
     'set'   => [
         'email_verified'  => 1,

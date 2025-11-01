@@ -48,7 +48,7 @@
                                     <div class="card-body">
                                         <?php if (!empty($_view['categories'])) : ?>
                                         <div class="form-group mb-2">
-                                            <label class="fw-bold">カテゴリ</label>
+                                            <label class="fw-bold">カテゴリー</label>
                                             <div id="validate_category_sets">
                                                 <?php foreach ($_view['categories'] as $category) : ?>
                                                 <label><input type="checkbox" name="category_sets[]" value="<?php t($category['id']) ?>" class="form-check-input"<?php in_array($category['id'], array_column($_view['entry']['category_sets'], 'category_id')) ? e(' checked="checked"') : '' ?>> <?php t($category['name']) ?></label><br>

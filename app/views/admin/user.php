@@ -11,21 +11,21 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
                         <div class="card-body">
-                            <p><a href="<?php t(MAIN_FILE) ?>/admin/user_form" class="btn btn-primary">ユーザ登録</a></p>
+                            <p><a href="<?php t(MAIN_FILE) ?>/admin/user_form" class="btn btn-primary">ユーザー登録</a></p>
                             <?php if (isset($_GET['ok'])) : ?>
                             <div class="alert alert-success">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                                 <?php if ($_GET['ok'] === 'post') : ?>
-                                ユーザを登録しました。
+                                ユーザーを登録しました。
                                 <?php elseif ($_GET['ok'] === 'delete') : ?>
-                                ユーザを削除しました。
+                                ユーザーを削除しました。
                                 <?php endif ?>
                             </div>
                             <?php elseif (isset($_GET['warning'])) : ?>
                             <div class="alert alert-danger">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                                 <?php if ($_GET['warning'] === 'delete') : ?>
-                                ユーザが選択されていません。
+                                ユーザーが選択されていません。
                                 <?php endif ?>
                             </div>
                             <?php endif ?>
@@ -33,7 +33,7 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="text-nowrap">ユーザ名</th>
+                                        <th class="text-nowrap">ユーザー名</th>
                                         <th class="text-nowrap">名前</th>
                                         <th class="text-nowrap d-none d-md-table-cell">メールアドレス</th>
                                         <th class="text-nowrap">権限</th>
@@ -44,7 +44,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th class="text-nowrap">ユーザ名</th>
+                                        <th class="text-nowrap">ユーザー名</th>
                                         <th class="text-nowrap">名前</th>
                                         <th class="text-nowrap d-none d-md-table-cell">メールアドレス</th>
                                         <th class="text-nowrap">権限</th>

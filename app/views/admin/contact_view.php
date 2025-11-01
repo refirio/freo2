@@ -20,7 +20,7 @@
                                         <dt class="col-sm-2">日時</dt>
                                         <dd class="col-sm-10"><?php h($_view['contact']['created']) ?></dd>
                                         <?php if (!empty($_view['contact']['user_id'])) : ?>
-                                        <dt class="col-sm-2">ユーザ名</dt>
+                                        <dt class="col-sm-2">ユーザー名</dt>
                                         <dd class="col-sm-10"><?php h($_view['contact']['user_username']) ?></dd>
                                         <?php endif ?>
                                         <dt class="col-sm-2">名前</dt>

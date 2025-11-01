@@ -3,7 +3,7 @@
         <main class="col-11 col-md-6 mx-auto my-4">
             <div class="mb-4 text-center">
                 <h1 class="h3">
-                    ユーザ登録
+                    ユーザー登録
                 </h1>
             </div>
 
@@ -20,7 +20,7 @@
                     <?php endif ?>
 
                     <dl class="row">
-                        <dt class="col-sm-3">ユーザ名</dt>
+                        <dt class="col-sm-3">ユーザー名</dt>
                         <dd class="col-sm-9"><?php h($_view['user']['username']) ?></dd>
                         <dt class="col-sm-3">パスワード</dt>
                         <dd class="col-sm-9"><?php h(alt(str_repeat('*', strlen($_view['user']['password'])), '-')) ?></dd>

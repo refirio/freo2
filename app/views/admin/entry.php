@@ -46,7 +46,7 @@
                                             <th class="text-nowrap">承認</th>
                                             <?php endif ?>
                                             <th class="text-nowrap">公開</th>
-                                            <th class="text-nowrap d-none d-md-table-cell">カテゴリ</th>
+                                            <th class="text-nowrap d-none d-md-table-cell">カテゴリー</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
                                     </thead>
@@ -60,7 +60,7 @@
                                             <th class="text-nowrap">承認</th>
                                             <?php endif ?>
                                             <th class="text-nowrap">公開</th>
-                                            <th class="text-nowrap d-none d-md-table-cell">カテゴリ</th>
+                                            <th class="text-nowrap d-none d-md-table-cell">カテゴリー</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
                                     </tfoot>

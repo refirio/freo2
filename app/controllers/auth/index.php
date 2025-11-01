@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // パスワード認証失敗
         $_view['user'] = $_POST;
 
-        $_view['warnings'] = ['ユーザ名もしくはパスワードが違います。'];
+        $_view['warnings'] = ['ユーザー名もしくはパスワードが違います。'];
 
         // トランザクションを開始
         db_transaction();

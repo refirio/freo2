@@ -2,7 +2,7 @@
 
 // 機能の利用を確認
 if (empty($GLOBALS['setting']['user_use_register'])) {
-    error('自身のユーザ削除は許可されていません。');
+    error('自身のユーザー削除は許可されていません。');
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,4 +21,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // タイトル
-$_view['title'] = 'ユーザ情報削除確認';
+$_view['title'] = 'ユーザー情報削除確認';

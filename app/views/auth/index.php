@@ -14,8 +14,8 @@
                 <?php endif ?>
 
                 <div class="form-floating">
-                    <input type="text" name="username" size="30" value="<?php t($_view['user']['username']) ?>" class="form-control" id="username" placeholder="ユーザ名">
-                    <label for="loginUsername">ユーザ名</label>
+                    <input type="text" name="username" size="30" value="<?php t($_view['user']['username']) ?>" class="form-control" id="username" placeholder="ユーザー名">
+                    <label for="loginUsername">ユーザー名</label>
                 </div>
                 <div class="form-floating">
                     <input type="password" name="password" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control" id="password" placeholder="パスワード">
@@ -32,7 +32,7 @@
                 </div>
                 <?php if (!empty($GLOBALS['setting']['user_use_register'])) : ?>
                 <div class="form-group mt-1">
-                    <a href="<?php t(MAIN_FILE) ?>/auth/register">ユーザ登録</a>
+                    <a href="<?php t(MAIN_FILE) ?>/auth/register">ユーザー登録</a>
                 </div>
                 <?php endif ?>
                 <div class="form-group mt-4">

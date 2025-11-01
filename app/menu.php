@@ -79,7 +79,7 @@ $GLOBALS['menu_contents'] = [
                 'show'   => true,
             ],
             'category' => [
-                'name'   => 'カテゴリ管理',
+                'name'   => 'カテゴリー管理',
                 'link'   => '/admin/category',
                 'active' => '/^category(_|$)/',
                 'icon'   => '#symbol-file-text',
@@ -118,7 +118,7 @@ $GLOBALS['menu_contents'] = [
         ],
         'system' => [
             'user' => [
-                'name'   => 'ユーザ管理',
+                'name'   => 'ユーザー管理',
                 'link'   => '/admin/user',
                 'active' => '/^user(_|$)/',
                 'icon'   => '#symbol-file-text',

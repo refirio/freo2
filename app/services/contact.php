@@ -15,7 +15,7 @@ function service_contact_insert($queries, $options = [])
     // 操作ログの記録
     service_log_record(null, 'contacts', 'insert');
 
-    // ユーザ
+    // ユーザー
     if (!empty($_SESSION['auth']['user']['id'])) {
         $queries['values']['user_id'] = $_SESSION['auth']['user']['id'];
     }

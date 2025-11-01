@@ -39,7 +39,7 @@
                                             <th class="text-nowrap"><label><input type="checkbox" name="" value="" class="bulks"></label></th>
                                             <?php endif ?>
                                             <th class="text-nowrap d-none d-md-table-cell">日時</th>
-                                            <th class="text-nowrap">ユーザ名</th>
+                                            <th class="text-nowrap">ユーザー名</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">状況</th>
                                             <th class="text-nowrap">作業</th>
@@ -51,7 +51,7 @@
                                             <th class="text-nowrap"><label><input type="checkbox" name="" value="" class="bulks"></label></th>
                                             <?php endif ?>
                                             <th class="text-nowrap d-none d-md-table-cell">日時</th>
-                                            <th class="text-nowrap">ユーザ名</th>
+                                            <th class="text-nowrap">ユーザー名</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">状況</th>
                                             <th class="text-nowrap">作業</th>

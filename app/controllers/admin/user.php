@@ -7,7 +7,7 @@ if (isset($_GET['page'])) {
     $_GET['page'] = 1;
 }
 
-// ユーザを取得
+// ユーザーを取得
 $_view['users'] = model('select_users', [
     'order_by' => 'users.username, users.id',
     'limit'    => [
@@ -40,4 +40,4 @@ foreach ($authorities as $authority) {
 }
 
 // タイトル
-$_view['title'] = 'ユーザ管理';
+$_view['title'] = 'ユーザー管理';

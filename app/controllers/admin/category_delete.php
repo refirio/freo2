@@ -16,7 +16,7 @@ if (!empty($_POST['id'])) {
     // トランザクションを開始
     db_transaction();
 
-    // カテゴリを削除
+    // カテゴリーを削除
     $resource = service_category_delete([
         'where' => [
             'categories.id = :id',

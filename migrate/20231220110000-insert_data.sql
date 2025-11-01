@@ -5,7 +5,7 @@ INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '投稿者', 2, NULL);
 INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '閲覧者', 1, NULL);
 INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, 'ゲスト', 0, NULL);
 
-INSERT INTO types VALUES(NULL, NOW(), NOW(), NULL, 'entry', '記事', NULL, 1);
+INSERT INTO types VALUES(NULL, NOW(), NOW(), NULL, 'entry', 'エントリー', NULL, 1);
 INSERT INTO types VALUES(NULL, NOW(), NOW(), NULL, 'page', 'ページ', NULL, 2);
 
 INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'initial', '読み込み開始', NULL, NULL, 1);
@@ -45,9 +45,9 @@ INSERT INTO settings VALUES('mail_body_end', '━━━━━━━━━━━�
 Example
 URL: https://www.example.com/
 ━━━━━━━━━━━━━━━━━━━━━━━━━');
-INSERT INTO settings VALUES('mail_register_subject', 'ユーザ登録完了');
+INSERT INTO settings VALUES('mail_register_subject', 'ユーザー登録完了');
 INSERT INTO settings VALUES('mail_verify_subject', 'メールアドレス存在確認');
 INSERT INTO settings VALUES('mail_password_subject', 'パスワード再設定');
-INSERT INTO settings VALUES('mail_leave_subject', 'ユーザ削除完了');
+INSERT INTO settings VALUES('mail_leave_subject', 'ユーザー削除完了');
 INSERT INTO settings VALUES('mail_contact_subject', 'お問い合わせありがとうございます');
 INSERT INTO settings VALUES('mail_contact_subject_admin', 'お問い合わせがありました');

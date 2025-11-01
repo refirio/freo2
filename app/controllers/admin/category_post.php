@@ -17,7 +17,7 @@ if (empty($_SESSION['post'])) {
 db_transaction();
 
 if (empty($_SESSION['post']['category']['id'])) {
-    // カテゴリを登録
+    // カテゴリーを登録
     $resource = service_category_insert([
         'values' => [
             'type_id' => $_SESSION['post']['category']['type_id'],
@@ -31,7 +31,7 @@ if (empty($_SESSION['post']['category']['id'])) {
         error('データを登録できません。');
     }
 } else {
-    // カテゴリを編集
+    // カテゴリーを編集
     $resource = service_category_update([
         'set'   => [
             'type_id' => $_SESSION['post']['category']['type_id'],

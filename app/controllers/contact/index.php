@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $_view['contact'] = model('default_contacts');
 
     if (!empty($_SESSION['auth']['user']['id'])) {
-        // ユーザを取得
+        // ユーザーを取得
         $users = model('select_users', [
             'where' => [
                 'id = :id AND enabled = 1',

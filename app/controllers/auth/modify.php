@@ -74,4 +74,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // タイトル
-$_view['title'] = 'ユーザ情報編集';
+$_view['title'] = 'ユーザー情報編集';

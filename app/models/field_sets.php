@@ -36,7 +36,7 @@ function select_field_sets($queries, $options = [])
         }
         $queries['where'] = 'fields.deleted IS NULL AND (' . $queries['where'] . ')';
     } else {
-        // ユーザを取得
+        // ユーザーを取得
         $queries['from'] = DATABASE_PREFIX . 'field_sets';
     }
 

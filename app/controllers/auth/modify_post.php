@@ -31,7 +31,7 @@ $attribute_sets = array_column($attribute_sets, 'attribute_id');
 // トランザクションを開始
 db_transaction();
 
-// ユーザを編集
+// ユーザーを編集
 $sets = [
     'username' => $_SESSION['post']['user']['username'],
     'name'     => $_SESSION['post']['user']['name'],

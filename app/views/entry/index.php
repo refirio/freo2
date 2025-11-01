@@ -21,7 +21,7 @@
                     </ul>
                     <?php endif ?>
 
-                    <h3 class="h5">カテゴリ</h3>
+                    <h3 class="h5">カテゴリー</h3>
                     <ul>
                         <li><a href="<?php t(MAIN_FILE) ?>/entry/" class="selected">全て</a></li>
                         <?php foreach ($_view['categories'] as $category) : ?>

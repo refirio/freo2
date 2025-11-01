@@ -3,7 +3,7 @@
 import('libs/modules/validator.php');
 
 /**
- * ユーザの取得
+ * ユーザーの取得
  *
  * @param array $queries
  * @param array $options
@@ -32,7 +32,7 @@ function select_users($queries, $options = [])
         }
         $queries['where'] = 'users.deleted IS NULL AND (' . $queries['where'] . ')';
     } else {
-        // ユーザを取得
+        // ユーザーを取得
         $queries['from'] = DATABASE_PREFIX . 'users';
 
         // 削除済みデータは取得しない
@@ -70,7 +70,7 @@ function select_users($queries, $options = [])
 }
 
 /**
- * ユーザの登録
+ * ユーザーの登録
  *
  * @param array $queries
  * @param array $options
@@ -122,7 +122,7 @@ function insert_users($queries, $options = [])
 }
 
 /**
- * ユーザの編集
+ * ユーザーの編集
  *
  * @param array $queries
  * @param array $options
@@ -164,7 +164,7 @@ function update_users($queries, $options = [])
 }
 
 /**
- * ユーザの削除
+ * ユーザーの削除
  *
  * @param array $queries
  * @param array $options
@@ -233,7 +233,7 @@ function delete_users($queries, $options = [])
 }
 
 /**
- * ユーザの検証
+ * ユーザーの検証
  *
  * @param array $queries
  * @param array $options
@@ -255,14 +255,14 @@ function validate_users($queries, $options = [])
         }
     }
 
-    // ユーザ名
+    // ユーザー名
     if (isset($queries['username'])) {
         if (!validator_required($queries['username'])) {
-            $messages['username'] = 'ユーザ名が入力されていません。';
+            $messages['username'] = 'ユーザー名が入力されていません。';
         } elseif (!validator_alpha_dash($queries['username'])) {
-            $messages['username'] = 'ユーザ名は半角英数字で入力してください。';
+            $messages['username'] = 'ユーザー名は半角英数字で入力してください。';
         } elseif (!validator_between($queries['username'], 4, 20)) {
-            $messages['username'] = 'ユーザ名は4文字以上20文字以内で入力してください。';
+            $messages['username'] = 'ユーザー名は4文字以上20文字以内で入力してください。';
         } elseif ($options['duplicate'] === true) {
             if (empty($queries['id'])) {
                 $users = db_select([
@@ -289,7 +289,7 @@ function validate_users($queries, $options = [])
                 ]);
             }
             if (!empty($users)) {
-                $messages['username'] = '入力されたユーザ名はすでに使用されています。';
+                $messages['username'] = '入力されたユーザー名はすでに使用されています。';
             }
         }
     }
@@ -316,7 +316,7 @@ function validate_users($queries, $options = [])
             } elseif (!validator_between($queries['password'], 8, 40)) {
                 $messages['password'] = 'パスワードは8文字以上40文字以内で入力してください。';
             } elseif (isset($queries['username']) && validator_equals($queries['password'], $queries['username'])) {
-                $messages['password'] = 'パスワードはユーザ名とは異なるものを入力してください。';
+                $messages['password'] = 'パスワードはユーザー名とは異なるものを入力してください。';
             } elseif (!validator_equals($queries['password'], $queries['password_confirm'])) {
                 $messages['password'] = 'パスワードと確認パスワードが一致しません。';
             }
@@ -463,7 +463,7 @@ function set_attribute_users($user_id, $attribute_sets)
 }
 
 /**
- * ユーザの初期値
+ * ユーザーの初期値
  *
  * @return array
  */

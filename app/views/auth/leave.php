@@ -3,7 +3,7 @@
         <main class="col-11 col-md-6 mx-auto my-4">
             <div class="mb-4 text-center">
                 <h1 class="h3">
-                    ユーザ情報
+                    ユーザー情報
                 </h1>
             </div>
 
@@ -14,7 +14,7 @@
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <div class="card-body">
                             <div class="form-group">
-                                ユーザ情報の削除を行います。
+                                ユーザー情報の削除を行います。
                             </div>
                             <div class="form-group mt-4">
                                 <button type="submit" class="btn btn-primary px-4">進む</button>

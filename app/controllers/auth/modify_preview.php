@@ -30,4 +30,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $_view['user'] = $_SESSION['post']['user'];
 
 // タイトル
-$_view['title'] = 'ユーザ情報編集確認';
+$_view['title'] = 'ユーザー情報編集確認';

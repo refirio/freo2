@@ -5,7 +5,7 @@ import('app/services/mail.php');
 
 // 機能の利用を確認
 if (empty($GLOBALS['setting']['user_use_register'])) {
-    error('自身のユーザ削除は許可されていません。');
+    error('自身のユーザー削除は許可されていません。');
 }
 
 // フォワードを確認
@@ -16,7 +16,7 @@ if (forward() === null) {
 // トランザクションを開始
 db_transaction();
 
-// ユーザ情報を取得
+// ユーザー情報を取得
 $users = model('select_users', [
     'select' => 'email, token',
     'where'  => [
@@ -27,7 +27,7 @@ $users = model('select_users', [
     ],
 ]);
 
-// ユーザを削除
+// ユーザーを削除
 $resource = service_user_delete([
     'where' => [
         'id = :id',
@@ -45,7 +45,7 @@ if (!$resource) {
 // トランザクションを終了
 db_commit();
 
-// ユーザ削除完了を通知
+// ユーザー削除完了を通知
 $to      = $users[0]['email'];
 $subject = $GLOBALS['setting']['mail_leave_subject'];
 $message = view('mail/leave/send.php', true);

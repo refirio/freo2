@@ -3,7 +3,7 @@
         <main class="col-11 col-md-6 mx-auto my-4">
             <div class="mb-4 text-center">
                 <h1 class="h3">
-                    ユーザ登録
+                    ユーザー登録
                 </h1>
             </div>
 
@@ -23,7 +23,7 @@
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <div class="card-body">
                             <div class="form-group mb-2">
-                                <label class="fw-bold">ユーザ名 <span class="badge bg-danger">必須</span></label>
+                                <label class="fw-bold">ユーザー名 <span class="badge bg-danger">必須</span></label>
                                 <input type="text" name="username" size="30" value="<?php t($_view['user']['username']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">

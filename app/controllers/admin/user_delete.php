@@ -16,7 +16,7 @@ if (!empty($_POST['id'])) {
     // トランザクションを開始
     db_transaction();
 
-    // ユーザを削除
+    // ユーザーを削除
     $resource = service_user_delete([
         'where' => [
             'id = :id',

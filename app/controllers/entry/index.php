@@ -42,7 +42,7 @@ $entry_count = service_entry_select_published('entry', [
 $_view['entry_count'] = $entry_count[0]['count'];
 $_view['entry_page']  = ceil($entry_count[0]['count'] / $GLOBALS['config']['limit']['entry']);
 
-// カテゴリを取得
+// カテゴリーを取得
 $_view['categories'] = model('select_categories', [
     'order_by' => 'sort, id',
 ]);

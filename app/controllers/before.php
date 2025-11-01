@@ -46,7 +46,7 @@ if (!preg_match('/^(auth)$/', $_REQUEST['_mode']) || !preg_match('/^(index|logou
     }
 }
 
-// ユーザを確認
+// ユーザーを確認
 if (!empty($_SESSION['auth']['user']['id'])) {
     $users = model('select_users', [
         'where' => [
@@ -112,7 +112,7 @@ if (!empty($_SESSION['auth']['user']['id'])) {
         ]);
         $GLOBALS['attributes'] = array_column($attribute_sets, 'attribute_id');
 
-        // ユーザ情報を取得
+        // ユーザー情報を取得
         $_view['_user'] = $users[0];
     }
 }
