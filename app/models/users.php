@@ -393,6 +393,14 @@ function validate_users($queries, $options = [])
         }
     }
 
+    // メモ
+    if (isset($queries['memo'])) {
+        if (!validator_required($queries['memo'])) {
+        } elseif (!validator_max_length($queries['memo'], 5000)) {
+            $messages['memo'] = 'メモは5000文字以内で入力してください。';
+        }
+    }
+
     // 暗証コード
     if (isset($queries['token_code'])) {
         if (!validator_required($queries['token_code'])) {
@@ -476,6 +484,7 @@ function default_users()
         'email_verified' => 0,
         'url'            => null,
         'text'           => null,
+        'memo'           => null,
         'loggedin'       => null,
         'failed'         => null,
         'failed_last'    => null,

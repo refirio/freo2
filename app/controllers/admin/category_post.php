@@ -23,6 +23,7 @@ if (empty($_SESSION['post']['category']['id'])) {
             'type_id' => $_SESSION['post']['category']['type_id'],
             'code'    => $_SESSION['post']['category']['code'],
             'name'    => $_SESSION['post']['category']['name'],
+            'memo'    => $_SESSION['post']['category']['memo'],
             'sort'    => $_SESSION['post']['category']['sort'],
         ],
     ]);
@@ -36,6 +37,7 @@ if (empty($_SESSION['post']['category']['id'])) {
             'type_id' => $_SESSION['post']['category']['type_id'],
             'code'    => $_SESSION['post']['category']['code'],
             'name'    => $_SESSION['post']['category']['name'],
+            'memo'    => $_SESSION['post']['category']['memo'],
         ],
         'where' => [
             'id = :id',

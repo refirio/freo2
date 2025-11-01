@@ -34,6 +34,7 @@ if (empty($_SESSION['post']['user']['id'])) {
             'email_verified' => 1,
             'url'            => $_SESSION['post']['user']['url'],
             'text'           => $_SESSION['post']['user']['text'],
+            'memo'           => $_SESSION['post']['user']['memo'],
         ],
     ], [
         'attribute_sets' => $_SESSION['post']['user']['attribute_sets'],
@@ -51,6 +52,7 @@ if (empty($_SESSION['post']['user']['id'])) {
         'email'        => $_SESSION['post']['user']['email'],
         'url'          => $_SESSION['post']['user']['url'],
         'text'         => $_SESSION['post']['user']['text'],
+        'memo'         => $_SESSION['post']['user']['memo'],
     ];
     if (!empty($_SESSION['post']['user']['password'])) {
         $sets['password']      = hash_crypt($_SESSION['post']['user']['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']);

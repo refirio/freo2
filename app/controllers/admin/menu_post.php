@@ -23,6 +23,7 @@ if (empty($_SESSION['post']['menu']['id'])) {
             'enabled' => $_SESSION['post']['menu']['enabled'],
             'title'   => $_SESSION['post']['menu']['title'],
             'url'     => $_SESSION['post']['menu']['url'],
+            'memo'    => $_SESSION['post']['menu']['memo'],
             'sort'    => $_SESSION['post']['menu']['sort'],
         ],
     ]);
@@ -36,6 +37,7 @@ if (empty($_SESSION['post']['menu']['id'])) {
             'enabled' => $_SESSION['post']['menu']['enabled'],
             'title'   => $_SESSION['post']['menu']['title'],
             'url'     => $_SESSION['post']['menu']['url'],
+            'memo'    => $_SESSION['post']['menu']['memo'],
         ],
         'where' => [
             'id = :id',

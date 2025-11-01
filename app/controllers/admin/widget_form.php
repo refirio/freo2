@@ -18,6 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'code'  => isset($_POST['code'])  ? $_POST['code']  : '',
             'title' => isset($_POST['title']) ? $_POST['title'] : '',
             'text'  => isset($_POST['text'])  ? $_POST['text']  : '',
+            'memo'  => isset($_POST['memo'])  ? $_POST['memo']  : '',
         ]),
     ];
 

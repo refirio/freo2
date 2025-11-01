@@ -247,6 +247,14 @@ function validate_widgets($queries, $options = [])
         }
     }
 
+    // メモ
+    if (isset($queries['memo'])) {
+        if (!validator_required($queries['memo'])) {
+        } elseif (!validator_max_length($queries['memo'], 5000)) {
+            $messages['memo'] = 'メモは5000文字以内で入力してください。';
+        }
+    }
+
     // 並び順
     if (isset($queries['sort'])) {
         if (!validator_required($queries['sort'])) {
@@ -276,6 +284,7 @@ function default_widgets()
         'title'    => '',
         'code'     => '',
         'text'     => null,
+        'memo'     => null,
         'sort'     => 0,
     ];
 }

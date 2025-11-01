@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS users(
     email_verified TINYINT(1) UNSIGNED NOT NULL                COMMENT 'メールアドレス検証',
     url            VARCHAR(255)                                COMMENT 'URL',
     text           TEXT                                        COMMENT '自己紹介',
+    memo           TEXT                                        COMMENT 'メモ',
     loggedin       DATETIME                                    COMMENT '最終ログイン日時',
     failed         INT UNSIGNED                                COMMENT 'ログイン失敗回数',
     failed_last    DATETIME                                    COMMENT '最終ログイン失敗日時',
@@ -29,6 +30,7 @@ CREATE TABLE IF NOT EXISTS authorities(
     deleted  DATETIME                             COMMENT '削除日時',
     name     VARCHAR(255) NOT NULL                COMMENT '名前',
     power    INT UNSIGNED NOT NULL                COMMENT '権力',
+    memo     TEXT                                 COMMENT 'メモ',
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '権限';
 
@@ -50,6 +52,7 @@ CREATE TABLE IF NOT EXISTS types(
     deleted  DATETIME                             COMMENT '削除日時',
     code     VARCHAR(255) NOT NULL                COMMENT 'コード',
     name     VARCHAR(255) NOT NULL                COMMENT '名前',
+    memo     TEXT                                 COMMENT 'メモ',
     sort     INT UNSIGNED NOT NULL                COMMENT '並び順',
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '型';
@@ -83,6 +86,7 @@ CREATE TABLE IF NOT EXISTS categories(
     type_id INT UNSIGNED  NOT NULL                COMMENT '外部キー 型',
     code     VARCHAR(255) NOT NULL                COMMENT 'コード',
     name     VARCHAR(255) NOT NULL                COMMENT '名前',
+    memo     TEXT                                 COMMENT 'メモ',
     sort     INT UNSIGNED NOT NULL                COMMENT '並び順',
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'カテゴリ';
@@ -102,6 +106,7 @@ CREATE TABLE IF NOT EXISTS fields(
     kind       VARCHAR(80)  NOT NULL                COMMENT '種類',
     validation VARCHAR(80)                          COMMENT 'バリデーション',
     text       TEXT                                 COMMENT 'テキスト',
+    memo       TEXT                                 COMMENT 'メモ',
     sort       INT UNSIGNED NOT NULL                COMMENT '並び順',
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'フィールド';
@@ -118,6 +123,7 @@ CREATE TABLE IF NOT EXISTS attributes(
     modified DATETIME     NOT NULL                COMMENT '更新日時',
     deleted  DATETIME                             COMMENT '削除日時',
     name     VARCHAR(255) NOT NULL                COMMENT '名前',
+    memo     TEXT                                 COMMENT 'メモ',
     sort     INT UNSIGNED NOT NULL                COMMENT '並び順',
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT '属性';
@@ -136,6 +142,7 @@ CREATE TABLE IF NOT EXISTS menus(
     enabled  TINYINT(1) UNSIGNED NOT NULL                COMMENT '有効',
     title    VARCHAR(255)        NOT NULL                COMMENT 'タイトル',
     url      VARCHAR(255)        NOT NULL                COMMENT 'URL',
+    memo     TEXT                                        COMMENT 'メモ',
     sort     INT UNSIGNED        NOT NULL                COMMENT '並び順',
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'メニュー';
@@ -148,6 +155,7 @@ CREATE TABLE IF NOT EXISTS widgets(
     code     VARCHAR(255) NOT NULL UNIQUE         COMMENT 'コード',
     title    VARCHAR(255) NOT NULL                COMMENT 'タイトル',
     text     TEXT                                 COMMENT 'テキスト',
+    memo     TEXT                                 COMMENT 'メモ',
     sort     INT UNSIGNED NOT NULL                COMMENT '並び順',
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'ウィジェット';

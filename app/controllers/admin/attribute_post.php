@@ -21,6 +21,7 @@ if (empty($_SESSION['post']['attribute']['id'])) {
     $resource = service_attribute_insert([
         'values' => [
             'name' => $_SESSION['post']['attribute']['name'],
+            'memo' => $_SESSION['post']['attribute']['memo'],
             'sort' => $_SESSION['post']['attribute']['sort'],
         ],
     ]);
@@ -32,6 +33,7 @@ if (empty($_SESSION['post']['attribute']['id'])) {
     $resource = service_attribute_update([
         'set'   => [
             'name' => $_SESSION['post']['attribute']['name'],
+            'memo' => $_SESSION['post']['attribute']['memo'],
         ],
         'where' => [
             'id = :id',

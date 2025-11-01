@@ -32,6 +32,10 @@
                                             <label class="fw-bold">名前 <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="name" size="30" value="<?php t($_view['attribute']['name']) ?>" class="form-control">
                                         </div>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">メモ</label>
+                                            <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['attribute']['memo']) ?></textarea>
+                                        </div>
                                         <div class="form-group mt-4">
                                             <button type="submit" class="btn btn-primary px-4">登録</button>
                                         </div>

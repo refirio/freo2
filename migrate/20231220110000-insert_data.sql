@@ -1,18 +1,18 @@
-INSERT INTO users VALUES(NULL, NOW(), NOW(), NULL, 'admin', '7463f5f0110ccf10c3327984e9a64e37', 'fec4c34788722a9e7445a950818adac4', 1, 1, '管理者', 'admin@example.com', 1, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO users VALUES(NULL, NOW(), NOW(), NULL, 'admin', '7463f5f0110ccf10c3327984e9a64e37', 'fec4c34788722a9e7445a950818adac4', 1, 1, '管理者', 'admin@example.com', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
-INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '管理者', 3);
-INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '投稿者', 2);
-INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '閲覧者', 1);
-INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, 'ゲスト', 0);
+INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '管理者', 3, NULL);
+INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '投稿者', 2, NULL);
+INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, '閲覧者', 1, NULL);
+INSERT INTO authorities VALUES(NULL, NOW(), NOW(), NULL, 'ゲスト', 0, NULL);
 
-INSERT INTO types VALUES(NULL, NOW(), NOW(), NULL, 'entry', '記事', 1);
-INSERT INTO types VALUES(NULL, NOW(), NOW(), NULL, 'page', 'ページ', 2);
+INSERT INTO types VALUES(NULL, NOW(), NOW(), NULL, 'entry', '記事', NULL, 1);
+INSERT INTO types VALUES(NULL, NOW(), NOW(), NULL, 'page', 'ページ', NULL, 2);
 
-INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'initial', '読み込み開始', NULL, 1);
-INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'ready', '読み込み完了', NULL, 2);
-INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'menu', 'メニュー', NULL, 3);
-INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'home', 'ホームページ', NULL, 4);
-INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'page', '下層ページ', NULL, 5);
+INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'initial', '読み込み開始', NULL, NULL, 1);
+INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'ready', '読み込み完了', NULL, NULL, 2);
+INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'menu', 'メニュー', NULL, NULL, 3);
+INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'home', 'ホームページ', NULL, NULL, 4);
+INSERT INTO widgets VALUES(NULL, NOW(), NOW(), NULL, 'page', '下層ページ', NULL, NULL, 5);
 
 INSERT INTO settings VALUES('title', 'Example');
 INSERT INTO settings VALUES('description', 'サイトの概要。');

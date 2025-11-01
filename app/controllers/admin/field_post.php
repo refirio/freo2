@@ -26,6 +26,7 @@ if (empty($_SESSION['post']['field']['id'])) {
             'kind'       => $_SESSION['post']['field']['kind'],
             'validation' => $_SESSION['post']['field']['validation'],
             'text'       => $_SESSION['post']['field']['text'],
+            'memo'       => $_SESSION['post']['field']['memo'],
             'sort'       => $_SESSION['post']['field']['sort'],
         ],
     ]);
@@ -42,6 +43,7 @@ if (empty($_SESSION['post']['field']['id'])) {
             'kind'       => $_SESSION['post']['field']['kind'],
             'validation' => $_SESSION['post']['field']['validation'],
             'text'       => $_SESSION['post']['field']['text'],
+            'memo'       => $_SESSION['post']['field']['memo'],
         ],
         'where' => [
             'id = :id',

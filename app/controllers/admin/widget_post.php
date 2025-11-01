@@ -22,6 +22,7 @@ $resource = service_widget_update([
         'code'  => $_SESSION['post']['widget']['code'],
         'title' => $_SESSION['post']['widget']['title'],
         'text'  => $_SESSION['post']['widget']['text'],
+        'memo'  => $_SESSION['post']['widget']['memo'],
     ],
     'where' => [
         'id = :id',

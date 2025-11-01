@@ -206,6 +206,14 @@ function validate_authorities($queries, $options = [])
         }
     }
 
+    // メモ
+    if (isset($queries['memo'])) {
+        if (!validator_required($queries['memo'])) {
+        } elseif (!validator_max_length($queries['memo'], 5000)) {
+            $messages['memo'] = 'メモは5000文字以内で入力してください。';
+        }
+    }
+
     return $messages;
 }
 
@@ -223,5 +231,6 @@ function default_authorities()
         'deleted'  => null,
         'name'     => '',
         'power'    => 0,
+        'memo'     => null,
     ];
 }

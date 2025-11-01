@@ -40,6 +40,10 @@
                                             <label class="fw-bold">テキスト</label>
                                             <textarea name="text" rows="10" cols="50" class="form-control"><?php t($_view['widget']['text']) ?></textarea>
                                         </div>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">メモ</label>
+                                            <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['widget']['memo']) ?></textarea>
+                                        </div>
                                         <div class="form-group mt-4">
                                             <button type="submit" class="btn btn-primary px-4">登録</button>
                                         </div>

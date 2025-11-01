@@ -20,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'kind'       => isset($_POST['kind'])       ? $_POST['kind']       : '',
             'validation' => isset($_POST['validation']) ? $_POST['validation'] : '',
             'text'       => isset($_POST['text'])       ? $_POST['text']       : '',
+            'memo'       => isset($_POST['memo'])       ? $_POST['memo']       : '',
         ]),
     ];
 

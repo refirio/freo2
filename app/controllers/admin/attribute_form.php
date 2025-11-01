@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'attribute' => model('normalize_attributes', [
             'id'   => isset($_POST['id'])   ? $_POST['id']   : '',
             'name' => isset($_POST['name']) ? $_POST['name'] : '',
+            'memo' => isset($_POST['memo']) ? $_POST['memo'] : '',
         ]),
     ];
 

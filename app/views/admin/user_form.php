@@ -58,6 +58,10 @@
                                             <textarea name="text" rows="10" cols="20" class="form-control"><?php t($_view['user']['text']) ?></textarea>
                                         </div>
                                         <div class="form-group mb-2">
+                                            <label class="fw-bold">メモ</label>
+                                            <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['user']['memo']) ?></textarea>
+                                        </div>
+                                        <div class="form-group mb-2">
                                             <label class="fw-bold">権限 <span class="badge bg-danger">必須</span></label>
                                             <select name="authority_id" class="form-select" style="width: 200px;">
                                                 <option value=""></option>
