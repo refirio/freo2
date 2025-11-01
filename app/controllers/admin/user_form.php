@@ -22,6 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'enabled'          => isset($_POST['enabled'])          ? $_POST['enabled']          : '',
             'name'             => isset($_POST['name'])             ? $_POST['name']             : '',
             'email'            => isset($_POST['email'])            ? $_POST['email']            : '',
+            'url'              => isset($_POST['url'])              ? $_POST['url']              : '',
+            'text'             => isset($_POST['text'])             ? $_POST['text']             : '',
             'attribute_sets'   => isset($_POST['attribute_sets'])   ? $_POST['attribute_sets']   : [],
         ]),
     ];

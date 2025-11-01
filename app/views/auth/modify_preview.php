@@ -28,6 +28,10 @@
                             <dd class="col-sm-9"><?php h(alt($_view['user']['name'], '-')) ?></dd>
                             <dt class="col-sm-3">メールアドレス</dt>
                             <dd class="col-sm-9"><?php h(alt($_view['user']['email'], '-')) ?></dd>
+                            <dt class="col-sm-3">URL</dt>
+                            <dd class="col-sm-9"><?php h(alt($_view['user']['url'], '-')) ?></dd>
+                            <dt class="col-sm-3">自己紹介</dt>
+                            <dd class="col-sm-9"><?php h(alt($_view['user']['text'], '-')) ?></dd>
                         </dl>
                         <form action="<?php t(MAIN_FILE) ?>/auth/modify_preview" method="post">
                             <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">

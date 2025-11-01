@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS users(
     name           VARCHAR(255)                                COMMENT '名前',
     email          VARCHAR(255)        NOT NULL UNIQUE         COMMENT 'メールアドレス',
     email_verified TINYINT(1) UNSIGNED NOT NULL                COMMENT 'メールアドレス検証',
+    url            VARCHAR(255)                                COMMENT 'URL',
+    text           TEXT                                        COMMENT '自己紹介',
     loggedin       DATETIME                                    COMMENT '最終ログイン日時',
     failed         INT UNSIGNED                                COMMENT 'ログイン失敗回数',
     failed_last    DATETIME                                    COMMENT '最終ログイン失敗日時',

@@ -377,6 +377,22 @@ function validate_users($queries, $options = [])
         }
     }
 
+    // URL
+    if (isset($queries['url'])) {
+        if (!validator_required($queries['url'])) {
+        } elseif (!validator_max_length($queries['url'], 200)) {
+            $messages['url'] = 'URLは200文字以内で入力してください。';
+        }
+    }
+
+    // 自己紹介
+    if (isset($queries['text'])) {
+        if (!validator_required($queries['text'])) {
+        } elseif (!validator_max_length($queries['text'], 1000)) {
+            $messages['text'] = '自己紹介は1000文字以内で入力してください。';
+        }
+    }
+
     // 暗証コード
     if (isset($queries['token_code'])) {
         if (!validator_required($queries['token_code'])) {
@@ -458,6 +474,8 @@ function default_users()
         'name'           => null,
         'email'          => '',
         'email_verified' => 0,
+        'url'            => null,
+        'text'           => null,
         'loggedin'       => null,
         'failed'         => null,
         'failed_last'    => null,

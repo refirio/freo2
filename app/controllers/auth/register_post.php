@@ -50,6 +50,8 @@ $resource = service_user_insert([
         'enabled'       => $enabled,
         'name'          => $_SESSION['post']['user']['name'],
         'email'         => $_SESSION['post']['user']['email'],
+        'url'           => $_SESSION['post']['user']['url'],
+        'text'          => $_SESSION['post']['user']['text'],
         'token'         => rand_string(),
         'token_expire'  => localdate('Y-m-d H:i:s', time() + 60 * 60 * 24),
 

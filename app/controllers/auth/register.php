@@ -25,6 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'password_confirm' => isset($_POST['password_confirm']) ? $_POST['password_confirm'] : '',
             'name'             => isset($_POST['name'])             ? $_POST['name']             : '',
             'email'            => isset($_POST['email'])            ? $_POST['email']            : '',
+            'url'              => isset($_POST['url'])              ? $_POST['url']              : '',
+            'text'             => isset($_POST['text'])             ? $_POST['text']             : '',
         ]),
     ];
 
