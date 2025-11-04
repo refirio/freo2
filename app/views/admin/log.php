@@ -6,6 +6,14 @@
                             <svg class="bi flex-shrink-0 me-1 mb-1" width="24" height="24"><use xlink:href="#symbol-file-text"/></svg>
                             システム
                         </h2>
+                        <div class="btn-toolbar align-middl">
+                            <nav style="--bs-breadcrumb-divider: '>';">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="<?php t(MAIN_FILE) ?>/admin/">ホーム</a></li>
+                                    <li class="breadcrumb-item active"><?php h($_view['title']) ?></li>
+                                </ol>
+                            </nav>
+                        </div>
                     </div>
 
                     <div class="card shadow-sm mb-3">
@@ -18,9 +26,8 @@
                                         <th class="text-nowrap">ユーザー名</th>
                                         <th class="text-nowrap d-none d-md-table-cell">名前</th>
                                         <th class="text-nowrap">IPアドレス</th>
-                                        <th class="text-nowrap d-none d-md-table-cell">環境</th>
-                                        <th class="text-nowrap">ログ</th>
-                                        <th class="text-nowrap d-none d-md-table-cell">ページ</th>
+                                        <th class="text-nowrap d-none d-md-table-cell">ログ</th>
+                                        <th class="text-nowrap">作業</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -29,26 +36,26 @@
                                         <th class="text-nowrap">ユーザー名</th>
                                         <th class="text-nowrap d-none d-md-table-cell">名前</th>
                                         <th class="text-nowrap">IPアドレス</th>
-                                        <th class="text-nowrap d-none d-md-table-cell">環境</th>
-                                        <th class="text-nowrap">ログ</th>
-                                        <th class="text-nowrap d-none d-md-table-cell">ページ</th>
+                                        <th class="text-nowrap d-none d-md-table-cell">ログ</th>
+                                        <th class="text-nowrap">作業</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
-                                    <?php foreach ($_view['logs'] as $log) : list($environment, $browser, $os) = environment_useragent($log['agent']) ?>
+                                    <?php foreach ($_view['logs'] as $log) : ?>
                                     <tr>
                                         <td><?php h(localdate('Ymd', $log['created']) == localdate('Ymd') ? localdate('H:i:s', $log['created']) : localdate('Y/m/d', $log['created'])) ?></td>
                                         <td><?php h($log['user_username']) ?></td>
                                         <td class="d-none d-md-table-cell"><?php h($log['user_name']) ?></td>
                                         <td><?php h($log['ip']) ?></td>
-                                        <td class="d-none d-md-table-cell"><span title="<?php t($log['agent']) ?>"><?php h($environment ? $environment : '-') ?></span></td>
-                                        <td>
+                                        <td class="d-none d-md-table-cell">
                                             <?php if ($log['model'] && $log['exec']) : ?>
                                                 <?php h($log['model']) ?>テーブルに対して<?php h($log['exec']) ?>しました。
                                             <?php endif ?>
                                             <?php h($log['message']) ?>
                                         </td>
-                                        <td class="d-none d-md-table-cell"><?php h($log['page']) ?></td>
+                                        <td>
+                                            <a href="<?php t(MAIN_FILE) ?>/admin/log_view?id=<?php t($log['id']) ?>" class="btn btn-primary text-nowrap">表示</a>
+                                        </td>
                                     </tr>
                                     <?php endforeach ?>
                                 </tbody>

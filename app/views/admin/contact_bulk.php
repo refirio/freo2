@@ -6,6 +6,13 @@
                             <svg class="bi flex-shrink-0 me-1 mb-1" width="24" height="24"><use xlink:href="#symbol-file-text"/></svg>
                             コミュニケーション
                         </h2>
+                        <nav style="--bs-breadcrumb-divider: '>';">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="<?php t(MAIN_FILE) ?>/admin/">ホーム</a></li>
+                                <li class="breadcrumb-item"><a href="<?php t(MAIN_FILE) ?>/admin/contact">お問い合わせ管理</a></li>
+                                <li class="breadcrumb-item active"><?php h($_view['title']) ?></li>
+                            </ol>
+                        </nav>
                     </div>
 
                     <div class="card shadow-sm mb-3">

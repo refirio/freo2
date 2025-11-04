@@ -1,7 +1,5 @@
 <?php
 
-import('libs/modules/environment.php');
-
 // ページを取得
 if (isset($_GET['page'])) {
     $_GET['page'] = intval($_GET['page']);

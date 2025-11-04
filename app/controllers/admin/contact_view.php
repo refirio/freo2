@@ -19,4 +19,3 @@ if (empty($contacts)) {
 
 // タイトル
 $_view['title'] = 'お問い合わせ表示';
-

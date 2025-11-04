@@ -88,6 +88,9 @@ div.dashboard a {
 body, main {
     background-color: #EEEEEE;
 }
+main nav a {
+    color: #555555;
+}
 main .heading {
     background-color: #555555;
     color: #FFFFFF;
