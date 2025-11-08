@@ -59,6 +59,12 @@
                                             <textarea name="<?php t($key) ?>" rows="5" cols="50" class="form-control"><?php t($_view['setting_sets'][$key]) ?></textarea>
                                             <?php elseif ($data['type'] == 'boolean') : ?>
                                             <div><label><input type="checkbox" name="<?php t($key) ?>" value="1" class="form-check-input"<?php $_view['setting_sets'][$key] ? e(' checked="checked"') : '' ?>> ON</label></div>
+                                            <?php elseif ($data['type'] == 'select') : ?>
+                                            <select name="<?php t($key) ?>" class="form-select" style="width: 200px;">
+                                                <?php foreach ($GLOBALS['setting_contents'][$_GET['target']][$key]['kind'] as $kind_key => $kind_value) : ?>
+                                                <option value="<?php t($kind_key) ?>"<?php $kind_key == $_view['setting_sets'][$key] ? e(' selected="selected"') : '' ?>><?php t($kind_value) ?></option>
+                                                <?php endforeach ?>
+                                            </select>
                                             <?php endif ?>
                                         </div>
                                         <?php endforeach ?>

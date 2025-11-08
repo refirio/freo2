@@ -6,7 +6,7 @@
                                                 <div class="field">
                                                     <input type="text" name="field_sets[<?php t($field['id']) ?>]" size="30" value="<?php t($_view['entry']['field_sets'][$field['id']] ?? '') ?>" class="form-control">
                                                 </div>
-                                                <?php elseif ($field['kind'] === 'textarea') : ?>
+                                                <?php elseif ($field['kind'] === 'textarea' || $field['kind'] === 'html') : ?>
                                                 <div class="field">
                                                     <textarea name="field_sets[<?php t($field['id']) ?>]" rows="5" cols="50" class="form-control"><?php t($_view['entry']['field_sets'][$field['id']] ?? '') ?></textarea>
                                                 </div>

@@ -62,6 +62,7 @@ $GLOBALS['config']['option'] = app_config('APP_OPTION', [
             'number'   => '数字入力',
             'alphabet' => '英数字入力',
             'textarea' => '複数行入力',
+            'html'     => 'HTML直接入力',
             'wysiwyg'  => 'WYSIWYGエディタ',
             'select'   => 'セレクトボックス',
             'radio'    => 'ラジオボタン',

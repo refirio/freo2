@@ -29,11 +29,6 @@ $GLOBALS['setting_contents'] = [
             'type'     => 'boolean',
             'required' => false,
         ],
-        'entry_use_text' => [
-            'name'     => '本文の入力',
-            'type'     => 'boolean',
-            'required' => false,
-        ],
         'entry_use_picture' => [
             'name'     => '写真の入力',
             'type'     => 'boolean',
@@ -49,15 +44,21 @@ $GLOBALS['setting_contents'] = [
             'type'     => 'text',
             'required' => false,
         ],
+        'entry_text_type' => [
+            'name'     => '本文の入力項目',
+            'type'     => 'select',
+            'required' => false,
+            'kind'     => [
+                'none'     => 'なし',
+                'textarea' => '複数行入力',
+                'html'     => 'HTML直接入力',
+                'wysiwyg'  => 'WYSIWYGエディタ',
+            ],
+        ],
     ],
     'page'  => [
         'page_use_approve' => [
             'name'     => 'ページの承認',
-            'type'     => 'boolean',
-            'required' => false,
-        ],
-        'page_use_text' => [
-            'name'     => '本文の入力',
             'type'     => 'boolean',
             'required' => false,
         ],
@@ -75,6 +76,17 @@ $GLOBALS['setting_contents'] = [
             'name'     => 'コードの初期値',
             'type'     => 'text',
             'required' => false,
+        ],
+        'page_text_type' => [
+            'name'     => '本文の入力項目',
+            'type'     => 'select',
+            'required' => false,
+            'kind'     => [
+                'none'     => 'なし',
+                'textarea' => '複数行入力',
+                'html'     => 'HTML直接入力',
+                'wysiwyg'  => 'WYSIWYGエディタ',
+            ],
         ],
         'page_home_code' => [
             'name'     => 'ホームページに表示するページのコード',

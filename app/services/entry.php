@@ -59,11 +59,19 @@ function service_entry_select_published($type, $queries, $options = [])
     // エントリーの表示制限
     $temps = [];
     foreach ($entries as $entry) {
-        if (isset($entry['id']) && $entry['public'] === 'password' && empty($_SESSION['entry_passwords'][$entry['id']])) {
-            $entry['title']     = $GLOBALS['setting']['restricted_password_title'] . $entry['title'];
-            $entry['text']      = $GLOBALS['setting']['restricted_password_text'];
-            $entry['picture']   = null;
-            $entry['thumbnail'] = null;
+        if (isset($entry['id'])) {
+            if ($entry['public'] === 'password' && empty($_SESSION['entry_passwords'][$entry['id']])) {
+                $entry['title']     = $GLOBALS['setting']['restricted_password_title'] . $entry['title'];
+                $entry['text']      = $GLOBALS['setting']['restricted_password_text'];
+                $entry['picture']   = null;
+                $entry['thumbnail'] = null;
+            } else {
+                if ($GLOBALS['setting']['entry_text_type'] === 'none') {
+                    $entry['text'] = '';
+                } elseif ($GLOBALS['setting']['entry_text_type'] === 'textarea') {
+                    $entry['text'] = h($entry['text'], true);
+                }
+            }
         }
         $temps[] = $entry;
     }

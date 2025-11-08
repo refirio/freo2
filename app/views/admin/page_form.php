@@ -95,10 +95,10 @@
                                             <label class="fw-bold">タイトル <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="title" size="30" value="<?php t($_view['entry']['title']) ?>" class="form-control">
                                         </div>
-                                        <?php if ($GLOBALS['setting']['entry_use_text']) : ?>
+                                        <?php if ($GLOBALS['setting']['page_text_type'] !== 'none') : ?>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">本文</label>
-                                            <textarea name="text" rows="10" cols="50" class="form-control editor"><?php t($_view['entry']['text']) ?></textarea>
+                                            <textarea name="text" rows="10" cols="50" class="form-control<?php if ($GLOBALS['setting']['page_text_type'] === 'wysiwyg') : ?> editor<?php endif ?>"><?php t($_view['entry']['text']) ?></textarea>
                                         </div>
                                         <?php endif ?>
                                         <?php if ($GLOBALS['setting']['entry_use_picture']) : ?>
