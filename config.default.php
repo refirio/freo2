@@ -6,11 +6,16 @@
 
 *******************************************************************************/
 
+define('APP_HTTP_URL', 'https://example.com');
+define('APP_HTTP_PATH', '/');
+define('APP_STORAGE_TYPE', 'file');
+define('APP_STORAGE_URL', APP_HTTP_URL . '/');
+
 /********* Main ***************************************************************/
 
 define('MAIN_FILE', $_SERVER['SCRIPT_NAME']);
-define('MAIN_LIBRARY_PATH', '../levis/');
-define('MAIN_APPLICATION_PATH', '../levis/');
+define('MAIN_LIBRARY_PATH', '');
+define('MAIN_APPLICATION_PATH', '');
 define('MAIN_DEFAULT_MODE', 'home');
 define('MAIN_DEFAULT_WORK', 'index');
 define('MAIN_INTERNAL_ENCODING', 'UTF-8');
@@ -31,9 +36,9 @@ define('DATABASE_CHARSET_INPUT_FROM', 'UTF-8');
 define('DATABASE_CHARSET_INPUT_TO', 'UTF-8');
 define('DATABASE_CHARSET_OUTPUT_FROM', 'UTF-8');
 define('DATABASE_CHARSET_OUTPUT_TO', 'UTF-8');
-define('DATABASE_MIGRATE_PATH', '../levis/migrate/');
-define('DATABASE_SCAFFOLD_PATH', '../levis/scaffold/');
-define('DATABASE_BACKUP_PATH', '../levis/backup/');
+define('DATABASE_MIGRATE_PATH', 'migrate/');
+define('DATABASE_SCAFFOLD_PATH', 'scaffold/');
+define('DATABASE_BACKUP_PATH', 'backup/');
 define('DATABASE_AUTOCONNECT', true);
 
 /********* Session ************************************************************/
@@ -58,8 +63,8 @@ define('AUTOLOAD_SERVICE', false);
 
 /********* Page ***************************************************************/
 
-define('PAGE_PATH', '../levis/page/');
-define('PAGE_CONTROLLER', '../levis/page');
+define('PAGE_PATH', 'page/');
+define('PAGE_CONTROLLER', 'page');
 
 /********* Permission *********************************************************/
 
@@ -68,7 +73,7 @@ define('PERMISSION_FILE', 0606);
 
 /********* Test ***************************************************************/
 
-define('TEST_PATH', '../levis/test/');
+define('TEST_PATH', 'test/');
 
 /********* Debug **************************************************************/
 
