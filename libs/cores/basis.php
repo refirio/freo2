@@ -376,7 +376,7 @@ function model()
                 logging('message', 'Opendir error: ' . $args[0]);
             }
 
-            error('Opendir error' . (DEBUG_LEVEL ? ': ' . $args[0]: ''));
+            error('Opendir error' . (DEBUG_LEVEL ? ': ' . $args[0] : ''));
         }
 
         eval($php);
