@@ -77,6 +77,55 @@ function service_storage_put($key, $body = null)
 }
 
 /**
+ * オブジェクトを複製
+ *
+ * @param string $key
+ * @param string $source
+ *
+ * @return bool
+ */
+function service_storage_copy($key, $source)
+{
+    $result = false;
+    if ($GLOBALS['config']['storage_type'] === 's3') {
+        $result = s3_copy($key, $source);
+    } elseif ($GLOBALS['config']['storage_type'] === 'file') {
+        if (preg_match('/\/$/', $key)) {
+            // do nothing.
+        } else {
+            $result = copy($key, $source);
+        }
+    }
+
+    return $result;
+}
+
+/**
+ * オブジェクトを移動
+ *
+ * @param string $key
+ * @param string $source
+ *
+ * @return bool
+ */
+function service_storage_move($key, $source)
+{
+    $result = false;
+    if ($GLOBALS['config']['storage_type'] === 's3') {
+        $result = s3_copy($key, $source);
+        $result = s3_remove($source);
+    } elseif ($GLOBALS['config']['storage_type'] === 'file') {
+        if (preg_match('/\/$/', $key)) {
+            // do nothing.
+        } else {
+            $result = rename($key, $source);
+        }
+    }
+
+    return $result;
+}
+
+/**
  * オブジェクトを削除
  *
  * @param string $key
@@ -96,4 +145,36 @@ function service_storage_remove($key)
     }
 
     return $result;
+}
+
+/**
+ * オブジェクトを一覧
+ *
+ * @param string $key
+ *
+ * @return bool
+ */
+function service_storage_list($key)
+{
+    $results = [];
+    if ($GLOBALS['config']['storage_type'] === 's3') {
+        $results = s3_list($key);
+    } elseif ($GLOBALS['config']['storage_type'] === 'file') {
+        $results = [];
+        if ($dh = opendir($key)) {
+            while (($entry = readdir($dh)) !== false) {
+                if ($entry == '.' || $entry == '..' || $entry == '.gitkeep') {
+                    continue;
+                }
+
+                $results[] = [
+                    'name'     => $entry,
+                    'modified' => filemtime($key . $entry),
+                    'size'     => filesize($key . $entry),
+                ];
+            }
+        }
+    }
+
+    return $results;
 }

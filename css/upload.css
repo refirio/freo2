@@ -45,3 +45,33 @@ div.upload ul li {
 div.upload.dragover button {
     background-color: #EEEEEE;
 }
+
+/********* 一括アップロード ***************************************************/
+
+/* ファイルを選択してアップロード */
+div.uploads {
+    position: relative;
+}
+div.uploads button {
+    width: 100px;
+    height: 30px;
+    border: 0;
+    background-color: #CCCCCC;
+}
+div.uploads button:hover {
+    background-color: #EEEEEE;
+}
+div.uploads input {
+    visibility: hidden;
+    position: absolute;
+    height: 0px;
+}
+div.uploads p {
+    margin: 0;
+    padding: 5px 0 0;
+}
+
+/* ファイルをドラッグ＆ドロップしてアップロード */
+div.uploads.dragover button {
+    background-color: #EEEEEE;
+}

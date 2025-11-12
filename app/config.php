@@ -101,6 +101,8 @@ $GLOBALS['config']['storage_url'] = app_config('APP_STORAGE_URL', null);
 $GLOBALS['config']['file_target'] = app_config('APP_FILE_TARGET', [
     'entry' => 'files/entries/',
     'field' => 'files/fields/',
+    'media' => 'files/medias/',
+    'temp'  => 'files/temps/',
 ]);
 
 /* ファイルアップロード許可 */

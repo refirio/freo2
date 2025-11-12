@@ -128,6 +128,37 @@ function s3_put($key, $body = null)
 }
 
 /**
+ * オブジェクトを複製
+ *
+ * @param string $key
+ * @param string $source
+ *
+ * @return bool
+ */
+function s3_copy($key, $source)
+{
+    list($client, $setting) = s3_init();
+
+    if (preg_match('/\/$/', $key)) {
+        // do nothing.
+    } else {
+        try {
+            $result = $client->copy(array(
+                'Bucket'     => $setting['bucket'],
+                'Key'        => $key,
+                'CopySource' => $setting['bucket'] . '/' . $source,
+            ));
+        } catch (S3Exception $e) {
+            error('S3Exception: ' . $e->getMessage());
+        } catch (Exception $e) {
+            error('Exception: ' . $e->getMessage());
+        }
+    }
+
+    return $result;
+}
+
+/**
  * オブジェクトを削除
  *
  * @param string $key
@@ -167,6 +198,33 @@ function s3_remove($key)
         } catch (Exception $e) {
             error('Exception: ' . $e->getMessage());
         }
+    }
+
+    return $result;
+}
+
+/**
+ * オブジェクトを一覧
+ *
+ * @param string $key
+ *
+ * @return bool
+ */
+function s3_list($key)
+{
+    list($client, $setting) = s3_init();
+
+    try {
+        $result = $client->listObjects([
+            'Bucket'    => $setting['bucket'],
+            'Prefix'    => $key,
+            'Delimiter' => '/',
+        ]);
+        $result = $result['Contents'];
+    } catch (S3Exception $e) {
+        error('S3Exception: ' . $e->getMessage());
+    } catch (Exception $e) {
+        error('Exception: ' . $e->getMessage());
     }
 
     return $result;

@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+    /*
+     * ファイルアップロード
+     */
     if ($('.upload').length > 0) {
         /*
          * 作業対象を決定
@@ -168,6 +171,81 @@ $(document).ready(function() {
                 console.log(status);
                 console.log(errorThrown);
             }
+        });
+    }
+
+    /*
+     * ファイル一括アップロード
+     */
+    if ($('.uploads').length > 0) {
+        /*
+         * ファイルを選択してアップロード
+         */
+        var target = $('#uploads');
+
+        target.upload({
+            url: target.data('uploads'),
+            progress: function() {
+                target.find('p').html('アップロードしています。');
+            },
+            success: function(response) {
+                // トークンを更新
+                $('form input.token').val(response.values.token);
+                $('a.token').attr('data-token', response.values.token);
+
+                // 結果を表示
+                target.find('p').html('');
+
+                for (var i = 0; i < response.values.files.length; i++) {
+                    target.find('p').append('<div class="file">' + response.values.files[i] + '<input type="hidden" name="temp[]" value="' + response.values.files[i] + '"></div>');
+                }
+            },
+            error: function(message) {
+                // 結果を表示
+                target.find('p').html('<div class="warning">アップロードに失敗しました。' + message + '</div>');
+            },
+        });
+
+        /*
+         * ファイルをドラッグ＆ドロップしてアップロード
+         */
+        $(document).on('drop', function(e) {
+            return false;
+        }).on('dragover', function(e) {
+            return false;
+        });
+
+        var target = $('#uploads');
+
+        target.droparea({
+            form: target.closest('form').get(0),
+            url: target.data('uploads'),
+            name: target.find('input[type=file]').attr('name'),
+            dragover: function() {
+                target.addClass('dragover');
+            },
+            dragleave: function() {
+                target.removeClass('dragover');
+            },
+            initialize: function() {
+                target.removeClass('dragover');
+                target.find('p').html('アップロードを開始します。');
+            },
+            progress: function(total, loaded, percent) {
+                target.find('p').html('アップロードしています。' + (total ? ' | ' + Math.round(total / 1024) + 'KB 中 ' + Math.round(loaded / 1024) + 'KB 読み込み | 進捗' + percent + '%' : ''));
+            },
+            success: function(response) {
+                // 結果を表示
+                target.find('p').html('');
+
+                for (var i = 0; i < response.values.files.length; i++) {
+                    target.find('p').append('<div class="file">' + response.values.files[i] + '<input type="hidden" name="temp[]" value="' + response.values.files[i] + '"></div>');
+                }
+            },
+            error: function(message) {
+                // 結果を表示
+                target.find('p').html('<div class="warning">アップロードに失敗しました。' + message + '</div>');
+            },
         });
     }
 

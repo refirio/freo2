@@ -106,6 +106,13 @@ $GLOBALS['menu_contents'] = [
                 'icon'   => '#symbol-file-text',
                 'show'   => $GLOBALS['setting']['menu_admin_widget'],
             ],
+            'media' => [
+                'name'   => 'メディア管理',
+                'link'   => '/admin/media',
+                'active' => '/^media(_|$)/',
+                'icon'   => '#symbol-file-text',
+                'show'   => true,
+            ],
         ],
         'communication' => [
             'contact' => [
