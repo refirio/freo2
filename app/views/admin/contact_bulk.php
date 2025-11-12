@@ -23,12 +23,9 @@
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                                 一括処理対象が選択されていません。
                             </div>
-                            <p><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t($_POST['page']) ?>" class="btn btn-secondary">戻る</a></p>
+                            <p><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t($_POST['page']) ?>" class="btn btn-secondary px-4">戻る</a></p>
                         <?php else : ?>
-                            <ul>
-                                <li>以下のお問い合わせが削除されます。よろしければ削除ボタンを押してください。</li>
-                            </ul>
-                            <p><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t($_POST['page']) ?>">戻る</a></p>
+                            <p>以下のお問い合わせが削除されます。よろしければ削除ボタンを押してください。</p>
 
                             <form action="<?php t(MAIN_FILE) ?>/admin/contact_delete" method="post" class="delete">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
@@ -36,7 +33,10 @@
                                 <?php foreach ($_view['contact_bulks'] as $contact_bulk) : ?>
                                 <input type="hidden" name="list[]" value="<?php t($contact_bulk) ?>">
                                 <?php endforeach ?>
-                                <p><button type="submit" class="btn btn-danger px-4">削除</button></p>
+                                <div class="form-group my-4">
+                                    <a href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t($_POST['page']) ?>" class="btn btn-secondary px-4">戻る</a>
+                                    <button type="submit" class="btn btn-danger px-4">削除</button>
+                                </div>
                             </form>
 
                             <table class="table table-bordered">
