@@ -26,6 +26,7 @@ function service_storage_init($config = [])
  */
 function service_storage_exist($key)
 {
+    $result = false;
     if ($GLOBALS['config']['storage_type'] === 's3') {
         $result = s3_exist($key);
     } elseif ($GLOBALS['config']['storage_type'] === 'file') {
@@ -40,10 +41,11 @@ function service_storage_exist($key)
  *
  * @param string $key
  *
- * @return bool
+ * @return string
  */
 function service_storage_get($key)
 {
+    $result = null;
     if ($GLOBALS['config']['storage_type'] === 's3') {
         $result = s3_get($key);
     } elseif ($GLOBALS['config']['storage_type'] === 'file') {
@@ -63,6 +65,7 @@ function service_storage_get($key)
  */
 function service_storage_put($key, $body = null)
 {
+    $result = false;
     if ($GLOBALS['config']['storage_type'] === 's3') {
         $result = s3_put($key, $body);
     } elseif ($GLOBALS['config']['storage_type'] === 'file') {
@@ -134,6 +137,7 @@ function service_storage_move($key, $source)
  */
 function service_storage_remove($key)
 {
+    $result = false;
     if ($GLOBALS['config']['storage_type'] === 's3') {
         $result = s3_remove($key);
     } elseif ($GLOBALS['config']['storage_type'] === 'file') {
@@ -156,25 +160,57 @@ function service_storage_remove($key)
  */
 function service_storage_list($key)
 {
-    $results = [];
+    $directories = [];
+    $files       = [];
     if ($GLOBALS['config']['storage_type'] === 's3') {
-        $results = s3_list($key);
+        $list = s3_list($key);
+
+        if (!empty($list['CommonPrefixes'])) {
+            foreach ($list['CommonPrefixes'] as $prefix) {
+                $directories[] = [
+                    'type'     => 'directory',
+                    'name'     => $prefix['Prefix'],
+                    'modified' => null,
+                    'size'     => null,
+                ];
+            }
+        }
+
+        if (!empty($list['Contents'])) {
+            foreach ($list['Contents'] as $content) {
+                $files[] = [
+                    'type'     => 'file',
+                    'name'     => $content['Key'],
+                    'modified' => $content['LastModified'],
+                    'size'     => $content['Size'],
+                ];
+            }
+        }
     } elseif ($GLOBALS['config']['storage_type'] === 'file') {
-        $results = [];
         if ($dh = opendir($key)) {
             while (($entry = readdir($dh)) !== false) {
                 if ($entry == '.' || $entry == '..' || $entry == '.gitkeep') {
                     continue;
                 }
 
-                $results[] = [
-                    'name'     => $entry,
-                    'modified' => filemtime($key . $entry),
-                    'size'     => filesize($key . $entry),
-                ];
+                if (is_dir($key . $entry)) {
+                    $directories[] = [
+                        'type'     => 'directory',
+                        'name'     => $entry,
+                        'modified' => null,
+                        'size'     => null,
+                    ];
+                } else {
+                    $files[] = [
+                        'type'     => 'file',
+                        'name'     => $entry,
+                        'modified' => filemtime($key . $entry),
+                        'size'     => filesize($key . $entry),
+                    ];
+                }
             }
         }
     }
 
-    return $results;
+    return array_merge($directories, $files);
 }

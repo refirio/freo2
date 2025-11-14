@@ -17,7 +17,7 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
                         <div class="card-body">
-                            <p><a href="<?php t(MAIN_FILE) ?>/admin/media_form" class="btn btn-primary">メディア登録</a></p>
+                            <p><a href="<?php t(MAIN_FILE) ?>/admin/media_form<?php t($_GET['directory'] === '' ? '' : '?directory=' . $_GET['directory']) ?>" class="btn btn-primary">メディア登録</a></p>
                             <?php if (isset($_GET['ok'])) : ?>
                             <div class="alert alert-success">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
@@ -44,26 +44,43 @@
                                         <tr>
                                             <th class="text-nowrap"></th>
                                             <th class="text-nowrap">ファイル名</th>
-                                            <th class="text-nowrap">ファイルサイズ</th>
                                             <th class="text-nowrap">最終更新日時</th>
+                                            <th class="text-nowrap">ファイルサイズ</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
                                             <th class="text-nowrap"></th>
                                             <th class="text-nowrap">ファイル名</th>
-                                            <th class="text-nowrap">ファイルサイズ</th>
                                             <th class="text-nowrap">最終更新日時</th>
+                                            <th class="text-nowrap">ファイルサイズ</th>
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        <?php if ($_GET['directory'] !== '') : ?>
+                                        <tr>
+                                            <td></td>
+                                            <td><svg class="bi flex-shrink-0 me-1" width="16" height="16"><use xlink:href="#symbol-folder-fill"/></svg> <a href="<?php t(MAIN_FILE) ?>/admin/media">..</a></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                        <?php endif ?>
                                         <?php foreach ($_view['medias'] as $media) : ?>
+                                        <?php if ($media['type'] === 'directory') : ?>
                                         <tr>
                                             <td><input type="checkbox" name="medias[]" value="<?php t($media['name']) ?>"></td>
-                                            <td><?php h($media['name']) ?></td>
-                                            <td><?php h(number_format($media['size'] / 1024)) ?>KB</td>
-                                            <td><?php h(localdate('Y/m/d H:i:s', $media['modified'])) ?></td>
+                                            <td><svg class="bi flex-shrink-0 me-1" width="16" height="16"><use xlink:href="#symbol-folder-fill"/></svg> <a href="<?php t(MAIN_FILE) ?>/admin/media?directory=<?php t($_GET['directory'] === '' ? '' : $_GET['directory'] . '/') ?><?php t($media['name']) ?>" class="text-dark text-decoration-none"><?php h($media['name']) ?></a></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
+                                        <?php else : ?>
+                                        <tr>
+                                            <td><input type="checkbox" name="medias[]" value="<?php t($media['name']) ?>"></td>
+                                            <td><svg class="bi flex-shrink-0 me-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg> <?php h($media['name']) ?></td>
+                                            <td><?php h(localdate('Y/m/d H:i:s', $media['modified'])) ?></td>
+                                            <td class="text-end"><?php h(number_format($media['size'] / 1024)) ?>KB</td>
+                                        </tr>
+                                        <?php endif ?>
                                         <?php endforeach ?>
                                     </tbody>
                                 </table>

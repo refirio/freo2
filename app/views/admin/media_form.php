@@ -42,6 +42,10 @@
                                                 <p>選択されていません</p>
                                             </div>
                                         </div>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">ディレクトリ</label>
+                                            <input type="text" name="directory" size="30" value="<?php t($_GET['directory']) ?>" class="form-control">
+                                        </div>
                                         <div class="form-group mt-4">
                                             <button type="submit" class="btn btn-primary px-4">登録</button>
                                         </div>

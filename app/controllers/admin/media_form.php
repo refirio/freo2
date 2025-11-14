@@ -11,8 +11,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error('不正なアクセスです。');
     }
 
+    // 入力データを検証
+    if (!preg_match('/^[\w\-\/]+$/', $_POST['directory']) || preg_match('/\/\//', $_POST['directory'])) {
+        error('不正なアクセスです。');
+    } elseif (!preg_match('/\/$/', $_POST['directory'])) {
+        $_POST['directory'] .= '/';
+    }
+
+    // 登録データ
+    $_SESSION['post']['media'] = [
+        'directory' => $_POST['directory'],
+    ];
+
     // フォワード
     forward('/admin/media_post');
+}
+
+// ディレクトリを取得
+if (!isset($_GET['directory'])) {
+    $_GET['directory'] = '';
 }
 
 // タイトル
