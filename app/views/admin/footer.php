@@ -1,5 +1,26 @@
+        <?php if ($_REQUEST['_type'] !== 'iframe') : ?>
             </div>
         </div>
+
+        <div class="modal fade" id="mediaModal" tabindex="-1" aria-labelledby="mediaModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="mediaModalLabel">メディア</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="ratio ratio-1x1">
+                            <iframe src="<?php t(MAIN_FILE) ?>/admin/media?_type=iframe" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif ?>
 
         <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
             <symbol id="symbol-box-arrow-up-right" fill="currentColor" viewBox="0 0 16 16">

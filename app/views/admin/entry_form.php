@@ -107,7 +107,7 @@
                                         </div>
                                         <?php if ($GLOBALS['setting']['entry_text_type'] !== 'none') : ?>
                                         <div class="form-group mb-2">
-                                            <label class="fw-bold">本文</label>
+                                            <label class="fw-bold">本文（<a href="#" data-bs-toggle="modal" data-bs-target="#mediaModal">メディア</a>）</label>
                                             <textarea name="text" rows="10" cols="50" class="form-control<?php if ($GLOBALS['setting']['entry_text_type'] === 'wysiwyg') : ?> editor<?php endif ?>"><?php t($_view['entry']['text']) ?></textarea>
                                         </div>
                                         <?php endif ?>

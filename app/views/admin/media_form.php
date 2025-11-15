@@ -1,6 +1,7 @@
 <?php import('app/views/admin/header.php') ?>
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 mb-2 px-md-4">
+                    <?php if ($_REQUEST['_type'] !== 'iframe') : ?>
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-2">
                         <h2 class="h3">
                             <svg class="bi flex-shrink-0 me-1 mb-1" width="24" height="24"><use xlink:href="#symbol-pencil-square"/></svg>
@@ -14,6 +15,7 @@
                             </ol>
                         </nav>
                     </div>
+                    <?php endif ?>
 
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
@@ -27,7 +29,7 @@
                             </div>
                             <?php endif ?>
 
-                            <form action="<?php t(MAIN_FILE) ?>/admin/media_form" method="post" class="register">
+                            <form action="<?php t(MAIN_FILE) ?>/admin/media_form<?php t(empty($_REQUEST['_type']) ? '' : '?_type=' . $_REQUEST['_type']) ?>" method="post" class="register">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <div class="card shadow-sm mb-3">
                                     <div class="card-header">

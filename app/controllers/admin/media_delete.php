@@ -12,17 +12,24 @@ if (empty($_SERVER['HTTP_REFERER']) || !preg_match('/^' . preg_quote($GLOBALS['c
     error('不正なアクセスです。');
 }
 
+// 入力データを検証
+if (!isset($_GET['directory']) || !preg_match('/^[\w\-\/]+$/', $_GET['directory'])) {
+    $_GET['directory'] = '';
+}
+
+$directory = $_GET['directory'];
+
 if (empty($_POST['medias'])) {
     // リダイレクト
-    redirect('/admin/media?warning=delete');
+    redirect('/admin/media?warning=delete' . ($directory === '' ? '' : '&directory=' . $directory) . (empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']));
 } elseif (empty($_POST['confirm'])) {
     // メディアを削除
     foreach ($_POST['medias'] as $media) {
-        service_storage_remove($GLOBALS['config']['file_target']['media'] . $media);
+        service_storage_remove($GLOBALS['config']['file_target']['media'] . $directory . '/' . $media);
     }
 
     // リダイレクト
-    redirect('/admin/media?ok=delete');
+    redirect('/admin/media?ok=delete' . ($directory === '' ? '' : '&directory=' . $directory) . (empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']));
 } else {
     // メディアを取得
     $_view['medias'] = $_POST['medias'];

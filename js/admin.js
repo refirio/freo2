@@ -1,3 +1,21 @@
+let editorInstance = null;
+
+/*
+ * メディアをエディタに挿入
+ */
+function insertMedia(tag) {
+    if (editorInstance == null) {
+        return;
+    }
+
+    editorInstance.model.change(writer => {
+        const viewFragment = editorInstance.data.processor.toView(tag);
+        const modelFragment = editorInstance.data.toModel(viewFragment);
+
+        editorInstance.model.insertContent(modelFragment, editorInstance.model.document.selection);
+    });
+}
+
 $(document).ready(function() {
 
     /*
@@ -299,11 +317,28 @@ $(document).ready(function() {
                         ]
                     }
                 })
+                .then(instance => {
+                    if (editorInstance == null) {
+                        editorInstance = instance;
+                    }
+                })
                 .catch(error => {
                     console.error(error);
                 });
         });
     }
+
+    /*
+     * メディアをエディタに挿入
+     */
+    $('.insert-media').on('click', function () {
+        const mediaUrl  = $(this).data('url');
+        const mediaName = $(this).data('name');
+
+        const mediaTag = '<img src="' + mediaUrl + '" alt="' + mediaName + '">';
+
+        window.parent.insertMedia(mediaTag);
+    });
 
     /*
      * 並び替え

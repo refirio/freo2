@@ -12,15 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // 入力データを検証
-    if (!preg_match('/^[\w\-\/]+$/', $_POST['directory']) || preg_match('/\/\//', $_POST['directory'])) {
-        error('不正なアクセスです。');
-    } elseif (!preg_match('/\/$/', $_POST['directory'])) {
-        $_POST['directory'] .= '/';
+    if (isset($_POST['directory']) && (!preg_match('/^[\w\-\/]+$/', $_POST['directory']))) {
+        error('ディレクトリの指定が不正です。');
     }
 
     // 登録データ
     $_SESSION['post']['media'] = [
-        'directory' => $_POST['directory'],
+        'directory' => rtrim($_POST['directory'], '/'),
     ];
 
     // フォワード
