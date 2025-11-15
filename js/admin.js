@@ -1,19 +1,37 @@
-let editorInstance = null;
+let text = null;
 
 /*
  * メディアをエディタに挿入
  */
 function insertMedia(tag) {
-    if (editorInstance == null) {
+    if (text == null) {
         return;
     }
 
-    editorInstance.model.change(writer => {
-        const viewFragment = editorInstance.data.processor.toView(tag);
-        const modelFragment = editorInstance.data.toModel(viewFragment);
+    if (text && text.model) {
+        // CKEditor
+        text.model.change(writer => {
+            const viewFragment = text.data.processor.toView(tag);
+            const modelFragment = text.data.toModel(viewFragment);
 
-        editorInstance.model.insertContent(modelFragment, editorInstance.model.document.selection);
-    });
+            text.model.insertContent(modelFragment, text.model.document.selection);
+        });
+    } else {
+        // テキストエリア
+        const textarea = text.get(0);
+
+        const start = textarea.selectionStart;
+        const end   = textarea.selectionEnd;
+
+        const before = textarea.value.substring(0, start);
+        const after  = textarea.value.substring(end);
+
+        textarea.value = before + tag + after;
+
+        textarea.selectionStart = textarea.selectionEnd = start + tag.length;
+
+        textarea.focus();
+    }
 }
 
 $(document).ready(function() {
@@ -305,6 +323,7 @@ $(document).ready(function() {
      * エディタ
      */
     if ($('.editor').length > 0) {
+        // CKEditor
         document.querySelectorAll('.editor').forEach(function(editor) {
             ClassicEditor
                 .create(editor, {
@@ -318,14 +337,17 @@ $(document).ready(function() {
                     }
                 })
                 .then(instance => {
-                    if (editorInstance == null) {
-                        editorInstance = instance;
+                    if (text == null) {
+                        text = instance;
                     }
                 })
                 .catch(error => {
                     console.error(error);
                 });
         });
+    } else {
+        // テキストエリア
+        text = $('textarea[name=text]');
     }
 
     /*
