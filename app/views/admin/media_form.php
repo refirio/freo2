@@ -29,6 +29,7 @@
                             </div>
                             <?php endif ?>
 
+                            <?php if (empty($_GET['type'])) : ?>
                             <form action="<?php t(MAIN_FILE) ?>/admin/media_form<?php t(empty($_REQUEST['_type']) ? '' : '?_type=' . $_REQUEST['_type']) ?>" method="post" class="register">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <div class="card shadow-sm mb-3">
@@ -54,6 +55,23 @@
                                     </div>
                                 </div>
                             </form>
+                            <?php else : ?>
+                            <form action="<?php t(MAIN_FILE) ?>/admin/media_delete<?php t(empty($_REQUEST['_type']) ? '' : '?_type=' . $_REQUEST['_type']) ?>" method="post" class="delete">
+                                <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
+                                <input type="hidden" name="directory" value="<?php t($_GET['directory']) ?>">
+                                <input type="hidden" name="name" value="<?php t($_GET['name']) ?><?php t($_GET['type'] === 'directory' ? '/' : '') ?>">
+                                <div class="card shadow-sm mb-3">
+                                    <div class="card-header">
+                                        削除
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-danger px-4">削除</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <?php endif ?>
                         </div>
                     </div>
                 </main>

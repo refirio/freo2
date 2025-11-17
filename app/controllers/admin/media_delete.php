@@ -16,10 +16,22 @@ if (empty($_SERVER['HTTP_REFERER']) || !preg_match('/^' . preg_quote($GLOBALS['c
 if (!isset($_GET['directory']) || !preg_match('/^[\w\-\/]+$/', $_GET['directory'])) {
     $_GET['directory'] = '';
 }
+if (!isset($_POST['directory']) || !preg_match('/^[\w\-\/]+$/', $_POST['directory'])) {
+    $_POST['directory'] = '';
+}
+if (!isset($_POST['name']) || !preg_match('/^[\w\-\/\.]+$/', $_POST['name'])) {
+    $_POST['name'] = '';
+}
 
 $directory = $_GET['directory'];
 
-if (empty($_POST['medias'])) {
+if (!empty($_POST['name'])) {
+    // メディアを削除
+    service_storage_remove($GLOBALS['config']['file_target']['media'] . $_POST['directory'] . '/' . $_POST['name']);
+
+    // リダイレクト
+    redirect('/admin/media?ok=delete' . ($_POST['directory'] === '' ? '' : '&directory=' . $_POST['directory']) . (empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']));
+} elseif (empty($_POST['medias'])) {
     // リダイレクト
     redirect('/admin/media?warning=delete' . ($directory === '' ? '' : '&directory=' . $directory) . (empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']));
 } elseif (empty($_POST['confirm'])) {

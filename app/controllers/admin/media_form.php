@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // 入力データを検証
-    if (isset($_POST['directory']) && (!preg_match('/^[\w\-\/]+$/', $_POST['directory']))) {
+    if (!empty($_POST['directory']) && (!preg_match('/^[\w\-\/]+$/', $_POST['directory']))) {
         error('ディレクトリの指定が不正です。');
     }
 
@@ -31,4 +31,8 @@ if (!isset($_GET['directory'])) {
 }
 
 // タイトル
-$_view['title'] = 'メディア登録';
+if (empty($_GET['type'])) {
+    $_view['title'] = 'メディア登録';
+} else {
+    $_view['title'] = 'メディア編集';
+}
