@@ -27,6 +27,13 @@
                                 <?php h($warning) ?>
                                 <?php endforeach ?>
                             </div>
+                            <?php elseif (isset($_GET['warning'])) : ?>
+                            <div class="alert alert-danger">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
+                                <?php if ($_GET['warning'] === 'post') : ?>
+                                メディアを登録できません。
+                                <?php endif ?>
+                            </div>
                             <?php endif ?>
 
                             <?php if (empty($_GET['type'])) : ?>
@@ -50,13 +57,14 @@
                                             <input type="text" name="directory" size="30" value="<?php t($_GET['directory']) ?>" class="form-control">
                                         </div>
                                         <div class="form-group mt-4">
+                                            <a href="<?php t(MAIN_FILE) ?>/admin/media?directory=<?php t($_GET['directory'] === '' ? '' : $_GET['directory']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-secondary px-4">戻る</a>
                                             <button type="submit" class="btn btn-primary px-4">登録</button>
                                         </div>
                                     </div>
                                 </div>
                             </form>
                             <?php else : ?>
-                            <form action="<?php t(MAIN_FILE) ?>/admin/media_form<?php t(empty($_REQUEST['_type']) ? '' : '?_type=' . $_REQUEST['_type']) ?>" method="post" class="register">
+                            <form action="<?php t(MAIN_FILE) ?>/admin/media_form<?php t(empty($_REQUEST['_type']) ? '' : '?_type=' . $_REQUEST['_type']) ?>" method="post" class="register validate">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <input type="hidden" name="directory" value="<?php t($_GET['directory']) ?>">
                                 <input type="hidden" name="name" value="<?php t($_GET['name']) ?>">
@@ -70,6 +78,7 @@
                                             <input type="text" name="rename" size="30" value="<?php t($_GET['name']) ?>" class="form-control">
                                         </div>
                                         <div class="form-group mt-4">
+                                            <a href="<?php t(MAIN_FILE) ?>/admin/media?directory=<?php t($_GET['directory'] === '' ? '' : $_GET['directory']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-secondary px-4">戻る</a>
                                             <button type="submit" class="btn btn-primary px-4">登録</button>
                                         </div>
                                     </div>

@@ -26,8 +26,18 @@ if (isset($_SESSION['post']['media']['name']) && isset($_SESSION['post']['media'
     foreach ($_SESSION['media'] as $media) {
         service_storage_rename($GLOBALS['config']['file_target']['temp'] . session_id() . '_' . $media, $GLOBALS['config']['file_target']['media'] . $directory . '/' . $media);
     }
+
+    // 古いファイルを削除
+    $files = service_storage_list($GLOBALS['config']['file_target']['temp']);
+
+    foreach ($files as $file) {
+        if (preg_match('/^' . preg_quote(session_id() . '_', '/') . '/', $file['name']) || ($file['name'] != '.gitkeep' && $file['modified'] < localdate() - 60 * 60)) {
+            service_storage_remove($GLOBALS['config']['file_target']['temp'] . $file['name']);
+        }
+    }
 } else {
-    error('不正なアクセスです。');
+    // リダイレクト
+    redirect('/admin/media_form?warning=post' . ($directory === '' ? '' : '&directory=' . $directory) . (empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']));
 }
 
 // 投稿セッションを初期化

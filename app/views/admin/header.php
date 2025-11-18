@@ -49,7 +49,7 @@
                         <h2 class="d-none">メニュー</h2>
                         <?php foreach ($GLOBALS['menu_group']['admin'] as $menu_key => $menu_value) : if ($menu_value['show']) : ?>
                         <?php if ($menu_key != 'home') : ?>
-                        <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3 mb-2">
+                        <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3">
                             <span><?php t($menu_value['name']) ?></span>
                         </h3>
                         <?php endif ?>

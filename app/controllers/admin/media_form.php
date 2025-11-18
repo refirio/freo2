@@ -12,13 +12,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // 入力データを検証
-    if (!empty($_POST['directory']) && (!preg_match('/^[\w\-\/]+$/', $_POST['directory']))) {
+    if (!empty($_POST['directory']) && (!preg_match('/^[\w\-\.\/]+$/', $_POST['directory']) || preg_match('/\.\./', $_POST['directory']) || preg_match('/\/\//', $_POST['directory']))) {
         error('ディレクトリの指定が不正です。');
     }
 
     if (isset($_POST['name']) && isset($_POST['rename'])) {
         if (!preg_match('/^[\w\-\.]+$/', $_POST['name']) || !preg_match('/^[\w\-\.]+$/', $_POST['rename'])) {
-            error('ファイル名の指定が不正です。');
+            error('名前の指定が不正です。');
         }
 
         // 登録データ
@@ -36,8 +36,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error('不正なアクセスです。');
     }
 
-    // フォワード
-    forward('/admin/media_post');
+    if (isset($_POST['_type']) && $_POST['_type'] === 'json') {
+        ok();
+    } else {
+        // フォワード
+        forward('/admin/media_post');
+    }
 }
 
 // ディレクトリを取得

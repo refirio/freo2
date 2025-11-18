@@ -8,7 +8,7 @@ if (!isset($_GET['directory'])) {
 }
 
 // 入力データを検証
-if (!preg_match('/^[\w\-\/]+$/', $_GET['directory']) || preg_match('/\/\//', $_GET['directory']) || preg_match('/\/$/', $_GET['directory'])) {
+if (!preg_match('/^[\w\-\.\/]+$/', $_GET['directory']) || preg_match('/\.\./', $_GET['directory']) || preg_match('/\/\//', $_GET['directory']) || preg_match('/\/$/', $_GET['directory'])) {
     $_GET['directory'] = '';
 }
 if ($_GET['directory'] === '') {

@@ -1,7 +1,7 @@
-let text = null;
+var text = null;
 
 /*
- * メディアをエディタに挿入
+ * メディアを本文に挿入
  */
 function insertMedia(tag) {
     if (text == null) {
@@ -11,20 +11,20 @@ function insertMedia(tag) {
     if (text && text.model) {
         // CKEditor
         text.model.change(writer => {
-            const viewFragment = text.data.processor.toView(tag);
-            const modelFragment = text.data.toModel(viewFragment);
+            var viewFragment = text.data.processor.toView(tag);
+            var modelFragment = text.data.toModel(viewFragment);
 
             text.model.insertContent(modelFragment, text.model.document.selection);
         });
     } else {
         // テキストエリア
-        const textarea = text.get(0);
+        var textarea = text.get(0);
 
-        const start = textarea.selectionStart;
-        const end   = textarea.selectionEnd;
+        var start = textarea.selectionStart;
+        var end   = textarea.selectionEnd;
 
-        const before = textarea.value.substring(0, start);
-        const after  = textarea.value.substring(end);
+        var before = textarea.value.substring(0, start);
+        var after  = textarea.value.substring(end);
 
         textarea.value = before + tag + after;
 
@@ -320,7 +320,7 @@ $(document).ready(function() {
     }
 
     /*
-     * エディタ
+     * 本文
      */
     if ($('.editor').length > 0) {
         // CKEditor
@@ -351,13 +351,20 @@ $(document).ready(function() {
     }
 
     /*
-     * メディアをエディタに挿入
+     * メディアを本文に挿入
      */
     $('.insert-media').on('click', function () {
-        const mediaUrl  = $(this).data('url');
-        const mediaName = $(this).data('name');
+        var mediaUrl  = $(this).data('url');
+        var mediaName = $(this).data('name');
 
-        const mediaTag = '<img src="' + mediaUrl + '" alt="' + mediaName + '">';
+        var extension = mediaName.split('.').pop().toLowerCase();
+
+        var mediaTag;
+        if (['png', 'jpeg', 'jpg', 'jpe', 'gif'].includes(extension)) {
+            mediaTag = '<img src="' + mediaUrl + '" alt="' + mediaName + '">';
+        } else {
+            mediaTag = '<a href="' + mediaUrl + '" target="_blank">' + mediaName + '</a>';
+        }
 
         window.parent.insertMedia(mediaTag);
     });

@@ -35,7 +35,7 @@
                                 <input type="hidden" name="medias[]" value="<?php t($media) ?>">
                                 <?php endforeach ?>
                                 <div class="form-group my-4">
-                                    <a href="<?php t(MAIN_FILE) ?>/admin/media" class="btn btn-secondary px-4">戻る</a>
+                                    <a href="<?php t(MAIN_FILE) ?>/admin/media?directory=<?php t($_GET['directory'] === '' ? '' : $_GET['directory']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-secondary px-4">戻る</a>
                                     <button type="submit" class="btn btn-danger px-4">削除</button>
                                 </div>
                             </form>

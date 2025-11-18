@@ -2,6 +2,7 @@
             </div>
         </div>
 
+        <?php if ($GLOBALS['authority']['power'] >= 3 && preg_match('/^(entry_form|page_form)$/', $_REQUEST['_work'])) : ?>
         <div class="modal fade" id="mediaModal" tabindex="-1" aria-labelledby="mediaModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -20,6 +21,7 @@
                 </div>
             </div>
         </div>
+        <?php endif ?>
         <?php endif ?>
 
         <svg xmlns="http://www.w3.org/2000/svg" class="d-none">

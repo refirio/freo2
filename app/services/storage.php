@@ -156,7 +156,7 @@ function service_storage_remove($key)
  *
  * @param string $key
  *
- * @return bool
+ * @return array
  */
 function service_storage_list($key)
 {
