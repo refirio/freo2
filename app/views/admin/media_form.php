@@ -56,6 +56,26 @@
                                 </div>
                             </form>
                             <?php else : ?>
+                            <form action="<?php t(MAIN_FILE) ?>/admin/media_form<?php t(empty($_REQUEST['_type']) ? '' : '?_type=' . $_REQUEST['_type']) ?>" method="post" class="register">
+                                <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
+                                <input type="hidden" name="directory" value="<?php t($_GET['directory']) ?>">
+                                <input type="hidden" name="name" value="<?php t($_GET['name']) ?>">
+                                <div class="card shadow-sm mb-3">
+                                    <div class="card-header">
+                                        登録
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">名前</label>
+                                            <input type="text" name="rename" size="30" value="<?php t($_GET['name']) ?>" class="form-control">
+                                        </div>
+                                        <div class="form-group mt-4">
+                                            <button type="submit" class="btn btn-primary px-4">登録</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
                             <form action="<?php t(MAIN_FILE) ?>/admin/media_delete<?php t(empty($_REQUEST['_type']) ? '' : '?_type=' . $_REQUEST['_type']) ?>" method="post" class="delete">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <input type="hidden" name="directory" value="<?php t($_GET['directory']) ?>">

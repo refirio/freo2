@@ -111,7 +111,7 @@ function service_storage_copy($key, $source)
  *
  * @return bool
  */
-function service_storage_move($key, $source)
+function service_storage_rename($key, $source)
 {
     $result = false;
     if ($GLOBALS['config']['storage_type'] === 's3') {

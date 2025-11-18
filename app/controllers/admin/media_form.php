@@ -16,10 +16,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error('ディレクトリの指定が不正です。');
     }
 
-    // 登録データ
-    $_SESSION['post']['media'] = [
-        'directory' => rtrim($_POST['directory'], '/'),
-    ];
+    if (isset($_POST['name']) && isset($_POST['rename'])) {
+        if (!preg_match('/^[\w\-\.]+$/', $_POST['name']) || !preg_match('/^[\w\-\.]+$/', $_POST['rename'])) {
+            error('ファイル名の指定が不正です。');
+        }
+
+        // 登録データ
+        $_SESSION['post']['media'] = [
+            'directory' => rtrim($_POST['directory'], '/'),
+            'name'      => $_POST['name'],
+            'rename'    => $_POST['rename'],
+        ];
+    } elseif (isset($_POST['directory'])) {
+        // 登録データ
+        $_SESSION['post']['media'] = [
+            'directory' => rtrim($_POST['directory'], '/'),
+        ];
+    } else {
+        error('不正なアクセスです。');
+    }
 
     // フォワード
     forward('/admin/media_post');
