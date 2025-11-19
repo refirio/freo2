@@ -111,7 +111,7 @@ $GLOBALS['menu_contents'] = [
                 'link'   => '/admin/media',
                 'active' => '/^media(_|$)/',
                 'icon'   => '#symbol-list-ul',
-                'show'   => isset($GLOBALS['authority']) && $GLOBALS['authority']['power'] >= 3,
+                'show'   => true,
             ],
         ],
         'communication' => [

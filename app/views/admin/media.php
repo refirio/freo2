@@ -19,6 +19,9 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
                         <div class="card-body">
+                            <?php if ($_GET['directory'] !== '' && $_GET['directory'] !== '.') : ?>
+                            <p>作業ディレクトリは <code><?php h($_GET['directory']) ?></code> です。</p>
+                            <?php endif ?>
                             <p><a href="<?php t(MAIN_FILE) ?>/admin/media_form?directory=<?php t($_GET['directory'] === '' ? '' : $_GET['directory']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-primary">メディア登録</a></p>
                             <?php if (isset($_GET['ok'])) : ?>
                             <div class="alert alert-success">
@@ -65,7 +68,7 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <?php if ($_GET['directory'] !== '') : ?>
+                                        <?php if ($_GET['directory'] !== '' && $_GET['directory'] !== '.' && $_GET['directory'] !== $GLOBALS['config']['media_author_dir'] && $_view['media_author_dir'] === false) : ?>
                                         <tr>
                                             <td></td>
                                             <td><svg class="bi flex-shrink-0 me-1" width="16" height="16"><use xlink:href="#symbol-folder-fill"/></svg> <a href="<?php t(MAIN_FILE) ?>/admin/media?directory=<?php t($_GET['directory'] === '' ? '' : dirname($_GET['directory'])) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="text-decoration-none"><code class="text-dark">..</code></a></td>

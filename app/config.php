@@ -150,6 +150,12 @@ $GLOBALS['config']['resize_height'] = app_config('APP_RESIZE_HEIGHT', 80);
 /* 画像リサイズ時のJpeg画質 */
 $GLOBALS['config']['resize_quality'] = app_config('APP_RESIZE_QUALITY', 85);
 
+/* 投稿者がアップロードできるメディア領域 */
+$GLOBALS['config']['media_author_dir'] = app_config('APP_MEDIA_AUTHOR_DIR', 'images');
+
+/* 投稿者がアップロードできるメディア拡張子 */
+$GLOBALS['config']['media_author_ext'] = app_config('APP_MEDIA_AUTHOR_EXT', ['png', 'jpeg', 'jpg', 'jpe', 'gif']);
+
 /* ログインの有効期限 */
 $GLOBALS['config']['login_expire'] = app_config('APP_LOGIN_EXPIRE', 60 * 60);
 

@@ -15,6 +15,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $files = [];
     for ($i = 0; $i < $file_count; $i++) {
         if (is_uploaded_file($_FILES['media']['tmp_name'][$i])) {
+            if ($GLOBALS['authority']['power'] < 3) {
+                if (!preg_match('/\.(' . implode('|', $GLOBALS['config']['media_author_ext']) . ')$/i', $_FILES['media']['name'][$i])) {
+                    error('指定された拡張子は使用できません。', ['token' => token('create')]);
+                }
+            }
             if (service_storage_put($GLOBALS['config']['file_target']['temp'] . session_id() . '_' . $_FILES['media']['name'][$i], file_get_contents($_FILES['media']['tmp_name'][$i])) === false) {
                 error('ファイルを保存できません。', ['token' => token('create')]);
             }

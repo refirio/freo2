@@ -20,6 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!preg_match('/^[\w\-\.]+$/', $_POST['name']) || !preg_match('/^[\w\-\.]+$/', $_POST['rename'])) {
             error('名前の指定が不正です。');
         }
+        if ($GLOBALS['authority']['power'] < 3) {
+            if (!preg_match('/\.(' . implode('|', $GLOBALS['config']['media_author_ext']) . ')$/i', $_POST['name'])) {
+                error('指定された拡張子のファイルは扱えません。');
+            }
+            if (!preg_match('/\.(' . implode('|', $GLOBALS['config']['media_author_ext']) . ')$/i', $_POST['rename'])) {
+                error('指定された拡張子は使用できません。');
+            }
+        }
 
         // 登録データ
         $_SESSION['post']['media'] = [
