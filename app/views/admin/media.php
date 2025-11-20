@@ -19,10 +19,10 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
                         <div class="card-body">
-                            <?php if ($_GET['directory'] !== '' && $_GET['directory'] !== '.') : ?>
-                            <p>作業ディレクトリは <code><?php h($_GET['directory']) ?></code> です。</p>
+                            <?php if ($_view['current_dir']) : ?>
+                            <p>作業ディレクトリは <code><?php h($_view['current_dir']) ?></code> です。</p>
                             <?php endif ?>
-                            <p><a href="<?php t(MAIN_FILE) ?>/admin/media_form?directory=<?php t($_GET['directory'] === '' ? '' : $_GET['directory']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-primary">メディア登録</a></p>
+                            <p><a href="<?php t(MAIN_FILE) ?>/admin/media_form?directory=<?php t($_view['current_dir']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-primary">メディア登録</a></p>
                             <?php if (isset($_GET['ok'])) : ?>
                             <div class="alert alert-success">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
@@ -41,7 +41,7 @@
                             </div>
                             <?php endif ?>
 
-                            <form action="<?php t(MAIN_FILE) ?>/admin/media_delete?directory=<?php t($_GET['directory'] === '' ? '' : $_GET['directory']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" method="post">
+                            <form action="<?php t(MAIN_FILE) ?>/admin/media_delete?directory=<?php t($_view['current_dir']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" method="post">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <input type="hidden" name="confirm" value=1">
                                 <table class="table table-bordered">
@@ -68,10 +68,10 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-                                        <?php if ($_GET['directory'] !== '' && $_GET['directory'] !== '.' && $_GET['directory'] !== $GLOBALS['config']['media_author_dir'] && $_view['media_author_dir'] === false) : ?>
+                                        <?php if ($_view['parent_dir']) : ?>
                                         <tr>
                                             <td></td>
-                                            <td><svg class="bi flex-shrink-0 me-1" width="16" height="16"><use xlink:href="#symbol-folder-fill"/></svg> <a href="<?php t(MAIN_FILE) ?>/admin/media?directory=<?php t($_GET['directory'] === '' ? '' : dirname($_GET['directory'])) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="text-decoration-none"><code class="text-dark">..</code></a></td>
+                                            <td><svg class="bi flex-shrink-0 me-1" width="16" height="16"><use xlink:href="#symbol-folder-fill"/></svg> <a href="<?php t(MAIN_FILE) ?>/admin/media?directory=<?php t($_view['parent_dir']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="text-decoration-none"><code class="text-dark">..</code></a></td>
                                             <?php if ($_REQUEST['_type'] !== 'iframe') : ?>
                                             <td class="d-none d-md-table-cell"></td>
                                             <td class="d-none d-md-table-cell"></td>
@@ -83,18 +83,12 @@
                                         <?php if ($media['type'] === 'directory') : ?>
                                         <tr>
                                             <td></td>
-                                            <td><svg class="bi flex-shrink-0 me-1" width="16" height="16"><use xlink:href="#symbol-folder-fill"/></svg> <a href="<?php t(MAIN_FILE) ?>/admin/media?directory=<?php t($_GET['directory'] === '' ? '' : $_GET['directory'] . '/') ?><?php t($media['name']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="text-decoration-none"><code class="text-dark"><?php h($media['name']) ?></code></a></td>
+                                            <td><svg class="bi flex-shrink-0 me-1" width="16" height="16"><use xlink:href="#symbol-folder-fill"/></svg> <a href="<?php t(MAIN_FILE) ?>/admin/media?directory=<?php t($_view['current_dir'] ? $_view['current_dir'] . '/' : '') ?><?php t($media['name']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="text-decoration-none"><code class="text-dark"><?php h($media['name']) ?></code></a></td>
                                             <?php if ($_REQUEST['_type'] !== 'iframe') : ?>
                                             <td class="d-none d-md-table-cell"></td>
                                             <td class="d-none d-md-table-cell"></td>
                                             <?php endif ?>
-                                            <td>
-                                                <?php if ($_REQUEST['_type'] === 'iframe') : ?>
-                                                <a href="<?php t(MAIN_FILE) ?>/admin/media_form?type=directory&amp;directory=<?php t($_GET['directory'] === '' ? '' : $_GET['directory']) ?>&amp;name=<?php t($media['name']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a>
-                                                <?php else : ?>
-                                                <a href="<?php t(MAIN_FILE) ?>/admin/media_form?type=directory&amp;directory=<?php t($_GET['directory'] === '' ? '' : $_GET['directory']) ?>&amp;name=<?php t($media['name']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-primary text-nowrap">編集</a>
-                                                <?php endif ?>
-                                            </td>
+                                            <td><a href="<?php t(MAIN_FILE) ?>/admin/media_form?type=directory&amp;directory=<?php t($_view['current_dir']) ?>&amp;name=<?php t($media['name']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-primary<?php t($_REQUEST['_type'] === 'iframe' ? ' btn-sm' : '') ?> text-nowrap">編集</a></td>
                                         </tr>
                                         <?php else : ?>
                                         <tr>
@@ -107,10 +101,8 @@
                                             <td>
                                                 <?php if ($_REQUEST['_type'] === 'iframe') : ?>
                                                 <button type="button" class="btn btn-primary btn-sm text-nowrap insert-media" data-url="<?php t(APP_STORAGE_URL . $GLOBALS['config']['file_target']['media'] . $_GET['directory'] . '/' . $media['name']) ?>" data-name="<?php t($media['name']) ?>">挿入</button>
-                                                <a href="<?php t(MAIN_FILE) ?>/admin/media_form?type=file&amp;directory=<?php t($_GET['directory'] === '' ? '' : $_GET['directory']) ?>&amp;name=<?php t($media['name']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a>
-                                                <?php else : ?>
-                                                <a href="<?php t(MAIN_FILE) ?>/admin/media_form?type=file&amp;directory=<?php t($_GET['directory'] === '' ? '' : $_GET['directory']) ?>&amp;name=<?php t($media['name']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-primary text-nowrap">編集</a>
                                                 <?php endif ?>
+                                                <a href="<?php t(MAIN_FILE) ?>/admin/media_form?type=file&amp;directory=<?php t($_view['current_dir']) ?>&amp;name=<?php t($media['name']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-primary<?php t($_REQUEST['_type'] === 'iframe' ? ' btn-sm' : '') ?> text-nowrap">編集</a>
                                             </td>
                                         </tr>
                                         <?php endif ?>
