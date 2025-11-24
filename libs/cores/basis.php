@@ -614,6 +614,10 @@ function alt($data, $alternative, $pattern = null)
  */
 function truncate($data, $width = 0, $trimmarker = '...', $encoding = 'UTF-8')
 {
+    if (is_null($data)) {
+        $data = '';
+    }
+
     if (mb_strlen($data, $encoding) > $width) {
         $data = mb_substr($data, 0, $width, $encoding) . $trimmarker;
     }
