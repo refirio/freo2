@@ -22,22 +22,20 @@
                     <form action="<?php t(MAIN_FILE) ?>/auth/password_form" method="post" class="register validate">
                         <input type="hidden" name="key" value="<?php t($_view['key']) ?>">
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
-                        <div class="card-body">
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">暗証コード</label>
-                                <input type="text" name="token_code" size="30" value="<?php t($_view['user']['token_code']) ?>" class="form-control">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">パスワード</label>
-                                <input type="password" name="password" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">パスワード確認（同じものをもう一度入力）</label>
-                                <input type="password" name="password_confirm" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
-                            </div>
-                            <div class="form-group mt-4">
-                                <button type="submit" class="btn btn-primary px-4">登録</button>
-                            </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">暗証コード</label>
+                            <input type="text" name="token_code" size="30" value="<?php t($_view['user']['token_code']) ?>" class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">パスワード</label>
+                            <input type="password" name="password" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">パスワード確認（同じものをもう一度入力）</label>
+                            <input type="password" name="password_confirm" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
+                        </div>
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary px-4">登録</button>
                         </div>
                     </form>
                 </div>

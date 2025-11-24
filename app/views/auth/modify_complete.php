@@ -10,17 +10,15 @@
             <div class="card shadow-sm mb-3">
                 <div class="card-header heading"><?php h($_view['title']) ?></div>
                 <div class="card-body">
-                    <div class="card-body">
-                        <div class="alert alert-success">
-                            <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
-                            ユーザー情報を編集しました。
-                        </div>
-                        <?php if ($GLOBALS['authority']['power'] >= 1) : ?>
-                        <p><a href="<?php t(MAIN_FILE) ?>/admin/home" class="btn btn-secondary">戻る</a><p>
-                        <?php else : ?>
-                        <p><a href="<?php t(MAIN_FILE) ?>/auth/home" class="btn btn-secondary">戻る</a><p>
-                        <?php endif ?>
+                    <div class="alert alert-success">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
+                        ユーザー情報を編集しました。
                     </div>
+                    <?php if ($GLOBALS['authority']['power'] >= 1) : ?>
+                    <p><a href="<?php t(MAIN_FILE) ?>/admin/home" class="btn btn-secondary">戻る</a><p>
+                    <?php else : ?>
+                    <p><a href="<?php t(MAIN_FILE) ?>/auth/home" class="btn btn-secondary">戻る</a><p>
+                    <?php endif ?>
                 </div>
             </div>
         </main>

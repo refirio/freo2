@@ -23,29 +23,26 @@
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <input type="hidden" name="id" value="<?php t($_view['comment']['id']) ?>">
                         <input type="hidden" name="contact_id" value="<?php t($_view['comment']['contact_id']) ?>">
-
-                        <div class="card-body">
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">日時</label>
-                                <input type="text" size="30" value="<?php t($_view['comment']['created']) ?>" readonly class="form-control">
-                            </div>
-                            <input type="hidden" name="name" value="<?php t($_view['comment']['name']) ?>">
-                            <input type="hidden" name="url" value="<?php t($_view['comment']['url']) ?>">
-                            <div class="form-group mb-2">
-                                <label>お名前</label>
-                                <input type="text" value="<?php t($_view['comment']['name']) ?>" readonly class="form-control">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label>URL</label>
-                                <input type="url" value="<?php t($_view['comment']['url']) ?>" readonly class="form-control">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">お問い合わせ内容</label>
-                                <textarea name="message" rows="10" cols="50" class="form-control"><?php t($_view['comment']['message']) ?></textarea>
-                            </div>
-                            <div class="form-group mt-4">
-                                <button type="submit" class="btn btn-primary px-4">登録</button>
-                            </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">日時</label>
+                            <input type="text" size="30" value="<?php t($_view['comment']['created']) ?>" readonly class="form-control">
+                        </div>
+                        <input type="hidden" name="name" value="<?php t($_view['comment']['name']) ?>">
+                        <input type="hidden" name="url" value="<?php t($_view['comment']['url']) ?>">
+                        <div class="form-group mb-2">
+                            <label>お名前</label>
+                            <input type="text" value="<?php t($_view['comment']['name']) ?>" readonly class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label>URL</label>
+                            <input type="url" value="<?php t($_view['comment']['url']) ?>" readonly class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">お問い合わせ内容</label>
+                            <textarea name="message" rows="10" cols="50" class="form-control"><?php t($_view['comment']['message']) ?></textarea>
+                        </div>
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary px-4">登録</button>
                         </div>
                     </form>
                 </div>
@@ -60,10 +57,8 @@
                     <form action="<?php t(MAIN_FILE) ?>/auth/comment_delete" method="post" class="delete">
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <input type="hidden" name="id" value="<?php t($_view['comment']['id']) ?>">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-danger px-4">削除</button>
-                            </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-danger px-4">削除</button>
                         </div>
                     </form>
                 </div>

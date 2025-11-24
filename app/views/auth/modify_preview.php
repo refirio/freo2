@@ -18,29 +18,27 @@
                     </ul>
                     <?php endif ?>
 
-                    <div class="card-body">
-                        <dl class="row">
-                            <dt class="col-sm-3">ユーザー名</dt>
-                            <dd class="col-sm-9"><?php h($_view['user']['username']) ?></dd>
-                            <dt class="col-sm-3">パスワード</dt>
-                            <dd class="col-sm-9"><?php h(alt(str_repeat('*', strlen($_view['user']['password'])), '-')) ?></dd>
-                            <dt class="col-sm-3">名前</dt>
-                            <dd class="col-sm-9"><?php h(alt($_view['user']['name'], '-')) ?></dd>
-                            <dt class="col-sm-3">メールアドレス</dt>
-                            <dd class="col-sm-9"><?php h(alt($_view['user']['email'], '-')) ?></dd>
-                            <dt class="col-sm-3">URL</dt>
-                            <dd class="col-sm-9"><?php h(alt($_view['user']['url'], '-')) ?></dd>
-                            <dt class="col-sm-3">自己紹介</dt>
-                            <dd class="col-sm-9"><?php h(alt($_view['user']['text'], '-')) ?></dd>
-                        </dl>
-                        <form action="<?php t(MAIN_FILE) ?>/auth/modify_preview" method="post">
-                            <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
-                            <div class="form-group mt-4">
-                                <a href="<?php t(MAIN_FILE) ?>/auth/modify?referer=preview" class="btn btn-secondary px-4">修正</a>
-                                <button type="submit" class="btn btn-primary px-4">登録</button>
-                            </div>
-                        </form>
-                    </div>
+                    <dl class="row">
+                        <dt class="col-sm-3">ユーザー名</dt>
+                        <dd class="col-sm-9"><?php h($_view['user']['username']) ?></dd>
+                        <dt class="col-sm-3">パスワード</dt>
+                        <dd class="col-sm-9"><?php h(alt(str_repeat('*', strlen($_view['user']['password'])), '-')) ?></dd>
+                        <dt class="col-sm-3">名前</dt>
+                        <dd class="col-sm-9"><?php h(alt($_view['user']['name'], '-')) ?></dd>
+                        <dt class="col-sm-3">メールアドレス</dt>
+                        <dd class="col-sm-9"><?php h(alt($_view['user']['email'], '-')) ?></dd>
+                        <dt class="col-sm-3">URL</dt>
+                        <dd class="col-sm-9"><?php h(alt($_view['user']['url'], '-')) ?></dd>
+                        <dt class="col-sm-3">自己紹介</dt>
+                        <dd class="col-sm-9"><?php h(alt($_view['user']['text'], '-')) ?></dd>
+                    </dl>
+                    <form action="<?php t(MAIN_FILE) ?>/auth/modify_preview" method="post">
+                        <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
+                        <div class="form-group mt-4">
+                            <a href="<?php t(MAIN_FILE) ?>/auth/modify?referer=preview" class="btn btn-secondary px-4">修正</a>
+                            <button type="submit" class="btn btn-primary px-4">登録</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </main>

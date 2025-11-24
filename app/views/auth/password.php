@@ -21,14 +21,12 @@
 
                     <form action="<?php t(MAIN_FILE) ?>/auth/password" method="post" class="register validate">
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
-                        <div class="card-body">
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">メールアドレス</label>
-                                <input type="text" name="email" size="30" value="<?php t($_view['user']['email']) ?>" class="form-control">
-                            </div>
-                            <div class="form-group mt-4">
-                                <button type="submit" class="btn btn-primary px-4">再発行</button>
-                            </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">メールアドレス</label>
+                            <input type="text" name="email" size="30" value="<?php t($_view['user']['email']) ?>" class="form-control">
+                        </div>
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary px-4">再発行</button>
                         </div>
                     </form>
                 </div>

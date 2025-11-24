@@ -21,38 +21,36 @@
 
                     <form action="<?php t(MAIN_FILE) ?>/auth/register" method="post" class="register validate">
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
-                        <div class="card-body">
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">ユーザー名 <span class="badge bg-danger">必須</span></label>
-                                <input type="text" name="username" size="30" value="<?php t($_view['user']['username']) ?>" class="form-control">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">パスワード <span class="badge bg-danger">必須</span></label>
-                                <input type="password" name="password" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">パスワード確認（同じものをもう一度入力） <span class="badge bg-danger">必須</span></label>
-                                <input type="password" name="password_confirm" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">名前</label>
-                                <input type="text" name="name" size="30" value="<?php t($_view['user']['name']) ?>" class="form-control">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">メールアドレス <span class="badge bg-danger">必須</span></label>
-                                <input type="text" name="email" size="30" value="<?php t($_view['user']['email']) ?>" class="form-control">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">URL</label>
-                                <input type="text" name="url" size="30" value="<?php t($_view['user']['url']) ?>" class="form-control">
-                            </div>
-                            <div class="form-group mb-2">
-                                <label class="fw-bold">自己紹介</label>
-                                <textarea name="text" rows="10" cols="20" class="form-control"><?php t($_view['user']['text']) ?></textarea>
-                            </div>
-                            <div class="form-group mt-4">
-                                <button type="submit" class="btn btn-primary px-4">確認</button>
-                            </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">ユーザー名 <span class="badge bg-danger">必須</span></label>
+                            <input type="text" name="username" size="30" value="<?php t($_view['user']['username']) ?>" class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">パスワード <span class="badge bg-danger">必須</span></label>
+                            <input type="password" name="password" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">パスワード確認（同じものをもう一度入力） <span class="badge bg-danger">必須</span></label>
+                            <input type="password" name="password_confirm" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">名前</label>
+                            <input type="text" name="name" size="30" value="<?php t($_view['user']['name']) ?>" class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">メールアドレス <span class="badge bg-danger">必須</span></label>
+                            <input type="text" name="email" size="30" value="<?php t($_view['user']['email']) ?>" class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">URL</label>
+                            <input type="text" name="url" size="30" value="<?php t($_view['user']['url']) ?>" class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
+                            <label class="fw-bold">自己紹介</label>
+                            <textarea name="text" rows="10" cols="20" class="form-control"><?php t($_view['user']['text']) ?></textarea>
+                        </div>
+                        <div class="form-group mt-4">
+                            <button type="submit" class="btn btn-primary px-4">確認</button>
                         </div>
                     </form>
                 </div>
