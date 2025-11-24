@@ -99,6 +99,13 @@ $GLOBALS['config']['option'] = app_config('APP_OPTION', [
             'closed'     => '完了',
         ],
     ],
+    'comment' => [
+        // 承認
+        'approved' => [
+            1 => '承認済',
+            0 => '未承認',
+        ],
+    ],
 ]);
 
 /* ストレージ */

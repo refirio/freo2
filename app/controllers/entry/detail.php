@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // コメントを取得
 $_view['comments'] = model('select_comments', [
     'where' => [
-        'entries.code = :code',
+        'comments.approved = 1 AND entries.code = :code',
         [
             'code' => $_GET['code'],
         ],

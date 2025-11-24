@@ -25,11 +25,7 @@
             </div>
         </main>
         <div class="my-4 text-center">
-            <?php if ($GLOBALS['authority']['power'] >= 1) : ?>
-            <a href="<?php t(MAIN_FILE) ?>/admin/">管理ページへ戻る</a>
-            <?php else : ?>
-            <a href="<?php t(MAIN_FILE) ?>/">トップページへ戻る</a>
-            <?php endif ?>
+            <a href="<?php t(MAIN_FILE) ?>/auth/home">ホームに戻る</a>
         </div>
 
 <?php import('app/views/auth/footer.php') ?>

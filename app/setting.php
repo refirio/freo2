@@ -5,6 +5,7 @@ $GLOBALS['setting_title'] = [
     'basis'      => '基本設定',
     'entry'      => 'エントリー設定',
     'page'       => 'ページ設定',
+    'comment'    => 'コメント設定',
     'user'       => 'ユーザー設定',
     'restricted' => '制限設定',
     'menu'       => 'メニュー設定',
@@ -95,6 +96,13 @@ $GLOBALS['setting_contents'] = [
         ],
         'page_url_omission' => [
             'name'     => 'ページURLの省略',
+            'type'     => 'boolean',
+            'required' => false,
+        ],
+    ],
+    'comment' => [
+        'comment_use_approve' => [
+            'name'     => 'コメントの承認',
             'type'     => 'boolean',
             'required' => false,
         ],

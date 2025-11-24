@@ -18,5 +18,18 @@ if (empty($contacts)) {
     $_view['contact'] = $contacts[0];
 }
 
+// コメントを取得
+$_view['comments'] = model('select_comments', [
+    'where' => [
+        'comments.contact_id = :id',
+        [
+            'id' => $_GET['id'],
+        ],
+    ],
+    'order_by' => 'comments.id',
+], [
+    'associate' => true,
+]);
+
 // タイトル
 $_view['title'] = 'お問い合わせ表示';

@@ -13,6 +13,9 @@ if (empty($_SESSION['post'])) {
     redirect('/');
 }
 
+// 承認
+$approve = $GLOBALS['setting']['comment_use_approve'] ? 0 : 1;
+
 // トランザクションを開始
 db_transaction();
 
@@ -20,6 +23,7 @@ db_transaction();
 $resource = service_comment_insert([
     'values' => [
         'entry_id' => $_SESSION['post']['comment']['entry_id'],
+        'approved' => $approve,
         'name'     => $_SESSION['post']['comment']['name'],
         'url'      => $_SESSION['post']['comment']['url'],
         'message'  => $_SESSION['post']['comment']['message'],

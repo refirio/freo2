@@ -38,6 +38,7 @@
                                     <?php elseif ($comment['contact_id']) : ?>
                                     <a href="<?php t(MAIN_FILE) ?>/auth/contact_view?id=<?php t($comment['contact_id']) ?>" class="btn btn-primary text-nowrap">表示</a>
                                     <?php endif ?>
+                                    <a href="<?php t(MAIN_FILE) ?>/auth/comment_form?id=<?php t($comment['id']) ?>" class="btn btn-primary text-nowrap">編集</a>
                                 </td>
                             </tr>
                             <?php endforeach ?>

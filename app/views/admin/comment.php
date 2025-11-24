@@ -22,6 +22,8 @@
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                                 <?php if ($_GET['ok'] === 'post') : ?>
                                 コメントを登録しました。
+                                <?php elseif ($_GET['ok'] === 'approve') : ?>
+                                コメントの承認を変更しました。
                                 <?php elseif ($_GET['ok'] === 'delete') : ?>
                                 コメントを削除しました。
                                 <?php endif ?>
