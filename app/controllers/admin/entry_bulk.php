@@ -34,4 +34,4 @@ if (isset($_POST['_type']) && $_POST['_type'] === 'json') {
 }
 
 // タイトル
-$_view['title'] = '一括処理';
+$_view['title'] = 'エントリー一括削除';

@@ -30,7 +30,6 @@
                             <form action="<?php t(MAIN_FILE) ?>/admin/user_form<?php $_view['user']['id'] ? t('?id=' . $_view['user']['id']) : '' ?>" method="post" class="register validate">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <input type="hidden" name="id" value="<?php t($_view['user']['id']) ?>">
-                                <input type="hidden" name="view" value="">
                                 <div class="card shadow-sm mb-3">
                                     <div class="card-header">
                                         登録

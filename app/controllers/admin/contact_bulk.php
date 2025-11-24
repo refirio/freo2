@@ -29,18 +29,7 @@ if (isset($_POST['_type']) && $_POST['_type'] === 'json') {
         'order_by' => 'id DESC',
     ]);
     $_view['contact_bulks'] = array_keys($_SESSION['bulk']['contact']);
-
-    // カテゴリーを取得
-    $categories = model('select_categories', [
-        'order_by' => 'sort, id',
-    ]);
-    $category_sets = [];
-    foreach ($categories as $category) {
-        $category_sets[$category['id']] = $category;
-    }
-    $_view['category_sets'] = $category_sets;
-    $_view['categories']    = $categories;
 }
 
 // タイトル
-$_view['title'] = '一括処理';
+$_view['title'] = 'お問い合わせ一括削除';

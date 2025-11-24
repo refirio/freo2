@@ -21,7 +21,6 @@
                     <?php if ($_view['entry']['public'] === 'password' && empty($_SESSION['entry_passwords'][$_view['entry']['id']])) : ?>
                     <form action="<?php t(MAIN_FILE) ?>/entry/detail/<?php t($_view['entry']['code']) ?>" method="post">
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
-                        <input type="hidden" name="view" value="">
                         <input type="hidden" name="exec" value="password">
                         <div class="form-group mb-2">
                             <label>パスワード</label>

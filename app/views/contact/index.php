@@ -1,7 +1,7 @@
 <?php import('app/views/header.php') ?>
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
-                    <h2 class="h4 mb-3">Contact</h2>
+                    <h2 class="h4 mb-3"><?php h($_view['title']) ?></h2>
                     <p>お問い合わせを承ります。</p>
 
                     <?php if (isset($_view['warnings'])) : ?>
@@ -15,7 +15,6 @@
 
                     <form action="<?php t(MAIN_FILE) ?>/contact/" method="post" class="register validate">
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
-                        <input type="hidden" name="view" value="">
                         <?php if (empty($_SESSION['auth']['user']['id'])) : ?>
                         <div class="form-group mb-2">
                             <label>お名前 <span class="badge bg-danger">必須</span></label>

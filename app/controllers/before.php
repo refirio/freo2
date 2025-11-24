@@ -120,9 +120,9 @@ if (!empty($_SESSION['auth']['user']['id'])) {
 if (!preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
     // ページURLの省略
     if ($GLOBALS['setting']['page_url_omission']) {
-        if ($_params[0] !== 'page') {
+        if (is_array($_params) && $_params[0] !== 'page') {
             $pages = service_entry_select_published('page', [
-                'select' => 'entries.id',
+                'select' => 'entries.id, entries.public',
                 'where'  => [
                     'entries.code = :code',
                     [

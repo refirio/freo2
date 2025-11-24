@@ -33,11 +33,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['exec']) && $_POST['exec'] === 'password') {
         // パスワード認証
-        if ($_POST['password'] === $entries[0]['password']) {
-            $_SESSION['entry_passwords'][$entries[0]['id']] = true;
+        if ($_POST['password'] === $pages[0]['password']) {
+            $_SESSION['entry_passwords'][$pages[0]['id']] = true;
 
             // リダイレクト
-            redirect('/page/' . $entries[0]['code']);
+            redirect('/page/' . $pages[0]['code']);
         } else {
             warning('パスワードが違います。');
         }
