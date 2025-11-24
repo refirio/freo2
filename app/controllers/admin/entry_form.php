@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'code'           => isset($_POST['code'])           ? $_POST['code']           : '',
             'title'          => isset($_POST['title'])          ? $_POST['title']          : '',
             'text'           => isset($_POST['text'])           ? $_POST['text']           : '',
+            'comment'        => isset($_POST['comment'])        ? $_POST['comment']        : '',
             'field_sets'     => isset($_POST['field_sets'])     ? $_POST['field_sets']     : [],
             'category_sets'  => isset($_POST['category_sets'])  ? $_POST['category_sets']  : [],
             'attribute_sets' => isset($_POST['attribute_sets']) ? $_POST['attribute_sets'] : [],

@@ -24,6 +24,8 @@
                     <?php endif ?>
                     <p>ようこそ、<?php h($_view['_user']['name'] ? $_view['_user']['name'] : $_view['_user']['username']) ?>さん</p>
                     <ul>
+                        <li><a href="<?php t(MAIN_FILE) ?>/auth/comment">コメント履歴</a></li>
+                        <li><a href="<?php t(MAIN_FILE) ?>/auth/contact">お問い合わせ履歴</a></li>
                         <li><a href="<?php t(MAIN_FILE) ?>/auth/modify">ユーザー情報編集</a></li>
                         <?php if ($GLOBALS['authority']['power'] == 0 && !empty($GLOBALS['setting']['user_use_register'])) : ?>
                         <li><a href="<?php t(MAIN_FILE) ?>/auth/leave">ユーザー情報削除</a></li>

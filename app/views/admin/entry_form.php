@@ -138,6 +138,14 @@
                                         </div>
                                         <?php endif ?>
                                         <?php import('app/views/admin/field_set.php') ?>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">コメントの受付 <span class="badge bg-danger">必須</span></label>
+                                            <select name="comment" class="form-select" style="width: 200px;">
+                                                <?php foreach ($GLOBALS['config']['option']['entry']['comment'] as $key => $value) : ?>
+                                                <option value="<?php t($key) ?>"<?php $key == $_view['entry']['comment'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                        </div>
                                         <div class="form-group mt-4">
                                             <button type="button" class="btn btn-primary px-4 preview">確認</button>
                                             <button type="submit" class="btn btn-primary px-4">登録</button>

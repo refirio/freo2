@@ -122,6 +122,13 @@ $GLOBALS['menu_contents'] = [
                 'icon'   => '#symbol-list-ul',
                 'show'   => true,
             ],
+            'comment' => [
+                'name'   => 'コメント管理',
+                'link'   => '/admin/comment',
+                'active' => '/^comment(_|$)/',
+                'icon'   => '#symbol-list-ul',
+                'show'   => true,
+            ],
         ],
         'system' => [
             'user' => [

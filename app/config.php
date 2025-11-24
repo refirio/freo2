@@ -19,6 +19,7 @@ $GLOBALS['config']['hash_salt'] = app_config('APP_HASH_SALT', 'RKH7X92N4P');
 $GLOBALS['config']['limit'] = app_config('APP_LIMIT', [
     'entry'   => 10,
     'contact' => 10,
+    'comment' => 10,
     'user'    => 10,
     'log'     => 20,
 ]);
@@ -27,6 +28,7 @@ $GLOBALS['config']['limit'] = app_config('APP_LIMIT', [
 $GLOBALS['config']['pager'] = app_config('APP_PAGER', [
     'entry'   => 5,
     'contact' => 5,
+    'comment' => 5,
     'user'    => 5,
     'log'     => 5,
 ]);
@@ -53,6 +55,12 @@ $GLOBALS['config']['option'] = app_config('APP_OPTION', [
             'attribute' => '指定の属性に公開',
             'password'  => 'パスワード認証で公開',
             'none'      => '非公開',
+        ],
+        // コメントの受付
+        'comment' => [
+            'opened' => '受け付ける',
+            'user'   => '登録ユーザーから受け付ける',
+            'closed' => '受け付けない',
         ],
     ],
     'field' => [

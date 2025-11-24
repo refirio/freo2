@@ -558,6 +558,13 @@ function validate_entries($queries, $options = [])
         }
     }
 
+    // コメントの受付
+    if (isset($queries['comment'])) {
+        if (!validator_list($queries['comment'], $GLOBALS['config']['option']['entry']['comment'])) {
+            $messages['comment'] = 'コメントの受付の値が不正です。';
+        }
+    }
+
     return $messages;
 }
 
@@ -1008,6 +1015,7 @@ function default_entries()
         'text'           => null,
         'picture'        => null,
         'thumbnail'      => null,
+        'comment'        => 'closed',
         'field_sets'     => [],
         'category_sets'  => [],
         'attribute_sets' => [],
