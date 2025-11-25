@@ -199,6 +199,15 @@ function validate_contacts($queries, $options = [])
         }
     }
 
+    // お問い合わせ件名
+    if (isset($queries['subject'])) {
+        if (!validator_required($queries['subject'])) {
+            $messages['subject'] = 'お問い合わせ件名が入力されていません。';
+        } elseif (!validator_max_length($queries['subject'], 100)) {
+            $messages['subject'] = 'お問い合わせ件名は100文字以内で入力してください。';
+        }
+    }
+
     // お問い合わせ内容
     if (isset($queries['message'])) {
         if (!validator_required($queries['message'])) {
@@ -253,6 +262,7 @@ function default_contacts()
         'user_id'  => null,
         'name'     => '',
         'email'    => '',
+        'subject'  => '',
         'message'  => '',
         'status'   => 'opened',
         'memo'     => null,

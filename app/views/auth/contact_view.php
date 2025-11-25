@@ -13,6 +13,8 @@
                     <dl class="row">
                         <dt class="col-sm-2">日時</dt>
                         <dd class="col-sm-10"><?php h(localdate('Y/m/d H:i:s', $_view['contact']['created'])) ?></dd>
+                        <dt class="col-sm-2">件名</dt>
+                        <dd class="col-sm-10"><?php h($_view['contact']['subject']) ?></dd>
                         <dt class="col-sm-2">内容</dt>
                         <dd class="col-sm-10"><?php h($_view['contact']['message']) ?></dd>
                     </dl>

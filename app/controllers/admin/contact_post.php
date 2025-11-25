@@ -21,6 +21,7 @@ $resource = service_contact_update([
     'set'  => [
         'name'    => $_SESSION['post']['contact']['name'],
         'email'   => $_SESSION['post']['contact']['email'],
+        'subject' => $_SESSION['post']['contact']['subject'],
         'message' => $_SESSION['post']['contact']['message'],
         'status'  => $_SESSION['post']['contact']['status'],
         'memo'    => $_SESSION['post']['contact']['memo'],

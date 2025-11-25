@@ -14,14 +14,14 @@
                         <thead>
                             <tr>
                                 <th class="text-nowrap d-none d-md-table-cell">日時</th>
-                                <th class="text-nowrap">内容</th>
+                                <th class="text-nowrap">件名</th>
                                 <th class="text-nowrap">作業</th>
                             </tr>
                         </thead>
                         <tfoot>
                             <tr>
                                 <th class="text-nowrap d-none d-md-table-cell">日時</th>
-                                <th class="text-nowrap">内容</th>
+                                <th class="text-nowrap">件名</th>
                                 <th class="text-nowrap">作業</th>
                             </tr>
                         </tfoot>
@@ -29,7 +29,7 @@
                             <?php foreach ($_view['contacts'] as $contact) : ?>
                             <tr>
                                 <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $contact['created']) == localdate('Ymd') ? localdate('H:i:s', $contact['created']) : localdate('Y/m/d', $contact['created'])) ?></td>
-                                <td><?php t(truncate($contact['message'], 100)) ?></td>
+                                <td><?php t(truncate($contact['subject'], 100)) ?></td>
                                 <td><a href="<?php t(MAIN_FILE) ?>/auth/contact_view?id=<?php t($contact['id']) ?>" class="btn btn-primary text-nowrap">表示</a></td>
                             </tr>
                             <?php endforeach ?>

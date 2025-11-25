@@ -33,6 +33,10 @@
                         </div>
                         <?php endif ?>
                         <div class="form-group mb-2">
+                            <label>お問い合わせ件名 <span class="badge bg-danger">必須</span></label>
+                            <input type="text" name="subject" value="<?php t($_view['contact']['subject']) ?>" class="form-control">
+                        </div>
+                        <div class="form-group mb-2">
                             <label>お問い合わせ内容 <span class="badge bg-danger">必須</span></label>
                             <textarea name="message" rows="10" cols="50" class="form-control"><?php t($_view['contact']['message']) ?></textarea>
                         </div>

@@ -14,6 +14,8 @@
                             <dt class="col-sm-2">お名前</dt>
                             <dd class="col-sm-10"><?php h($_view['_user']['name']) ?></dd>
                             <?php endif ?>
+                            <dt class="col-sm-2">お問い合わせ件名</dt>
+                            <dd class="col-sm-10"><?php h($_view['contact']['subject']) ?></dd>
                             <dt class="col-sm-2">お問い合わせ内容</dt>
                             <dd class="col-sm-10"><?php h($_view['contact']['message']) ?></dd>
                         </dl>

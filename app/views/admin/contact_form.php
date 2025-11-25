@@ -49,7 +49,11 @@
                                             <input type="text" name="email" size="30" value="<?php t($_view['contact']['email']) ?>" class="form-control">
                                         </div>
                                         <div class="form-group mb-2">
-                                            <label class="fw-bold">お問い合わせ内容</label>
+                                            <label class="fw-bold">お問い合わせ件名 <span class="badge bg-danger">必須</span></label>
+                                            <input type="text" name="subject" size="30" value="<?php t($_view['contact']['subject']) ?>" class="form-control">
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">お問い合わせ内容 <span class="badge bg-danger">必須</span></label>
                                             <textarea name="message" rows="10" cols="50" class="form-control"><?php t($_view['contact']['message']) ?></textarea>
                                         </div>
                                         <div class="form-group mb-2">

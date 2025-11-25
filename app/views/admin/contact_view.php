@@ -34,6 +34,8 @@
                                         <dd class="col-sm-10"><?php h($_view['contact']['name']) ?></dd>
                                         <dt class="col-sm-2">メールアドレス</dt>
                                         <dd class="col-sm-10"><?php h($_view['contact']['email']) ?></dd>
+                                        <dt class="col-sm-2">お問い合わせ件名</dt>
+                                        <dd class="col-sm-10"><?php h($_view['contact']['subject']) ?></dd>
                                         <dt class="col-sm-2">お問い合わせ内容</dt>
                                         <dd class="col-sm-10"><?php h($_view['contact']['message']) ?></dd>
                                         <dt class="col-sm-2">状況</dt>
