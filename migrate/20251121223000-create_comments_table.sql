@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS comments(
     PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT 'コメント';
 
-ALTER TABLE `entries` ADD comment VARCHAR(20) NOT NULL COMMENT 'コメントの受付' AFTER thumbnail;
-UPDATE `entries` SET comment = 'closed';
+ALTER TABLE entries ADD comment VARCHAR(20) NOT NULL COMMENT 'コメントの受付' AFTER thumbnail;
+UPDATE entries SET comment = 'closed';
 
 INSERT INTO settings VALUES('comment_use_approve', NULL);
