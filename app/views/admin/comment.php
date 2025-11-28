@@ -50,6 +50,9 @@
                                             <th class="text-nowrap">ユーザー名</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">対象</th>
+                                            <?php if ($GLOBALS['setting']['comment_use_approve']) : ?>
+                                            <th class="text-nowrap">承認</th>
+                                            <?php endif ?>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
                                     </thead>
@@ -62,6 +65,9 @@
                                             <th class="text-nowrap">ユーザー名</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">対象</th>
+                                            <?php if ($GLOBALS['setting']['comment_use_approve']) : ?>
+                                            <th class="text-nowrap">承認</th>
+                                            <?php endif ?>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
                                     </tfoot>
@@ -83,6 +89,9 @@
                                                 <a href="<?php t(MAIN_FILE) ?>/admin/contact_view?id=<?php t($comment['contact_id']) ?>">お問い合わせ</a>
                                                 <?php endif ?>
                                             </td>
+                                            <?php if ($GLOBALS['setting']['comment_use_approve']) : ?>
+                                            <td><?php h($GLOBALS['config']['option']['comment']['approved'][$comment['approved']]) ?></td>
+                                            <?php endif ?>
                                             <td>
                                                 <a href="<?php t(MAIN_FILE) ?>/admin/comment_view?id=<?php t($comment['id']) ?>" class="btn btn-primary text-nowrap">表示</a>
                                                 <?php if ($GLOBALS['authority']['power'] >= 2) : ?>

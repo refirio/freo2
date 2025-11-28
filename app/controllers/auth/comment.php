@@ -29,6 +29,12 @@ $_view['comments'] = model('select_comments', [
 
 $comment_count = model('select_comments', [
     'select' => 'COUNT(DISTINCT comments.id) AS count',
+    'where'  => [
+        'comments.user_id = :user_id',
+        [
+            'user_id' => $_SESSION['auth']['user']['id'],
+        ],
+    ],
 ], [
     'associate' => true,
 ]);

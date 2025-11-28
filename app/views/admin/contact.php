@@ -30,7 +30,7 @@
                             <div class="alert alert-danger">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
                                 <?php if ($_GET['warning'] === 'delete') : ?>
-                                お問い合わせが選択されていません。
+                                削除対象が選択されていません。
                                 <?php endif ?>
                             </div>
                             <?php endif ?>

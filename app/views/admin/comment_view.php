@@ -46,6 +46,10 @@
                                             <a href="<?php t(MAIN_FILE) ?>/admin/contact_view?id=<?php t($_view['comment']['contact_id']) ?>">お問い合わせ</a>
                                             <?php endif ?>
                                         </dd>
+                                        <?php if ($GLOBALS['setting']['comment_use_approve']) : ?>
+                                        <dt class="col-sm-2">承認</dt>
+                                        <dd class="col-sm-10"><?php h($GLOBALS['config']['option']['comment']['approved'][$_view['comment']['approved']]) ?></dd>
+                                        <?php endif ?>
                                         <dt class="col-sm-2">メモ</dt>
                                         <dd class="col-sm-10"><?php h($_view['comment']['memo']) ?></dd>
                                     </dl>

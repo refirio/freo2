@@ -23,7 +23,7 @@
                         <?php if (empty($_view['medias'])) : ?>
                             <div class="alert alert-danger">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
-                                一括処理対象が選択されていません。
+                                一括削除対象が選択されていません。
                             </div>
                             <p><a href="<?php t(MAIN_FILE) ?>/admin/media" class="btn btn-secondary px-4">戻る</a></p>
                         <?php else : ?>

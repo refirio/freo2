@@ -38,7 +38,7 @@
                             <input type="url" value="<?php t($_view['comment']['url']) ?>" readonly class="form-control">
                         </div>
                         <div class="form-group mb-2">
-                            <label class="fw-bold">お問い合わせ内容</label>
+                            <label class="fw-bold">コメント内容</label>
                             <textarea name="message" rows="10" cols="50" class="form-control"><?php t($_view['comment']['message']) ?></textarea>
                         </div>
                         <div class="form-group mt-4">
