@@ -17,6 +17,20 @@ if (empty($_SESSION['post'])) {
 db_transaction();
 
 if (empty($_SESSION['post']['comment']['id'])) {
+    // お問い合わせを確認
+    $contacts = model('select_contacts', [
+        'where' => [
+            'id = :contact_id AND user_id = :user_id',
+            [
+                'contact_id' => $_SESSION['post']['comment']['contact_id'],
+                'user_id'    => $_SESSION['auth']['user']['id'],
+            ],
+        ],
+    ]);
+    if (empty($contacts)) {
+        error('登録データが見つかりません。');
+    }
+
     // コメントを登録
     $resource = service_comment_insert([
         'values' => [
@@ -40,9 +54,10 @@ if (empty($_SESSION['post']['comment']['id'])) {
             'memo'    => $_SESSION['post']['comment']['memo'],
         ],
         'where' => [
-            'id = :id',
+            'id = :id AND user_id = :user_id',
             [
-                'id' => $_SESSION['post']['comment']['id'],
+                'id'      => $_SESSION['post']['comment']['id'],
+                'user_id' => $_SESSION['auth']['user']['id'],
             ],
         ],
     ], [

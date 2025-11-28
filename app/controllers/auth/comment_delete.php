@@ -19,9 +19,10 @@ if (!empty($_POST['id'])) {
     // コメントを削除
     $resource = service_comment_delete([
         'where' => [
-            'id = :id',
+            'id = :id AND user_id = :user_id',
             [
-                'id' => $_POST['id'],
+                'id'      => $_POST['id'],
+                'user_id' => $_SESSION['auth']['user']['id'],
             ],
         ],
     ]);

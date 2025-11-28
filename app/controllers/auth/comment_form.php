@@ -51,6 +51,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     // 初期データを取得
     if (empty($_GET['id'])) {
+        $contacts = model('select_contacts', [
+            'where' => [
+                'contacts.id = :contact_id AND contacts.user_id = :user_id',
+                [
+                    'contact_id' => $_GET['contact_id'],
+                    'user_id'    => $_SESSION['auth']['user']['id'],
+                ],
+            ],
+        ], [
+            'associate' => true,
+        ]);
+        if (empty($contacts)) {
+            warning('表示データが見つかりません。');
+        }
+
         $_view['comment'] = model('default_comments');
         $_view['comment']['contact_id'] = $_GET['contact_id'];
 
@@ -69,9 +84,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $comments = model('select_comments', [
             'where' => [
-                'id = :id',
+                'id = :id AND user_id = :user_id',
                 [
-                    'id' => $_GET['id'],
+                    'id'      => $_GET['id'],
+                    'user_id' => $_SESSION['auth']['user']['id'],
                 ],
             ],
         ]);

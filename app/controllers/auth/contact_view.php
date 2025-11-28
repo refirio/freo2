@@ -3,10 +3,10 @@
 // お問い合わせを取得
 $contacts = model('select_contacts', [
     'where' => [
-        'contacts.user_id = user_id AND contacts.id = :id',
+        'contacts.id = :id AND contacts.user_id = :user_id',
         [
-            'user_id' => $_SESSION['auth']['user']['id'],
             'id'      => $_GET['id'],
+            'user_id' => $_SESSION['auth']['user']['id'],
         ],
     ],
 ], [

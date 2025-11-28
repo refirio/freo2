@@ -33,6 +33,8 @@ if (!$resource) {
     error('データを登録できません。');
 }
 
+$entry_id = $_SESSION['post']['comment']['entry_id'];
+
 // トランザクションを終了
 db_commit();
 
@@ -40,4 +42,4 @@ db_commit();
 unset($_SESSION['post']);
 
 // リダイレクト
-redirect('/comment/complete');
+redirect('/comment/complete?entry_id=' . $entry_id);
