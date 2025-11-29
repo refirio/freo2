@@ -86,6 +86,14 @@
                                             </div>
                                         </div>
                                         <?php endif ?>
+                                        <div class="form-group mb-2 for-authority_id">
+                                            <label class="fw-bold">属性適用開始日時</label>
+                                            <input type="text" name="attribute_begin" size="30" value="<?php t($_view['user']['attribute_begin']) ?>" autocomplete="off" class="form-control" style="width: 200px;">
+                                        </div>
+                                        <div class="form-group mb-2 for-authority_id">
+                                            <label class="fw-bold">属性適用終了日時</label>
+                                            <input type="text" name="attribute_end" size="30" value="<?php t($_view['user']['attribute_end']) ?>" autocomplete="off" class="form-control" style="width: 200px;">
+                                        </div>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">有効 <span class="badge bg-danger">必須</span></label>
                                             <select name="enabled" class="form-select" style="width: 200px;">

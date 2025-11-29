@@ -24,17 +24,19 @@ if (empty($_SESSION['post']['user']['id'])) {
     // ユーザーを登録
     $resource = service_user_insert([
         'values' => [
-            'username'       => $_SESSION['post']['user']['username'],
-            'password'       => hash_crypt($_SESSION['post']['user']['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']),
-            'password_salt'  => $password_salt,
-            'authority_id'   => $_SESSION['post']['user']['authority_id'],
-            'enabled'        => $_SESSION['post']['user']['enabled'],
-            'name'           => $_SESSION['post']['user']['name'],
-            'email'          => $_SESSION['post']['user']['email'],
-            'email_verified' => 1,
-            'url'            => $_SESSION['post']['user']['url'],
-            'text'           => $_SESSION['post']['user']['text'],
-            'memo'           => $_SESSION['post']['user']['memo'],
+            'username'        => $_SESSION['post']['user']['username'],
+            'password'        => hash_crypt($_SESSION['post']['user']['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']),
+            'password_salt'   => $password_salt,
+            'authority_id'    => $_SESSION['post']['user']['authority_id'],
+            'attribute_begin' => $_SESSION['post']['user']['attribute_begin'],
+            'attribute_end'   => $_SESSION['post']['user']['attribute_end'],
+            'enabled'         => $_SESSION['post']['user']['enabled'],
+            'name'            => $_SESSION['post']['user']['name'],
+            'email'           => $_SESSION['post']['user']['email'],
+            'email_verified'  => 1,
+            'url'             => $_SESSION['post']['user']['url'],
+            'text'            => $_SESSION['post']['user']['text'],
+            'memo'            => $_SESSION['post']['user']['memo'],
         ],
     ], [
         'attribute_sets' => $_SESSION['post']['user']['attribute_sets'],
@@ -45,14 +47,16 @@ if (empty($_SESSION['post']['user']['id'])) {
 } else {
     // ユーザーを編集
     $sets = [
-        'username'     => $_SESSION['post']['user']['username'],
-        'authority_id' => $_SESSION['post']['user']['authority_id'],
-        'enabled'      => $_SESSION['post']['user']['enabled'],
-        'name'         => $_SESSION['post']['user']['name'],
-        'email'        => $_SESSION['post']['user']['email'],
-        'url'          => $_SESSION['post']['user']['url'],
-        'text'         => $_SESSION['post']['user']['text'],
-        'memo'         => $_SESSION['post']['user']['memo'],
+        'username'        => $_SESSION['post']['user']['username'],
+        'authority_id'    => $_SESSION['post']['user']['authority_id'],
+        'attribute_begin' => $_SESSION['post']['user']['attribute_begin'],
+        'attribute_end'   => $_SESSION['post']['user']['attribute_end'],
+        'enabled'         => $_SESSION['post']['user']['enabled'],
+        'name'            => $_SESSION['post']['user']['name'],
+        'email'           => $_SESSION['post']['user']['email'],
+        'url'             => $_SESSION['post']['user']['url'],
+        'text'            => $_SESSION['post']['user']['text'],
+        'memo'            => $_SESSION['post']['user']['memo'],
     ];
     if (!empty($_SESSION['post']['user']['password'])) {
         $sets['password']      = hash_crypt($_SESSION['post']['user']['password'], $password_salt . ':' . $GLOBALS['config']['hash_salt']);

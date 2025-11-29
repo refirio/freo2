@@ -8,9 +8,9 @@ db_transaction();
 // ユーザーを編集
 $resource = service_user_update([
     'set'   => [
-        'email_verified'  => 1,
-        'token'           => null,
-        'token_expire'    => null,
+        'email_verified' => 1,
+        'token'          => null,
+        'token_expire'   => null,
     ],
     'where' => [
         'email = :email AND token = :token AND token_expire > :token_expire',

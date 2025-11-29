@@ -289,7 +289,7 @@ $(document).ready(function() {
      * 日時入力
      */
     $.datetimepicker.setLocale('ja');
-    $('input[name=public_begin], input[name=public_end], input[name=datetime]').datetimepicker({
+    $('input[name=public_begin], input[name=public_end], input[name=datetime], input[name=attribute_begin], input[name=attribute_end]').datetimepicker({
         format: 'Y-m-d H:00'
     });
 
@@ -368,6 +368,22 @@ $(document).ready(function() {
 
         window.parent.insertMedia(mediaTag);
     });
+
+    /*
+     * 権限
+     */
+    $('select[name=authority_id]').on('change', function() {
+        if ($('input[name="attribute_sets[]"]').length > 0 && $(this).find('option:selected').text() == 'ゲスト') {
+            $('.for-authority_id').show();
+        } else {
+            $('.for-authority_id').hide();
+        }
+    });
+    if ($('input[name="attribute_sets[]"]').length > 0 && $('select[name=authority_id] option:selected').text() == 'ゲスト') {
+        $('.for-authority_id').show();
+    } else {
+        $('.for-authority_id').hide();
+    }
 
     /*
      * 並び替え

@@ -19,6 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'password'         => isset($_POST['password'])         ? $_POST['password']         : '',
             'password_confirm' => isset($_POST['password_confirm']) ? $_POST['password_confirm'] : '',
             'authority_id'     => isset($_POST['authority_id'])     ? $_POST['authority_id']     : '',
+            'attribute_begin'  => isset($_POST['attribute_begin'])  ? $_POST['attribute_begin']  : '',
+            'attribute_end'    => isset($_POST['attribute_end'])    ? $_POST['attribute_end']    : '',
             'enabled'          => isset($_POST['enabled'])          ? $_POST['enabled']          : '',
             'name'             => isset($_POST['name'])             ? $_POST['name']             : '',
             'email'            => isset($_POST['email'])            ? $_POST['email']            : '',
@@ -84,6 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['update']['user'] = localdate('Y-m-d H:i:s');
     }
 }
+
+// ユーザーの表示用データ作成
+$_view['user'] = model('view_users', $_view['user']);
 
 // 権限を取得
 $_view['authorities'] = model('select_authorities', [

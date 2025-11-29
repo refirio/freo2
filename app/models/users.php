@@ -233,6 +233,35 @@ function delete_users($queries, $options = [])
 }
 
 /**
+ * ユーザーの正規化
+ *
+ * @param array $queries
+ * @param array $options
+ *
+ * @return array
+ */
+function normalize_users($queries, $options = [])
+{
+    // 属性適用開始日時
+    if (isset($queries['attribute_begin'])) {
+        if (!empty($queries['attribute_begin'])) {
+            $queries['attribute_begin'] .= ':00';
+        }
+        $queries['attribute_begin'] = mb_convert_kana($queries['attribute_begin'], 'a', MAIN_INTERNAL_ENCODING);
+    }
+
+    // 属性適用終了日時
+    if (isset($queries['attribute_end'])) {
+        if (!empty($queries['attribute_end'])) {
+            $queries['attribute_end'] .= ':00';
+        }
+        $queries['attribute_end'] = mb_convert_kana($queries['attribute_end'], 'a', MAIN_INTERNAL_ENCODING);
+    }
+
+    return $queries;
+}
+
+/**
  * ユーザーの検証
  *
  * @param array $queries
@@ -327,6 +356,22 @@ function validate_users($queries, $options = [])
     if (isset($queries['authority_id'])) {
         if (!validator_required($queries['authority_id'])) {
             $messages['authority_id'] = '権限が入力されていません。';
+        }
+    }
+
+    // 属性適用開始日時
+    if (isset($queries['attribute_begin'])) {
+        if (!validator_required($queries['attribute_begin'])) {
+        } elseif (!validator_datetime($queries['attribute_begin'])) {
+            $messages['attribute_begin'] = '属性適用開始日時の値が不正です。';
+        }
+    }
+
+    // 属性適用終了日時
+    if (isset($queries['attribute_end'])) {
+        if (!validator_required($queries['attribute_end'])) {
+        } elseif (!validator_datetime($queries['attribute_end'])) {
+            $messages['attribute_end'] = '属性適用終了日時の値が不正です。';
         }
     }
 
@@ -463,6 +508,32 @@ function set_attribute_users($user_id, $attribute_sets)
 }
 
 /**
+ * ユーザーの表示用データ作成
+ *
+ * @param array $data
+ *
+ * @return array
+ */
+function view_users($data)
+{
+    // 属性適用開始日時
+    if (isset($data['attribute_begin'])) {
+        if (preg_match('/^(\d\d\d\d\-\d\d\-\d\d \d\d:\d\d):\d\d$/', $data['attribute_begin'], $matches)) {
+            $data['attribute_begin'] = $matches[1];
+        }
+    }
+
+    // 属性適用終了日時
+    if (isset($data['attribute_end'])) {
+        if (preg_match('/^(\d\d\d\d\-\d\d\-\d\d \d\d:\d\d):\d\d$/', $data['attribute_end'], $matches)) {
+            $data['attribute_end'] = $matches[1];
+        }
+    }
+
+    return $data;
+}
+
+/**
  * ユーザーの初期値
  *
  * @return array
@@ -470,27 +541,29 @@ function set_attribute_users($user_id, $attribute_sets)
 function default_users()
 {
     return [
-        'id'             => null,
-        'created'        => localdate('Y-m-d H:i:s'),
-        'modified'       => localdate('Y-m-d H:i:s'),
-        'deleted'        => null,
-        'enabled'        => 1,
-        'username'       => '',
-        'password'       => '',
-        'password_salt'  => '',
-        'authority_id'   => 0,
-        'name'           => null,
-        'email'          => '',
-        'email_verified' => 0,
-        'url'            => null,
-        'text'           => null,
-        'memo'           => null,
-        'loggedin'       => null,
-        'failed'         => null,
-        'failed_last'    => null,
-        'token'          => null,
-        'token_code'     => null,
-        'token_expire'   => null,
-        'attribute_sets' => [],
+        'id'              => null,
+        'created'         => localdate('Y-m-d H:i:s'),
+        'modified'        => localdate('Y-m-d H:i:s'),
+        'deleted'         => null,
+        'enabled'         => 1,
+        'username'        => '',
+        'password'        => '',
+        'password_salt'   => '',
+        'authority_id'    => 0,
+        'attribute_begin' => null,
+        'attribute_end'   => null,
+        'name'            => null,
+        'email'           => '',
+        'email_verified'  => 0,
+        'url'             => null,
+        'text'            => null,
+        'memo'            => null,
+        'loggedin'        => null,
+        'failed'          => null,
+        'failed_last'     => null,
+        'token'           => null,
+        'token_code'      => null,
+        'token_expire'    => null,
+        'attribute_sets'  => [],
     ];
 }
