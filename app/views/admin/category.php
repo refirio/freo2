@@ -60,7 +60,7 @@
                                     <tbody>
                                         <?php foreach ($_view['categories'] as $category) : ?>
                                         <tr id="sort_<?php h($category['id']) ?>">
-                                            <td class="d-none d-md-table-cell"><?php h(truncate($category['code'], 50)) ?></td>
+                                            <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($category['code'], 50)) ?></code></td>
                                             <td><?php h(truncate($category['name'], 50)) ?></td>
                                             <td><span class="handle text-nowrap">並び替え</span></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/category_form?id=<?php t($category['id']) ?>" class="btn btn-primary">編集</a></td>

@@ -76,7 +76,7 @@
                                         <?php foreach ($_view['entries'] as $entry) : ?>
                                         <tr>
                                             <td><input type="checkbox" name="bulks[]" value="<?php h($entry['id']) ?>"<?php isset($_SESSION['bulk']['entry'][$entry['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
-                                            <td class="d-none d-md-table-cell"><?php h(truncate($entry['code'], 50)) ?></td>
+                                            <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($entry['code'], 50)) ?></code></td>
                                             <td><?php h(truncate($entry['title'], 50)) ?></td>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
                                             <?php if ($GLOBALS['setting']['entry_use_approve']) : ?>
@@ -97,10 +97,10 @@
                                 <?php if ($_view['entry_page'] > 1) : ?>
                                     <ul class="pagination d-flex justify-content-end">
                                         <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/entry?page=1" class="page-link">&laquo;</a></li>
-                                        <?php for ($i = 1; $i <= $_view['entry_page']; $i++) : ?>
+                                        <?php for ($i = max(1, $_GET['page'] - floor($GLOBALS['config']['pager']['admin_entry'] / 2)); $i <= min($_view['entry_page'], $_GET['page'] + floor($GLOBALS['config']['pager']['admin_entry'] / 2)); $i++) : ?>
                                         <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/entry?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                                         <?php endfor ?>
-                                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/entry?page=<?php t(ceil($_view['entry_count'] / $GLOBALS['config']['limit']['entry'])) ?>" class="page-link">&raquo;</a></li>
+                                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/entry?page=<?php t(ceil($_view['entry_count'] / $GLOBALS['config']['limit']['admin_entry'])) ?>" class="page-link">&raquo;</a></li>
                                     </ul>
                                 <?php endif ?>
                             </form>

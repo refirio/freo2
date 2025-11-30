@@ -26,14 +26,14 @@
                                     <dl class="row">
                                         <dt class="col-sm-2">日時</dt>
                                         <dd class="col-sm-10"><?php h(localdate('Y/m/d H:i:s', $_view['comment']['created'])) ?></dd>
-                                        <?php if (!empty($_view['comment']['user_id'])) : ?>
+                                        <?php if (!empty($_view['comment']['user_id']) && !preg_match('/^DELETED /', $_view['comment']['user_username'])) : ?>
                                         <dt class="col-sm-2">ユーザー名</dt>
-                                        <dd class="col-sm-10"><?php h($_view['comment']['user_username']) ?></dd>
+                                        <dd class="col-sm-10"><code class="text-dark"><?php h($_view['comment']['user_username']) ?></code></dd>
                                         <?php endif ?>
                                         <dt class="col-sm-2">名前</dt>
                                         <dd class="col-sm-10"><?php h($_view['comment']['name']) ?></dd>
                                         <dt class="col-sm-2">URL</dt>
-                                        <dd class="col-sm-10"><?php h($_view['comment']['url']) ?></dd>
+                                        <dd class="col-sm-10"><?php if ($_view['comment']['url']) : ?><code class="text-dark"><?php h($_view['comment']['url']) ?></code><?php endif ?></dd>
                                         <dt class="col-sm-2">コメント内容</dt>
                                         <dd class="col-sm-10"><?php h($_view['comment']['message']) ?></dd>
                                         <dt class="col-sm-2">対象</dt>

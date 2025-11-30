@@ -13,8 +13,8 @@ $_view['logs'] = model('select_logs', [
     'limit'    => [
         ':offset, :limit',
         [
-            'offset' => $GLOBALS['config']['limit']['log'] * ($_GET['page'] - 1),
-            'limit'  => $GLOBALS['config']['limit']['log'],
+            'offset' => $GLOBALS['config']['limit']['admin_log'] * ($_GET['page'] - 1),
+            'limit'  => $GLOBALS['config']['limit']['admin_log'],
         ],
     ],
 ], [
@@ -27,7 +27,7 @@ $log_count = model('select_logs', [
     'associate' => true,
 ]);
 $_view['log_count'] = $log_count[0]['count'];
-$_view['log_page']  = ceil($log_count[0]['count'] / $GLOBALS['config']['limit']['log']);
+$_view['log_page']  = ceil($log_count[0]['count'] / $GLOBALS['config']['limit']['admin_log']);
 
 // タイトル
 $_view['title'] = 'ログ';

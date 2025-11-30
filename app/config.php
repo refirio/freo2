@@ -17,20 +17,26 @@ $GLOBALS['config']['hash_salt'] = app_config('APP_HASH_SALT', 'RKH7X92N4P');
 
 /* 表示件数 */
 $GLOBALS['config']['limit'] = app_config('APP_LIMIT', [
-    'entry'   => 10,
-    'contact' => 10,
-    'comment' => 10,
-    'user'    => 10,
-    'log'     => 20,
+    'entry'         => 10,
+    'contact'       => 10,
+    'comment'       => 10,
+    'admin_entry'   => 20,
+    'admin_contact' => 20,
+    'admin_comment' => 20,
+    'admin_user'    => 20,
+    'admin_log'     => 50,
 ]);
 
 /* ページャーの幅 */
 $GLOBALS['config']['pager'] = app_config('APP_PAGER', [
-    'entry'   => 5,
-    'contact' => 5,
-    'comment' => 5,
-    'user'    => 5,
-    'log'     => 5,
+    'entry'         => 5,
+    'contact'       => 5,
+    'comment'       => 5,
+    'admin_entry'   => 5,
+    'admin_contact' => 5,
+    'admin_comment' => 5,
+    'admin_user'    => 5,
+    'admin_log'     => 5,
 ]);
 
 /* オプション項目 */

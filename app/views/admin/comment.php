@@ -80,7 +80,7 @@
                                             <td><input type="checkbox" name="bulks[]" value="<?php h($comment['id']) ?>"<?php isset($_SESSION['bulk']['comment'][$comment['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
                                             <?php endif ?>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $comment['created']) == localdate('Ymd') ? localdate('H:i:s', $comment['created']) : localdate('Y/m/d', $comment['created'])) ?></td>
-                                            <td><?php h($comment['user_id'] ? truncate($comment['user_username'], 50) : '') ?></td>
+                                            <td><?php if (!preg_match('/^DELETED /', $comment['user_username'])) :?><code class="text-dark"><?php h($comment['user_id'] ? truncate($comment['user_username'], 50) : '') ?></code><?php endif ?></td>
                                             <td><?php h(truncate($comment['name'], 50)) ?></td>
                                             <td>
                                                 <?php if ($comment['type_code'] === 'entry') : ?>
@@ -110,10 +110,10 @@
                                 <?php if ($_view['comment_page'] > 1) : ?>
                                     <ul class="pagination d-flex justify-content-end">
                                         <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/comment?page=1" class="page-link">&laquo;</a></li>
-                                        <?php for ($i = 1; $i <= $_view['comment_page']; $i++) : ?>
+                                        <?php for ($i = max(1, $_GET['page'] - floor($GLOBALS['config']['pager']['admin_comment'] / 2)); $i <= min($_view['comment_page'], $_GET['page'] + floor($GLOBALS['config']['pager']['admin_comment'] / 2)); $i++) : ?>
                                         <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/comment?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                                         <?php endfor ?>
-                                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/comment?page=<?php t(ceil($_view['comment_count'] / $GLOBALS['config']['limit']['comment'])) ?>" class="page-link">&raquo;</a></li>
+                                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/comment?page=<?php t(ceil($_view['comment_count'] / $GLOBALS['config']['limit']['admin_comment'])) ?>" class="page-link">&raquo;</a></li>
                                     </ul>
                                 <?php endif ?>
                             </form>

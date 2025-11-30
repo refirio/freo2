@@ -20,15 +20,15 @@
 
                     <dl class="row">
                         <dt class="col-sm-3">ユーザー名</dt>
-                        <dd class="col-sm-9"><?php h($_view['user']['username']) ?></dd>
+                        <dd class="col-sm-9"><code class="text-dark"><?php h($_view['user']['username']) ?></code></dd>
                         <dt class="col-sm-3">パスワード</dt>
-                        <dd class="col-sm-9"><?php h(alt(str_repeat('*', strlen($_view['user']['password'])), '-')) ?></dd>
+                        <dd class="col-sm-9"><code class="text-dark"><?php h(alt(str_repeat('*', strlen($_view['user']['password'])), '-')) ?></code></dd>
                         <dt class="col-sm-3">名前</dt>
                         <dd class="col-sm-9"><?php h(alt($_view['user']['name'], '-')) ?></dd>
                         <dt class="col-sm-3">メールアドレス</dt>
-                        <dd class="col-sm-9"><?php h(alt($_view['user']['email'], '-')) ?></dd>
+                        <dd class="col-sm-9"><code class="text-dark"><?php h(alt($_view['user']['email'], '-')) ?></code></dd>
                         <dt class="col-sm-3">URL</dt>
-                        <dd class="col-sm-9"><?php h(alt($_view['user']['url'], '-')) ?></dd>
+                        <dd class="col-sm-9"><?php if ($_view['user']['url']) : ?><code class="text-dark"><?php h(alt($_view['user']['url'], '-')) ?></code><?php endif ?></dd>
                         <dt class="col-sm-3">自己紹介</dt>
                         <dd class="col-sm-9"><?php h(alt($_view['user']['text'], '-')) ?></dd>
                     </dl>

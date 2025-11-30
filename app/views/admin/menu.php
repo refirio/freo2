@@ -63,7 +63,7 @@
                                         <?php foreach ($_view['menus'] as $menu) : ?>
                                         <tr id="sort_<?php h($menu['id']) ?>">
                                             <td><?php h(truncate($menu['title'], 50)) ?></td>
-                                            <td class="d-none d-md-table-cell"><?php h(truncate($menu['url'], 50)) ?></td>
+                                            <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($menu['url'], 50)) ?></code></td>
                                             <td><?php h($GLOBALS['config']['option']['menu']['enabled'][$menu['enabled']]) ?></td>
                                             <td><span class="handle text-nowrap">並び替え</span></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/menu_form?id=<?php t($menu['id']) ?>" class="btn btn-primary">編集</a></td>

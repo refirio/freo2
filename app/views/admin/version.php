@@ -26,7 +26,7 @@
                                         <dt class="col-sm-2">名称</dt>
                                         <dd class="col-sm-10">freo</dd>
                                         <dt class="col-sm-2">バージョン</dt>
-                                        <dd class="col-sm-10"><?php h(APP_VERSION_NUMBER) ?></dd>
+                                        <dd class="col-sm-10"><code class="text-dark"><?php h(APP_VERSION_NUMBER) ?></code></dd>
                                         <dt class="col-sm-2">更新日</dt>
                                         <dd class="col-sm-10"><?php h(localdate('Y/m/d', APP_VERSION_UPDATE)) ?></dd>
                                     </dl>
@@ -41,7 +41,7 @@
                                         <dt class="col-sm-2">名称</dt>
                                         <dd class="col-sm-10">levis</dd>
                                         <dt class="col-sm-2">バージョン</dt>
-                                        <dd class="col-sm-10"><?php h(VERSION_NUMBER) ?></dd>
+                                        <dd class="col-sm-10"><code class="text-dark"><?php h(VERSION_NUMBER) ?></code></dd>
                                         <dt class="col-sm-2">更新日</dt>
                                         <dd class="col-sm-10"><?php h(localdate('Y/m/d', VERSION_UPDATE)) ?></dd>
                                     </dl>

@@ -26,14 +26,14 @@
                                     <dl class="row">
                                         <dt class="col-sm-2">日時</dt>
                                         <dd class="col-sm-10"><?php h(localdate('Y/m/d H:i:s', $_view['contact']['created'])) ?></dd>
-                                        <?php if (!empty($_view['contact']['user_id'])) : ?>
+                                        <?php if (!empty($_view['contact']['user_id']) && !preg_match('/^DELETED /', $_view['contact']['user_username'])) : ?>
                                         <dt class="col-sm-2">ユーザー名</dt>
-                                        <dd class="col-sm-10"><?php h($_view['contact']['user_username']) ?></dd>
+                                        <dd class="col-sm-10"><code class="text-dark"><?php h($_view['contact']['user_username']) ?></code></dd>
                                         <?php endif ?>
                                         <dt class="col-sm-2">名前</dt>
                                         <dd class="col-sm-10"><?php h($_view['contact']['name']) ?></dd>
                                         <dt class="col-sm-2">メールアドレス</dt>
-                                        <dd class="col-sm-10"><?php h($_view['contact']['email']) ?></dd>
+                                        <dd class="col-sm-10"><?php if ($_view['contact']['email']) : ?><code class="text-dark"><?php h($_view['contact']['email']) ?></code><?php endif ?></dd>
                                         <dt class="col-sm-2">お問い合わせ件名</dt>
                                         <dd class="col-sm-10"><?php h($_view['contact']['subject']) ?></dd>
                                         <dt class="col-sm-2">お問い合わせ内容</dt>

@@ -44,7 +44,7 @@
                                 <tbody>
                                     <?php foreach ($_view['widgets'] as $widget) : ?>
                                     <tr>
-                                        <td class="d-none d-md-table-cell"><?php h(truncate($widget['code'], 50)) ?></td>
+                                        <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($widget['code'], 50)) ?></code></td>
                                         <td><?php h(truncate($widget['title'], 50)) ?></td>
                                         <td><a href="<?php t(MAIN_FILE) ?>/admin/widget_form?id=<?php t($widget['id']) ?>" class="btn btn-primary">編集</a></td>
                                     </tr>

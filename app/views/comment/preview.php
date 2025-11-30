@@ -8,7 +8,7 @@
                             <dt class="col-sm-2">お名前</dt>
                             <dd class="col-sm-10"><?php h($_view['comment']['name']) ?></dd>
                             <dt class="col-sm-2">URL</dt>
-                            <dd class="col-sm-10"><?php h($_view['comment']['url']) ?></dd>
+                            <dd class="col-sm-10"><?php if ($_view['comment']['url']) : ?><code class="text-dark"><?php h($_view['comment']['url']) ?></code><?php endif ?></dd>
                             <dt class="col-sm-2">コメント内容</dt>
                             <dd class="col-sm-10"><?php h($_view['comment']['message']) ?></dd>
                         </dl>

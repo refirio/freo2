@@ -62,9 +62,9 @@
                                 <tbody>
                                     <?php foreach ($_view['users'] as $user) : ?>
                                     <tr>
-                                        <td><?php h($user['username']) ?></td>
+                                        <td><code class="text-dark"><?php h($user['username']) ?></code></td>
                                         <td><?php h($user['name']) ?></td>
-                                        <td class="d-none d-md-table-cell"><?php h($user['email']) ?><?php h($user['email_verified'] ? '' : '（未確認）') ?></td>
+                                        <td class="d-none d-md-table-cell"><code class="text-dark"><?php h($user['email']) ?></code><?php h($user['email_verified'] ? '' : '（未確認）') ?></td>
                                         <td>
                                             <?php if (empty($user['authority_id'])) : ?>
                                                 -
@@ -88,10 +88,10 @@
                             <?php if ($_view['user_page'] > 1) : ?>
                                 <ul class="pagination d-flex justify-content-end">
                                     <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/user?page=1" class="page-link">&laquo;</a></li>
-                                    <?php for ($i = 1; $i <= $_view['user_page']; $i++) : ?>
+                                    <?php for ($i = max(1, $_GET['page'] - floor($GLOBALS['config']['pager']['admin_user'] / 2)); $i <= min($_view['user_page'], $_GET['page'] + floor($GLOBALS['config']['pager']['admin_user'] / 2)); $i++) : ?>
                                     <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/user?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                                     <?php endfor ?>
-                                    <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/user?page=<?php t(ceil($_view['user_count'] / $GLOBALS['config']['limit']['user'])) ?>" class="page-link">&raquo;</a></li>
+                                    <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/user?page=<?php t(ceil($_view['user_count'] / $GLOBALS['config']['limit']['admin_user'])) ?>" class="page-link">&raquo;</a></li>
                                 </ul>
                             <?php endif ?>
                         </div>

@@ -44,9 +44,9 @@
                                     <?php foreach ($_view['logs'] as $log) : ?>
                                     <tr>
                                         <td><?php h(localdate('Ymd', $log['created']) == localdate('Ymd') ? localdate('H:i:s', $log['created']) : localdate('Y/m/d', $log['created'])) ?></td>
-                                        <td><?php h($log['user_username']) ?></td>
+                                        <td><code class="text-dark"><?php h($log['user_username']) ?></code></td>
                                         <td class="d-none d-md-table-cell"><?php h($log['user_name']) ?></td>
-                                        <td><?php h($log['ip']) ?></td>
+                                        <td><code class="text-dark"><?php h($log['ip']) ?></code></td>
                                         <td class="d-none d-md-table-cell">
                                             <?php if ($log['model'] && $log['exec']) : ?>
                                                 <?php h($log['model']) ?>テーブルに対して<?php h($log['exec']) ?>しました。
@@ -63,10 +63,10 @@
                             <?php if ($_view['log_page'] > 1) : ?>
                                 <ul class="pagination d-flex justify-content-end">
                                     <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/log?page=1" class="page-link">&laquo;</a></li>
-                                    <?php for ($i = 1; $i <= $_view['log_page']; $i++) : ?>
+                                    <?php for ($i = max(1, $_GET['page'] - floor($GLOBALS['config']['pager']['admin_log'] / 2)); $i <= min($_view['log_page'], $_GET['page'] + floor($GLOBALS['config']['pager']['admin_log'] / 2)); $i++) : ?>
                                     <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/log?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                                     <?php endfor ?>
-                                    <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/log?page=<?php t(ceil($_view['log_count'] / $GLOBALS['config']['limit']['log'])) ?>" class="page-link">&raquo;</a></li>
+                                    <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/log?page=<?php t(ceil($_view['log_count'] / $GLOBALS['config']['limit']['admin_log'])) ?>" class="page-link">&raquo;</a></li>
                                 </ul>
                             <?php endif ?>
                         </div>

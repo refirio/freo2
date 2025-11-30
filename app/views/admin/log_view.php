@@ -28,11 +28,11 @@
                                         <dt class="col-sm-2">日時</dt>
                                         <dd class="col-sm-10"><?php h(localdate('Y/m/d H:i:s', $_view['log']['created'])) ?></dd>
                                         <dt class="col-sm-2">ユーザー名</dt>
-                                        <dd class="col-sm-10"><?php h($_view['log']['user_username']) ?></dd>
+                                        <dd class="col-sm-10"><code class="text-dark"><?php h($_view['log']['user_username']) ?></code></dd>
                                         <dt class="col-sm-2">名前</dt>
                                         <dd class="col-sm-10"><?php h($_view['log']['user_name']) ?></dd>
                                         <dt class="col-sm-2">IPアドレス</dt>
-                                        <dd class="col-sm-10"><?php h($_view['log']['ip']) ?></dd>
+                                        <dd class="col-sm-10"><code class="text-dark"><?php h($_view['log']['ip']) ?></code></dd>
                                         <dt class="col-sm-2">環境</dt>
                                         <dd class="col-sm-10"><span title="<?php t($_view['log']['agent']) ?>"><?php h($environment ? $environment : '-') ?></span></dd>
                                         <dt class="col-sm-2">ログ</dt>
@@ -43,7 +43,7 @@
                                             <?php h($_view['log']['message']) ?>
                                         </dd>
                                         <dt class="col-sm-2">ページ</dt>
-                                        <dd class="col-sm-10"><?php h($_view['log']['page']) ?></dd>
+                                        <dd class="col-sm-10"><code class="text-dark"><?php h($_view['log']['page']) ?></code></dd>
                                     </dl>
                                 </div>
                             </div>

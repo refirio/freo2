@@ -55,9 +55,9 @@
                                 <tbody>
                                     <?php foreach ($_view['plugins'] as $plugin) : ?>
                                     <tr>
-                                        <td><?php h($plugin['code']) ?></td>
+                                        <td><code class="text-dark"><?php h($plugin['code']) ?></code></td>
                                         <td><?php h($plugin['name']) ?></td>
-                                        <td><?php h($plugin['version']) ?></td>
+                                        <td><code class="text-dark"><?php h($plugin['version']) ?></code></td>
                                         <td class="d-none d-md-table-cell"><?php h($plugin['description']) ?></td>
                                         <td>
                                             <?php if (empty($plugin['installed'])) : ?>

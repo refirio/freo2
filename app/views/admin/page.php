@@ -73,7 +73,7 @@
                                         <?php foreach ($_view['entries'] as $entry) : ?>
                                         <tr>
                                             <td><input type="checkbox" name="bulks[]" value="<?php h($entry['id']) ?>"<?php isset($_SESSION['bulk']['entry'][$entry['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
-                                            <td class="d-none d-md-table-cell"><?php h(truncate($entry['code'], 50)) ?></td>
+                                            <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($entry['code'], 50)) ?></code></td>
                                             <td><?php h(truncate($entry['title'], 50)) ?></td>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
                                             <?php if ($GLOBALS['setting']['page_use_approve']) : ?>

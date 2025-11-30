@@ -71,8 +71,8 @@
                                             <?php endif ?>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $contact['created']) == localdate('Ymd') ? localdate('H:i:s', $contact['created']) : localdate('Y/m/d', $contact['created'])) ?></td>
                                             <td>
-                                                <?php if ($contact['user_id']) : ?>
-                                                <a href="<?php t(MAIN_FILE) ?>/admin/user_form?id=<?php t($contact['user_id']) ?>"><?php h(truncate($contact['user_username'], 50)) ?></a>
+                                                <?php if ($contact['user_id'] && !preg_match('/^DELETED /', $contact['user_username'])) : ?>
+                                                <a href="<?php t(MAIN_FILE) ?>/admin/user_form?id=<?php t($contact['user_id']) ?>" class="text-dark"><code class="text-dark"><?php h(truncate($contact['user_username'], 50)) ?></code></a>
                                                 <?php else : ?>
                                                 <?php h(truncate($contact['name'], 50)) ?>
                                                 <?php endif ?>
@@ -95,10 +95,10 @@
                                 <?php if ($_view['contact_page'] > 1) : ?>
                                     <ul class="pagination d-flex justify-content-end">
                                         <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=1" class="page-link">&laquo;</a></li>
-                                        <?php for ($i = 1; $i <= $_view['contact_page']; $i++) : ?>
+                                        <?php for ($i = max(1, $_GET['page'] - floor($GLOBALS['config']['pager']['admin_contact'] / 2)); $i <= min($_view['contact_page'], $_GET['page'] + floor($GLOBALS['config']['pager']['admin_contact'] / 2)); $i++) : ?>
                                         <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                                         <?php endfor ?>
-                                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t(ceil($_view['contact_count'] / $GLOBALS['config']['limit']['contact'])) ?>" class="page-link">&raquo;</a></li>
+                                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/contact?page=<?php t(ceil($_view['contact_count'] / $GLOBALS['config']['limit']['admin_contact'])) ?>" class="page-link">&raquo;</a></li>
                                     </ul>
                                 <?php endif ?>
                             </form>

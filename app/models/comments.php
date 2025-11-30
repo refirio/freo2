@@ -22,13 +22,16 @@ function select_comments($queries, $options = [])
         if (!isset($queries['select'])) {
             $queries['select'] = 'DISTINCT comments.*, '
                                . 'entries.code AS entry_code, '
+                               . 'entries.title AS entry_title, '
                                . 'types.code AS type_code, '
+                               . 'contacts.subject AS contact_subject, '
                                . 'users.username AS user_username';
         }
 
         $queries['from'] = DATABASE_PREFIX . 'comments AS comments '
                          . 'LEFT JOIN ' . DATABASE_PREFIX . 'entries AS entries ON comments.entry_id = entries.id '
                          . 'LEFT JOIN ' . DATABASE_PREFIX . 'types AS types ON entries.type_id = types.id '
+                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'contacts AS contacts ON comments.contact_id = contacts.id '
                          . 'LEFT JOIN ' . DATABASE_PREFIX . 'users AS users ON comments.user_id = users.id';
 
         // 削除済みデータは取得しない

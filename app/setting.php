@@ -108,13 +108,13 @@ $GLOBALS['setting_contents'] = [
         ],
     ],
     'user' => [
-        'user_use_approve' => [
-            'name'     => 'ユーザーの承認',
+        'user_use_register' => [
+            'name'     => '訪問者によるユーザー新規登録',
             'type'     => 'boolean',
             'required' => false,
         ],
-        'user_use_register' => [
-            'name'     => '訪問者によるユーザー新規登録',
+        'user_use_approve' => [
+            'name'     => 'ユーザーの承認',
             'type'     => 'boolean',
             'required' => false,
         ],

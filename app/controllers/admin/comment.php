@@ -15,8 +15,8 @@ $_view['comments'] = model('select_comments', [
     'limit'    => [
         ':offset, :limit',
         [
-            'offset' => $GLOBALS['config']['limit']['comment'] * ($_GET['page'] - 1),
-            'limit'  => $GLOBALS['config']['limit']['comment'],
+            'offset' => $GLOBALS['config']['limit']['admin_comment'] * ($_GET['page'] - 1),
+            'limit'  => $GLOBALS['config']['limit']['admin_comment'],
         ],
     ],
 ], [
@@ -29,7 +29,7 @@ $comment_count = model('select_comments', [
     'associate' => true,
 ]);
 $_view['comment_count'] = $comment_count[0]['count'];
-$_view['comment_page']  = ceil($comment_count[0]['count'] / $GLOBALS['config']['limit']['comment']);
+$_view['comment_page']  = ceil($comment_count[0]['count'] / $GLOBALS['config']['limit']['admin_comment']);
 
 // タイトル
 $_view['title'] = 'コメント管理';
