@@ -35,7 +35,7 @@ if ($GLOBALS['authority']['power'] == 3 && $_GET['directory'] === '') {
 }
 
 // メディアを取得
-$_view['medias'] = service_storage_list($GLOBALS['config']['file_target']['media'] . $_GET['directory'] . '/');
+$_view['medias'] = service_storage_list($GLOBALS['config']['file_target']['media'] . ($_GET['directory'] ? $_GET['directory'] . '/' : ''));
 
 // タイトル
 $_view['title'] = 'メディア管理';

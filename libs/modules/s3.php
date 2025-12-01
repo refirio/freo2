@@ -59,6 +59,7 @@ function s3_exist($key)
 {
     list($client, $setting) = s3_init();
 
+    $result = false;
     try {
         $result = $client->doesObjectExist($setting['bucket'], $key);
     } catch (S3Exception $e) {
@@ -81,6 +82,7 @@ function s3_get($key)
 {
     list($client, $setting) = s3_init();
 
+    $result = false;
     try {
         $result = $client->getObject([
             'Bucket' => $setting['bucket'],
@@ -108,6 +110,7 @@ function s3_put($key, $body = null)
 {
     list($client, $setting) = s3_init();
 
+    $result = false;
     if (preg_match('/\/$/', $key)) {
         // do nothing.
     } else {
@@ -139,11 +142,12 @@ function s3_copy($key, $source)
 {
     list($client, $setting) = s3_init();
 
+    $result = false;
     if (preg_match('/\/$/', $key)) {
         // do nothing.
     } else {
         try {
-            $result = $client->copy(array(
+            $result = $client->copyObject(array(
                 'Bucket'     => $setting['bucket'],
                 'Key'        => $key,
                 'CopySource' => $setting['bucket'] . '/' . $source,
@@ -169,6 +173,7 @@ function s3_remove($key)
 {
     list($client, $setting) = s3_init();
 
+    $result = false;
     if (preg_match('/\/$/', $key)) {
         try {
             $result = $client->listObjects([
@@ -214,13 +219,13 @@ function s3_list($key)
 {
     list($client, $setting) = s3_init();
 
+    $result = false;
     try {
         $result = $client->listObjects([
             'Bucket'    => $setting['bucket'],
             'Prefix'    => $key,
             'Delimiter' => '/',
         ]);
-        $result = $result['Contents'];
     } catch (S3Exception $e) {
         error('S3Exception: ' . $e->getMessage());
     } catch (Exception $e) {

@@ -17,14 +17,14 @@ $directory = $_SESSION['post']['media']['directory'];
 
 if (isset($_SESSION['post']['media']['name']) && isset($_SESSION['post']['media']['rename'])) {
     // ファイルの名前を変更
-    service_storage_rename($GLOBALS['config']['file_target']['media'] . $directory . '/' . $_SESSION['post']['media']['name'], $GLOBALS['config']['file_target']['media'] . $directory . '/' . $_SESSION['post']['media']['rename']);
+    service_storage_rename($GLOBALS['config']['file_target']['media'] . ($directory ? $directory . '/' : '') . $_SESSION['post']['media']['rename'], $GLOBALS['config']['file_target']['media'] . ($directory ? $directory . '/' : '') . $_SESSION['post']['media']['name']);
 } elseif (isset($_SESSION['media'])) {
     // ディレクトリを作成
-    service_storage_put($GLOBALS['config']['file_target']['media'] . $directory . '/');
+    service_storage_put($GLOBALS['config']['file_target']['media'] . ($directory ? $directory . '/' : ''));
 
     // アップロードファイルを一時領域から移動
     foreach ($_SESSION['media'] as $media) {
-        service_storage_rename($GLOBALS['config']['file_target']['temp'] . session_id() . '_' . $media, $GLOBALS['config']['file_target']['media'] . $directory . '/' . $media);
+        service_storage_rename($GLOBALS['config']['file_target']['media'] . ($directory ? $directory . '/' : '') . $media, $GLOBALS['config']['file_target']['temp'] . session_id() . '_' . $media);
     }
 
     // 古いファイルを削除

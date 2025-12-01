@@ -100,7 +100,7 @@
                                             <?php endif ?>
                                             <td>
                                                 <?php if ($_REQUEST['_type'] === 'iframe') : ?>
-                                                <button type="button" class="btn btn-primary btn-sm text-nowrap insert-media" data-url="<?php t(APP_STORAGE_URL . $GLOBALS['config']['file_target']['media'] . $_GET['directory'] . '/' . $media['name']) ?>" data-name="<?php t($media['name']) ?>">挿入</button>
+                                                <button type="button" class="btn btn-primary btn-sm text-nowrap insert-media" data-url="<?php t(APP_STORAGE_URL . $GLOBALS['config']['file_target']['media'] . ($_GET['directory'] ? $_GET['directory'] . '/' : '') . $media['name']) ?>" data-name="<?php t($media['name']) ?>">挿入</button>
                                                 <?php endif ?>
                                                 <a href="<?php t(MAIN_FILE) ?>/admin/media_form?type=file&amp;directory=<?php t($_view['current_dir']) ?>&amp;name=<?php t($media['name']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" class="btn btn-primary<?php t($_REQUEST['_type'] === 'iframe' ? ' btn-sm' : '') ?> text-nowrap">編集</a>
                                             </td>

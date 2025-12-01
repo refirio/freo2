@@ -96,7 +96,7 @@ function service_storage_copy($key, $source)
         if (preg_match('/\/$/', $key)) {
             // do nothing.
         } else {
-            $result = copy($key, $source);
+            $result = copy($source, $key);
         }
     }
 
@@ -121,7 +121,7 @@ function service_storage_rename($key, $source)
         if (preg_match('/\/$/', $key)) {
             // do nothing.
         } else {
-            $result = rename($key, $source);
+            $result = rename($source, $key);
         }
     }
 
@@ -167,9 +167,14 @@ function service_storage_list($key)
 
         if (!empty($list['CommonPrefixes'])) {
             foreach ($list['CommonPrefixes'] as $prefix) {
+                if (preg_match('/^' . preg_quote($key, '/') . '(\w+)\//', $prefix['Prefix'], $matches)) {
+                    $name = $matches[1];
+                } else {
+                    $name = $prefix['Prefix'];
+                }
                 $directories[] = [
                     'type'     => 'directory',
-                    'name'     => $prefix['Prefix'],
+                    'name'     => $name,
                     'modified' => null,
                     'size'     => null,
                 ];
@@ -178,9 +183,14 @@ function service_storage_list($key)
 
         if (!empty($list['Contents'])) {
             foreach ($list['Contents'] as $content) {
+                if (preg_match('/^' . preg_quote($key, '/') . '(.+)/', $content['Key'], $matches)) {
+                    $name = $matches[1];
+                } else {
+                    $name = $content['Key'];
+                }
                 $files[] = [
                     'type'     => 'file',
-                    'name'     => $content['Key'],
+                    'name'     => $name,
                     'modified' => $content['LastModified'],
                     'size'     => $content['Size'],
                 ];

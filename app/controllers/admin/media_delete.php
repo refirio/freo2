@@ -27,7 +27,7 @@ $directory = $_GET['directory'];
 
 if (!empty($_POST['name'])) {
     // メディアを削除
-    service_storage_remove($GLOBALS['config']['file_target']['media'] . $_POST['directory'] . '/' . $_POST['name']);
+    service_storage_remove($GLOBALS['config']['file_target']['media'] . ($_POST['directory'] ? $_POST['directory'] . '/' : '') . $_POST['name']);
 
     // リダイレクト
     redirect('/admin/media?ok=delete' . ($_POST['directory'] === '' ? '' : '&directory=' . $_POST['directory']) . (empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']));
@@ -37,7 +37,7 @@ if (!empty($_POST['name'])) {
 } elseif (empty($_POST['confirm'])) {
     // メディアを削除
     foreach ($_POST['medias'] as $media) {
-        service_storage_remove($GLOBALS['config']['file_target']['media'] . $directory . '/' . $media);
+        service_storage_remove($GLOBALS['config']['file_target']['media'] . ($directory ? $directory . '/' : '') . $media);
     }
 
     // リダイレクト
