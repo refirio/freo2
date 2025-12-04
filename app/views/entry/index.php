@@ -2,15 +2,28 @@
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
                     <h2 class="h4 mb-3">Entry</h2>
-                    <ul class="headline">
-                        <?php foreach ($_view['entries'] as $entry) : ?>
-                        <li>
-                            <time datetime="<?php h(localdate('Y-m-d', $entry['datetime'])) ?>" class="datetime"><?php h(localdate('Y.m.d', $entry['datetime'])) ?></time>
-                            <a href="<?php t(MAIN_FILE) ?>/entry/detail/<?php h($entry['code']) ?>" class="px-2"><?php h($entry['title']) ?></a>
-                            <span class="text"><?php h(truncate(strip_tags($entry['text'] ?? ''), 100)) ?></span>
-                        </li>
+                    <?php foreach ($_view['entries'] as $entry) : ?>
+                    <h3 class="h5"><time datetime="<?php h(localdate('Y-m-d', $entry['datetime'])) ?>"><?php h(localdate('Y/m/d', $entry['datetime'])) ?></time> <?php h($entry['title']) ?></h3>
+
+                    <?php if (!empty($entry['category_sets'])) : ?>
+                    <ul class="category">
+                        <?php foreach ($entry['category_sets'] as $category_sets) : ?>
+                        <li><?php h($category_sets['category_name']) ?></li>
                         <?php endforeach ?>
                     </ul>
+                    <?php endif ?>
+
+                    <div class="text">
+                        <?php if (!empty($entry['thumbnail'])) : ?>
+                        <p class="mt-1"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['entry'] . $entry['id'] . '/' . $entry['thumbnail']) ?>" alt="" class="img-fluid"></p>
+                        <?php endif ?>
+
+                        <?php if (!empty($entry['text'])) : ?>
+                        <p class="mb-1"><?php h(truncate(strip_tags($entry['text'] ?? ''), 100)) ?></p>
+                        <?php endif ?>
+                        <p class="mt-1"><a href="<?php t(MAIN_FILE) ?>/entry/detail/<?php h($entry['code']) ?>">エントリーを読む</a></p>
+                    </div>
+                    <?php endforeach ?>
 
                     <?php if ($_view['entry_page'] > 1) : ?>
                     <h3 class="h5">ページ</h3>

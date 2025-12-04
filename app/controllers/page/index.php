@@ -115,6 +115,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+// フィールドを取得
+$_view['fields'] = model('select_fields', [
+    'where'    => 'type_id = ' . intval($pages[0]['type_id']),
+    'order_by' => 'sort, id',
+]);
+
 // コメントを取得
 $_view['comments'] = model('select_comments', [
     'where' => [

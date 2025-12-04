@@ -80,9 +80,9 @@
                                             <td><?php h(truncate($entry['title'], 50)) ?></td>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
                                             <?php if ($GLOBALS['setting']['entry_use_approve']) : ?>
-                                            <td><?php h($GLOBALS['config']['option']['entry']['approved'][$entry['approved']]) ?></td>
+                                            <td><span class="badge rounded-pill text-white bg-secondary"><?php h($GLOBALS['config']['option']['entry']['approved'][$entry['approved']]) ?></span></td>
                                             <?php endif ?>
-                                            <td><?php h($GLOBALS['config']['option']['entry']['public'][$entry['public']]) ?></td>
+                                            <td><span class="badge rounded-pill text-white bg-secondary"><?php h($GLOBALS['config']['option']['entry']['public'][$entry['public']]) ?></span></td>
                                             <td class="d-none d-md-table-cell">
                                                 <?php foreach ($entry['category_sets'] as $category_sets) : ?>
                                                 <div class="text-nowrap"><?php h($category_sets['category_name']) ?></div>

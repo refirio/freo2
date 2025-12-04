@@ -69,7 +69,7 @@
                                             <?php if (empty($user['authority_id'])) : ?>
                                                 -
                                             <?php else : ?>
-                                                <?php h($_view['authority_sets'][$user['authority_id']]) ?>
+                                                <span class="badge rounded-pill text-white bg-secondary"><?php h($_view['authority_sets'][$user['authority_id']]) ?></span>
                                             <?php endif ?>
                                         </td>
                                         <td class="d-none d-md-table-cell">
@@ -79,7 +79,7 @@
                                                 <?php h(localdate('Ymd', $user['loggedin']) == localdate('Ymd') ? localdate('H:i:s', $user['loggedin']) : localdate('Y/m/d', $user['loggedin'])) ?>
                                             <?php endif ?>
                                         </td>
-                                        <td><?php h($GLOBALS['config']['option']['user']['enabled'][$user['enabled']]) ?></td>
+                                        <td><span class="badge rounded-pill text-white bg-secondary"><?php h($GLOBALS['config']['option']['user']['enabled'][$user['enabled']]) ?></span></td>
                                         <td><a href="<?php t(MAIN_FILE) ?>/admin/user_form?id=<?php t($user['id']) ?>" class="btn btn-primary">編集</a></td>
                                     </tr>
                                     <?php endforeach ?>

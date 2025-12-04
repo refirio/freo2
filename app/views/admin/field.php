@@ -64,8 +64,8 @@
                                         <tr id="sort_<?php h($field['id']) ?>">
                                             <td><?php h($field['type_name']) ?></td>
                                             <td><?php h(truncate($field['name'], 50)) ?></td>
-                                            <td><?php h($GLOBALS['config']['option']['field']['kind'][$field['kind']]) ?></td>
-                                            <td><span class="handle text-nowrap">並び替え</span></td>
+                                            <td><span class="badge rounded-pill text-white bg-secondary"><?php h($GLOBALS['config']['option']['field']['kind'][$field['kind']]) ?></span></td>
+                                            <td><span class="handle text-nowrap"><svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-arrow-down-up"/></svg></span></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/field_form?id=<?php t($field['id']) ?>" class="btn btn-primary">編集</a></td>
                                         </tr>
                                         <?php endforeach ?>

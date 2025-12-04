@@ -22,6 +22,7 @@ function select_entries($queries, $options = [])
         // 関連するデータを取得
         if (!isset($queries['select'])) {
             $queries['select'] = 'DISTINCT entries.*, '
+                               . 'types.id AS type_id, '
                                . 'types.code AS type_code, '
                                . 'types.name AS type_name, '
                                . 'types.sort AS type_sort';

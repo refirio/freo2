@@ -45,7 +45,7 @@
                                         <tr>
                                             <th class="text-nowrap d-none d-md-table-cell">コード</th>
                                             <th class="text-nowrap">名前</th>
-                                            <th class="text-nowrap">並び替え</th>
+                                            <th class="text-nowrap">並び順</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
                                     </thead>
@@ -53,7 +53,7 @@
                                         <tr>
                                             <th class="text-nowrap d-none d-md-table-cell">コード</th>
                                             <th class="text-nowrap">名前</th>
-                                            <th class="text-nowrap">並び替え</th>
+                                            <th class="text-nowrap">並び順</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
                                     </tfoot>
@@ -62,7 +62,7 @@
                                         <tr id="sort_<?php h($category['id']) ?>">
                                             <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($category['code'], 50)) ?></code></td>
                                             <td><?php h(truncate($category['name'], 50)) ?></td>
-                                            <td><span class="handle text-nowrap">並び替え</span></td>
+                                            <td><span class="handle text-nowrap"><svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-arrow-down-up"/></svg></span></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/category_form?id=<?php t($category['id']) ?>" class="btn btn-primary">編集</a></td>
                                         </tr>
                                         <?php endforeach ?>
