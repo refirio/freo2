@@ -48,7 +48,7 @@
                                         </dd>
                                         <?php if ($GLOBALS['setting']['comment_use_approve']) : ?>
                                         <dt class="col-sm-2">承認</dt>
-                                        <dd class="col-sm-10"><span class="badge rounded-pill text-white bg-secondary"><?php h($GLOBALS['config']['option']['comment']['approved'][$_view['comment']['approved']]) ?></span></dd>
+                                        <dd class="col-sm-10"><span class="badge <?php t(app_badge('approved', $_view['comment']['approved'])) ?>"><?php h($GLOBALS['config']['option']['comment']['approved'][$_view['comment']['approved']]) ?></span></dd>
                                         <?php endif ?>
                                         <dt class="col-sm-2">メモ</dt>
                                         <dd class="col-sm-10"><?php h($_view['comment']['memo']) ?></dd>

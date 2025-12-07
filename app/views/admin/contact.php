@@ -78,7 +78,7 @@
                                                 <?php endif ?>
                                             </td>
                                             <td><?php h(truncate($contact['subject'], 50)) ?></td>
-                                            <td><span class="badge rounded-pill text-white bg-secondary"><?php h(truncate($GLOBALS['config']['option']['contact']['status'][$contact['status']], 50)) ?></span></td>
+                                            <td><span class="badge <?php t(app_badge('status', $contact['status'])) ?>"><?php h(truncate($GLOBALS['config']['option']['contact']['status'][$contact['status']], 50)) ?></span></td>
                                             <td>
                                                 <a href="<?php t(MAIN_FILE) ?>/admin/contact_view?id=<?php t($contact['id']) ?>" class="btn btn-primary text-nowrap">表示</a>
                                                 <?php if ($GLOBALS['authority']['power'] >= 2) : ?>

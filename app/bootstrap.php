@@ -56,3 +56,45 @@ function app_dataset($get_key, $get_value, $set_key, $set_value)
 
     return $dataset;
 }
+
+/**
+ * Return the class for badge.
+ *
+ * @param string $key
+ * @param string $value
+ *
+ * @return string
+ */
+function app_badge($key, $value)
+{
+    $text_color = 'light';
+    $bg_color   = 'secondary';
+
+    if ($value === 1) {
+        $bg_color = 'success';
+    }
+    if ($value === 0) {
+        $text_color = 'dark';
+        $bg_color   = 'warning';
+    }
+
+    if ($key === 'public') {
+        if ($value === 'all' || $value === 'user' || $value === 'attribute' || $value === 'password') {
+            $bg_color = 'success';
+        }
+    }
+    if ($key === 'kind' || $key === 'authority_id') {
+        $text_color = 'dark';
+        $bg_color   = 'info';
+    }
+    if ($key === 'status') {
+        if ($value === 'closed') {
+            $bg_color = 'success';
+        } else {
+            $text_color = 'dark';
+            $bg_color   = 'warning';
+        }
+    }
+
+    return 'rounded-pill text-' . $text_color . ' bg-' . $bg_color;
+}

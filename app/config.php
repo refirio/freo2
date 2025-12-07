@@ -116,7 +116,7 @@ $GLOBALS['config']['option'] = app_config('APP_OPTION', [
 
 /* ストレージ */
 $GLOBALS['config']['storage_type'] = app_config('APP_STORAGE_TYPE', 'file');
-$GLOBALS['config']['storage_url'] = app_config('APP_STORAGE_URL', null);
+$GLOBALS['config']['storage_url'] = app_config('APP_STORAGE_URL', $GLOBALS['config']['http_url']);
 
 /* ファイルアップロード先 */
 $GLOBALS['config']['file_target'] = app_config('APP_FILE_TARGET', [
@@ -214,4 +214,4 @@ $GLOBALS['config']['recaptcha_site_key'] = app_config('APP_RECAPTCHA_SITE_KEY', 
 $GLOBALS['config']['recaptcha_secret_key'] = app_config('APP_RECAPTCHA_SECRET_KEY', null);
 
 /* プラグイン格納ディレクトリ */
-$GLOBALS['config']['plugin_path'] = app_config('APP_PLUGIN_PATH', 'plugins/');
+$GLOBALS['config']['plugin_path'] = app_config('APP_PLUGIN_PATH', MAIN_APPLICATION_PATH . 'plugins/');

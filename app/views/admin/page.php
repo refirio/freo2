@@ -77,9 +77,9 @@
                                             <td><?php h(truncate($entry['title'], 50)) ?></td>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
                                             <?php if ($GLOBALS['setting']['page_use_approve']) : ?>
-                                            <td><span class="badge rounded-pill text-white bg-secondary"><?php h($GLOBALS['config']['option']['entry']['approved'][$entry['approved']]) ?></span></td>
+                                            <td><span class="badge <?php t(app_badge('approved', $entry['approved'])) ?>"><?php h($GLOBALS['config']['option']['entry']['approved'][$entry['approved']]) ?></span></td>
                                             <?php endif ?>
-                                            <td><span class="badge rounded-pill text-white bg-secondary"><?php h($GLOBALS['config']['option']['entry']['public'][$entry['public']]) ?></span></td>
+                                            <td><span class="badge <?php t(app_badge('public', $entry['public'])) ?>"><?php h($GLOBALS['config']['option']['entry']['public'][$entry['public']]) ?></span></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/page_form?id=<?php t($entry['id']) ?>" class="btn btn-primary text-nowrap">編集</a></td>
                                         </tr>
                                         <?php endforeach ?>

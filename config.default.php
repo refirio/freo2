@@ -9,7 +9,6 @@
 define('APP_HTTP_URL', 'https://example.com');
 define('APP_HTTP_PATH', '/');
 define('APP_STORAGE_TYPE', 'file');
-define('APP_STORAGE_URL', APP_HTTP_URL . '/');
 
 /********* Main ***************************************************************/
 

@@ -39,7 +39,7 @@
                                         <dt class="col-sm-2">お問い合わせ内容</dt>
                                         <dd class="col-sm-10"><?php h($_view['contact']['message']) ?></dd>
                                         <dt class="col-sm-2">状況</dt>
-                                        <dd class="col-sm-10"><span class="badge rounded-pill text-white bg-secondary"><?php h($GLOBALS['config']['option']['contact']['status'][$_view['contact']['status']]) ?></span></dd>
+                                        <dd class="col-sm-10"><span class="badge <?php t(app_badge('status', $_view['contact']['status'])) ?>"><?php h($GLOBALS['config']['option']['contact']['status'][$_view['contact']['status']]) ?></span></dd>
                                         <dt class="col-sm-2">メモ</dt>
                                         <dd class="col-sm-10"><?php h($_view['contact']['memo']) ?></dd>
                                     </dl>

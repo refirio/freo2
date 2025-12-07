@@ -92,7 +92,7 @@
                                                 <?php endif ?>
                                             </td>
                                             <?php if ($GLOBALS['setting']['comment_use_approve']) : ?>
-                                            <td><span class="badge rounded-pill text-white bg-secondary"><?php h($GLOBALS['config']['option']['comment']['approved'][$comment['approved']]) ?></span></td>
+                                            <td><span class="badge <?php t(app_badge('approved', $comment['approved'])) ?>"><?php h($GLOBALS['config']['option']['comment']['approved'][$comment['approved']]) ?></span></td>
                                             <?php endif ?>
                                             <td>
                                                 <a href="<?php t(MAIN_FILE) ?>/admin/comment_view?id=<?php t($comment['id']) ?>" class="btn btn-primary text-nowrap">表示</a>
