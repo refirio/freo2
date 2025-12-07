@@ -48,6 +48,8 @@
                         <li><a href="<?php t(MAIN_FILE) ?>/entry/?archive=<?php t($entry_archive['month']) ?>"><?php h(localdate('Y年n月', $entry_archive['month'])) ?>（<?php h($entry_archive['count']) ?>）</a></li>
                         <?php endforeach ?>
                     </ul>
+
+                    <?php e($_view['widget_sets']['public_page']) ?>
                 </main>
 
 <?php import('app/views/footer.php') ?>

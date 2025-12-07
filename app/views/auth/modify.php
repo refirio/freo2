@@ -55,6 +55,7 @@
                     </form>
                 </div>
             </div>
+            <?php e($_view['widget_sets']['auth_page']) ?>
         </main>
         <div class="my-4 text-center">
             <?php if ($GLOBALS['authority']['power'] >= 1) : ?>

@@ -4,7 +4,7 @@
         <meta charset="<?php t(MAIN_CHARSET) ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?php isset($_view['title']) ? h($_view['title'] . ' | ') : '' ?><?php h($GLOBALS['setting']['title']) ?></title>
-        <?php e($_view['widgets']['initial']) ?>
+        <?php e($_view['widget_sets']['public_initial']) ?>
         <link rel="alternate" href="<?php h($GLOBALS['config']['http_url']) ?>/entry/feed" type="application/rss+xml" title="RSS">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link rel="stylesheet" href="<?php t($GLOBALS['config']['http_path']) ?><?php t(loader_css('common.css')) ?>">
@@ -44,6 +44,6 @@
                             <?php endif; endforeach ?>
                         </ul>
                         <?php endif; endforeach ?>
-                        <?php e($_view['widgets']['menu']) ?>
+                        <?php e($_view['widget_sets']['public_menu']) ?>
                     </div>
                 </nav>

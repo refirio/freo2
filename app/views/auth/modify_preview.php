@@ -41,6 +41,7 @@
                     </form>
                 </div>
             </div>
+            <?php e($_view['widget_sets']['auth_page']) ?>
         </main>
 
 <?php import('app/views/auth/footer.php') ?>

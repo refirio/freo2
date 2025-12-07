@@ -39,6 +39,8 @@
                     <a href="<?php t(MAIN_FILE) ?>/">トップページへ戻る</a>
                 </div>
             </form>
+
+            <?php e($_view['widget_sets']['auth_home']) ?>
         </main>
 
 <?php import('app/views/auth/footer.php') ?>

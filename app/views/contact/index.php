@@ -59,6 +59,8 @@
                     });
                     </script>
                     <?php endif ?>
+
+                    <?php e($_view['widget_sets']['public_page']) ?>
                 </main>
 
 <?php import('app/views/footer.php') ?>

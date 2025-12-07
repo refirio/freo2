@@ -154,17 +154,17 @@ if (!preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
         }
         $_view['menus'][] = $menu;
     }
-
-    // ウィジェットを取得
-    $widgets = model('select_widgets', []);
-    $_view['widgets'] = [];
-    foreach ($widgets as $widget) {
-        $_view['widgets'][$widget['code']] = $widget['text'];
-    }
 }
 
 // メニュー
 import('app/menu.php');
+
+// ウィジェットを取得
+$widgets = model('select_widgets', []);
+$_view['widget_sets'] = [];
+foreach ($widgets as $widget) {
+    $_view['widget_sets'][$widget['code']] = $widget['text'];
+}
 
 // プラグインを取得
 $plugins = model('select_plugins', [

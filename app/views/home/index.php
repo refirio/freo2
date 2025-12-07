@@ -25,7 +25,7 @@
                         </li>
                         <?php endforeach ?>
                     </ul>
-                    <?php e($_view['widgets']['home']) ?>
+                    <?php e($_view['widget_sets']['public_home']) ?>
                 </main>
 
 <?php import('app/views/footer.php') ?>

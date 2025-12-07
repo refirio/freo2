@@ -4,6 +4,7 @@
         <meta charset="<?php t(MAIN_CHARSET) ?>">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title><?php isset($_view['title']) ? h($_view['title'] . ' | ') : '' ?>管理者用 | <?php h($GLOBALS['setting']['title']) ?></title>
+        <?php e($_view['widget_sets']['admin_initial']) ?>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <link href="<?php t($GLOBALS['config']['http_path']) ?><?php t(loader_css('jquery.datetimepicker.min.css')) ?>" rel="stylesheet">
         <link href="<?php t($GLOBALS['config']['http_path']) ?><?php t(loader_css('common.css')) ?>" rel="stylesheet">
@@ -64,6 +65,7 @@
                             <?php endif; endforeach ?>
                         </ul>
                         <?php endif; endforeach ?>
+                        <?php e($_view['widget_sets']['admin_menu']) ?>
                     </div>
                 </nav>
         <?php endif ?>

@@ -17,6 +17,7 @@
                     <p><a href="<?php t(MAIN_FILE) ?>/" class="btn btn-secondary">戻る</a><p>
                 </div>
             </div>
+            <?php e($_view['widget_sets']['auth_page']) ?>
         </main>
 
 <?php import('app/views/auth/footer.php') ?>

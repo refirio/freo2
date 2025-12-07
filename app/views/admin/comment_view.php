@@ -57,6 +57,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php e($_view['widget_sets']['admin_page']) ?>
                 </main>
 
 <?php import('app/views/admin/footer.php') ?>

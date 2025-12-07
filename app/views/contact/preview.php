@@ -25,6 +25,7 @@
                             <button type="submit" class="btn btn-primary px-4">送信</button>
                         </div>
                     </form>
+                    <?php e($_view['widget_sets']['public_page']) ?>
                 </main>
 
 <?php import('app/views/footer.php') ?>

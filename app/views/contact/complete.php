@@ -6,6 +6,7 @@
                     <ul>
                         <li><a href="<?php t(MAIN_FILE) ?>/">戻る</a></li>
                     </ul>
+                    <?php e($_view['widget_sets']['public_page']) ?>
                 </main>
 
 <?php import('app/views/footer.php') ?>

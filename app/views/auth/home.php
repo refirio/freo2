@@ -32,8 +32,10 @@
                         <?php endif ?>
                         <li><a href="<?php t(MAIN_FILE) ?>/auth/logout">ログアウト</a></li>
                     </ul>
+                    <?php e($_view['widget_sets']['auth_menu']) ?>
                 </div>
             </div>
+            <?php e($_view['widget_sets']['auth_home']) ?>
         </main>
         <div class="my-4 text-center">
             <a href="<?php t(MAIN_FILE) ?>/">トップページへ戻る</a>

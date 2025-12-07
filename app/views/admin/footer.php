@@ -73,6 +73,7 @@
         <script src="<?php t($GLOBALS['config']['http_path']) ?><?php t(loader_js('common.js')) ?>"></script>
         <script src="<?php t($GLOBALS['config']['http_path']) ?><?php t(loader_js('admin.js')) ?>"></script>
         <?php isset($_view['script']) ? e($_view['script']) : '' ?>
+        <?php e($_view['widget_sets']['admin_ready']) ?>
         <?php import('app/views/test.php') ?>
     </body>
 </html>

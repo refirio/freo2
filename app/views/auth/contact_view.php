@@ -39,6 +39,7 @@
                     <?php endif ?>
                 </div>
             </div>
+            <?php e($_view['widget_sets']['auth_page']) ?>
         </main>
         <div class="my-4 text-center">
             <a href="<?php t(MAIN_FILE) ?>/auth/home">ホームに戻る</a>

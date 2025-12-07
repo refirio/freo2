@@ -12,7 +12,7 @@
         <script src="<?php t($GLOBALS['config']['http_path']) ?><?php t(loader_js('jquery.min.js')) ?>"></script>
         <script src="<?php t($GLOBALS['config']['http_path']) ?><?php t(loader_js('common.js')) ?>"></script>
         <?php isset($_view['script']) ? e($_view['script']) : '' ?>
-        <?php e($_view['widgets']['ready']) ?>
+        <?php e($_view['widget_sets']['public_ready']) ?>
         <?php import('app/views/test.php') ?>
     </body>
 </html>
