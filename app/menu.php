@@ -83,7 +83,7 @@ $GLOBALS['menu_contents'] = [
                 'link'   => '/admin/field',
                 'active' => '/^field(_|$)/',
                 'icon'   => '#symbol-list-ul',
-                'show'   => $GLOBALS['setting']['menu_admin_field'],
+                'show'   => isset($GLOBALS['authority']) && $GLOBALS['authority']['power'] >= 3 && $GLOBALS['setting']['menu_admin_field'],
             ],
             'page' => [
                 'name'   => 'ページ管理',
@@ -97,14 +97,14 @@ $GLOBALS['menu_contents'] = [
                 'link'   => '/admin/menu',
                 'active' => '/^menu(_|$)/',
                 'icon'   => '#symbol-list-ul',
-                'show'   => $GLOBALS['setting']['menu_admin_menu'],
+                'show'   => isset($GLOBALS['authority']) && $GLOBALS['authority']['power'] >= 3 && $GLOBALS['setting']['menu_admin_menu'],
             ],
             'widget' => [
                 'name'   => 'ウィジェット管理',
                 'link'   => '/admin/widget',
                 'active' => '/^widget(_|$)/',
                 'icon'   => '#symbol-list-ul',
-                'show'   => $GLOBALS['setting']['menu_admin_widget'],
+                'show'   => isset($GLOBALS['authority']) && $GLOBALS['authority']['power'] >= 3 && $GLOBALS['setting']['menu_admin_widget'],
             ],
             'media' => [
                 'name'   => 'メディア管理',

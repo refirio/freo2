@@ -13,8 +13,8 @@ $_view['users'] = model('select_users', [
     'limit'    => [
         ':offset, :limit',
         [
-            'offset' => $GLOBALS['config']['limit']['admin_user'] * ($_GET['page'] - 1),
-            'limit'  => $GLOBALS['config']['limit']['admin_user'],
+            'offset' => $GLOBALS['setting']['number_limit_admin_user'] * ($_GET['page'] - 1),
+            'limit'  => $GLOBALS['setting']['number_limit_admin_user'],
         ],
     ],
 ], [
@@ -27,7 +27,7 @@ $user_count = model('select_users', [
     'associate' => true,
 ]);
 $_view['user_count'] = $user_count[0]['count'];
-$_view['user_page']  = ceil($user_count[0]['count'] / $GLOBALS['config']['limit']['admin_user']);
+$_view['user_page']  = ceil($user_count[0]['count'] / $GLOBALS['setting']['number_limit_admin_user']);
 
 // 権限を取得
 $authorities = model('select_authorities', [

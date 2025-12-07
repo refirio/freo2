@@ -11,6 +11,9 @@
                     <div class="dashboard card shadow-sm mb-3">
                         <div class="card-header heading">ダッシュボード</div>
                         <div class="card-body">
+                            <?php if ($GLOBALS['setting']['admin_description']) : ?>
+                            <p><?php h($GLOBALS['setting']['admin_description']) ?></p>
+                            <?php endif ?>
                             <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
                             <h3 class="h5">コンテンツ</h3>
                             <div class="row">
@@ -43,6 +46,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <?php if ($GLOBALS['authority']['power'] >= 3) : ?>
                             <h3 class="h5">システム</h3>
                             <div class="row">
                                 <div class="col-md-3">
@@ -54,6 +58,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <?php endif ?>
                         </div>
                     </div>
                     <?php e($_view['widget_sets']['admin_home']) ?>

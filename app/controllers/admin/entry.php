@@ -16,8 +16,8 @@ $_view['entries'] = model('select_entries', [
     'limit'    => [
         ':offset, :limit',
         [
-            'offset' => $GLOBALS['config']['limit']['admin_entry'] * ($_GET['page'] - 1),
-            'limit'  => $GLOBALS['config']['limit']['admin_entry'],
+            'offset' => $GLOBALS['setting']['number_limit_admin_entry'] * ($_GET['page'] - 1),
+            'limit'  => $GLOBALS['setting']['number_limit_admin_entry'],
         ],
     ],
 ], [
@@ -31,7 +31,7 @@ $entry_count = model('select_entries', [
     'associate' => true,
 ]);
 $_view['entry_count'] = $entry_count[0]['count'];
-$_view['entry_page']  = ceil($entry_count[0]['count'] / $GLOBALS['config']['limit']['admin_entry']);
+$_view['entry_page']  = ceil($entry_count[0]['count'] / $GLOBALS['setting']['number_limit_admin_entry']);
 
 // タイトル
 $_view['title'] = 'エントリー管理';

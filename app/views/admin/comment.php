@@ -110,10 +110,10 @@
                                 <?php if ($_view['comment_page'] > 1) : ?>
                                     <ul class="pagination d-flex justify-content-end">
                                         <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/comment?page=1" class="page-link">&laquo;</a></li>
-                                        <?php for ($i = max(1, $_GET['page'] - floor($GLOBALS['config']['pager']['admin_comment'] / 2)); $i <= min($_view['comment_page'], $_GET['page'] + floor($GLOBALS['config']['pager']['admin_comment'] / 2)); $i++) : ?>
+                                        <?php for ($i = max(1, $_GET['page'] - floor($GLOBALS['setting']['number_width_admin_comment'] / 2)); $i <= min($_view['comment_page'], $_GET['page'] + floor($GLOBALS['setting']['number_width_admin_comment'] / 2)); $i++) : ?>
                                         <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/comment?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                                         <?php endfor ?>
-                                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/comment?page=<?php t(ceil($_view['comment_count'] / $GLOBALS['config']['limit']['admin_comment'])) ?>" class="page-link">&raquo;</a></li>
+                                        <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/comment?page=<?php t(ceil($_view['comment_count'] / $GLOBALS['setting']['number_limit_admin_entry'])) ?>" class="page-link">&raquo;</a></li>
                                     </ul>
                                 <?php endif ?>
                             </form>

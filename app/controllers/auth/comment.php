@@ -7,7 +7,7 @@ if (isset($_GET['page'])) {
     $_GET['page'] = 1;
 }
 
-// お問い合わせを取得
+// コメントを取得
 $_view['comments'] = model('select_comments', [
     'where'    => [
         'comments.user_id = :user_id',
@@ -19,8 +19,8 @@ $_view['comments'] = model('select_comments', [
     'limit'    => [
         ':offset, :limit',
         [
-            'offset' => $GLOBALS['config']['limit']['comment'] * ($_GET['page'] - 1),
-            'limit'  => $GLOBALS['config']['limit']['comment'],
+            'offset' => $GLOBALS['setting']['number_limit_comment'] * ($_GET['page'] - 1),
+            'limit'  => $GLOBALS['setting']['number_limit_comment'],
         ],
     ],
 ], [
@@ -39,7 +39,7 @@ $comment_count = model('select_comments', [
     'associate' => true,
 ]);
 $_view['comment_count'] = $comment_count[0]['count'];
-$_view['comment_page']  = ceil($comment_count[0]['count'] / $GLOBALS['config']['limit']['comment']);
+$_view['comment_page']  = ceil($comment_count[0]['count'] / $GLOBALS['setting']['number_limit_comment']);
 
 // タイトル
 $_view['title'] = 'コメント履歴';

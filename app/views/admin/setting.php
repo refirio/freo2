@@ -55,6 +55,8 @@
                                             <label class="fw-bold"><?php t($data['name']) ?><?php if ($data['required']) : ?> <span class="badge bg-danger">必須</span><?php endif ?></label>
                                             <?php if ($data['type'] == 'text') : ?>
                                             <input type="text" name="<?php t($key) ?>" size="30" value="<?php t($_view['setting_sets'][$key]) ?>" class="form-control">
+                                            <?php elseif ($data['type'] == 'number') : ?>
+                                            <input type="text" name="<?php t($key) ?>" size="30" value="<?php t($_view['setting_sets'][$key]) ?>" class="form-control" style="width: 100px;">
                                             <?php elseif ($data['type'] == 'textarea') : ?>
                                             <textarea name="<?php t($key) ?>" rows="5" cols="50" class="form-control"><?php t($_view['setting_sets'][$key]) ?></textarea>
                                             <?php elseif ($data['type'] == 'boolean') : ?>

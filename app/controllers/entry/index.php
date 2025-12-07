@@ -29,8 +29,8 @@ $_view['entries'] = service_entry_select_published('entry', [
     'limit'    => [
         ':offset, :limit',
         [
-            'offset' => $GLOBALS['config']['limit']['entry'] * ($_GET['page'] - 1),
-            'limit'  => $GLOBALS['config']['limit']['entry'],
+            'offset' => $GLOBALS['setting']['number_limit_entry'] * ($_GET['page'] - 1),
+            'limit'  => $GLOBALS['setting']['number_limit_entry'],
         ],
     ],
 ]);
@@ -40,7 +40,7 @@ $entry_count = service_entry_select_published('entry', [
     'where'  => $filters['where'],
 ]);
 $_view['entry_count'] = $entry_count[0]['count'];
-$_view['entry_page']  = ceil($entry_count[0]['count'] / $GLOBALS['config']['limit']['entry']);
+$_view['entry_page']  = ceil($entry_count[0]['count'] / $GLOBALS['setting']['number_limit_entry']);
 
 // カテゴリーを取得
 $_view['categories'] = model('select_categories', [

@@ -8,6 +8,7 @@ $GLOBALS['setting_title'] = [
     'comment'    => 'コメント設定',
     'user'       => 'ユーザー設定',
     'restricted' => '制限設定',
+    'number'     => '表示件数設定',
     'menu'       => 'メニュー設定',
     'mail'       => 'メール設定',
 ];
@@ -20,6 +21,16 @@ $GLOBALS['setting_contents'] = [
         ],
         'description' => [
             'name'     => '概要',
+            'type'     => 'text',
+            'required' => false,
+        ],
+        'admin_title' => [
+            'name'     => '管理ページ タイトル',
+            'type'     => 'text',
+            'required' => true,
+        ],
+        'admin_description' => [
+            'name'     => '管理ページ 概要',
             'type'     => 'text',
             'required' => false,
         ],
@@ -128,6 +139,88 @@ $GLOBALS['setting_contents'] = [
         'restricted_password_text' => [
             'name'     => 'パスワード認証で制限された本文に表示する文言',
             'type'     => 'text',
+            'required' => true,
+        ],
+    ],
+    'number' => [
+        'number_limit_entry' => [
+            'name'     => 'エントリーの表示件数',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_limit_contact' => [
+            'name'     => 'お問い合わせの表示件数',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_limit_comment' => [
+            'name'     => 'コメントの表示件数',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_limit_admin_entry' => [
+            'name'     => 'エントリーの表示件数（管理ページ）',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_limit_admin_contact' => [
+            'name'     => 'お問い合わせの表示件数（管理ページ）',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_limit_admin_comment' => [
+            'name'     => 'コメントの表示件数（管理ページ）',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_limit_admin_user' => [
+            'name'     => 'ユーザーの表示件数（管理ページ）',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_limit_admin_log' => [
+            'name'     => 'ログの表示件数（管理ページ）',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_width_entry' => [
+            'name'     => 'エントリーのページャー幅',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_width_contact' => [
+            'name'     => 'お問い合わせのページャー幅',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_width_comment' => [
+            'name'     => 'コメントのページャー幅',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_width_admin_entry' => [
+            'name'     => 'エントリーのページャー幅（管理ページ）',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_width_admin_contact' => [
+            'name'     => 'お問い合わせのページャー幅（管理ページ）',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_width_admin_comment' => [
+            'name'     => 'コメントのページャー幅（管理ページ）',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_width_admin_user' => [
+            'name'     => 'ユーザーのページャー幅（管理ページ）',
+            'type'     => 'number',
+            'required' => true,
+        ],
+        'number_width_admin_log' => [
+            'name'     => 'ログのページャー幅（管理ページ）',
+            'type'     => 'number',
             'required' => true,
         ],
     ],
