@@ -48,7 +48,7 @@
                                             <textarea name="text" rows="10" cols="50" class="form-control"><?php t($_view['widget']['text']) ?></textarea>
                                         </div>
                                         <div class="form-group mb-2">
-                                            <label class="fw-bold">メモ</label>
+                                            <label class="fw-bold">メモ <span class="badge text-light bg-secondary" data-toggle="tooltip" title="公開されないテキスト。">？</span></label>
                                             <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['widget']['memo']) ?></textarea>
                                         </div>
                                         <div class="form-group mt-4">

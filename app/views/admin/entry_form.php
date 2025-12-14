@@ -98,7 +98,7 @@
                                             <input type="text" name="datetime" size="30" value="<?php t($_view['entry']['datetime']) ?>" autocomplete="off" class="form-control" style="width: 200px;">
                                         </div>
                                         <div class="form-group mb-2">
-                                            <label class="fw-bold">コード <span class="badge bg-danger">必須</span></label>
+                                            <label class="fw-bold">コード <span class="badge text-light bg-secondary" data-toggle="tooltip" title="エントリーのURLに使用されます。">？</span> <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="code" size="30" value="<?php t($_view['entry']['code']) ?>" class="form-control">
                                         </div>
                                         <div class="form-group mb-2">

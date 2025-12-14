@@ -1,6 +1,11 @@
 $(document).ready(function() {
 
     /*
+     * ツールチップ
+     */
+    $('[data-toggle="tooltip"]').tooltip();
+
+    /*
      * プレビュー
      */
     $('.preview').on('click', function() {
