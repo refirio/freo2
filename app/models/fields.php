@@ -265,11 +265,27 @@ function validate_fields($queries, $options = [])
         }
     }
 
-    // テキスト
-    if (isset($queries['text'])) {
-        if (!validator_required($queries['text'])) {
-        } elseif (!validator_max_length($queries['text'], 5000)) {
-            $messages['text'] = 'テキストは5000文字以内で入力してください。';
+    // 選択肢
+    if (isset($queries['choices'])) {
+        if (!validator_required($queries['choices'])) {
+        } elseif (!validator_max_length($queries['choices'], 1000)) {
+            $messages['choices'] = '選択肢は1000文字以内で入力してください。';
+        }
+    }
+
+    // 初期値
+    if (isset($queries['initial'])) {
+        if (!validator_required($queries['initial'])) {
+        } elseif (!validator_max_length($queries['initial'], 2000)) {
+            $messages['initial'] = '初期値は2000文字以内で入力してください。';
+        }
+    }
+
+    // 説明
+    if (isset($queries['explanation'])) {
+        if (!validator_required($queries['explanation'])) {
+        } elseif (!validator_max_length($queries['explanation'], 200)) {
+            $messages['explanation'] = '説明は200文字以内で入力してください。';
         }
     }
 
@@ -303,16 +319,18 @@ function validate_fields($queries, $options = [])
 function default_fields()
 {
     return [
-        'id'         => null,
-        'created'    => localdate('Y-m-d H:i:s'),
-        'modified'   => localdate('Y-m-d H:i:s'),
-        'deleted'    => null,
-        'type_id'    => 0,
-        'name'       => '',
-        'kind'       => '',
-        'validation' => null,
-        'text'       => null,
-        'memo'       => null,
-        'sort'       => 0,
+        'id'          => null,
+        'created'     => localdate('Y-m-d H:i:s'),
+        'modified'    => localdate('Y-m-d H:i:s'),
+        'deleted'     => null,
+        'type_id'     => 0,
+        'name'        => '',
+        'kind'        => '',
+        'validation'  => null,
+        'choices'     => null,
+        'initial'     => null,
+        'explanation' => null,
+        'memo'        => null,
+        'sort'        => 0,
     ];
 }

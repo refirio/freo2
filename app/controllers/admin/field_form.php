@@ -14,13 +14,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 入力データを整理
     $post = [
         'field' => model('normalize_fields', [
-            'id'         => isset($_POST['id'])         ? $_POST['id']         : '',
-            'type_id'    => isset($_POST['type_id'])    ? $_POST['type_id']    : '',
-            'name'       => isset($_POST['name'])       ? $_POST['name']       : '',
-            'kind'       => isset($_POST['kind'])       ? $_POST['kind']       : '',
-            'validation' => isset($_POST['validation']) ? $_POST['validation'] : '',
-            'text'       => isset($_POST['text'])       ? $_POST['text']       : '',
-            'memo'       => isset($_POST['memo'])       ? $_POST['memo']       : '',
+            'id'          => isset($_POST['id'])          ? $_POST['id']          : '',
+            'type_id'     => isset($_POST['type_id'])     ? $_POST['type_id']     : '',
+            'name'        => isset($_POST['name'])        ? $_POST['name']        : '',
+            'kind'        => isset($_POST['kind'])        ? $_POST['kind']        : '',
+            'validation'  => isset($_POST['validation'])  ? $_POST['validation']  : '',
+            'choices'     => isset($_POST['choices'])     ? $_POST['choices']     : '',
+            'initial'     => isset($_POST['initial'])     ? $_POST['initial']     : '',
+            'explanation' => isset($_POST['explanation']) ? $_POST['explanation'] : '',
+            'memo'        => isset($_POST['memo'])        ? $_POST['memo']        : '',
         ]),
     ];
 
@@ -51,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $fields = model('select_fields', [
             'where' => [
-                'fields.id = :id AND types.code = ' . db_escape('entry'),
+                'fields.id = :id',
                 [
                     'id' => $_GET['id'],
                 ],

@@ -20,14 +20,16 @@ if (empty($_SESSION['post']['field']['id'])) {
     // フィールドを登録
     $resource = service_field_insert([
         'values' => [
-            'name'       => $_SESSION['post']['field']['name'],
-            'type_id'    => $_SESSION['post']['field']['type_id'],
-            'name'       => $_SESSION['post']['field']['name'],
-            'kind'       => $_SESSION['post']['field']['kind'],
-            'validation' => $_SESSION['post']['field']['validation'],
-            'text'       => $_SESSION['post']['field']['text'],
-            'memo'       => $_SESSION['post']['field']['memo'],
-            'sort'       => $_SESSION['post']['field']['sort'],
+            'name'        => $_SESSION['post']['field']['name'],
+            'type_id'     => $_SESSION['post']['field']['type_id'],
+            'name'        => $_SESSION['post']['field']['name'],
+            'kind'        => $_SESSION['post']['field']['kind'],
+            'validation'  => $_SESSION['post']['field']['validation'],
+            'choices'     => $_SESSION['post']['field']['choices'],
+            'initial'     => $_SESSION['post']['field']['initial'],
+            'explanation' => $_SESSION['post']['field']['explanation'],
+            'memo'        => $_SESSION['post']['field']['memo'],
+            'sort'        => $_SESSION['post']['field']['sort'],
         ],
     ]);
     if (!$resource) {
@@ -37,13 +39,15 @@ if (empty($_SESSION['post']['field']['id'])) {
     // フィールドを編集
     $resource = service_field_update([
         'set'   => [
-            'name'       => $_SESSION['post']['field']['name'],
-            'type_id'    => $_SESSION['post']['field']['type_id'],
-            'name'       => $_SESSION['post']['field']['name'],
-            'kind'       => $_SESSION['post']['field']['kind'],
-            'validation' => $_SESSION['post']['field']['validation'],
-            'text'       => $_SESSION['post']['field']['text'],
-            'memo'       => $_SESSION['post']['field']['memo'],
+            'name'        => $_SESSION['post']['field']['name'],
+            'type_id'     => $_SESSION['post']['field']['type_id'],
+            'name'        => $_SESSION['post']['field']['name'],
+            'kind'        => $_SESSION['post']['field']['kind'],
+            'validation'  => $_SESSION['post']['field']['validation'],
+            'choices'     => $_SESSION['post']['field']['choices'],
+            'initial'     => $_SESSION['post']['field']['initial'],
+            'explanation' => $_SESSION['post']['field']['explanation'],
+            'memo'        => $_SESSION['post']['field']['memo'],
         ],
         'where' => [
             'id = :id',

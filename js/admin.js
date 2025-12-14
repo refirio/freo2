@@ -386,6 +386,22 @@ $(document).ready(function() {
     }
 
     /*
+     * 種類
+     */
+    $('select[name=kind]').on('change', function() {
+        if ($(this).val() == 'select' || $(this).val() == 'radio' || $(this).val() == 'checkbox') {
+            $('.for-kind').show();
+        } else {
+            $('.for-kind').hide();
+        }
+    });
+    if ($('select[name=kind]').val() == 'select' || $('select[name=kind]').val() == 'radio' || $('select[name=kind]').val() == 'checkbox') {
+        $('.for-kind').show();
+    } else {
+        $('.for-kind').hide();
+    }
+
+    /*
      * 並び替え
      */
     $('#sortable table tbody').sortable({

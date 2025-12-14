@@ -65,9 +65,17 @@
                                                 <?php endforeach ?>
                                             </select>
                                         </div>
+                                        <div class="form-group mb-2 for-kind">
+                                            <label class="fw-bold">選択肢</label>
+                                            <textarea name="choices" rows="5" cols="50" class="form-control"><?php t($_view['field']['choices']) ?></textarea>
+                                        </div>
                                         <div class="form-group mb-2">
-                                            <label class="fw-bold">テキスト</label>
-                                            <textarea name="text" rows="5" cols="50" class="form-control"><?php t($_view['field']['text']) ?></textarea>
+                                            <label class="fw-bold">初期値</label>
+                                            <textarea name="initial" rows="5" cols="50" class="form-control"><?php t($_view['field']['initial']) ?></textarea>
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">説明 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="入力画面に表示する説明。">？</span></label>
+                                            <input type="text" name="explanation" size="30" value="<?php t($_view['field']['explanation']) ?>" class="form-control">
                                         </div>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">メモ <span class="badge text-light bg-secondary" data-toggle="tooltip" title="公開されないテキスト。">？</span></label>

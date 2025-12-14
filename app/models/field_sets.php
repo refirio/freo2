@@ -23,7 +23,9 @@ function select_field_sets($queries, $options = [])
                                . 'fields.name AS field_name, '
                                . 'fields.kind AS field_kind, '
                                . 'fields.validation AS field_validation, '
-                               . 'fields.text AS field_text, '
+                               . 'fields.choices AS field_choices, '
+                               . 'fields.initial AS field_initial, '
+                               . 'fields.explanation AS field_explanation, '
                                . 'fields.sort AS field_sort';
         }
 
