@@ -19,6 +19,7 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
                         <div class="card-body">
+                            <p>システムの操作ログを表示します。</p>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>

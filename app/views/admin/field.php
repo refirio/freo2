@@ -17,6 +17,7 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
                         <div class="card-body">
+                            <p>エントリーとページに追加する入力項目を管理します。</p>
                             <p><a href="<?php t(MAIN_FILE) ?>/admin/field_form" class="btn btn-primary">フィールド登録</a></p>
                             <?php if (isset($_GET['ok'])) : ?>
                             <div class="alert alert-success">

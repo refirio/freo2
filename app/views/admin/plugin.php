@@ -17,6 +17,7 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
                         <div class="card-body">
+                            <p>プラグインを管理します。</p>
                             <?php if (isset($_GET['ok'])) : ?>
                             <div class="alert alert-success">
                                 <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>

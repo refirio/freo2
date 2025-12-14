@@ -19,6 +19,7 @@
                     <div class="card shadow-sm mb-3">
                         <div class="card-header heading"><?php h($_view['title']) ?></div>
                         <div class="card-body">
+                            <p>アップロードファイルを管理します。</p>
                             <?php if ($_view['current_dir']) : ?>
                             <p>作業ディレクトリは <code><?php h($_view['current_dir']) ?></code> です。</p>
                             <?php endif ?>
