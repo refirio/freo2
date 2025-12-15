@@ -10,8 +10,8 @@
 
                     <?php if ($_view['page']['picture'] || $_view['page']['thumbnail']) : ?>
                     <div class="images">
-                        <?php if ($_view['page']['picture']) : ?><div class="image"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>" alt=""></div><?php endif ?>
-                        <?php if ($_view['page']['thumbnail']) : ?><div class="image"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt=""></div><?php endif ?>
+                        <?php if ($_view['page']['picture']) : ?><div class="image"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>" alt=""></div><?php endif ?>
+                        <?php if ($_view['page']['thumbnail']) : ?><div class="image"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt=""></div><?php endif ?>
                     </div>
                     <?php endif ?>
                     <?php endif ?>

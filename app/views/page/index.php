@@ -6,12 +6,12 @@
 
                     <?php if (!empty($_view['page']['picture']) && !empty($_view['page']['thumbnail'])) : ?>
                     <div class="images">
-                        <div class="image mt-2 mb-2"><a href="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt="" class="img-fluid"></a></div>
+                        <div class="image mt-2 mb-2"><a href="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt="" class="img-fluid"></a></div>
                     </div>
                     <?php elseif (!empty($_view['page']['picture']) || !empty($_view['page']['thumbnail'])) : ?>
                     <div class="images">
-                        <?php if (!empty($_view['page']['picture'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>" alt="" class="img-fluid"></div><?php endif ?>
-                        <?php if (!empty($_view['page']['thumbnail'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt="" class="img-fluid"></div><?php endif ?>
+                        <?php if (!empty($_view['page']['picture'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>" alt="" class="img-fluid"></div><?php endif ?>
+                        <?php if (!empty($_view['page']['thumbnail'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt="" class="img-fluid"></div><?php endif ?>
                     </div>
                     <?php endif ?>
 
@@ -32,7 +32,7 @@
                                 <?php elseif ($field['kind'] === 'html' || $field['kind'] === 'wysiwyg') : ?>
                                 <?php e($_view['page']['field_sets'][$field['id']]) ?>
                                 <?php elseif ($field['kind'] === 'image' || $field['kind'] === 'file') : ?>
-                                <img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['field'] . $_view['page']['id'] . '_' . $field['id'] . '/' . $_view['page']['field_sets'][$field['id']]) ?>" alt="" class="img-fluid">
+                                <img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['field'] . $_view['page']['id'] . '_' . $field['id'] . '/' . $_view['page']['field_sets'][$field['id']]) ?>" alt="" class="img-fluid">
                                 <?php endif ?>
                             </td>
                         </tr>

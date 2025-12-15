@@ -15,7 +15,7 @@
 
                     <div class="text">
                         <?php if (!empty($entry['thumbnail'])) : ?>
-                        <p class="mt-1"><img src="<?php t($GLOBALS['config']['storage_url'] . $GLOBALS['config']['file_target']['entry'] . $entry['id'] . '/' . $entry['thumbnail']) ?>" alt="" class="img-fluid"></p>
+                        <p class="mt-1"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $entry['id'] . '/' . $entry['thumbnail']) ?>" alt="" class="img-fluid"></p>
                         <?php endif ?>
 
                         <?php if (!empty($entry['text'])) : ?>
