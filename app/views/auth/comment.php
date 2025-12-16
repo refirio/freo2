@@ -3,7 +3,7 @@
         <main class="col-11 col-md-6 mx-auto my-4">
             <div class="mb-4 text-center">
                 <h1 class="h3">
-                    ユーザー情報
+                    マイページ
                 </h1>
             </div>
 
@@ -27,6 +27,7 @@
                         <?php endif ?>
                     </div>
                     <?php endif ?>
+                    <?php e($GLOBALS['setting']['text_auth_comment']) ?>
                     <table class="table table-bordered">
                         <thead>
                             <tr>

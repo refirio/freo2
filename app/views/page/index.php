@@ -2,6 +2,8 @@
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4" id="page-<?php h($_view['page']['code']) ?>">
                     <h2 class="h4 mb-3">Page</h2>
+                    <?php e($GLOBALS['setting']['text_page_index']) ?>
+
                     <h3 class="h5"><?php h($_view['page']['title']) ?></h3>
 
                     <?php if (!empty($_view['page']['picture']) && !empty($_view['page']['thumbnail'])) : ?>
@@ -70,6 +72,7 @@
                     <?php if ($_view['page']['comment'] === 'opened' || ($_view['page']['comment'] === 'user' && !empty($_SESSION['auth']['user']['id']))) : ?>
                     <div id="comment_form">
                         <h3 class="h5 mt-4">コメント投稿</h3>
+                        <?php e($GLOBALS['setting']['text_page_index_comment_form']) ?>
 
                         <?php if (isset($_view['warnings'])) : ?>
                         <div class="alert alert-danger">

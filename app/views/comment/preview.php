@@ -2,7 +2,7 @@
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
                     <h2 class="h4 mb-3"><?php h($_view['title']) ?></h2>
-                    <p>以下の内容で投稿します。</p>
+                    <?php e($GLOBALS['setting']['text_comment_preview']) ?>
                     <form action="<?php t(MAIN_FILE) ?>/comment/preview" method="post">
                         <dl class="row">
                             <dt class="col-sm-2">お名前</dt>

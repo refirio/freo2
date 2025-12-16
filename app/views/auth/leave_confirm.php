@@ -10,7 +10,7 @@
             <div class="card shadow-sm mb-3">
                 <div class="card-header heading"><?php h($_view['title']) ?></div>
                 <div class="card-body">
-                    <p>本当にユーザー情報を削除してもよろしいですか？この操作は取り消すことができません。</p>
+                    <?php e($GLOBALS['setting']['text_auth_leave_confirm']) ?>
                     <form action="<?php t(MAIN_FILE) ?>/auth/leave_confirm" method="post">
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <div class="form-group mt-4">

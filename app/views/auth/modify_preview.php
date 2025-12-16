@@ -10,6 +10,8 @@
             <div class="card shadow-sm mb-3">
                 <div class="card-header heading"><?php h($_view['title']) ?></div>
                 <div class="card-body">
+                    <?php e($GLOBALS['setting']['text_auth_modify_preview']) ?>
+
                     <?php if (isset($_view['warnings'])) : ?>
                     <ul class="warning">
                         <?php foreach ($_view['warnings'] as $warning) : ?>

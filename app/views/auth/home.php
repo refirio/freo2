@@ -22,6 +22,7 @@
                         <a href="<?php t(MAIN_FILE) ?>/auth/email_send">メールアドレスの存在を確認してください。</a>
                     </div>
                     <?php endif ?>
+                    <?php e($GLOBALS['setting']['text_auth_home']) ?>
                     <p>ようこそ、<?php h($_view['_user']['name'] ? $_view['_user']['name'] : $_view['_user']['username']) ?>さん</p>
                     <ul>
                         <li><a href="<?php t(MAIN_FILE) ?>/auth/comment">コメント履歴</a></li>

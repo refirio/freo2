@@ -2,7 +2,7 @@
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
                     <h2 class="h4 mb-3"><?php h($_view['title']) ?></h2>
-                    <p>以下の内容で送信します。</p>
+                    <?php e($GLOBALS['setting']['text_contact_preview']) ?>
                     <form action="<?php t(MAIN_FILE) ?>/contact/preview" method="post">
                         <dl class="row">
                             <?php if (empty($_SESSION['auth']['user']['id'])) : ?>

@@ -10,6 +10,7 @@ $GLOBALS['setting_title'] = [
     'restricted' => '制限設定',
     'number'     => '表示件数設定',
     'menu'       => 'メニュー設定',
+    'text'       => '文言設定',
     'mail'       => 'メール設定',
 ];
 $GLOBALS['setting_contents'] = [
@@ -68,7 +69,7 @@ $GLOBALS['setting_contents'] = [
             ],
         ],
     ],
-    'page'  => [
+    'page' => [
         'page_use_approve' => [
             'name'     => 'ページの承認',
             'type'     => 'boolean',
@@ -246,7 +247,149 @@ $GLOBALS['setting_contents'] = [
             'required' => false,
         ],
     ],
-    'mail'  => [
+    'text' => [
+        'text_home_index' => [
+            'name'     => 'トップページ',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_entry_index' => [
+            'name'     => 'エントリー',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_entry_detail' => [
+            'name'     => 'エントリー 詳細',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_entry_detail_comment_form' => [
+            'name'     => 'エントリー コメント投稿',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_page_index' => [
+            'name'     => 'ページ',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_page_index_comment_form' => [
+            'name'     => 'ページ コメント投稿',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_contact_index' => [
+            'name'     => 'お問い合わせ',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_contact_preview' => [
+            'name'     => 'お問い合わせ 確認',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_contact_complete' => [
+            'name'     => 'お問い合わせ 完了',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_comment_preview' => [
+            'name'     => 'コメント投稿 確認',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_comment_complete' => [
+            'name'     => 'コメント投稿 完了',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_index' => [
+            'name'     => 'ログイン',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_register' => [
+            'name'     => 'ユーザー登録',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_register_preview' => [
+            'name'     => 'ユーザー登録 確認',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_register_complete' => [
+            'name'     => 'ユーザー登録 完了',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_password' => [
+            'name'     => 'パスワード再設定',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_password_form' => [
+            'name'     => 'パスワード再設定 登録',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_password_complete' => [
+            'name'     => 'パスワード再設定 完了',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_home' => [
+            'name'     => 'マイページ',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_comment' => [
+            'name'     => 'コメント履歴',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_comment_form' => [
+            'name'     => 'コメント登録',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_contact' => [
+            'name'     => 'お問い合わせ履歴',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_modify' => [
+            'name'     => 'ユーザー情報編集',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_modify_preview' => [
+            'name'     => 'ユーザー情報編集 確認',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_modify_complete' => [
+            'name'     => 'ユーザー情報編集 完了',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_leave' => [
+            'name'     => 'ユーザー情報削除',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_leave_confirm' => [
+            'name'     => 'ユーザー情報削除 確認',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+        'text_auth_leave_complete' => [
+            'name'     => 'ユーザー情報削除 完了',
+            'type'     => 'textarea',
+            'required' => false,
+        ],
+    ],
+    'mail' => [
         'mail_from' => [
             'name'     => 'メールの送信元',
             'type'     => 'text',

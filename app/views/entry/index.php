@@ -2,6 +2,8 @@
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
                     <h2 class="h4 mb-3">Entry</h2>
+                    <?php e($GLOBALS['setting']['text_entry_index']) ?>
+
                     <?php foreach ($_view['entries'] as $entry) : ?>
                     <h3 class="h5"><time datetime="<?php h(localdate('Y-m-d', $entry['datetime'])) ?>"><?php h(localdate('Y/m/d', $entry['datetime'])) ?></time> <?php h($entry['title']) ?></h3>
 

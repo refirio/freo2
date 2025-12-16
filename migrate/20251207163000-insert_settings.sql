@@ -1,5 +1,5 @@
 INSERT INTO settings VALUES('admin_title', 'Admin Page');
-INSERT INTO settings VALUES('admin_description', '');
+INSERT INTO settings VALUES('admin_description', NULL);
 
 INSERT INTO settings VALUES('number_limit_entry', 10);
 INSERT INTO settings VALUES('number_limit_contact', 10);

@@ -10,6 +10,8 @@
             <div class="card shadow-sm mb-3">
                 <div class="card-header heading"><?php h($_view['title']) ?></div>
                 <div class="card-body">
+                    <?php e($GLOBALS['setting']['text_auth_register_preview']) ?>
+
                     <?php if (isset($_view['warnings'])) : ?>
                     <div class="alert alert-danger">
                         <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>

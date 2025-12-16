@@ -2,6 +2,8 @@
 
                 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
                     <h2 class="h4 mb-3">Entry</h2>
+                    <?php e($GLOBALS['setting']['text_entry_detail']) ?>
+
                     <h3 class="h5"><time datetime="<?php h(localdate('Y-m-d', $_view['entry']['datetime'])) ?>"><?php h(localdate('Y/m/d', $_view['entry']['datetime'])) ?></time> <?php h($_view['entry']['title']) ?></h3>
 
                     <?php if (!empty($_view['entry']['category_sets'])) : ?>
@@ -78,6 +80,7 @@
                     <?php if ($_view['entry']['comment'] === 'opened' || ($_view['entry']['comment'] === 'user' && !empty($_SESSION['auth']['user']['id']))) : ?>
                     <div id="comment_form">
                         <h3 class="h5 mt-4">コメント投稿</h3>
+                        <?php e($GLOBALS['setting']['text_entry_detail_comment_form']) ?>
 
                         <?php if (isset($_view['warnings'])) : ?>
                         <div class="alert alert-danger">

@@ -1,6 +1,8 @@
 <?php import('app/views/header.php') ?>
 
                 <main class="col-md-9 col-lg-10 ms-sm-auto px-3 px-md-4">
+                    <?php e($GLOBALS['setting']['text_home_index']) ?>
+
                     <?php if (!empty($_view['page'])) : ?>
                     <h2 class="h4 mb-3"><?php h($_view['page']['title']) ?></h2>
 

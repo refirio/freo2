@@ -3,13 +3,15 @@
         <main class="col-11 col-md-6 mx-auto my-4">
             <div class="mb-4 text-center">
                 <h1 class="h3">
-                    パスワード再発行
+                    パスワード再設定
                 </h1>
             </div>
 
             <div class="card shadow-sm mb-3">
                 <div class="card-header heading"><?php h($_view['title']) ?></div>
                 <div class="card-body">
+                    <?php e($GLOBALS['setting']['text_auth_password']) ?>
+
                     <?php if (isset($_view['warnings'])) : ?>
                     <div class="alert alert-danger">
                         <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
@@ -26,7 +28,7 @@
                             <input type="text" name="email" size="30" value="<?php t($_view['user']['email']) ?>" class="form-control">
                         </div>
                         <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary px-4">再発行</button>
+                            <button type="submit" class="btn btn-primary px-4">再設定</button>
                         </div>
                     </form>
                 </div>

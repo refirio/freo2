@@ -10,11 +10,9 @@
             <div class="card shadow-sm mb-3">
                 <div class="card-header heading"><?php h($_view['title']) ?></div>
                 <div class="card-body">
+                    <?php e($GLOBALS['setting']['text_auth_leave']) ?>
                     <form action="<?php t(MAIN_FILE) ?>/auth/leave" method="post">
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
-                        <div class="form-group">
-                            ユーザー情報の削除を行います。
-                        </div>
                         <div class="form-group mt-4">
                             <button type="submit" class="btn btn-primary px-4">進む</button>
                         </div>
