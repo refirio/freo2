@@ -48,3 +48,4 @@
                         <?php e($_view['widget_sets']['public_menu']) ?>
                     </div>
                 </nav>
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">

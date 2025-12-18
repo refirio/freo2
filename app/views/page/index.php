@@ -1,60 +1,61 @@
 <?php import('app/views/header.php') ?>
 
-                <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4" id="page-<?php h($_view['page']['code']) ?>">
-                    <h2 class="h4 mb-3">Page</h2>
-                    <?php e($GLOBALS['setting']['text_page_index']) ?>
+                    <div id="page-<?php h($_view['page']['code']) ?>">
+                        <h2 class="h4 mb-3">Page</h2>
+                        <?php e($GLOBALS['setting']['text_page_index']) ?>
 
-                    <h3 class="h5"><?php h($_view['page']['title']) ?></h3>
+                        <h3 class="h5"><?php h($_view['page']['title']) ?></h3>
 
-                    <?php if (!empty($_view['page']['picture']) && !empty($_view['page']['thumbnail'])) : ?>
-                    <div class="images">
-                        <div class="image mt-2 mb-2"><a href="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt="" class="img-fluid"></a></div>
-                    </div>
-                    <?php elseif (!empty($_view['page']['picture']) || !empty($_view['page']['thumbnail'])) : ?>
-                    <div class="images">
-                        <?php if (!empty($_view['page']['picture'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>" alt="" class="img-fluid"></div><?php endif ?>
-                        <?php if (!empty($_view['page']['thumbnail'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt="" class="img-fluid"></div><?php endif ?>
-                    </div>
-                    <?php endif ?>
-
-                    <?php if (!empty($_view['page']['text'])) : ?>
-                    <div class="text">
-                        <?php e($_view['page']['text']) ?>
-                    </div>
-                    <?php endif ?>
-
-                    <?php if (!empty($_view['page']['field_sets'])) : ?>
-                    <table class="table table-bordered">
-                        <?php foreach ($_view['fields'] as $field) : if (isset($_view['page']['field_sets'][$field['id']])) : ?>
-                        <tr>
-                            <th><?php h($field['name']) ?></th>
-                            <td>
-                                <?php if ($field['kind'] === 'text' || $field['kind'] === 'number' || $field['kind'] === 'alphabet' || $field['kind'] === 'textarea' || $field['kind'] === 'select' || $field['kind'] === 'radio' || $field['kind'] === 'checkbox') : ?>
-                                <?php h($_view['page']['field_sets'][$field['id']]) ?>
-                                <?php elseif ($field['kind'] === 'html' || $field['kind'] === 'wysiwyg') : ?>
-                                <?php e($_view['page']['field_sets'][$field['id']]) ?>
-                                <?php elseif ($field['kind'] === 'image' || $field['kind'] === 'file') : ?>
-                                <img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['field'] . $_view['page']['id'] . '_' . $field['id'] . '/' . $_view['page']['field_sets'][$field['id']]) ?>" alt="" class="img-fluid">
-                                <?php endif ?>
-                            </td>
-                        </tr>
-                        <?php endif; endforeach ?>
-                    </table>
-                    <?php endif ?>
-
-                    <?php if ($_view['page']['public'] === 'password' && empty($_SESSION['entry_passwords'][$_view['page']['id']])) : ?>
-                    <form action="<?php t(MAIN_FILE) ?>/page/<?php t($_view['page']['code']) ?>" method="post">
-                        <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
-                        <input type="hidden" name="exec" value="password">
-                        <div class="form-group mb-2">
-                            <label>パスワード</label>
-                            <input type="password" name="password" value="" class="form-control">
+                        <?php if (!empty($_view['page']['picture']) && !empty($_view['page']['thumbnail'])) : ?>
+                        <div class="images">
+                            <div class="image mt-2 mb-2"><a href="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt="" class="img-fluid"></a></div>
                         </div>
-                        <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary px-4">認証</button>
+                        <?php elseif (!empty($_view['page']['picture']) || !empty($_view['page']['thumbnail'])) : ?>
+                        <div class="images">
+                            <?php if (!empty($_view['page']['picture'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>" alt="" class="img-fluid"></div><?php endif ?>
+                            <?php if (!empty($_view['page']['thumbnail'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['page'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt="" class="img-fluid"></div><?php endif ?>
                         </div>
-                    </form>
-                    <?php endif ?>
+                        <?php endif ?>
+
+                        <?php if (!empty($_view['page']['text'])) : ?>
+                        <div class="text">
+                            <?php e($_view['page']['text']) ?>
+                        </div>
+                        <?php endif ?>
+
+                        <?php if (!empty($_view['page']['field_sets'])) : ?>
+                        <table class="table table-bordered">
+                            <?php foreach ($_view['fields'] as $field) : if (isset($_view['page']['field_sets'][$field['id']])) : ?>
+                            <tr>
+                                <th><?php h($field['name']) ?></th>
+                                <td>
+                                    <?php if ($field['kind'] === 'text' || $field['kind'] === 'number' || $field['kind'] === 'alphabet' || $field['kind'] === 'textarea' || $field['kind'] === 'select' || $field['kind'] === 'radio' || $field['kind'] === 'checkbox') : ?>
+                                    <?php h($_view['page']['field_sets'][$field['id']]) ?>
+                                    <?php elseif ($field['kind'] === 'html' || $field['kind'] === 'wysiwyg') : ?>
+                                    <?php e($_view['page']['field_sets'][$field['id']]) ?>
+                                    <?php elseif ($field['kind'] === 'image' || $field['kind'] === 'file') : ?>
+                                    <img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['field'] . $_view['page']['id'] . '_' . $field['id'] . '/' . $_view['page']['field_sets'][$field['id']]) ?>" alt="" class="img-fluid">
+                                    <?php endif ?>
+                                </td>
+                            </tr>
+                            <?php endif; endforeach ?>
+                        </table>
+                        <?php endif ?>
+
+                        <?php if ($_view['page']['public'] === 'password' && empty($_SESSION['entry_passwords'][$_view['page']['id']])) : ?>
+                        <form action="<?php t(MAIN_FILE) ?>/page/<?php t($_view['page']['code']) ?>" method="post">
+                            <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
+                            <input type="hidden" name="exec" value="password">
+                            <div class="form-group mb-2">
+                                <label>パスワード</label>
+                                <input type="password" name="password" value="" class="form-control">
+                            </div>
+                            <div class="form-group mt-4">
+                                <button type="submit" class="btn btn-primary px-4">認証</button>
+                            </div>
+                        </form>
+                        <?php endif ?>
+                    </div>
 
                     <?php if (!empty($_view['comments'])) : ?>
                     <div id="comment">
@@ -135,6 +136,5 @@
                     <?php endif ?>
 
                     <?php e($_view['widget_sets']['public_page']) ?>
-                </main>
 
 <?php import('app/views/footer.php') ?>
