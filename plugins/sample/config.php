@@ -33,5 +33,7 @@ $GLOBALS['plugin']['sample']['author'] = 'refirio';
 /* プラグインURL */
 $GLOBALS['plugin']['sample']['link'] = 'https://refirio.org/';
 
-/* サンプルメッセージ */
-$GLOBALS['plugin']['sample']['message'] = 'これはプラグインのサンプルです。';
+/* プラグイン設定初期値 */
+$GLOBALS['plugin']['sample']['default'] = [
+    'message' => 'これはプラグインのサンプルです。',
+];

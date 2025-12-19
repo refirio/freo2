@@ -239,5 +239,6 @@ function default_plugins()
         'code'     => '',
         'version'  => '',
         'enabled'  => 0,
+        'setting'  => null,
     ];
 }
