@@ -1,29 +1,29 @@
-INSERT INTO settings VALUES('text_home_index', NULL);
-INSERT INTO settings VALUES('text_entry_index', NULL);
-INSERT INTO settings VALUES('text_entry_detail', NULL);
-INSERT INTO settings VALUES('text_entry_detail_comment_form', '<p>コメントを投稿します。</p>');
-INSERT INTO settings VALUES('text_page_index', NULL);
-INSERT INTO settings VALUES('text_page_index_comment_form', '<p>コメントを投稿します。</p>');
-INSERT INTO settings VALUES('text_contact_index', '<p>お問い合わせを送信します。</p>');
-INSERT INTO settings VALUES('text_contact_preview', '<p>以下の内容でお問い合わせを送信します。</p>');
-INSERT INTO settings VALUES('text_contact_complete', '<p>お問い合わせを送信しました。</p>');
-INSERT INTO settings VALUES('text_comment_preview', '<p>以下の内容でコメントを投稿します。</p>');
-INSERT INTO settings VALUES('text_comment_complete', '<p>コメントを投稿しました。</p>');
-INSERT INTO settings VALUES('text_auth_index', NULL);
-INSERT INTO settings VALUES('text_auth_register', '<p>ユーザー情報を登録します。</p>');
-INSERT INTO settings VALUES('text_auth_register_preview', '<p>以下の内容でユーザー情報を登録します。</p>');
-INSERT INTO settings VALUES('text_auth_register_complete', '<p>ユーザー情報を登録しました。</p>');
-INSERT INTO settings VALUES('text_auth_password', '<p>パスワードを再設定したいユーザーのメールアドレスを入力してください。</p>');
-INSERT INTO settings VALUES('text_auth_password_form', '<p>パスワードを再設定します。</p>');
-INSERT INTO settings VALUES('text_auth_password_complete', '<p>パスワードを再設定しました。</p>');
-INSERT INTO settings VALUES('text_auth_home', NULL);
-INSERT INTO settings VALUES('text_auth_email_verified', '<p>メールアドレス認証が完了しました。</p>');
-INSERT INTO settings VALUES('text_auth_comment', NULL);
-INSERT INTO settings VALUES('text_auth_comment_form', '<p>コメントを投稿します。</p>');
-INSERT INTO settings VALUES('text_auth_contact', NULL);
-INSERT INTO settings VALUES('text_auth_modify', '<p>ユーザー情報を編集します。</p>');
-INSERT INTO settings VALUES('text_auth_modify_preview', '<p>以下の内容でユーザー情報を編集します。</p>');
-INSERT INTO settings VALUES('text_auth_modify_complete', '<p>ユーザー情報を編集しました。</p>');
-INSERT INTO settings VALUES('text_auth_leave', '<p>ユーザー情報の削除を行います。</p>');
-INSERT INTO settings VALUES('text_auth_leave_confirm', '<p>本当にユーザー情報を削除してもよろしいですか？この操作は取り消すことができません。</p>');
-INSERT INTO settings VALUES('text_auth_leave_complete', '<p>ユーザー情報を削除しました。</p>');
+INSERT INTO settings VALUES('text_home_index', NULL),
+('text_entry_index', NULL),
+('text_entry_detail', NULL),
+('text_entry_detail_comment_form', '<p>コメントを投稿します。</p>'),
+('text_page_index', NULL),
+('text_page_index_comment_form', '<p>コメントを投稿します。</p>'),
+('text_contact_index', '<p>お問い合わせを送信します。</p>'),
+('text_contact_preview', '<p>以下の内容でお問い合わせを送信します。</p>'),
+('text_contact_complete', '<p>お問い合わせを送信しました。</p>'),
+('text_comment_preview', '<p>以下の内容でコメントを投稿します。</p>'),
+('text_comment_complete', '<p>コメントを投稿しました。</p>'),
+('text_auth_index', NULL),
+('text_auth_register', '<p>ユーザー情報を登録します。</p>'),
+('text_auth_register_preview', '<p>以下の内容でユーザー情報を登録します。</p>'),
+('text_auth_register_complete', '<p>ユーザー情報を登録しました。</p>'),
+('text_auth_password', '<p>パスワードを再設定したいユーザーのメールアドレスを入力してください。</p>'),
+('text_auth_password_form', '<p>パスワードを再設定します。</p>'),
+('text_auth_password_complete', '<p>パスワードを再設定しました。</p>'),
+('text_auth_home', NULL),
+('text_auth_email_verified', '<p>メールアドレス認証が完了しました。</p>'),
+('text_auth_comment', NULL),
+('text_auth_comment_form', '<p>コメントを投稿します。</p>'),
+('text_auth_contact', NULL),
+('text_auth_modify', '<p>ユーザー情報を編集します。</p>'),
+('text_auth_modify_preview', '<p>以下の内容でユーザー情報を編集します。</p>'),
+('text_auth_modify_complete', '<p>ユーザー情報を編集しました。</p>'),
+('text_auth_leave', '<p>ユーザー情報の削除を行います。</p>'),
+('text_auth_leave_confirm', '<p>本当にユーザー情報を削除してもよろしいですか？この操作は取り消すことができません。</p>'),
+('text_auth_leave_complete', '<p>ユーザー情報を削除しました。</p>');
