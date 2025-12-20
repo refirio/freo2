@@ -232,3 +232,20 @@ foreach ($plugins as $plugin) {
         exit;
     }
 }
+
+// テーマを取得
+$themes = model('select_themes', [
+    'where'    => 'enabled = 1',
+    'order_by' => 'code, id',
+]);
+
+// テーマファイルを読み込み
+if (!empty($themes)) {
+    $GLOBALS['_target'] = $GLOBALS['config']['theme_path'] . $themes[0]['code'];
+
+    import('app/config.php');
+
+    $GLOBALS['theme'][$themes[0]['code']]['setting'] = json_decode($themes[0]['setting'], true);
+
+    import('app/bootstrap.php');
+}

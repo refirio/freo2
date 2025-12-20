@@ -145,6 +145,13 @@ $GLOBALS['menu_contents'] = [
                 'icon'   => '#symbol-list-ul',
                 'show'   => true,
             ],
+            'theme' => [
+                'name'   => 'テーマ管理',
+                'link'   => '/admin/theme',
+                'active' => '/^theme(_|$)/',
+                'icon'   => '#symbol-list-ul',
+                'show'   => true,
+            ],
             'plugin' => [
                 'name'   => 'プラグイン管理',
                 'link'   => '/admin/plugin',

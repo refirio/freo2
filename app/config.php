@@ -189,5 +189,8 @@ $GLOBALS['config']['recaptcha_enable'] = app_config('APP_RECAPTCHA_ENABLE', fals
 $GLOBALS['config']['recaptcha_site_key'] = app_config('APP_RECAPTCHA_SITE_KEY', null);
 $GLOBALS['config']['recaptcha_secret_key'] = app_config('APP_RECAPTCHA_SECRET_KEY', null);
 
+/* テーマ格納ディレクトリ */
+$GLOBALS['config']['theme_path'] = app_config('APP_THEME_PATH', MAIN_APPLICATION_PATH . 'themes/');
+
 /* プラグイン格納ディレクトリ */
 $GLOBALS['config']['plugin_path'] = app_config('APP_PLUGIN_PATH', MAIN_APPLICATION_PATH . 'plugins/');
