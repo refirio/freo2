@@ -1,8 +1,8 @@
-                </main>
+        </main>
+        <footer class="px-3 py-2">
+            <div class="container px-lg-5 px-0">
+                <p>Created by <?php h($GLOBALS['setting']['title']) ?>.</p>
             </div>
-        </div>
-        <footer class="pb-1 mx-3 my-4">
-            <p>Created by <?php h($GLOBALS['setting']['title']) ?>.</p>
         </footer>
         <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
             <symbol id="symbol-exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">

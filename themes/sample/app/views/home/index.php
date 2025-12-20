@@ -10,6 +10,10 @@
                 <?php if (!empty($_view['page'])) : ?>
                 <h2 class="h3 mb-3"><?php h($_view['page']['title']) ?></h2>
 
+                <div class="text">
+                    <?php e($_view['page']['text']) ?>
+                </div>
+
                 <?php if (!empty($_view['page']['picture']) && !empty($_view['page']['thumbnail'])) : ?>
                 <div class="images">
                     <div class="image mt-2 mb-2"><a href="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['picture']) ?>"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt="" class="img-fluid"></a></div>
@@ -21,15 +25,11 @@
                 </div>
                 <?php endif ?>
 
-                <div class="text">
-                    <?php e($_view['page']['text']) ?>
-                </div>
-
                 <?php endif ?>
             </div>
 
             <div id="entry">
-                <h2 class="h3 mb-3">エントリー</h2>
+                <h2 class="h3 mb-3">Entry</h2>
                 <ul class="headline">
                     <?php foreach ($_view['entries'] as $entry) : ?>
                     <li>
