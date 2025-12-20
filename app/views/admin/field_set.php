@@ -26,13 +26,13 @@
                                                 <?php elseif ($field['kind'] === 'radio') : ?>
                                                 <?php foreach (explode("\n", $field['choices']) as $value) : ?>
                                                 <div class="field">
-                                                    <label><input type="radio" name="field_sets[<?php t($field['id']) ?>]" value="<?php t($value) ?>" class="form-check-input"<?php !$_view['entry']['id'] && in_array($value, explode("\n", $field['initial'])) ? e(' checked="checked"') : '' ?><?php (isset($_view['entry']['field_sets'][$field['id']]) && in_array($value, explode("\n", $_view['entry']['field_sets'][$field['id']]))) ? e(' checked="checked"') : '' ?>> <?php t($value) ?></label><br>
+                                                    <label><input type="radio" name="field_sets[<?php t($field['id']) ?>]" value="<?php t($value) ?>" class="form-check-input"<?php !$_view['entry']['id'] && in_array($value, $field['initial'] ? explode("\n", $field['initial']) : []) ? e(' checked="checked"') : '' ?><?php (isset($_view['entry']['field_sets'][$field['id']]) && in_array($value, explode("\n", $_view['entry']['field_sets'][$field['id']]))) ? e(' checked="checked"') : '' ?>> <?php t($value) ?></label><br>
                                                 </div>
                                                 <?php endforeach ?>
                                                 <?php elseif ($field['kind'] === 'checkbox') : ?>
                                                 <div class="field">
                                                     <?php foreach (explode("\n", $field['choices']) as $value) : ?>
-                                                    <label><input type="checkbox" name="field_sets[<?php t($field['id']) ?>][]" value="<?php t($value) ?>" class="form-check-input"<?php !$_view['entry']['id'] && in_array($value, explode("\n", $field['initial'])) ? e(' checked="checked"') : '' ?><?php (isset($_view['entry']['field_sets'][$field['id']]) && in_array($value, explode("\n", $_view['entry']['field_sets'][$field['id']]))) ? e(' checked="checked"') : '' ?>> <?php t($value) ?></label><br>
+                                                    <label><input type="checkbox" name="field_sets[<?php t($field['id']) ?>][]" value="<?php t($value) ?>" class="form-check-input"<?php !$_view['entry']['id'] && in_array($value, $field['initial'] ? explode("\n", $field['initial']) : []) ? e(' checked="checked"') : '' ?><?php (isset($_view['entry']['field_sets'][$field['id']]) && in_array($value, explode("\n", $_view['entry']['field_sets'][$field['id']]))) ? e(' checked="checked"') : '' ?>> <?php t($value) ?></label><br>
                                                     <?php endforeach ?>
                                                 </div>
                                                 <?php elseif ($field['kind'] === 'image' || $field['kind'] === 'file') : ?>

@@ -28,6 +28,8 @@
                                         <dd class="col-sm-10"><code class="text-dark"><?php h($_GET['code']) ?></code></dd>
                                         <dt class="col-sm-2">名前</dt>
                                         <dd class="col-sm-10"><?php h($GLOBALS['plugin'][$_GET['code']]['name']) ?></dd>
+                                        <dt class="col-sm-2">バージョン</dt>
+                                        <dd class="col-sm-10"><code class="text-dark"><?php h($GLOBALS['plugin'][$_GET['code']]['version']) ?></code></dd>
                                         <dt class="col-sm-2">概要</dt>
                                         <dd class="col-sm-10"><?php h($GLOBALS['plugin'][$_GET['code']]['description']) ?></dd>
                                         <?php if (isset($GLOBALS['plugin'][$_GET['code']]['detail'])) : ?>
@@ -42,10 +44,20 @@
                                         <dt class="col-sm-2">URL</dt>
                                         <dd class="col-sm-10"><a href="<?php t($GLOBALS['plugin'][$_GET['code']]['link']) ?>" target="_blank"><?php h($GLOBALS['plugin'][$_GET['code']]['link']) ?></a></dd>
                                         <?php endif ?>
-                                        <dt class="col-sm-2">バージョン</dt>
-                                        <dd class="col-sm-10"><code class="text-dark"><?php h($GLOBALS['plugin'][$_GET['code']]['version']) ?></code></dd>
                                         <dt class="col-sm-2">更新日</dt>
                                         <dd class="col-sm-10"><?php h(localdate('Y/m/d', $GLOBALS['plugin'][$_GET['code']]['updated'])) ?></dd>
+                                        <dt class="col-sm-2">状態</dt>
+                                        <dd class="col-sm-10">
+                                            <?php if (empty($_view['plugin'])) : ?>
+                                                インストールされていません。
+                                            <?php else : ?>
+                                                <?php if (empty($_view['plugin']['enabled'])) : ?>
+                                                    有効化されていません。
+                                                <?php else : ?>
+                                                    使用しています。
+                                                <?php endif ?>
+                                            <?php endif ?>
+                                        </dd>
                                     </dl>
                                 </div>
                             </div>

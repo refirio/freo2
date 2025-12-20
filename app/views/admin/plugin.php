@@ -67,7 +67,7 @@
                                                 <?php if (empty($plugin['enabled'])) : ?>
                                                     有効化されていません。
                                                 <?php else : ?>
-                                                    稼働しています。
+                                                    使用しています。
                                                 <?php endif ?>
                                             <?php endif ?>
                                         </td>
