@@ -182,7 +182,11 @@ foreach ($plugins as $plugin) {
 
     import($target_dir . 'config.php');
 
-    $GLOBALS['plugin']['sample']['setting'] = json_decode($plugin['setting'], true);
+    $GLOBALS['plugin'][$plugin['code']]['setting'] = json_decode($plugin['setting'], true);
+
+    if (is_file($target_dir . 'app/bootstrap.php')) {
+        import($target_dir . 'app/bootstrap.php');
+    }
 
     if (is_file($target_dir . 'before.php')) {
         import($target_dir . 'before.php');

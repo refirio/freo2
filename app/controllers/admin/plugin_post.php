@@ -30,7 +30,7 @@ if ($_POST['exec'] == 'install') {
             'code'    => $GLOBALS['plugin'][$_POST['code']]['code'],
             'version' => $GLOBALS['plugin'][$_POST['code']]['version'],
             'enabled' => 0,
-            'setting' => json_encode($GLOBALS['plugin'][$_POST['code']]['default']),
+            'setting' => isset($GLOBALS['plugin'][$_POST['code']]['default']) ? json_encode($GLOBALS['plugin'][$_POST['code']]['default']) : null,
         ],
     ]);
     if (!$resource) {
