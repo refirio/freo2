@@ -6,8 +6,8 @@
             </div>
             <?php endif ?>
 
+            <?php if (!empty($_view['page'])) : ?>
             <div id="page">
-                <?php if (!empty($_view['page'])) : ?>
                 <h2 class="h3 mb-3"><?php h($_view['page']['title']) ?></h2>
 
                 <div class="text">
@@ -24,10 +24,10 @@
                     <?php if (!empty($_view['page']['thumbnail'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt="" class="img-fluid"></div><?php endif ?>
                 </div>
                 <?php endif ?>
-
-                <?php endif ?>
             </div>
+            <?php endif ?>
 
+            <?php if (!empty($_view['entries'])) : ?>
             <div id="entry">
                 <h2 class="h3 mb-3">Entry</h2>
                 <ul class="headline">
@@ -40,6 +40,7 @@
                     <?php endforeach ?>
                 </ul>
             </div>
+            <?php endif ?>
 
             <?php e($_view['widget_sets']['public_home']) ?>
 

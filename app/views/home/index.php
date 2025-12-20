@@ -6,8 +6,8 @@
             </div>
             <?php endif ?>
 
+            <?php if (!empty($_view['page'])) : ?>
             <div id="page">
-                <?php if (!empty($_view['page'])) : ?>
                 <h2 class="h3 mb-3"><?php h($_view['page']['title']) ?></h2>
 
                 <?php if (!empty($_view['page']['picture']) && !empty($_view['page']['thumbnail'])) : ?>
@@ -24,10 +24,10 @@
                 <div class="text">
                     <?php e($_view['page']['text']) ?>
                 </div>
-
-                <?php endif ?>
             </div>
+            <?php endif ?>
 
+            <?php if (!empty($_view['entries'])) : ?>
             <div id="entry">
                 <h2 class="h3 mb-3">エントリー</h2>
                 <ul class="headline">
@@ -40,6 +40,7 @@
                     <?php endforeach ?>
                 </ul>
             </div>
+            <?php endif ?>
 
             <?php e($_view['widget_sets']['public_home']) ?>
 
