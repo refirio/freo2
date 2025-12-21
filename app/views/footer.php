@@ -1,5 +1,5 @@
         </main>
-        <footer class="px-3 py-2">
+        <footer class="px-3 pt-4 pb-2">
             <div class="container px-lg-5 px-0">
                 <p>Created by <?php h($GLOBALS['setting']['title']) ?>.</p>
             </div>

@@ -156,6 +156,9 @@ if (!preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
     }
 }
 
+// 文字列
+import('app/string.php');
+
 // メニュー
 import('app/menu.php');
 

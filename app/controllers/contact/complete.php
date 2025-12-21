@@ -1,4 +1,4 @@
 <?php
 
 // タイトル
-$_view['title'] = 'お問い合わせ完了';
+$_view['title'] = $GLOBALS['string']['heading_contact_form'];

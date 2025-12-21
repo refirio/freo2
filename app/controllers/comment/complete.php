@@ -30,4 +30,4 @@ if (empty($entries)) {
 }
 
 // タイトル
-$_view['title'] = 'コメント投稿完了';
+$_view['title'] = $GLOBALS['string']['heading_comment_form'];

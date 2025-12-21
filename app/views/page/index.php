@@ -57,7 +57,7 @@
 
             <?php if (!empty($_view['comments'])) : ?>
             <div id="comment">
-                <h3 class="h4 mt-4">コメント</h3>
+                <h3 class="h4 mt-4"><?php h($GLOBALS['string']['heading_comment_list']) ?></h3>
 
                 <?php foreach ($_view['comments'] as $comment) : ?>
                 <div class="comment">
@@ -70,7 +70,7 @@
 
             <?php if ($_view['page']['comment'] === 'opened' || ($_view['page']['comment'] === 'user' && !empty($_SESSION['auth']['user']['id']))) : ?>
             <div id="comment_form">
-                <h3 class="h4 mt-4">コメント投稿</h3>
+                <h3 class="h4 mt-4"><?php h($GLOBALS['string']['heading_comment_form']) ?></h3>
                 <?php e($GLOBALS['setting']['text_page_index_comment_form']) ?>
 
                 <?php if (isset($_view['warnings'])) : ?>

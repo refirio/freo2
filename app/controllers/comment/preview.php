@@ -46,4 +46,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // タイトル
-$_view['title'] = 'コメント投稿確認';
+$_view['title'] = $GLOBALS['string']['heading_comment_form'];

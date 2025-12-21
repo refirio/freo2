@@ -2,7 +2,7 @@
 
         <main class="form-login my-5 text-center">
             <form action="<?php t(MAIN_FILE) ?>/auth/<?php empty($_GET['referer']) ? '' : t('?referer=' . rawurlencode($_GET['referer'])) ?>" method="post">
-                <h1 class="mb-4"><?php h($GLOBALS['setting']['title']) ?></h1>
+                <h1 class="mb-4"><?php h($_view['title']) ?></h1>
                 <?php e($GLOBALS['setting']['text_auth_index']) ?>
 
                 <?php if (isset($_view['warnings'])) : ?>
@@ -37,7 +37,7 @@
                 </div>
                 <?php endif ?>
                 <div class="form-group mt-4">
-                    <a href="<?php t(MAIN_FILE) ?>/">トップページへ戻る</a>
+                    <a href="<?php t(MAIN_FILE) ?>/"><?php h($GLOBALS['string']['text_goto_top']) ?></a>
                 </div>
             </form>
 

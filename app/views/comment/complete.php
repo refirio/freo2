@@ -12,7 +12,7 @@
                 <?php endif ?>
 
                 <ul>
-                    <li><a href="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'entry' ? '/entry/detail/' : '/page/') ?><?php t($_view['entry']['code']) ?>">戻る</a></li>
+                    <li><a href="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'entry' ? '/entry/detail/' : '/page/') ?><?php t($_view['entry']['code']) ?>"><?php h($GLOBALS['string']['text_goto_entry']) ?></a></li>
                 </ul>
             </div>
 

@@ -29,7 +29,7 @@
 
             <?php if (!empty($_view['entries'])) : ?>
             <div id="entry">
-                <h2 class="h3 mb-3">エントリー</h2>
+                <h2 class="h3 mb-3"><?php h($GLOBALS['string']['heading_entry_recently']) ?></h2>
                 <ul class="headline">
                     <?php foreach ($_view['entries'] as $entry) : ?>
                     <li>

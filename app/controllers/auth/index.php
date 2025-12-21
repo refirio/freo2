@@ -154,3 +154,6 @@ if (!empty($_SESSION['auth']['user']['id'])) {
         error('不正なアクセスです。');
     }
 }
+
+// タイトル
+$_view['title'] = $GLOBALS['string']['heading_auth'];

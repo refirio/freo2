@@ -4,6 +4,12 @@
 $GLOBALS['menu_group'] = [
     'public' => [
         'home' => [
+            'name' => $GLOBALS['string']['menu_public_home'],
+            'show' => true,
+        ],
+    ],
+    'auth' => [
+        'home' => [
             'name' => 'ホーム',
             'show' => true,
         ],
@@ -31,25 +37,64 @@ $GLOBALS['menu_contents'] = [
     'public' => [
         'home' => [
             'entry' => [
-                'name'   => 'エントリー',
+                'name'   => $GLOBALS['string']['menu_public_entry'],
                 'link'   => '/entry/',
                 'active' => '/^entry$/',
                 'icon'   => null,
                 'show'   => true,
             ],
             'contact' => [
-                'name'   => 'お問い合わせ',
+                'name'   => $GLOBALS['string']['menu_public_contact'],
                 'link'   => '/contact/',
                 'active' => '/^contact$/',
                 'icon'   => null,
                 'show'   => true,
             ],
             'auth' => [
-                'name'   => 'ログイン',
+                'name'   => $GLOBALS['string']['menu_public_auth'],
                 'link'   => '/auth/',
                 'active' => '/^auth$/',
                 'icon'   => null,
                 'show'   => $GLOBALS['setting']['menu_auth'],
+            ],
+        ],
+    ],
+    'auth' => [
+        'home' => [
+            'comment' => [
+                'name'   => $GLOBALS['string']['menu_auth_comment'],
+                'link'   => '/auth/comment',
+                'active' => '/^comment$/',
+                'icon'   => null,
+                'show'   => true,
+            ],
+            'contact' => [
+                'name'   => $GLOBALS['string']['menu_auth_contact'],
+                'link'   => '/auth/contact',
+                'active' => '/^contact$/',
+                'icon'   => null,
+                'show'   => true,
+            ],
+            'modify' => [
+                'name'   => $GLOBALS['string']['menu_auth_modify'],
+                'link'   => '/auth/modify',
+                'active' => '/^modify$/',
+                'icon'   => null,
+                'show'   => true,
+            ],
+            'leave' => [
+                'name'   => $GLOBALS['string']['menu_auth_leave'],
+                'link'   => '/auth/leave',
+                'active' => '/^leave$/',
+                'icon'   => null,
+                'show'   => isset($GLOBALS['authority']) && $GLOBALS['authority']['power'] == 0 && !empty($GLOBALS['setting']['user_use_register']),
+            ],
+            'logout' => [
+                'name'   => $GLOBALS['string']['menu_auth_logout'],
+                'link'   => '/auth/logout',
+                'active' => '/^logout$/',
+                'icon'   => null,
+                'show'   => true,
             ],
         ],
     ],

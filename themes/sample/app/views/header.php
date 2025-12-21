@@ -23,7 +23,7 @@
             <div class="row">
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 mb-3 ps-3 pe-0 d-md-block sidebar collapse">
                     <div class="sidebar-sticky">
-                        <h2 class="h3 mb-3">Menu</h2>
+                        <h2 class="h3 mb-3"><?php h($GLOBALS['string']['heading_menu']) ?></h2>
                         <?php if (!empty($_view['menus'])) : ?>
                         <ul>
                             <?php foreach ($_view['menus'] as $menu) : ?>

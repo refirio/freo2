@@ -23,9 +23,9 @@
         </header>
         <nav id="sidebarMenu" class="mx-3 mb-4 pe-md-0 d-md-block sidebar collapse">
             <div class="container px-0 px-md-5 sidebar-sticky">
-                <h2 class="d-block d-md-none">メニュー</h2>
+                <h2 class="d-block d-md-none"><?php h($GLOBALS['string']['heading_menu']) ?></h2>
                 <ul class="list-group list-group-horizontal-lg">
-                    <li class="list-group-item"><a href="<?php t(MAIN_FILE) ?>/">ホーム</a></li>
+                    <li class="list-group-item"><a href="<?php t(MAIN_FILE) ?>/"><?php h($GLOBALS['string']['menu_public_home']) ?></a></li>
                     <?php foreach ($_view['menus'] as $menu) : ?>
                     <li class="list-group-item"><a href="<?php h($menu['url']) ?>"><?php h($menu['title']) ?></a></li>
                     <?php endforeach ?>

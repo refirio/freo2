@@ -3,7 +3,7 @@
         <main class="col-11 col-md-6 mx-auto my-4">
             <div class="mb-4 text-center">
                 <h1 class="h3">
-                    マイページ
+                    <?php h($GLOBALS['string']['heading_mypage']) ?>
                 </h1>
             </div>
 
@@ -25,13 +25,9 @@
                     <?php e($GLOBALS['setting']['text_auth_home']) ?>
                     <p>ようこそ、<?php h($_view['_user']['name'] ? $_view['_user']['name'] : $_view['_user']['username']) ?>さん</p>
                     <ul>
-                        <li><a href="<?php t(MAIN_FILE) ?>/auth/comment">コメント履歴</a></li>
-                        <li><a href="<?php t(MAIN_FILE) ?>/auth/contact">お問い合わせ履歴</a></li>
-                        <li><a href="<?php t(MAIN_FILE) ?>/auth/modify">ユーザー情報編集</a></li>
-                        <?php if ($GLOBALS['authority']['power'] == 0 && !empty($GLOBALS['setting']['user_use_register'])) : ?>
-                        <li><a href="<?php t(MAIN_FILE) ?>/auth/leave">ユーザー情報削除</a></li>
-                        <?php endif ?>
-                        <li><a href="<?php t(MAIN_FILE) ?>/auth/logout">ログアウト</a></li>
+                        <?php foreach ($GLOBALS['menu_contents']['auth']['home'] as $work_key => $work_value) : if ($work_value['show']) : ?>
+                        <li><a href="<?php t(MAIN_FILE . $work_value['link']) ?>"><?php t($work_value['name']) ?></a></li>
+                        <?php endif; endforeach ?>
                     </ul>
                     <?php e($_view['widget_sets']['auth_menu']) ?>
                 </div>
@@ -39,7 +35,7 @@
             <?php e($_view['widget_sets']['auth_home']) ?>
         </main>
         <div class="my-4 text-center">
-            <a href="<?php t(MAIN_FILE) ?>/">トップページへ戻る</a>
+            <a href="<?php t(MAIN_FILE) ?>/"><?php h($GLOBALS['string']['text_goto_top']) ?></a>
         </div>
 
 <?php import('app/views/auth/footer.php') ?>

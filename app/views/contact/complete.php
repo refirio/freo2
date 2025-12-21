@@ -4,7 +4,7 @@
                 <h2 class="h3 mb-3"><?php h($_view['title']) ?></h2>
                 <?php e($GLOBALS['setting']['text_contact_complete']) ?>
                 <ul>
-                    <li><a href="<?php t(MAIN_FILE) ?>/">戻る</a></li>
+                    <li><a href="<?php t(MAIN_FILE) ?>/"><?php h($GLOBALS['string']['text_goto_top']) ?></a></li>
                 </ul>
             </div>
 
