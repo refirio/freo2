@@ -1,5 +1,7 @@
 <?php
 
+import('libs/modules/recaptcha.php');
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ワンタイムトークン
     if (!token('check')) {
@@ -8,12 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // reCAPTCHA
     if ($GLOBALS['config']['recaptcha_enable'] == true && empty($_SESSION['recaptcha'])) {
-        $recaptcha = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : null;
-        if (!$recaptcha){
-            error('reCAPTCHAでの認証を行ってください。');
-        }
-        $response = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $GLOBALS['config']['recaptcha_secret_key'] . '&response=' . $recaptcha), true);
-        if (intval($response['success']) === 1 && $response['score'] >= 0.5) {
+        $result = recaptcha_verify($GLOBALS['config']['recaptcha_secret_key']);
+        if ($result) {
             $_SESSION['recaptcha'] = true;
         } else {
             error('reCAPTCHAでの認証に失敗しました。');

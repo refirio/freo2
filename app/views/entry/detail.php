@@ -121,22 +121,14 @@
                     </div>
                     <div class="form-group mt-4">
                         <?php if ($GLOBALS['config']['recaptcha_enable'] == true) : ?>
-                        <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+                        <?php recaptcha_input($GLOBALS['config']['recaptcha_site_key']) ?>
                         <?php endif ?>
                         <button type="submit" class="btn btn-primary px-4">投稿</button>
                     </div>
                 </form>
 
                 <?php if ($GLOBALS['config']['recaptcha_enable'] == true) : ?>
-                <script src="https://www.google.com/recaptcha/api.js?render=<?php t($GLOBALS['config']['recaptcha_site_key']) ?>"></script>
-                <script>
-                grecaptcha.ready(function() {
-                    grecaptcha.execute('<?php t($GLOBALS['config']['recaptcha_site_key']) ?>', {action: 'homepage'}).then(function(token) {
-                        var recaptchaResponse = document.getElementById('g-recaptcha-response');
-                        recaptchaResponse.value = token;
-                    });
-                });
-                </script>
+                <?php recaptcha_import($GLOBALS['config']['recaptcha_site_key']) ?>
                 <?php endif ?>
             </div>
             <?php endif ?>
