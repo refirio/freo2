@@ -53,7 +53,7 @@
                                     <div class="card-body">
                                         <?php foreach ($_view['contents'] as $key => $data) : ?>
                                         <div class="form-group mb-2">
-                                            <label class="fw-bold"><?php t($data['name']) ?><?php if ($data['required']) : ?> <span class="badge bg-danger">必須</span><?php endif ?></label>
+                                            <label class="fw-bold"><?php t($data['name']) ?><?php if ($data['explanation']) : ?> <span class="badge text-light bg-secondary" data-toggle="tooltip" title="<?php t($data['explanation']) ?>">？</span><?php endif ?><?php if ($data['required']) : ?> <span class="badge bg-danger">必須</span><?php endif ?></label>
                                             <?php if ($data['type'] == 'text') : ?>
                                             <input type="text" name="<?php t($key) ?>" size="30" value="<?php t($_view['setting_sets'][$key]) ?>" class="form-control">
                                             <?php elseif ($data['type'] == 'number') : ?>
