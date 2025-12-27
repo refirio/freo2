@@ -3,6 +3,12 @@
 import('app/services/user.php');
 import('libs/modules/hash.php');
 
+// 権限を確認
+if (isset($GLOBALS['authority'])) {
+    // リダイレクト
+    redirect('/auth/');
+}
+
 // フォワードを確認
 if (forward() === null) {
     error('不正なアクセスです。');

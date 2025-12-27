@@ -3,6 +3,12 @@
 import('app/services/user.php');
 import('app/services/mail.php');
 
+// 権限を確認
+if (isset($GLOBALS['authority'])) {
+    // リダイレクト
+    redirect('/auth/');
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // ワンタイムトークン
     if (!token('check')) {

@@ -62,6 +62,9 @@ if (!empty($_SESSION['auth']['user']['id'])) {
         // リダイレクト
         redirect('/auth/home');
     } else {
+        // ユーザー情報を取得
+        $_view['_user'] = $users[0];
+
         // 権限を取得
         $authorities = model('select_authorities', [
             'where' => [
@@ -86,7 +89,7 @@ if (!empty($_SESSION['auth']['user']['id'])) {
         } elseif ($GLOBALS['authority']['power'] == 1) {
             // 閲覧者
             if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
-                if (!preg_match('/^(index|contact|contact|comment)(_|$)/', $_REQUEST['_work'])) {
+                if (!preg_match('/^(index|contact|comment)(_|$)/', $_REQUEST['_work'])) {
                     error('不正なアクセスです。');
                 }
             }
@@ -94,10 +97,6 @@ if (!empty($_SESSION['auth']['user']['id'])) {
             // ゲスト
             if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
                 error('不正なアクセスです。');
-            } elseif (preg_match('/^(auth)$/', $_REQUEST['_mode'])) {
-                if (!preg_match('/^(index|home|comment|contact|email|modify|logout|leave)(_|$)/', $_REQUEST['_work'])) {
-                    error('不正なアクセスです。');
-                }
             }
         }
 
@@ -115,13 +114,10 @@ if (!empty($_SESSION['auth']['user']['id'])) {
             ]);
             $GLOBALS['attributes'] = array_column($attribute_sets, 'attribute_id');
         }
-
-        // ユーザー情報を取得
-        $_view['_user'] = $users[0];
     }
 }
 
-if (!preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
+if (!preg_match('/^(auth|admin)$/', $_REQUEST['_mode'])) {
     // ページURLの省略
     if ($GLOBALS['setting']['page_url_omission']) {
         if (is_array($_params) && $_params[0] !== 'page') {

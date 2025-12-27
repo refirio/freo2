@@ -1,5 +1,11 @@
 <?php
 
+// 権限を確認
+if ($GLOBALS['authority']['power'] >= 1) {
+    // リダイレクト
+    redirect('/admin/');
+}
+
 // ユーザーを取得
 $users = model('select_users', [
     'where' => [
@@ -20,12 +26,6 @@ $authorities = model('select_authorities', [
     ],
 ]);
 $GLOBALS['authority'] = $authorities[0];
-
-// 権限を確認
-if ($GLOBALS['authority']['power'] >= 1) {
-    // リダイレクト
-    redirect('/admin/');
-}
 
 // タイトル
 $_view['title'] = 'ホーム';
