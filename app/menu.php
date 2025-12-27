@@ -61,17 +61,17 @@ $GLOBALS['menu_contents'] = [
     ],
     'auth' => [
         'home' => [
-            'comment' => [
-                'name'   => $GLOBALS['string']['menu_auth_comment'],
-                'link'   => '/auth/comment',
-                'active' => '/^comment$/',
-                'icon'   => null,
-                'show'   => true,
-            ],
             'contact' => [
                 'name'   => $GLOBALS['string']['menu_auth_contact'],
                 'link'   => '/auth/contact',
                 'active' => '/^contact$/',
+                'icon'   => null,
+                'show'   => true,
+            ],
+            'comment' => [
+                'name'   => $GLOBALS['string']['menu_auth_comment'],
+                'link'   => '/auth/comment',
+                'active' => '/^comment$/',
                 'icon'   => null,
                 'show'   => true,
             ],

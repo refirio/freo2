@@ -46,7 +46,7 @@
                                             <th class="text-nowrap"><label><input type="checkbox" name="" value="" class="bulks"></label></th>
                                             <?php endif ?>
                                             <th class="text-nowrap d-none d-md-table-cell">日時</th>
-                                            <th class="text-nowrap">名前</th>
+                                            <th class="text-nowrap d-none d-md-table-cell">名前</th>
                                             <th class="text-nowrap">件名</th>
                                             <th class="text-nowrap">状況</th>
                                             <th class="text-nowrap">作業</th>
@@ -58,7 +58,7 @@
                                             <th class="text-nowrap"><label><input type="checkbox" name="" value="" class="bulks"></label></th>
                                             <?php endif ?>
                                             <th class="text-nowrap d-none d-md-table-cell">日時</th>
-                                            <th class="text-nowrap">名前</th>
+                                            <th class="text-nowrap d-none d-md-table-cell">名前</th>
                                             <th class="text-nowrap">件名</th>
                                             <th class="text-nowrap">状況</th>
                                             <th class="text-nowrap">作業</th>
@@ -71,7 +71,7 @@
                                             <td><input type="checkbox" name="bulks[]" value="<?php h($contact['id']) ?>"<?php isset($_SESSION['bulk']['contact'][$contact['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
                                             <?php endif ?>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $contact['created']) == localdate('Ymd') ? localdate('H:i:s', $contact['created']) : localdate('Y/m/d', $contact['created'])) ?></td>
-                                            <td>
+                                            <td class="d-none d-md-table-cell">
                                                 <?php if ($contact['user_id'] && !preg_match('/^DELETED /', $contact['user_username'])) : ?>
                                                 <a href="<?php t(MAIN_FILE) ?>/admin/user_form?id=<?php t($contact['user_id']) ?>" class="text-dark"><code class="text-dark"><?php h(truncate($contact['user_username'], 50)) ?></code></a>
                                                 <?php else : ?>

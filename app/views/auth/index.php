@@ -37,7 +37,7 @@
                 </div>
                 <?php endif ?>
                 <div class="form-group mt-4">
-                    <a href="<?php t(MAIN_FILE) ?>/"><?php h($GLOBALS['string']['text_goto_top']) ?></a>
+                    <a href="<?php t(MAIN_FILE) ?>/"><?php h($GLOBALS['string']['text_goto_home']) ?></a>
                 </div>
             </form>
 

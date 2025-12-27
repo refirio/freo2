@@ -11,7 +11,7 @@
                 <div class="card-header heading"><?php h($_view['title']) ?></div>
                 <div class="card-body">
                     <?php e($GLOBALS['setting']['text_auth_leave_complete']) ?>
-                    <p><a href="<?php t(MAIN_FILE) ?>/" class="btn btn-secondary"><?php h($GLOBALS['string']['text_goto_top']) ?></a><p>
+                    <p><a href="<?php t(MAIN_FILE) ?>/" class="btn btn-secondary"><?php h($GLOBALS['string']['text_goto_home']) ?></a><p>
                 </div>
             </div>
             <?php e($_view['widget_sets']['auth_page']) ?>

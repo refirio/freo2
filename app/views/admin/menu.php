@@ -47,7 +47,7 @@
                                             <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap d-none d-md-table-cell">URL</th>
                                             <th class="text-nowrap">有効</th>
-                                            <th class="text-nowrap">並び替え</th>
+                                            <th class="text-nowrap d-none d-md-table-cell">並び替え</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
                                     </thead>
@@ -56,7 +56,7 @@
                                             <th class="text-nowrap">タイトル</th>
                                             <th class="text-nowrap d-none d-md-table-cell">URL</th>
                                             <th class="text-nowrap">有効</th>
-                                            <th class="text-nowrap">並び替え</th>
+                                            <th class="text-nowrap d-none d-md-table-cell">並び替え</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
                                     </tfoot>
@@ -66,7 +66,7 @@
                                             <td><?php h(truncate($menu['title'], 50)) ?></td>
                                             <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($menu['url'], 50)) ?></code></td>
                                             <td><span class="badge <?php t(app_badge('enabled', $menu['enabled'])) ?>"><?php h($GLOBALS['config']['option']['menu']['enabled'][$menu['enabled']]) ?></span></td>
-                                            <td><span class="handle text-nowrap"><svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-arrow-down-up"/></svg></span></td>
+                                            <td class="text-nowrap d-none d-md-table-cell"><span class="handle text-nowrap"><svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-arrow-down-up"/></svg></span></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/menu_form?id=<?php t($menu['id']) ?>" class="btn btn-primary">編集</a></td>
                                         </tr>
                                         <?php endforeach ?>

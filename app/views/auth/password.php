@@ -36,7 +36,7 @@
             <?php e($_view['widget_sets']['auth_page']) ?>
         </main>
         <div class="my-4 text-center">
-            <a href="<?php t(MAIN_FILE) ?>/"><?php h($GLOBALS['string']['text_goto_top']) ?></a>
+            <a href="<?php t(MAIN_FILE) ?>/"><?php h($GLOBALS['string']['text_goto_home']) ?></a>
         </div>
 
 <?php import('app/views/auth/footer.php') ?>

@@ -66,7 +66,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group mb-2 for-kind">
-                                            <label class="fw-bold">選択肢</label>
+                                            <label class="fw-bold">選択肢 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="改行区切りで複数指定可能。">？</span></label>
                                             <textarea name="choices" rows="5" cols="50" class="form-control"><?php t($_view['field']['choices']) ?></textarea>
                                         </div>
                                         <div class="form-group mb-2">

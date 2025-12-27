@@ -409,6 +409,12 @@ $GLOBALS['setting_contents'] = [
             'type'        => 'textarea',
             'required'    => false,
         ],
+        'text_auth_contact' => [
+            'name'        => 'お問い合わせ履歴',
+            'explanation' => null,
+            'type'        => 'textarea',
+            'required'    => false,
+        ],
         'text_auth_comment' => [
             'name'        => 'コメント履歴',
             'explanation' => null,
@@ -417,12 +423,6 @@ $GLOBALS['setting_contents'] = [
         ],
         'text_auth_comment_form' => [
             'name'        => 'コメント登録',
-            'explanation' => null,
-            'type'        => 'textarea',
-            'required'    => false,
-        ],
-        'text_auth_contact' => [
-            'name'        => 'お問い合わせ履歴',
             'explanation' => null,
             'type'        => 'textarea',
             'required'    => false,

@@ -61,9 +61,9 @@
         </main>
         <div class="my-4 text-center">
             <?php if ($GLOBALS['authority']['power'] >= 1) : ?>
-            <a href="<?php t(MAIN_FILE) ?>/admin/home"><?php h($GLOBALS['string']['text_goto_home']) ?></a>
+            <a href="<?php t(MAIN_FILE) ?>/admin/home"><?php h($GLOBALS['string']['text_goto_auth_home']) ?></a>
             <?php else : ?>
-            <a href="<?php t(MAIN_FILE) ?>/auth/home"><?php h($GLOBALS['string']['text_goto_home']) ?></a>
+            <a href="<?php t(MAIN_FILE) ?>/auth/home"><?php h($GLOBALS['string']['text_goto_auth_home']) ?></a>
             <?php endif ?>
         </div>
 

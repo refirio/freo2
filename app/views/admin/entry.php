@@ -81,9 +81,9 @@
                                             <td><?php h(truncate($entry['title'], 50)) ?></td>
                                             <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
                                             <?php if ($GLOBALS['setting']['entry_use_approve']) : ?>
-                                            <td><span class="badge <?php t(app_badge('approved', $entry['approved'])) ?>"><?php h($GLOBALS['config']['option']['entry']['approved'][$entry['approved']]) ?></span></td>
+                                            <td class="text-nowrap"><span class="badge <?php t(app_badge('approved', $entry['approved'])) ?>"><?php h($GLOBALS['config']['option']['entry']['approved'][$entry['approved']]) ?></span></td>
                                             <?php endif ?>
-                                            <td><span class="badge <?php t(app_badge('public', $entry['public'])) ?>"><?php h($GLOBALS['config']['option']['entry']['public'][$entry['public']]) ?></span></td>
+                                            <td class="text-nowrap"><span class="badge <?php t(app_badge('public', $entry['public'])) ?>"><?php h($GLOBALS['config']['option']['entry']['public'][$entry['public']]) ?></span></td>
                                             <td class="d-none d-md-table-cell">
                                                 <?php foreach ($entry['category_sets'] as $category_sets) : ?>
                                                 <div class="text-nowrap"><?php h($category_sets['category_name']) ?></div>

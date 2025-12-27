@@ -49,12 +49,12 @@
                                         <dt class="col-sm-2">状態</dt>
                                         <dd class="col-sm-10">
                                             <?php if (empty($_view['theme'])) : ?>
-                                                インストールされていません。
+                                                <span class="badge <?php t(app_badge('installed', 0)) ?>">未インストール</span>
                                             <?php else : ?>
                                                 <?php if (empty($_view['theme']['enabled'])) : ?>
-                                                    有効化されていません。
+                                                    <span class="badge <?php t(app_badge('enabled', 0)) ?>">無効</span>
                                                 <?php else : ?>
-                                                    使用しています。
+                                                    <span class="badge <?php t(app_badge('enabled', 1)) ?>">有効</span>
                                                 <?php endif ?>
                                             <?php endif ?>
                                         </dd>

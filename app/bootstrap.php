@@ -78,6 +78,9 @@ function app_badge($key, $value)
         $bg_color   = 'warning';
     }
 
+    if ($value === 'yes') {
+        $bg_color = 'success';
+    }
     if ($key === 'public') {
         if ($value === 'all' || $value === 'user' || $value === 'attribute' || $value === 'password') {
             $bg_color = 'success';
@@ -93,6 +96,12 @@ function app_badge($key, $value)
         } else {
             $text_color = 'dark';
             $bg_color   = 'warning';
+        }
+    }
+    if ($key === 'installed') {
+        if ($value === 0) {
+            $text_color = 'light';
+            $bg_color   = 'secondary';
         }
     }
 

@@ -46,8 +46,8 @@
                                         <tr>
                                             <th class="text-nowrap">対象</th>
                                             <th class="text-nowrap">名前</th>
-                                            <th class="text-nowrap">種類</th>
-                                            <th class="text-nowrap">並び替え</th>
+                                            <th class="text-nowrap d-none d-md-table-cell">種類</th>
+                                            <th class="text-nowrap d-none d-md-table-cell">並び替え</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
                                     </thead>
@@ -55,8 +55,8 @@
                                         <tr>
                                             <th class="text-nowrap">対象</th>
                                             <th class="text-nowrap">名前</th>
-                                            <th class="text-nowrap">種類</th>
-                                            <th class="text-nowrap">並び替え</th>
+                                            <th class="text-nowrap d-none d-md-table-cell">種類</th>
+                                            <th class="text-nowrap d-none d-md-table-cell">並び替え</th>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
                                     </tfoot>
@@ -65,8 +65,8 @@
                                         <tr id="sort_<?php h($field['id']) ?>">
                                             <td><?php h($field['type_name']) ?></td>
                                             <td><?php h(truncate($field['name'], 50)) ?></td>
-                                            <td><span class="badge <?php t(app_badge('kind', $field['kind'])) ?>"><?php h($GLOBALS['config']['option']['field']['kind'][$field['kind']]) ?></span></td>
-                                            <td><span class="handle text-nowrap"><svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-arrow-down-up"/></svg></span></td>
+                                            <td class="text-nowrap d-none d-md-table-cell"><span class="badge <?php t(app_badge('kind', $field['kind'])) ?>"><?php h($GLOBALS['config']['option']['field']['kind'][$field['kind']]) ?></span></td>
+                                            <td class="d-none d-md-table-cell"><span class="handle text-nowrap"><svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-arrow-down-up"/></svg></span></td>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/field_form?id=<?php t($field['id']) ?>" class="btn btn-primary">編集</a></td>
                                         </tr>
                                         <?php endforeach ?>

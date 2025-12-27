@@ -35,7 +35,7 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="text-nowrap">コード</th>
+                                        <th class="text-nowrap d-none d-md-table-cell">コード</th>
                                         <th class="text-nowrap">名前</th>
                                         <th class="text-nowrap">バージョン</th>
                                         <th class="text-nowrap d-none d-md-table-cell">概要</th>
@@ -45,7 +45,7 @@
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th class="text-nowrap">コード</th>
+                                        <th class="text-nowrap d-none d-md-table-cell">コード</th>
                                         <th class="text-nowrap">名前</th>
                                         <th class="text-nowrap">バージョン</th>
                                         <th class="text-nowrap d-none d-md-table-cell">概要</th>
@@ -56,18 +56,18 @@
                                 <tbody>
                                     <?php foreach ($_view['plugins'] as $plugin) : ?>
                                     <tr>
-                                        <td><code class="text-dark"><?php h($plugin['code']) ?></code></td>
+                                        <td class="d-none d-md-table-cell"><code class="text-dark"><?php h($plugin['code']) ?></code></td>
                                         <td><?php h($plugin['name']) ?></td>
                                         <td><code class="text-dark"><?php h($plugin['version']) ?></code></td>
                                         <td class="d-none d-md-table-cell"><?php h($plugin['description']) ?></td>
                                         <td>
                                             <?php if (empty($plugin['installed'])) : ?>
-                                                インストールされていません。
+                                                <span class="badge <?php t(app_badge('installed', 0)) ?>">未インストール</span>
                                             <?php else : ?>
                                                 <?php if (empty($plugin['enabled'])) : ?>
-                                                    有効化されていません。
+                                                    <span class="badge <?php t(app_badge('enabled', 0)) ?>">無効</span>
                                                 <?php else : ?>
-                                                    使用しています。
+                                                    <span class="badge <?php t(app_badge('enabled', 1)) ?>">有効</span>
                                                 <?php endif ?>
                                             <?php endif ?>
                                         </td>

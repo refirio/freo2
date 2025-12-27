@@ -41,7 +41,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-nowrap">ユーザー名</th>
-                                        <th class="text-nowrap">名前</th>
+                                        <th class="text-nowrap d-none d-md-table-cell">名前</th>
                                         <th class="text-nowrap d-none d-md-table-cell">メールアドレス</th>
                                         <th class="text-nowrap">権限</th>
                                         <th class="text-nowrap d-none d-md-table-cell">最終ログイン日時</th>
@@ -52,7 +52,7 @@
                                 <tfoot>
                                     <tr>
                                         <th class="text-nowrap">ユーザー名</th>
-                                        <th class="text-nowrap">名前</th>
+                                        <th class="text-nowrap d-none d-md-table-cell">名前</th>
                                         <th class="text-nowrap d-none d-md-table-cell">メールアドレス</th>
                                         <th class="text-nowrap">権限</th>
                                         <th class="text-nowrap d-none d-md-table-cell">最終ログイン日時</th>
@@ -64,7 +64,7 @@
                                     <?php foreach ($_view['users'] as $user) : ?>
                                     <tr>
                                         <td><code class="text-dark"><?php h($user['username']) ?></code></td>
-                                        <td><?php h($user['name']) ?></td>
+                                        <td class="d-none d-md-table-cell"><?php h($user['name']) ?></td>
                                         <td class="d-none d-md-table-cell"><code class="text-dark"><?php h($user['email']) ?></code><?php h($user['email_verified'] ? '' : '（未確認）') ?></td>
                                         <td>
                                             <?php if (empty($user['authority_id'])) : ?>
