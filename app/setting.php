@@ -183,6 +183,12 @@ $GLOBALS['setting_contents'] = [
             'type'        => 'number',
             'required'    => true,
         ],
+        'number_limit_home_entry' => [
+            'name'        => 'エントリーの表示件数（ホームページ）',
+            'explanation' => '0にすると項目自体が非表示になります。',
+            'type'        => 'number',
+            'required'    => true,
+        ],
         'number_limit_admin_entry' => [
             'name'        => 'エントリーの表示件数（管理ページ）',
             'explanation' => null,
