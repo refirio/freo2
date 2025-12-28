@@ -41,14 +41,14 @@ $GLOBALS['menu_contents'] = [
                 'link'   => '/entry/',
                 'active' => '/^entry$/',
                 'icon'   => null,
-                'show'   => true,
+                'show'   => $GLOBALS['setting']['menu_entry'],
             ],
             'contact' => [
                 'name'   => $GLOBALS['string']['menu_public_contact'],
                 'link'   => '/contact/',
                 'active' => '/^contact$/',
                 'icon'   => null,
-                'show'   => true,
+                'show'   => $GLOBALS['setting']['menu_contact'],
             ],
             'auth' => [
                 'name'   => $GLOBALS['string']['menu_public_auth'],
@@ -66,14 +66,14 @@ $GLOBALS['menu_contents'] = [
                 'link'   => '/auth/contact',
                 'active' => '/^contact$/',
                 'icon'   => null,
-                'show'   => true,
+                'show'   => $GLOBALS['setting']['menu_auth_contact'],
             ],
             'comment' => [
                 'name'   => $GLOBALS['string']['menu_auth_comment'],
                 'link'   => '/auth/comment',
                 'active' => '/^comment$/',
                 'icon'   => null,
-                'show'   => true,
+                'show'   => $GLOBALS['setting']['menu_auth_comment'],
             ],
             'modify' => [
                 'name'   => $GLOBALS['string']['menu_auth_modify'],

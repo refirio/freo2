@@ -6,6 +6,7 @@
 
 body {
     color: #222222;
+    font-size: 110%;
 }
 h1, h2 {
     font-family: 'Roboto', sans-serif;
@@ -27,6 +28,11 @@ header.navbar .navbar-toggler .navbar-toggler-icon {
 
 nav ul {
     padding-left: 1.5rem;
+}
+@media (max-width: 767.98px){
+    #globalMenu {
+        width: 100% !important;
+    }
 }
 
 /********* メインコンテンツ ***************************************************/

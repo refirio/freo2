@@ -15,13 +15,13 @@
     <body>
         <header class="navbar ms-3 pt-0 pb-1 m-3 me-1">
             <h1 class="my-1 my-md-0"><a href="<?php t(MAIN_FILE) ?>/"><?php h($GLOBALS['setting']['title']) ?></a></h1>
-            <button class="navbar-toggler position-absolute top-0 end-0 d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler position-absolute top-0 end-0 d-md-none collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#globalMenu" aria-controls="globalMenu" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
         </header>
         <div class="container-fluid">
             <div class="row">
-                <nav id="sidebarMenu" class="col-md-3 col-lg-2 mb-3 ps-3 pe-0 d-md-block sidebar collapse">
+                <nav id="globalMenu" class="col-md-3 col-lg-2 mb-3 ps-3 pe-0 d-md-block sidebar collapse">
                     <div class="sidebar-sticky">
                         <h2 class="h3 mb-3"><?php h($GLOBALS['string']['heading_menu']) ?></h2>
                         <?php if (!empty($_view['menus'])) : ?>
@@ -33,13 +33,13 @@
                         <?php endif ?>
                         <?php foreach ($GLOBALS['menu_group']['public'] as $menu_key => $menu_value) : if ($menu_value['show']) : ?>
                         <?php if ($menu_key != 'home') : ?>
-                        <h3 class="h5 mb-3"><?php t($menu_value['name']) ?></h3>
+                        <h3 class="h5 mb-3"><?php h($menu_value['name']) ?></h3>
                         <?php endif ?>
                         <ul>
                             <?php foreach ($GLOBALS['menu_contents']['public'][$menu_key] as $work_key => $work_value) : if ($work_value['show']) : ?>
                             <li>
                                 <a class="<?php if (preg_match($work_value['active'], $_REQUEST['_work'])) : ?>fw-bold<?php endif ?>" href="<?php t(MAIN_FILE . $work_value['link']) ?>">
-                                    <?php t($work_value['name']) ?>
+                                    <?php h($work_value['name']) ?>
                                 </a>
                             </li>
                             <?php endif; endforeach ?>

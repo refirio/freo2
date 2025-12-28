@@ -290,7 +290,8 @@ $(document).ready(function() {
      */
     $.datetimepicker.setLocale('ja');
     $('input[name=public_begin], input[name=public_end], input[name=datetime], input[name=attribute_begin], input[name=attribute_end]').datetimepicker({
-        format: 'Y-m-d H:00'
+        format: 'Y-m-d H:i',
+        step: 10
     });
 
     /*

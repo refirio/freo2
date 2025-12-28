@@ -6,12 +6,12 @@
                 <form action="<?php t(MAIN_FILE) ?>/comment/preview" method="post">
                     <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                     <dl class="row">
-                        <dt class="col-sm-2">お名前</dt>
-                        <dd class="col-sm-10"><?php h($_view['comment']['name']) ?></dd>
-                        <dt class="col-sm-2">URL</dt>
-                        <dd class="col-sm-10"><?php if ($_view['comment']['url']) : ?><code class="text-dark"><?php h($_view['comment']['url']) ?></code><?php endif ?></dd>
-                        <dt class="col-sm-2">コメント内容</dt>
-                        <dd class="col-sm-10"><?php h($_view['comment']['message']) ?></dd>
+                        <dt class="col-sm-3">お名前</dt>
+                        <dd class="col-sm-9"><?php h($_view['comment']['name']) ?></dd>
+                        <dt class="col-sm-3">URL</dt>
+                        <dd class="col-sm-9"><?php if ($_view['comment']['url']) : ?><code class="text-dark"><?php h($_view['comment']['url']) ?></code><?php endif ?></dd>
+                        <dt class="col-sm-3">コメント内容</dt>
+                        <dd class="col-sm-9"><?php h($_view['comment']['message']) ?></dd>
                     </dl>
                     <div class="form-group mt-4">
                         <a href="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'entry' ? '/entry/detail/' : '/page/') ?><?php t($_view['entry']['code']) ?>?referer=preview" class="btn btn-secondary px-4">修正</a>
