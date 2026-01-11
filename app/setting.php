@@ -47,7 +47,7 @@ $GLOBALS['setting_contents'] = [
             'type'        => 'boolean',
             'required'    => false,
         ],
-        'entry_use_picture' => [
+        'entry_use_pictures' => [
             'name'        => '写真の入力',
             'explanation' => null,
             'type'        => 'boolean',
@@ -85,7 +85,7 @@ $GLOBALS['setting_contents'] = [
             'type'        => 'boolean',
             'required'    => false,
         ],
-        'page_use_picture' => [
+        'page_use_pictures' => [
             'name'        => '写真の入力',
             'explanation' => null,
             'type'        => 'boolean',

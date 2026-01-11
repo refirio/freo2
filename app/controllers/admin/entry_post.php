@@ -18,7 +18,7 @@ $approve = $GLOBALS['setting']['entry_use_approve'] ? 0 : 1;
 
 // アップロードファイル
 $files = [
-    'picture'   => isset($_SESSION['file']['entry']['picture'])   ? $_SESSION['file']['entry']['picture']   : [],
+    'pictures'  => isset($_SESSION['file']['entry']['pictures'])  ? $_SESSION['file']['entry']['pictures']  : [],
     'thumbnail' => isset($_SESSION['file']['entry']['thumbnail']) ? $_SESSION['file']['entry']['thumbnail'] : [],
 ];
 $fields = model('select_fields', [
@@ -65,6 +65,7 @@ if (empty($_SESSION['post']['entry']['id'])) {
         'category_sets'  => $_SESSION['post']['entry']['category_sets'],
         'attribute_sets' => $_SESSION['post']['entry']['attribute_sets'],
         'files'          => $files,
+        'picture_files'  => $_SESSION['post']['entry']['picture_files'],
     ]);
     if (!$resource) {
         error('データを登録できません。');
@@ -97,6 +98,7 @@ if (empty($_SESSION['post']['entry']['id'])) {
         'category_sets'  => $_SESSION['post']['entry']['category_sets'],
         'attribute_sets' => $_SESSION['post']['entry']['attribute_sets'],
         'files'          => $files,
+        'picture_files'  => $_SESSION['post']['entry']['picture_files'],
     ]);
     if (!$resource) {
         error('データを編集できません。');

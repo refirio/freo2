@@ -63,13 +63,21 @@ function service_entry_select_published($type, $queries, $options = [])
             if ($entry['public'] === 'password' && empty($_SESSION['entry_passwords'][$entry['id']])) {
                 $entry['title']     = $GLOBALS['setting']['restricted_password_title'] . $entry['title'];
                 $entry['text']      = $GLOBALS['setting']['restricted_password_text'];
-                $entry['picture']   = null;
+                $entry['pictures']  = null;
                 $entry['thumbnail'] = null;
             } else {
                 if ($GLOBALS['setting']['entry_text_type'] === 'none') {
                     $entry['text'] = '';
                 } elseif ($GLOBALS['setting']['entry_text_type'] === 'textarea') {
                     $entry['text'] = h($entry['text'], true);
+                }
+
+                if (isset($entry['pictures'])) {
+                    if (empty($entry['pictures'])) {
+                        $entry['pictures'] = [];
+                    } else {
+                        $entry['pictures'] = explode("\n", $entry['pictures']);
+                    }
                 }
             }
         }
@@ -122,6 +130,7 @@ function service_entry_update($queries, $options = [])
         'category_sets'  => isset($options['category_sets'])  ? $options['category_sets']  : [],
         'attribute_sets' => isset($options['attribute_sets']) ? $options['attribute_sets'] : [],
         'files'          => isset($options['files'])          ? $options['files']          : [],
+        'picture_files'  => isset($options['picture_files'])  ? $options['picture_files']  : [],
         'update'         => isset($options['update'])         ? $options['update']         : null,
     ];
 

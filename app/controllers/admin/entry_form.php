@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'field_sets'     => isset($_POST['field_sets'])     ? $_POST['field_sets']     : [],
             'category_sets'  => isset($_POST['category_sets'])  ? $_POST['category_sets']  : [],
             'attribute_sets' => isset($_POST['attribute_sets']) ? $_POST['attribute_sets'] : [],
+            'picture_files'  => isset($_POST['picture_files'])  ? $_POST['picture_files']  : [],
         ]),
     ];
 
@@ -84,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_GET['_type']) && $_GET['_type'] === 'json') {
         // アップロードファイルを確認
         $files = [
-            'picture'   => $_view['entry']['picture']   ? file_mimetype($_view['entry']['picture'])   : null,
+            'pictures'  => $_view['entry']['pictures']  ? file_mimetype($_view['entry']['pictures'])  : null,
             'thumbnail' => $_view['entry']['thumbnail'] ? file_mimetype($_view['entry']['thumbnail']) : null,
         ];
         if (!empty($_GET['id'])) {

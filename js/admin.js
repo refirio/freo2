@@ -70,9 +70,10 @@ $(document).ready(function() {
 
                         var date = new Date();
                         for (var i = 0; i < response.values.files.length; i++) {
-                            target.find('p').append('<img src="' + response.values.files[i] + '&' + date.getTime() + '">');
+                            target.find('p').append('<img src="' + response.values.files[i].data + '&' + date.getTime() + '">');
                         }
 
+                        target.find('p').show();
                         target.find('ul').show();
                     },
                     error: function(message) {
@@ -123,9 +124,10 @@ $(document).ready(function() {
 
                         var date = new Date();
                         for (var i = 0; i < response.values.files.length; i++) {
-                            target.find('p').append('<img src="' + response.values.files[i] + '&' + date.getTime() + '">');
+                            target.find('p').append('<img src="' + response.values.files[i].data + '&' + date.getTime() + '">');
                         }
 
+                        target.find('p').show();
                         target.find('ul').show();
                     },
                     error: function(message) {
@@ -141,7 +143,7 @@ $(document).ready(function() {
          */
         var file_delete = function(key) {
             return function(e) {
-                if (window.confirm('本当に削除してもよろしいですか？')) {
+                //if (window.confirm('本当に削除してもよろしいですか？')) {
                     $.ajax({
                         type: 'post',
                         url: $(this).attr('href'),
@@ -156,6 +158,7 @@ $(document).ready(function() {
                             if (response.status == 'OK') {
                                 // 結果を表示
                                 $('#' + key + ' p img').attr('src', $('#' + key + ' p img').attr('src') + '&amp;' + new Date().getTime());
+                                $('#' + key + ' p').hide();
                                 $('#' + key + ' ul').hide();
                             } else {
                                 // 予期しないエラー
@@ -168,7 +171,7 @@ $(document).ready(function() {
                             console.log(errorThrown);
                         }
                     });
-                }
+                //}
 
                 return false;
             };
@@ -195,7 +198,10 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status == 'OK') {
                     $.each(response.files, function(key, value) {
-                        if (value != null) {
+                        if (value == null) {
+                            // 画像欄を非表示
+                            $('#' + key + ' p').hide();
+                        } else {
                             // 必要な操作メニューを表示
                             $('#' + key + ' ul').show();
                         }
@@ -214,6 +220,119 @@ $(document).ready(function() {
      * ファイル一括アップロード
      */
     if ($('.uploads').length > 0) {
+        /*
+         * ファイルを選択してアップロード
+         */
+        var target = $('.uploads');
+
+        target.upload({
+            url: target.data('upload'),
+            progress: function() {
+                target.find('p').html('アップロードしています。');
+            },
+            success: function(response) {
+                // トークンを更新
+                $('form input.token').val(response.values.token);
+                $('a.token').attr('data-token', response.values.token);
+
+                // 結果を表示
+                var date = new Date();
+                for (var i = 0; i < response.values.files.length; i++) {
+                    target.find('.pictures_result').append('<div class="file"><span class="handle"><img src="' + response.values.files[i].data + '&' + date.getTime() + '"></span><input type="hidden" name="picture_files[]" value="' + response.values.files[i].name + '"><a href="#" class="remove">×</a></div>');
+                }
+            },
+            error: function(message) {
+                // 結果を表示
+                target.find('.pictures_result').html('<div class="warning">アップロードに失敗しました。' + message + '</div>');
+            },
+        });
+
+        /*
+         * ファイルをドラッグ＆ドロップしてアップロード
+         */
+        $(document).on('drop', function(e) {
+            return false;
+        }).on('dragover', function(e) {
+            return false;
+        });
+
+        target.droparea({
+            form: target.closest('form').get(0),
+            url: target.data('upload'),
+            name: target.find('input[type=file]').attr('name'),
+            dragover: function() {
+                target.addClass('dragover');
+            },
+            dragleave: function() {
+                target.removeClass('dragover');
+            },
+            initialize: function() {
+                target.removeClass('dragover');
+                target.find('.pictures_result').html('アップロードを開始します。');
+            },
+            progress: function(total, loaded, percent) {
+                target.find('.pictures_result').html('アップロードしています。' + (total ? ' | ' + Math.round(total / 1024) + 'KB 中 ' + Math.round(loaded / 1024) + 'KB 読み込み | 進捗' + percent + '%' : ''));
+            },
+            success: function(response) {
+                // 結果を表示
+                var date = new Date();
+                for (var i = 0; i < response.values.files.length; i++) {
+                    target.find('.pictures_result').append('<div class="file"><span class="handle"><img src="' + response.values.files[i].data + '&' + date.getTime() + '"></span><input type="hidden" name="picture_files[]" value="' + response.values.files[i].name + '"><a href="#" class="remove">×</a></div>');
+                }
+            },
+            error: function(message) {
+                // 結果を表示
+                target.find('.pictures_result').html('<div class="warning">アップロードに失敗しました。' + message + '</div>');
+            },
+        });
+
+        /*
+         * ファイル選択欄を初期化
+         */
+        $.ajax({
+            type: 'get',
+            url: $('form.validate').attr('action'),
+            cache: false,
+            data: '_type=json',
+            dataType: 'json',
+            success: function(response) {
+                if (response.status == 'OK') {
+                    var date = new Date();
+                    $.each(response.data.entry.pictures.split("\n"), function(index, value) {
+                        target.find('.pictures_result').append('<div class="file"><span class="handle"><img src="' + $('#pictures').data('show') + '&index=' + index + '&' + date.getTime() + '"></span><input type="hidden" name="picture_files[]" value="' + value + '"><a href="#" class="remove">×</a></div>');
+                    });
+                }
+            },
+            error: function(request, status, errorThrown) {
+                console.log(request);
+                console.log(status);
+                console.log(errorThrown);
+            }
+        });
+
+        /*
+         * 並び替え
+         */
+        $('div.pictures_result').sortable({
+            handle: 'span.handle'
+        });
+
+        /*
+         * 「×」ボタンでファイルを削除
+         */
+        $(document).on('click', 'a.remove', function() {
+            //if (window.confirm('本当に削除してもよろしいですか？')) {
+                $(this).parent().remove();
+            //}
+
+            return false;
+        });
+    }
+
+    /*
+     * ファイル一括アップロード
+     */
+    if ($('#uploads').length > 0) {
         /*
          * ファイルを選択してアップロード
          */
@@ -250,8 +369,6 @@ $(document).ready(function() {
         }).on('dragover', function(e) {
             return false;
         });
-
-        var target = $('#uploads');
 
         target.droparea({
             form: target.closest('form').get(0),
@@ -442,6 +559,14 @@ $(document).ready(function() {
                     // window.location.reload();
                 }
             });
+        },
+        helper: function(e, tr) {
+            var originals = tr.children();
+            var helper = tr.clone();
+            helper.children().each(function(index) {
+                $(this).width(originals.eq(index).width());
+            });
+            return helper;
         }
     });
 

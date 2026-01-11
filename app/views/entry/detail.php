@@ -12,13 +12,13 @@
                 </ul>
                 <?php endif ?>
 
-                <?php if (!empty($_view['entry']['picture']) && !empty($_view['entry']['thumbnail'])) : ?>
+                <?php if (!empty($_view['entry']['pictures']) && !empty($_view['entry']['thumbnail'])) : ?>
                 <div class="images">
-                    <div class="image mt-2 mb-2"><a href="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['picture']) ?>"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['thumbnail']) ?>" alt="" class="img-fluid"></a></div>
+                    <div class="image mt-2 mb-2"><a href="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['pictures'][0]) ?>"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['thumbnail']) ?>" alt="" class="img-fluid"></a></div>
                 </div>
-                <?php elseif (!empty($_view['entry']['picture']) || !empty($_view['entry']['thumbnail'])) : ?>
+                <?php elseif (!empty($_view['entry']['pictures']) || !empty($_view['entry']['thumbnail'])) : ?>
                 <div class="images">
-                    <?php if (!empty($_view['entry']['picture'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['picture']) ?>" alt="" class="img-fluid"></div><?php endif ?>
+                    <?php if (!empty($_view['entry']['pictures'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['pictures'][0]) ?>" alt="" class="img-fluid"></div><?php endif ?>
                     <?php if (!empty($_view['entry']['thumbnail'])) : ?><div class="image mt-2 mb-2"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['thumbnail']) ?>" alt="" class="img-fluid"></div><?php endif ?>
                 </div>
                 <?php endif ?>

@@ -7,10 +7,11 @@ div.upload {
     position: relative;
 }
 div.upload button {
-    width: 100px;
+    width: 120px;
     height: 30px;
     border: 0;
     background-color: #CCCCCC;
+    border-radius: 4px;
 }
 div.upload button:hover {
     background-color: #EEEEEE;
@@ -25,8 +26,8 @@ div.upload p {
     padding: 5px 0 0;
 }
 div.upload p img {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 160px;
+    max-height: 160px;
 }
 div.upload ul {
     display: none;
@@ -34,11 +35,24 @@ div.upload ul {
     padding: 0;
 }
 div.upload ul li {
-    display: inline;
+    display: block;
     list-style: none;
     margin-right: 10px;
     font-size: 90%;
     font-weight: bold;
+}
+div.upload ul li a#thumbnail_delete {
+    display: block;
+    line-height: 1.0;
+    width: 20px;
+    margin-top: 2px;
+    padding-top: 2px;
+    padding-bottom: 4px;
+    border-radius: 4px;
+    background-color: #DD4B39;
+    color: #FFFFFF;
+    text-align: center;
+    text-decoration: none;
 }
 
 /* ファイルをドラッグ＆ドロップしてアップロード */
@@ -53,10 +67,11 @@ div.uploads {
     position: relative;
 }
 div.uploads button {
-    width: 100px;
+    width: 120px;
     height: 30px;
     border: 0;
     background-color: #CCCCCC;
+    border-radius: 4px;
 }
 div.uploads button:hover {
     background-color: #EEEEEE;
@@ -74,4 +89,44 @@ div.uploads p {
 /* ファイルをドラッグ＆ドロップしてアップロード */
 div.uploads.dragover button {
     background-color: #EEEEEE;
+}
+
+/* アップロードファイル一覧 */
+div.uploads div.pictures_result {
+    overflow: auto;
+}
+div.uploads div.pictures_result div.file {
+    float: left;
+    width: 160px;
+    height: 140px;
+    margin-top: 5px;
+    word-break: break-all;
+}
+div.uploads div.pictures_result div.file img {
+    max-width: 148px;
+    max-height: 108px;
+    padding-bottom: 6px;
+}
+div.uploads div.pictures_result div.file a.remove {
+    display: block;
+    line-height: 1.0;
+    width: 20px;
+    margin-top: 2px;
+    padding-top: 2px;
+    padding-bottom: 4px;
+    border-radius: 4px;
+    background-color: #DD4B39;
+    color: #FFFFFF;
+    text-align: center;
+    text-decoration: none;
+}
+div.uploads div.pictures_result span.handle {
+    display: block;
+    cursor: move;
+    width: 150px;
+    height: 110px;
+    line-height: 110px;
+    border: 1px solid #DDDDDD;
+    background-color: #EEEEEE;
+    text-align: center;
 }

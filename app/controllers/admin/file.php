@@ -25,7 +25,19 @@ $mime    = null;
 $content = null;
 
 if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
-    if (isset($_SESSION['file'][$_GET['target']][$_GET['key']]['name']) && isset($_SESSION['file'][$_GET['target']][$_GET['key']]['data'])) {
+    if (isset($_GET['index']) && isset($_SESSION['file'][$_GET['target']][$_GET['key']][$_GET['index']]['name']) && isset($_SESSION['file'][$_GET['target']][$_GET['key']][$_GET['index']]['data'])) {
+        foreach (array_keys($GLOBALS['config']['file_permission'][$_GET['format']]) as $permission) {
+            if (preg_match($GLOBALS['config']['file_permission'][$_GET['format']][$permission]['regexp'], $_SESSION['file'][$_GET['target']][$_GET['key']][$_GET['index']]['name'])) {
+                // マイムタイプ
+                $mime = $GLOBALS['config']['file_permission'][$_GET['format']][$permission]['mime'];
+
+                break;
+            }
+        }
+
+        // コンテンツ
+        $content = $_SESSION['file'][$_GET['target']][$_GET['key']][$_GET['index']]['data'];
+    } elseif (isset($_SESSION['file'][$_GET['target']][$_GET['key']]['name']) && isset($_SESSION['file'][$_GET['target']][$_GET['key']]['data'])) {
         // セッションからファイルを取得
         foreach (array_keys($GLOBALS['config']['file_permission'][$_GET['format']]) as $permission) {
             if (preg_match($GLOBALS['config']['file_permission'][$_GET['format']][$permission]['regexp'], $_SESSION['file'][$_GET['target']][$_GET['key']]['name'])) {
@@ -52,6 +64,15 @@ if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
             warning('データが見つかりません。');
         } else {
             $result = $results[0];
+        }
+
+        if ($_GET['key'] === 'pictures') {
+            $pictures = explode("\n", $result['pictures']);
+            if (isset($pictures[$_GET['index']])) {
+                $result[$_GET['key']] = $pictures[$_GET['index']];
+            } else {
+                $result[$_GET['key']] = null;
+            }
         }
 
         $file = $GLOBALS['config']['file_target'][$_GET['target']] . intval($_GET['id']) . '/' . $result[$_GET['key']];

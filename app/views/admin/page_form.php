@@ -26,7 +26,7 @@
                                 <dt>本文</dt>
                                     <dd><?php h($_view['entry']['text']) ?></dd>
                                 <dt>画像</dt>
-                                    <dd><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=picture&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></dd>
+                                    <dd><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=pictures&amp;format=image&amp;index=0<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></dd>
                                 <dt>サムネイル</dt>
                                     <dd><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=thumbnail&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></dd>
                                 <dt>公開</dt>
@@ -101,16 +101,13 @@
                                             <textarea name="text" rows="10" cols="50" class="form-control<?php if ($GLOBALS['setting']['page_text_type'] === 'wysiwyg') : ?> editor<?php endif ?>"><?php t($_view['entry']['text']) ?></textarea>
                                         </div>
                                         <?php endif ?>
-                                        <?php if ($GLOBALS['setting']['entry_use_picture']) : ?>
+                                        <?php if ($GLOBALS['setting']['page_use_pictures']) : ?>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">画像</label>
-                                            <div class="upload" id="picture" data-upload="<?php t(MAIN_FILE) ?>/admin/file_upload?_type=json&amp;target=entry&amp;key=picture&amp;format=image">
+                                            <div class="uploads" id="pictures" data-upload="<?php t(MAIN_FILE) ?>/admin/file_upload?_type=json&amp;target=entry&amp;key=pictures&amp;format=image" data-show="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=pictures&amp;format=image&amp;id=<?php t($_view['entry']['id']) ?>">
                                                 <button type="button">ファイル選択</button>
-                                                <input type="file" name="picture">
-                                                <p><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=picture&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></p>
-                                                <ul>
-                                                    <li><a href="<?php t(MAIN_FILE) ?>/admin/file_delete?target=entry&amp;key=picture&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>" id="picture_delete" class="token" data-token="<?php t($_view['token']) ?>">削除</a></li>
-                                                </ul>
+                                                <input type="file" name="pictures[]" multiple>
+                                                <div class="pictures_result"></div>
                                             </div>
                                         </div>
                                         <?php endif ?>
@@ -122,7 +119,7 @@
                                                 <input type="file" name="thumbnail">
                                                 <p><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=thumbnail&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></p>
                                                 <ul>
-                                                    <li><a href="<?php t(MAIN_FILE) ?>/admin/file_delete?target=entry&amp;key=thumbnail&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>" id="thumbnail_delete" class="token" data-token="<?php t($_view['token']) ?>">削除</a></li>
+                                                    <li><a href="<?php t(MAIN_FILE) ?>/admin/file_delete?target=entry&amp;key=thumbnail&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>" id="thumbnail_delete" class="token" data-token="<?php t($_view['token']) ?>">×</a></li>
                                                 </ul>
                                             </div>
                                         </div>

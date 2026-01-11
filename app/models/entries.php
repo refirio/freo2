@@ -113,6 +113,7 @@ function insert_entries($queries, $options = [])
         'category_sets'  => isset($options['category_sets'])  ? $options['category_sets']  : [],
         'attribute_sets' => isset($options['attribute_sets']) ? $options['attribute_sets'] : [],
         'files'          => isset($options['files'])          ? $options['files']          : [],
+        'picture_files'  => isset($options['picture_files'])  ? $options['picture_files']  : [],
     ];
 
     // 初期値を取得
@@ -161,10 +162,10 @@ function insert_entries($queries, $options = [])
 
     if (!empty($options['files'])) {
         // 関連するファイルを削除
-        model('remove_file_entries', $entry_id, $options['files']);
+        model('remove_file_entries', $entry_id, $options['files'], $options['picture_files']);
 
         // 関連するファイルを保存
-        model('save_file_entries', $entry_id, $options['files']);
+        model('save_file_entries', $entry_id, $options['files'], $options['picture_files']);
     }
 
     return $resource;
@@ -187,6 +188,7 @@ function update_entries($queries, $options = [])
         'category_sets'  => isset($options['category_sets'])  ? $options['category_sets']  : [],
         'attribute_sets' => isset($options['attribute_sets']) ? $options['attribute_sets'] : [],
         'files'          => isset($options['files'])          ? $options['files']          : [],
+        'picture_files'  => isset($options['picture_files'])  ? $options['picture_files']  : [],
     ];
 
     // 初期値を取得
@@ -228,10 +230,10 @@ function update_entries($queries, $options = [])
 
     if (!empty($options['files'])) {
         // 関連するファイルを削除
-        model('remove_file_entries', $id, $options['files']);
+        model('remove_file_entries', $id, $options['files'], $options['picture_files']);
 
         // 関連するファイルを保存
-        model('save_file_entries', $id, $options['files']);
+        model('save_file_entries', $id, $options['files'], $options['picture_files']);
     }
 
     return $resource;
@@ -787,10 +789,11 @@ function set_attribute_entries($entry_id, $attribute_sets)
  *
  * @param string $id
  * @param array  $files
+ * @param array  $picture_files
  *
  * @return void
  */
-function save_file_entries($id, $files)
+function save_file_entries($id, $files, $picture_files)
 {
     foreach (array_keys($files) as $file) {
         if (preg_match('/^field__(.*)$/', $file, $matches)) {
@@ -806,7 +809,22 @@ function save_file_entries($id, $files)
             $field  = null;
             $key    = intval($id);
         }
-        if (empty($files[$file]['delete']) && !empty($files[$file]['name'])) {
+        if (!empty($files[$file][0])) {
+            $directory = $GLOBALS['config']['file_target'][$target] . $key . '/';
+            $suffix    = '';
+
+            service_storage_put($directory);
+
+            foreach ($files[$file] as $data) {
+                if (preg_match('/(.*)\.(.*)$/', $data['name'], $matches)) {
+                    $filename = rawurlencode($matches[1]) . $suffix . '.' . $matches[2];
+
+                    if (service_storage_put($directory . $filename, $data['data']) === false) {
+                        error('ファイル ' . $filename . ' を保存できません。');
+                    }
+                }
+            }
+        } elseif (empty($files[$file]['delete']) && !empty($files[$file]['name'])) {
             if (preg_match('/(.*)\.(.*)$/', $files[$file]['name'], $matches)) {
                 $directory = $GLOBALS['config']['file_target'][$target] . $key . '/';
                 //$suffix    = $file === 'thumbnail' ? '_thumbnail' : '';
@@ -854,6 +872,24 @@ function save_file_entries($id, $files)
             }
         }
     }
+
+    if (!empty($picture_files)) {
+        $resource = db_update([
+            'update' => DATABASE_PREFIX . 'entries',
+            'set'    => [
+                'pictures' => implode("\n", $picture_files),
+            ],
+            'where'  => [
+                'id = :id',
+                [
+                    'id' => $id,
+                ],
+            ],
+        ]);
+        if (!$resource) {
+            error('データを編集できません。');
+        }
+    }
 }
 
 /**
@@ -861,11 +897,38 @@ function save_file_entries($id, $files)
  *
  * @param int   $id
  * @param array $files
+ * @param array $picture_files
  *
  * @return void
  */
-function remove_file_entries($id, $files)
+function remove_file_entries($id, $files, $picture_files)
 {
+    $entries = db_select([
+        'select' => 'pictures',
+        'from'   => DATABASE_PREFIX . 'entries',
+        'where'  => [
+            'id = :id AND deleted IS NULL',
+            [
+                'id' => $id,
+            ],
+        ],
+    ]);
+    if (empty($entries)) {
+        error('編集データが見つかりません。');
+    } else {
+        $pictures = explode("\n", $entries[0]['pictures']);
+
+        foreach ($pictures as $picture) {
+            if (in_array($picture, $picture_files)) {
+                continue;
+            }
+
+            if (service_storage_exist($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $picture)) {
+                service_storage_remove($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $picture);
+            }
+        }
+    }
+
     foreach (array_keys($files) as $file) {
         if (preg_match('/^field__(.*)$/', $file, $matches)) {
             $target = 'field';
@@ -1014,7 +1077,7 @@ function default_entries()
         'title'          => '',
         'code'           => '',
         'text'           => null,
-        'picture'        => null,
+        'pictures'       => null,
         'thumbnail'      => null,
         'comment'        => 'closed',
         'field_sets'     => [],
