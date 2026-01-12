@@ -14,7 +14,7 @@
                         <dd class="col-sm-9"><?php h($_view['comment']['message']) ?></dd>
                     </dl>
                     <div class="form-group mt-4">
-                        <a href="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'entry' ? '/entry/detail/' : '/page/') ?><?php t($_view['entry']['code']) ?>?referer=preview" class="btn btn-secondary px-4">修正</a>
+                        <a href="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'entry' ? '/entry/detail/' : '/page/') ?><?php t($_view['entry']['code']) ?>?referer=preview#comment_form" class="btn btn-secondary px-4">修正</a>
                         <button type="submit" class="btn btn-primary px-4">投稿</button>
                     </div>
                 </form>
