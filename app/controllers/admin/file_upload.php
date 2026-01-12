@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 入力データを検証＆登録
     if (is_array($_FILES[$_GET['key']]['tmp_name'])) {
+        // ファイル一括アップロード
         $files = [];
         foreach ($_FILES[$_GET['key']]['tmp_name'] as $index => $tmp_name) {
             if (is_uploaded_file($tmp_name)) {
@@ -55,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     } else {
+        // ファイルアップロード
         if (is_uploaded_file($_FILES[$_GET['key']]['tmp_name'])) {
             $names = [];
             $ext   = null;

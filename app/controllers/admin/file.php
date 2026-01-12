@@ -26,6 +26,7 @@ $content = null;
 
 if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
     if (isset($_GET['index']) && isset($_SESSION['file'][$_GET['target']][$_GET['key']][$_GET['index']]['name']) && isset($_SESSION['file'][$_GET['target']][$_GET['key']][$_GET['index']]['data'])) {
+        // ダミー画像ファイルを取得
         foreach (array_keys($GLOBALS['config']['file_permission'][$_GET['format']]) as $permission) {
             if (preg_match($GLOBALS['config']['file_permission'][$_GET['format']][$permission]['regexp'], $_SESSION['file'][$_GET['target']][$_GET['key']][$_GET['index']]['name'])) {
                 // マイムタイプ
@@ -98,6 +99,7 @@ if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
 }
 
 if ($file && service_storage_exist($file)) {
+    // 拡張子からマイムタイプを取得
     foreach (array_keys($GLOBALS['config']['file_permission'][$_GET['format']]) as $permission) {
         if (isset($result[$_GET['key']])) {
             $value = $result[$_GET['key']];

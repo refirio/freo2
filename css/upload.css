@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-/********* アップロード *******************************************************/
+/********* ファイルアップロード ***********************************************/
 
 /* ファイルを選択してアップロード */
 div.upload {
@@ -41,7 +41,7 @@ div.upload ul li {
     font-size: 90%;
     font-weight: bold;
 }
-div.upload ul li a#thumbnail_delete {
+div.upload ul li a.remove {
     display: block;
     line-height: 1.0;
     width: 20px;
@@ -60,7 +60,7 @@ div.upload.dragover button {
     background-color: #EEEEEE;
 }
 
-/********* 一括アップロード ***************************************************/
+/********* ファイル一括アップロード *******************************************/
 
 /* ファイルを選択してアップロード */
 div.uploads {
@@ -92,22 +92,22 @@ div.uploads.dragover button {
 }
 
 /* アップロードファイル一覧 */
-div.uploads div.pictures_result {
+div.uploads div.files {
     overflow: auto;
 }
-div.uploads div.pictures_result div.file {
+div.uploads div.files div.file {
     float: left;
     width: 160px;
     height: 140px;
     margin-top: 5px;
     word-break: break-all;
 }
-div.uploads div.pictures_result div.file img {
+div.uploads div.files div.file img {
     max-width: 148px;
-    max-height: 108px;
+    max-height: 114px;
     padding-bottom: 6px;
 }
-div.uploads div.pictures_result div.file a.remove {
+div.uploads div.files div.file a.remove {
     display: block;
     line-height: 1.0;
     width: 20px;
@@ -120,7 +120,7 @@ div.uploads div.pictures_result div.file a.remove {
     text-align: center;
     text-decoration: none;
 }
-div.uploads div.pictures_result span.handle {
+div.uploads div.files div.file span.handle {
     display: block;
     cursor: move;
     width: 150px;

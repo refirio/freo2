@@ -46,9 +46,9 @@
                                     <div class="card-body">
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">ファイル</label>
-                                            <div class="uploads" id="uploads" data-uploads="<?php t(MAIN_FILE) ?>/admin/media_upload?_type=json">
+                                            <div class="uploads" id="medias" data-uploads="<?php t(MAIN_FILE) ?>/admin/media_upload?_type=json">
                                                 <button type="button">ファイル選択</button>
-                                                <input type="file" name="media[]" multiple>
+                                                <input type="file" name="medias[]" multiple>
                                                 <p>選択されていません</p>
                                             </div>
                                         </div>

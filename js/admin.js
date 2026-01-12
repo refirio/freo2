@@ -184,6 +184,7 @@ $(document).ready(function() {
             (function(value) {
                 if ($('#' + value).length > 0) {
                     $('#' + value + ' ul').hide();
+                    $('#' + value + ' p').hide();
                     $('#' + value + '_delete').on('click', file_delete(value));
                 }
             })(value);
@@ -204,6 +205,7 @@ $(document).ready(function() {
                         } else {
                             // 必要な操作メニューを表示
                             $('#' + key + ' ul').show();
+                            $('#' + key + ' p').show();
                         }
                     });
                 }
@@ -219,11 +221,11 @@ $(document).ready(function() {
     /*
      * ファイル一括アップロード
      */
-    if ($('.uploads').length > 0) {
+    if ($('#pictures').length > 0) {
         /*
          * ファイルを選択してアップロード
          */
-        var target = $('.uploads');
+        var target = $('#pictures');
 
         target.upload({
             url: target.data('upload'),
@@ -298,9 +300,11 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status == 'OK') {
                     var date = new Date();
-                    $.each(response.data.entry.pictures.split("\n"), function(index, value) {
-                        target.find('.pictures_result').append('<div class="file"><span class="handle"><img src="' + $('#pictures').data('show') + '&index=' + index + '&' + date.getTime() + '"></span><input type="hidden" name="picture_files[]" value="' + value + '"><a href="#" class="remove">×</a></div>');
-                    });
+                    if (response.data.entry.pictures) {
+                        $.each(response.data.entry.pictures.split("\n"), function(index, value) {
+                            target.find('.pictures_result').append('<div class="file"><span class="handle"><img src="' + $('#pictures').data('show') + '&index=' + index + '&' + date.getTime() + '"></span><input type="hidden" name="picture_files[]" value="' + value + '"><a href="#" class="remove">×</a></div>');
+                        });
+                    }
                 }
             },
             error: function(request, status, errorThrown) {
@@ -330,13 +334,13 @@ $(document).ready(function() {
     }
 
     /*
-     * ファイル一括アップロード
+     * メディア一括アップロード
      */
-    if ($('#uploads').length > 0) {
+    if ($('#medias').length > 0) {
         /*
          * ファイルを選択してアップロード
          */
-        var target = $('#uploads');
+        var target = $('#medias');
 
         target.upload({
             url: target.data('uploads'),
@@ -352,7 +356,7 @@ $(document).ready(function() {
                 target.find('p').html('');
 
                 for (var i = 0; i < response.values.files.length; i++) {
-                    target.find('p').append('<div class="file">' + response.values.files[i] + '<input type="hidden" name="temp[]" value="' + response.values.files[i] + '"></div>');
+                    target.find('p').append('<div class="file">' + response.values.files[i] + '</div>');
                 }
             },
             error: function(message) {
@@ -392,7 +396,7 @@ $(document).ready(function() {
                 target.find('p').html('');
 
                 for (var i = 0; i < response.values.files.length; i++) {
-                    target.find('p').append('<div class="file">' + response.values.files[i] + '<input type="hidden" name="temp[]" value="' + response.values.files[i] + '"></div>');
+                    target.find('p').append('<div class="file">' + response.values.files[i] + '<input type="hidden" name="temps[]" value="' + response.values.files[i] + '"></div>');
                 }
             },
             error: function(message) {

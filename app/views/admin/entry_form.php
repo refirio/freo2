@@ -117,7 +117,7 @@
                                             <div class="uploads" id="pictures" data-upload="<?php t(MAIN_FILE) ?>/admin/file_upload?_type=json&amp;target=entry&amp;key=pictures&amp;format=image" data-show="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=pictures&amp;format=image&amp;id=<?php t($_view['entry']['id']) ?>">
                                                 <button type="button">ファイル選択</button>
                                                 <input type="file" name="pictures[]" multiple>
-                                                <div class="pictures_result"></div>
+                                                <div class="files pictures_result"></div>
                                             </div>
                                         </div>
                                         <?php endif ?>
@@ -129,7 +129,7 @@
                                                 <input type="file" name="thumbnail">
                                                 <p><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=thumbnail&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></p>
                                                 <ul>
-                                                    <li><a href="<?php t(MAIN_FILE) ?>/admin/file_delete?target=entry&amp;key=thumbnail&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>" id="thumbnail_delete" class="token" data-token="<?php t($_view['token']) ?>">×</a></li>
+                                                    <li><a href="<?php t(MAIN_FILE) ?>/admin/file_delete?target=entry&amp;key=thumbnail&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>" id="thumbnail_delete" class="remove token" data-token="<?php t($_view['token']) ?>">×</a></li>
                                                 </ul>
                                             </div>
                                         </div>

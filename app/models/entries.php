@@ -669,7 +669,7 @@ function filter_entries($queries, $options = [])
  */
 function set_field_entries($entry_id, $field_sets)
 {
-    // フィールドを編集
+    // 対象を確認
     $fields = model('select_fields', [
         'select' => 'id',
         'where'  => 'kind != ' . db_escape('image') . ' AND kind != ' . db_escape('file'),
@@ -680,6 +680,7 @@ function set_field_entries($entry_id, $field_sets)
         $field_ids = array_column($fields, 'id');
     }
 
+    // 古いデータを削除
     $resource = model('delete_field_sets', [
         'where' => [
             'field_id IN(' . implode(',', $field_ids) . ') AND entry_id = :id',
@@ -692,6 +693,7 @@ function set_field_entries($entry_id, $field_sets)
         error('データを削除できません。');
     }
 
+    // 新しいデータを登録
     foreach ($field_sets as $field_id => $text) {
         if ($text === '') {
             continue;
@@ -722,7 +724,7 @@ function set_field_entries($entry_id, $field_sets)
  */
 function set_category_entries($entry_id, $category_sets)
 {
-    // カテゴリーを編集
+    // 古いデータを削除
     $resource = model('delete_category_sets', [
         'where' => [
             'entry_id = :id',
@@ -735,6 +737,7 @@ function set_category_entries($entry_id, $category_sets)
         error('データを削除できません。');
     }
 
+    // 新しいデータを登録
     foreach ($category_sets as $category_id) {
         $resource = model('insert_category_sets', [
             'values' => [
@@ -758,7 +761,7 @@ function set_category_entries($entry_id, $category_sets)
  */
 function set_attribute_entries($entry_id, $attribute_sets)
 {
-    // 属性を編集
+    // 古いデータを削除
     $resource = model('delete_attribute_sets', [
         'where' => [
             'entry_id = :id',
@@ -771,6 +774,7 @@ function set_attribute_entries($entry_id, $attribute_sets)
         error('データを削除できません。');
     }
 
+    // 新しいデータを登録
     foreach ($attribute_sets as $attribute_id) {
         $resource = model('insert_attribute_sets', [
             'values' => [
@@ -795,6 +799,7 @@ function set_attribute_entries($entry_id, $attribute_sets)
  */
 function save_file_entries($id, $files, $picture_files)
 {
+    // アップロードされたファイルを順に処理
     foreach (array_keys($files) as $file) {
         if (preg_match('/^field__(.*)$/', $file, $matches)) {
             $target = 'field';
@@ -810,6 +815,7 @@ function save_file_entries($id, $files, $picture_files)
             $key    = intval($id);
         }
         if (!empty($files[$file][0])) {
+            // エントリーの画像を保存
             $directory = $GLOBALS['config']['file_target'][$target] . $key . '/';
             $suffix    = '';
 
@@ -826,6 +832,7 @@ function save_file_entries($id, $files, $picture_files)
             }
         } elseif (empty($files[$file]['delete']) && !empty($files[$file]['name'])) {
             if (preg_match('/(.*)\.(.*)$/', $files[$file]['name'], $matches)) {
+                // フィールドの画像とエントリーのサムネイルを保存
                 $directory = $GLOBALS['config']['file_target'][$target] . $key . '/';
                 //$suffix    = $file === 'thumbnail' ? '_thumbnail' : '';
                 $suffix    = '';
@@ -837,6 +844,7 @@ function save_file_entries($id, $files, $picture_files)
                     error('ファイル ' . $filename . ' を保存できません。');
                 } else {
                     if ($target === 'field') {
+                        // フィールドの画像を更新
                         $resource = model('insert_field_sets', [
                             'values' => [
                                 'field_id' => $field,
@@ -848,6 +856,7 @@ function save_file_entries($id, $files, $picture_files)
                             error('データを登録できません。');
                         }
                     } else {
+                        // エントリーのサムネイルを更新
                         $resource = db_update([
                             'update' => DATABASE_PREFIX . 'entries',
                             'set'    => [
@@ -873,22 +882,25 @@ function save_file_entries($id, $files, $picture_files)
         }
     }
 
+    // エントリーの画像を更新
+    $pictures = null;
     if (!empty($picture_files)) {
-        $resource = db_update([
-            'update' => DATABASE_PREFIX . 'entries',
-            'set'    => [
-                'pictures' => implode("\n", $picture_files),
+        $pictures = implode("\n", $picture_files);
+    }
+    $resource = db_update([
+        'update' => DATABASE_PREFIX . 'entries',
+        'set'    => [
+            'pictures' => $pictures,
+        ],
+        'where'  => [
+            'id = :id',
+            [
+                'id' => $id,
             ],
-            'where'  => [
-                'id = :id',
-                [
-                    'id' => $id,
-                ],
-            ],
-        ]);
-        if (!$resource) {
-            error('データを編集できません。');
-        }
+        ],
+    ]);
+    if (!$resource) {
+        error('データを編集できません。');
     }
 }
 
@@ -903,6 +915,7 @@ function save_file_entries($id, $files, $picture_files)
  */
 function remove_file_entries($id, $files, $picture_files)
 {
+    // エントリーの画像を削除
     $entries = db_select([
         'select' => 'pictures',
         'from'   => DATABASE_PREFIX . 'entries',
@@ -929,6 +942,7 @@ function remove_file_entries($id, $files, $picture_files)
         }
     }
 
+    // フィールドの画像とエントリーのサムネイルを削除
     foreach (array_keys($files) as $file) {
         if (preg_match('/^field__(.*)$/', $file, $matches)) {
             $target = 'field';
@@ -945,6 +959,7 @@ function remove_file_entries($id, $files, $picture_files)
         }
         if (!empty($files[$file]['delete']) || !empty($files[$file]['name'])) {
             if ($target === 'field') {
+                // フィールドの画像を削除
                 $field_sets = model('select_field_sets', [
                     'select' => 'text',
                     'where'  => [
@@ -979,6 +994,7 @@ function remove_file_entries($id, $files, $picture_files)
                     }
                 }
             } else {
+                // エントリーのサムネイルを削除
                 $entries = db_select([
                     'select' => $file,
                     'from'   => DATABASE_PREFIX . 'entries',
@@ -1073,7 +1089,7 @@ function default_entries()
         'public_begin'   => null,
         'public_end'     => null,
         'password'       => null,
-        'datetime'       => localdate('Y-m-d H:00'),
+        'datetime'       => localdate('Y-m-d H:i'),
         'title'          => '',
         'code'           => '',
         'text'           => null,

@@ -67,17 +67,13 @@ function service_entry_select_published($type, $queries, $options = [])
                 $entry['thumbnail'] = null;
             } else {
                 if ($GLOBALS['setting']['entry_text_type'] === 'none') {
-                    $entry['text'] = '';
+                    $entry['text'] = null;
                 } elseif ($GLOBALS['setting']['entry_text_type'] === 'textarea') {
                     $entry['text'] = h($entry['text'], true);
                 }
 
-                if (isset($entry['pictures'])) {
-                    if (empty($entry['pictures'])) {
-                        $entry['pictures'] = [];
-                    } else {
-                        $entry['pictures'] = explode("\n", $entry['pictures']);
-                    }
+                if (!empty($entry['pictures'])) {
+                    $entry['pictures'] = explode("\n", $entry['pictures']);
                 }
             }
         }
@@ -87,6 +83,7 @@ function service_entry_select_published($type, $queries, $options = [])
 
     return $entries;
 }
+
 /**
  * エントリーの登録
  *
