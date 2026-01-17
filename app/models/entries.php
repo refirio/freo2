@@ -161,11 +161,8 @@ function insert_entries($queries, $options = [])
     }
 
     if (!empty($options['files'])) {
-        // 関連するファイルを削除
-        model('remove_file_entries', $entry_id, $options['files'], $options['picture_files']);
-
-        // 関連するファイルを保存
-        model('save_file_entries', $entry_id, $options['files'], $options['picture_files']);
+        // 関連するファイルを更新
+        model('set_file_entries', $entry_id, $options['files'], $options['picture_files']);
     }
 
     return $resource;
@@ -229,11 +226,8 @@ function update_entries($queries, $options = [])
     }
 
     if (!empty($options['files'])) {
-        // 関連するファイルを削除
-        model('remove_file_entries', $id, $options['files'], $options['picture_files']);
-
-        // 関連するファイルを保存
-        model('save_file_entries', $id, $options['files'], $options['picture_files']);
+        // 関連するファイルを更新
+        model('set_file_entries', $id, $options['files'], $options['picture_files']);
     }
 
     return $resource;
@@ -789,7 +783,7 @@ function set_attribute_entries($entry_id, $attribute_sets)
 }
 
 /**
- * ファイルの保存
+ * ファイルを更新
  *
  * @param string $id
  * @param array  $files
@@ -797,151 +791,8 @@ function set_attribute_entries($entry_id, $attribute_sets)
  *
  * @return void
  */
-function save_file_entries($id, $files, $picture_files)
+function set_file_entries($id, $files, $picture_files)
 {
-    // アップロードされたファイルを順に処理
-    foreach (array_keys($files) as $file) {
-        if (preg_match('/^field__(.*)$/', $file, $matches)) {
-            $target = 'field';
-            $field  = $matches[1];
-            $key    = $id . '_' . $matches[1];
-        } elseif (preg_match('/^field_(.*)_(.*)$/', $file, $matches)) {
-            $target = 'field';
-            $field  = $matches[2];
-            $key    = $matches[1] . '_' . $matches[2];
-        } else {
-            $target = 'entry';
-            $field  = null;
-            $key    = intval($id);
-        }
-        if (!empty($files[$file][0])) {
-            // エントリーの画像を保存
-            $directory = $GLOBALS['config']['file_target'][$target] . $key . '/';
-            $suffix    = '';
-
-            service_storage_put($directory);
-
-            foreach ($files[$file] as $data) {
-                if (preg_match('/(.*)\.(.*)$/', $data['name'], $matches)) {
-                    $filename = rawurlencode($matches[1]) . $suffix . '.' . $matches[2];
-
-                    if (service_storage_put($directory . $filename, $data['data']) === false) {
-                        error('ファイル ' . $filename . ' を保存できません。');
-                    }
-                }
-            }
-        } elseif (empty($files[$file]['delete']) && !empty($files[$file]['name'])) {
-            if (preg_match('/(.*)\.(.*)$/', $files[$file]['name'], $matches)) {
-                // フィールドの画像とエントリーのサムネイルを保存
-                $directory = $GLOBALS['config']['file_target'][$target] . $key . '/';
-                //$suffix    = $file === 'thumbnail' ? '_thumbnail' : '';
-                $suffix    = '';
-                $filename  = rawurlencode($matches[1]) . $suffix . '.' . $matches[2];
-
-                service_storage_put($directory);
-
-                if (service_storage_put($directory . $filename, $files[$file]['data']) === false) {
-                    error('ファイル ' . $filename . ' を保存できません。');
-                } else {
-                    if ($target === 'field') {
-                        // フィールドの画像を更新
-                        $resource = model('insert_field_sets', [
-                            'values' => [
-                                'field_id' => $field,
-                                'entry_id' => $id,
-                                'text'     => $filename,
-                            ],
-                        ]);
-                        if (!$resource) {
-                            error('データを登録できません。');
-                        }
-                    } else {
-                        // エントリーのサムネイルを更新
-                        $resource = db_update([
-                            'update' => DATABASE_PREFIX . 'entries',
-                            'set'    => [
-                                $file => $filename,
-                            ],
-                            'where'  => [
-                                'id = :id',
-                                [
-                                    'id' => $id,
-                                ],
-                            ],
-                        ]);
-                        if (!$resource) {
-                            error('データを編集できません。');
-                        }
-                    }
-
-                    //file_resize($directory . $filename, $directory . 'thumbnail_' . $filename, $GLOBALS['config']['resize_width'], $GLOBALS['config']['resize_height'], $GLOBALS['config']['resize_quality']);
-                }
-            } else {
-                error('ファイル ' . $files[$file]['name'] . ' の拡張子を取得できません。');
-            }
-        }
-    }
-
-    // エントリーの画像を更新
-    $pictures = null;
-    if (!empty($picture_files)) {
-        $pictures = implode("\n", $picture_files);
-    }
-    $resource = db_update([
-        'update' => DATABASE_PREFIX . 'entries',
-        'set'    => [
-            'pictures' => $pictures,
-        ],
-        'where'  => [
-            'id = :id',
-            [
-                'id' => $id,
-            ],
-        ],
-    ]);
-    if (!$resource) {
-        error('データを編集できません。');
-    }
-}
-
-/**
- * ファイルの削除
- *
- * @param int   $id
- * @param array $files
- * @param array $picture_files
- *
- * @return void
- */
-function remove_file_entries($id, $files, $picture_files)
-{
-    // エントリーの画像を削除
-    $entries = db_select([
-        'select' => 'pictures',
-        'from'   => DATABASE_PREFIX . 'entries',
-        'where'  => [
-            'id = :id AND deleted IS NULL',
-            [
-                'id' => $id,
-            ],
-        ],
-    ]);
-    if (empty($entries)) {
-        error('編集データが見つかりません。');
-    } else {
-        $pictures = explode("\n", $entries[0]['pictures']);
-
-        foreach ($pictures as $picture) {
-            if (in_array($picture, $picture_files)) {
-                continue;
-            }
-
-            if (service_storage_exist($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $picture)) {
-                service_storage_remove($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $picture);
-            }
-        }
-    }
-
     // フィールドの画像とエントリーのサムネイルを削除
     foreach (array_keys($files) as $file) {
         if (preg_match('/^field__(.*)$/', $file, $matches)) {
@@ -974,9 +825,6 @@ function remove_file_entries($id, $files, $picture_files)
                     $field_set = $field_sets[0];
 
                     if (service_storage_exist($GLOBALS['config']['file_target']['field'] . $key . '/' . $field_set['text'])) {
-                        //if (is_file($GLOBALS['config']['file_target']['field'] . intval($id) . '/thumbnail_' . $field_set['text'])) {
-                        //    unlink($GLOBALS['config']['file_target']['field'] . intval($id) . '/thumbnail_' . $field_set['text']);
-                        //}
                         service_storage_remove($GLOBALS['config']['file_target']['field'] . $key . '/' . $field_set['text']);
 
                         $resource = model('delete_field_sets', [
@@ -996,7 +844,7 @@ function remove_file_entries($id, $files, $picture_files)
             } else {
                 // エントリーのサムネイルを削除
                 $entries = db_select([
-                    'select' => $file,
+                    'select' => 'thumbnail',
                     'from'   => DATABASE_PREFIX . 'entries',
                     'where'  => [
                         'id = :id AND deleted IS NULL',
@@ -1011,16 +859,13 @@ function remove_file_entries($id, $files, $picture_files)
                     $entry = $entries[0];
                 }
 
-                if (service_storage_exist($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $entry[$file])) {
-                    //if (is_file($GLOBALS['config']['file_target']['entry'] . intval($id) . '/thumbnail_' . $entry[$file])) {
-                    //    unlink($GLOBALS['config']['file_target']['entry'] . intval($id) . '/thumbnail_' . $entry[$file]);
-                    //}
-                    service_storage_remove($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $entry[$file]);
+                if (service_storage_exist($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $entry['thumbnail'])) {
+                    service_storage_remove($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $entry['thumbnail']);
 
                     $resource = db_update([
                         'update' => DATABASE_PREFIX . 'entries',
                         'set'    => [
-                            $file => null,
+                            'thumbnail' => null,
                         ],
                         'where'  => [
                             'id = :id',
@@ -1035,6 +880,138 @@ function remove_file_entries($id, $files, $picture_files)
                 }
             }
         }
+    }
+
+    // エントリーの画像を削除
+    $entries = db_select([
+        'select' => 'pictures',
+        'from'   => DATABASE_PREFIX . 'entries',
+        'where'  => [
+            'id = :id AND deleted IS NULL',
+            [
+                'id' => $id,
+            ],
+        ],
+    ]);
+    if (empty($entries)) {
+        error('編集データが見つかりません。');
+    } else {
+        $pictures = explode("\n", $entries[0]['pictures']);
+
+        foreach ($pictures as $picture) {
+            if (in_array($picture, $picture_files)) {
+                continue;
+            }
+
+            if (service_storage_exist($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $picture)) {
+                service_storage_remove($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $picture);
+            }
+        }
+    }
+
+    // フィールドの画像とエントリーのサムネイルを保存
+    foreach (array_keys($files) as $file) {
+        if (preg_match('/^field__(.*)$/', $file, $matches)) {
+            $target = 'field';
+            $field  = $matches[1];
+            $key    = $id . '_' . $matches[1];
+        } elseif (preg_match('/^field_(.*)_(.*)$/', $file, $matches)) {
+            $target = 'field';
+            $field  = $matches[2];
+            $key    = $matches[1] . '_' . $matches[2];
+        } else {
+            $target = 'entry';
+            $field  = null;
+            $key    = intval($id);
+        }
+        if (!empty($files[$file][0])) {
+            // エントリーの画像を保存
+            $directory = $GLOBALS['config']['file_target'][$target] . $key . '/';
+            $suffix    = '';
+
+            service_storage_put($directory);
+
+            foreach ($files[$file] as $data) {
+                if (preg_match('/(.*)\.(.*)$/', $data['name'], $matches)) {
+                    $filename = rawurlencode($matches[1]) . $suffix . '.' . $matches[2];
+
+                    if (!in_array($filename, $picture_files)) {
+                        continue;
+                    }
+
+                    if (service_storage_put($directory . $filename, $data['data']) === false) {
+                        error('ファイル ' . $filename . ' を保存できません。');
+                    }
+                }
+            }
+        } elseif (empty($files[$file]['delete']) && !empty($files[$file]['name'])) {
+            if (preg_match('/(.*)\.(.*)$/', $files[$file]['name'], $matches)) {
+                // フィールドの画像とエントリーのサムネイルを保存
+                $directory = $GLOBALS['config']['file_target'][$target] . $key . '/';
+                $suffix    = '';
+                $filename  = rawurlencode($matches[1]) . $suffix . '.' . $matches[2];
+
+                service_storage_put($directory);
+
+                if (service_storage_put($directory . $filename, $files[$file]['data']) === false) {
+                    error('ファイル ' . $filename . ' を保存できません。');
+                } else {
+                    if ($target === 'field') {
+                        // フィールドの画像を更新
+                        $resource = model('insert_field_sets', [
+                            'values' => [
+                                'field_id' => $field,
+                                'entry_id' => $id,
+                                'text'     => $filename,
+                            ],
+                        ]);
+                        if (!$resource) {
+                            error('データを登録できません。');
+                        }
+                    } else {
+                        // エントリーのサムネイルを更新
+                        $resource = db_update([
+                            'update' => DATABASE_PREFIX . 'entries',
+                            'set'    => [
+                                'thumbnail' => $filename,
+                            ],
+                            'where'  => [
+                                'id = :id',
+                                [
+                                    'id' => $id,
+                                ],
+                            ],
+                        ]);
+                        if (!$resource) {
+                            error('データを編集できません。');
+                        }
+                    }
+                }
+            } else {
+                error('ファイル ' . $files[$file]['name'] . ' の拡張子を取得できません。');
+            }
+        }
+    }
+
+    // エントリーの画像を更新
+    $pictures = null;
+    if (!empty($picture_files)) {
+        $pictures = implode("\n", $picture_files);
+    }
+    $resource = db_update([
+        'update' => DATABASE_PREFIX . 'entries',
+        'set'    => [
+            'pictures' => $pictures,
+        ],
+        'where'  => [
+            'id = :id',
+            [
+                'id' => $id,
+            ],
+        ],
+    ]);
+    if (!$resource) {
+        error('データを編集できません。');
     }
 }
 

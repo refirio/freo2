@@ -22,6 +22,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 入力データを検証＆登録
     if (is_array($_FILES[$_GET['key']]['tmp_name'])) {
         // ファイル一括アップロード
+        $key = 0;
+        if (isset($_SESSION['file'][$_GET['target']][$_GET['key']])) {
+            $key = count($_SESSION['file'][$_GET['target']][$_GET['key']]);
+        }
+
         $files = [];
         foreach ($_FILES[$_GET['key']]['tmp_name'] as $index => $tmp_name) {
             if (is_uploaded_file($tmp_name)) {
@@ -44,14 +49,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     error('アップロードできるファイル形式は' . implode('、', $names) . 'のみです。', ['token' => token('create')]);
                 }
 
-                $_SESSION['file'][$_GET['target']][$_GET['key']][$index] = [
+                $_SESSION['file'][$_GET['target']][$_GET['key']][$index + $key] = [
                     'name' => $_FILES[$_GET['key']]['name'][$index],
                     'data' => file_get_contents($tmp_name),
                 ];
 
                 $files[] = [
                     'name' => $_FILES[$_GET['key']]['name'][$index],
-                    'data' => MAIN_FILE . '/admin/file?_type=image&target=' . $_GET['target'] . '&key=' . $_GET['key'] . '&index=' . $index . '&format=' . $_GET['format'],
+                    'data' => MAIN_FILE . '/admin/file?_type=image&target=' . $_GET['target'] . '&key=' . $_GET['key'] . '&index=' . ($index + $key) . '&format=' . $_GET['format'],
                 ];
             }
         }
