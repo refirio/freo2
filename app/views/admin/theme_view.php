@@ -81,6 +81,43 @@
                                 </div>
                             </form>
                             <?php else : ?>
+                            <?php if (!empty($_view['contents'])) : ?>
+                            <form action="<?php t(MAIN_FILE) ?>/admin/theme_post" method="post">
+                                <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
+                                <input type="hidden" name="code" value="<?php t($_GET['code']) ?>">
+                                <input type="hidden" name="exec" value="setting">
+                                <div class="card shadow-sm mb-3">
+                                    <div class="card-header">
+                                        設定
+                                    </div>
+                                    <div class="card-body">
+                                        <?php foreach ($_view['contents'] as $key => $data) : ?>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold"><?php t($data['name']) ?><?php if ($data['explanation']) : ?> <span class="badge text-light bg-secondary" data-toggle="tooltip" title="<?php t($data['explanation']) ?>">？</span><?php endif ?><?php if ($data['required']) : ?> <span class="badge bg-danger">必須</span><?php endif ?></label>
+                                            <?php if ($data['type'] == 'text') : ?>
+                                            <input type="text" name="setting[<?php t($key) ?>]" size="30" value="<?php t($_view['setting_sets'][$key]) ?>" class="form-control">
+                                            <?php elseif ($data['type'] == 'number') : ?>
+                                            <input type="text" name="setting[<?php t($key) ?>]" size="30" value="<?php t($_view['setting_sets'][$key]) ?>" class="form-control" style="width: 100px;">
+                                            <?php elseif ($data['type'] == 'textarea') : ?>
+                                            <textarea name="setting[<?php t($key) ?>]" rows="5" cols="50" class="form-control"><?php t($_view['setting_sets'][$key]) ?></textarea>
+                                            <?php elseif ($data['type'] == 'boolean') : ?>
+                                            <div><label><input type="checkbox" name="setting[<?php t($key) ?>]" value="1" class="form-check-input"<?php $_view['setting_sets'][$key] ? e(' checked="checked"') : '' ?>> ON</label></div>
+                                            <?php elseif ($data['type'] == 'select') : ?>
+                                            <select name="setting[<?php t($key) ?>]" class="form-select" style="width: 200px;">
+                                                <?php foreach ($data['kind'] as $kind_key => $kind_value) : ?>
+                                                <option value="<?php t($kind_key) ?>"<?php $kind_key == $_view['setting_sets'][$key] ? e(' selected="selected"') : '' ?>><?php t($kind_value) ?></option>
+                                                <?php endforeach ?>
+                                            </select>
+                                            <?php endif ?>
+                                        </div>
+                                        <?php endforeach ?>
+                                        <div class="form-group mt-4">
+                                            <button type="submit" class="btn btn-primary px-4">登録</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <?php endif ?>
                             <?php if (empty($_view['theme']['enabled'])) : ?>
                             <form action="<?php t(MAIN_FILE) ?>/admin/theme_post" method="post">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">

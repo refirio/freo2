@@ -25,6 +25,8 @@
                                 プラグインをインストールしました。
                                 <?php elseif ($_GET['ok'] === 'uninstall') : ?>
                                 プラグインをアンインストールしました。
+                                <?php elseif ($_GET['ok'] === 'setting') : ?>
+                                プラグインの設定を更新しました。
                                 <?php elseif ($_GET['ok'] === 'enable') : ?>
                                 プラグインを有効化しました。
                                 <?php elseif ($_GET['ok'] === 'disable') : ?>

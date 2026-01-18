@@ -31,8 +31,3 @@ $GLOBALS['theme']['sample']['author'] = 'refirio';
 
 /* テーマURL */
 $GLOBALS['theme']['sample']['link'] = 'https://refirio.org/';
-
-/* テーマ設定初期値 */
-$GLOBALS['theme']['sample']['default'] = [
-    'message' => 'これはテーマのサンプルです。',
-];

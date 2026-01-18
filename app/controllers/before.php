@@ -152,10 +152,10 @@ if (!preg_match('/^(auth|admin)$/', $_REQUEST['_mode'])) {
     }
 }
 
-// 文字列
+// 文字列定義を取得
 import('app/string.php');
 
-// メニュー
+// メニュー定義を取得
 import('app/menu.php');
 
 // ウィジェットを取得
@@ -181,7 +181,7 @@ foreach ($plugins as $plugin) {
 
     import($target_dir . 'config.php');
 
-    $GLOBALS['plugin'][$plugin['code']]['setting'] = json_decode($plugin['setting'], true);
+    $GLOBALS['plugin'][$plugin['code']]['setting'] = $plugin['setting'] ? json_decode($plugin['setting'], true) : [];
 
     if (is_file($target_dir . 'app/bootstrap.php')) {
         import($target_dir . 'app/bootstrap.php');
@@ -248,7 +248,7 @@ if (!empty($themes)) {
 
     import('app/config.php');
 
-    $GLOBALS['theme'][$themes[0]['code']]['setting'] = json_decode($themes[0]['setting'], true);
+    $GLOBALS['theme'][$themes[0]['code']]['setting'] = $themes[0]['setting'] ? json_decode($themes[0]['setting'], true) : [];
 
     import('app/bootstrap.php');
 }

@@ -1,6 +1,6 @@
 <?php
 
-// メニュー項目を定義
+// メニューを定義
 $GLOBALS['menu_group'] = [
     'public' => [
         'home' => [

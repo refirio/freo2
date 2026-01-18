@@ -25,6 +25,8 @@
                                 テーマをインストールしました。
                                 <?php elseif ($_GET['ok'] === 'uninstall') : ?>
                                 テーマをアンインストールしました。
+                                <?php elseif ($_GET['ok'] === 'setting') : ?>
+                                テーマの設定を更新しました。
                                 <?php elseif ($_GET['ok'] === 'enable') : ?>
                                 テーマを有効化しました。
                                 <?php elseif ($_GET['ok'] === 'disable') : ?>

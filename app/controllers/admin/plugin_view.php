@@ -29,5 +29,26 @@ if (!file_exists($target_dir . 'config.php')) {
 
 import($target_dir . 'config.php');
 
+// 設定内容
+if (empty($plugins[0]['setting'])) {
+    $_view['setting_sets'] = [];
+} else {
+    $_view['setting_sets'] = json_decode($plugins[0]['setting'], true);
+}
+if (isset($GLOBALS['plugin'][$_GET['code']]['setting_default'])) {
+    foreach ($GLOBALS['plugin'][$_GET['code']]['setting_default'] as $key => $value) {
+        if (!isset($_view['setting_sets'][$key])) {
+            $_view['setting_sets'][$key] = $value;
+        }
+    }
+}
+
+// 設定項目
+if (isset($GLOBALS['plugin'][$_GET['code']]['setting_define'])) {
+    $_view['contents'] = $GLOBALS['plugin'][$_GET['code']]['setting_define'];
+} else {
+    $_view['contents'] = [];
+}
+
 // タイトル
 $_view['title'] = 'プラグイン詳細';

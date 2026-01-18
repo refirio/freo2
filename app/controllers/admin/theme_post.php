@@ -30,7 +30,7 @@ if ($_POST['exec'] == 'install') {
             'code'    => $GLOBALS['theme'][$_POST['code']]['code'],
             'version' => $GLOBALS['theme'][$_POST['code']]['version'],
             'enabled' => 0,
-            'setting' => isset($GLOBALS['theme'][$_POST['code']]['default']) ? json_encode($GLOBALS['theme'][$_POST['code']]['default']) : null,
+            'setting' => isset($GLOBALS['theme'][$_POST['code']]['setting_default']) ? json_encode($GLOBALS['theme'][$_POST['code']]['setting_default']) : null,
         ],
     ]);
     if (!$resource) {
@@ -48,6 +48,38 @@ if ($_POST['exec'] == 'install') {
     ]);
     if (!$resource) {
         error('データを削除できません。');
+    }
+} elseif ($_POST['exec'] == 'setting') {
+    // テーマ設定を更新
+    $setting = [];
+    foreach ($GLOBALS['theme'][$_POST['code']]['setting_define'] as $key => $value) {
+        if (isset($_POST['setting'][$key])) {
+            if ($value['required'] && $_POST['setting'][$key] === '') {
+                error($value['name'] . 'が入力されていません。');
+            } elseif ($value['type'] == 'number' && !is_numeric($_POST['setting'][$key])) {
+                error($value['name'] . 'は半角数字で入力してください。');
+            }
+        }
+        if (isset($_POST['setting'][$key])) {
+            $setting[$key] = $_POST['setting'][$key];
+        } else {
+            $setting[$key] = 0;
+        }
+    }
+
+    $resource = service_theme_update([
+        'set'   => [
+            'setting' => json_encode($setting),
+        ],
+        'where' => [
+            'code = :code',
+            [
+                'code' => $_POST['code'],
+            ],
+        ],
+    ]);
+    if (!$resource) {
+        error('データを編集できません。');
     }
 } elseif ($_POST['exec'] == 'enable') {
     // 他のテーマを無効化

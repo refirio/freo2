@@ -24,6 +24,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $settings[$key] = isset($_POST[$key]) ? $_POST[$key] : '';
         if ($data['required'] && $settings[$key] === '') {
             $warnings[$key] = $data['name'] . 'が入力されていません。';
+        } elseif ($data['type'] == 'number' && !is_numeric($settings[$key])) {
+            error($data['name'] . 'は半角数字で入力してください。');
         }
     }
     $post = [
