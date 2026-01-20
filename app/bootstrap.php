@@ -104,6 +104,12 @@ function app_badge($key, $value)
             $bg_color   = 'secondary';
         }
     }
+    if ($key === 'update') {
+        if ($value === 1) {
+            $text_color = 'dark';
+            $bg_color   = 'warning';
+        }
+    }
 
     return 'rounded-pill text-' . $text_color . ' bg-' . $bg_color;
 }

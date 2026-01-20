@@ -21,10 +21,19 @@ if ($GLOBALS['authority']['power'] < 3) {
 import(MAIN_PATH . $GLOBALS['config']['plugin_path'] . $_POST['code'] . '/' . 'config.php');
 
 // トランザクションを開始
-db_transaction();
+//db_transaction();
 
 if ($_POST['exec'] == 'install') {
     // プラグインをインストール
+    if (isset($GLOBALS['plugin'][$_POST['code']]['sql']['install'])) {
+        foreach ($GLOBALS['plugin'][$_POST['code']]['sql']['install'] as $sql) {
+            $resource = db_query($sql);
+            if (!$resource) {
+                error('プラグイン用SQLを実行できません。');
+            }
+        }
+    }
+
     $resource = service_plugin_insert([
         'values' => [
             'code'    => $GLOBALS['plugin'][$_POST['code']]['code'],
@@ -34,10 +43,19 @@ if ($_POST['exec'] == 'install') {
         ],
     ]);
     if (!$resource) {
-        error('データを登録できません。');
+        error('プラグインをインストールできません。');
     }
 } elseif ($_POST['exec'] == 'uninstall') {
     // プラグインをアンインストール
+    if (isset($GLOBALS['plugin'][$_POST['code']]['sql']['uninstall'])) {
+        foreach ($GLOBALS['plugin'][$_POST['code']]['sql']['uninstall'] as $sql) {
+            $resource = db_query($sql);
+            if (!$resource) {
+                error('プラグイン用SQLを実行できません。');
+            }
+        }
+    }
+
     $resource = service_plugin_delete([
         'where' => [
             'code = :code',
@@ -47,7 +65,48 @@ if ($_POST['exec'] == 'install') {
         ],
     ]);
     if (!$resource) {
-        error('データを削除できません。');
+        error('プラグインをアンインストールできません。');
+    }
+} elseif ($_POST['exec'] == 'update') {
+    // プラグインをアップデート
+    if (isset($GLOBALS['plugin'][$_POST['code']]['sql']['update'])) {
+        $plugins = model('select_plugins', [
+            'where' => [
+                'code = :code',
+                [
+                    'code' => $_POST['code'],
+                ],
+            ],
+        ]);
+        if (empty($plugins)) {
+            error('プラグイン情報を取得できません。');
+        } else {
+            foreach ($GLOBALS['plugin'][$_POST['code']]['sql']['update'] as $version => $update) {
+                if (version_compare($GLOBALS['plugin'][$_POST['code']]['version'], $version, '>=') && version_compare($plugins[0]['version'], $version, '<')) {
+                    foreach ($update as $sql) {
+                        $resource = db_query($sql);
+                        if (!$resource) {
+                            error('プラグイン用SQLを実行できません。');
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    $resource = service_plugin_update([
+        'set'   => [
+            'version' => $GLOBALS['plugin'][$_POST['code']]['version'],
+        ],
+        'where' => [
+            'code = :code',
+            [
+                'code' => $_POST['code'],
+            ],
+        ],
+    ]);
+    if (!$resource) {
+        error('プラグインのバージョンを更新できません。');
     }
 } elseif ($_POST['exec'] == 'setting') {
     // プラグイン設定を更新
@@ -79,7 +138,7 @@ if ($_POST['exec'] == 'install') {
         ],
     ]);
     if (!$resource) {
-        error('データを編集できません。');
+        error('プラグイン設定を更新できません。');
     }
 } elseif ($_POST['exec'] == 'enable') {
     // プラグインを有効化
@@ -95,7 +154,7 @@ if ($_POST['exec'] == 'install') {
         ],
     ]);
     if (!$resource) {
-        error('データを編集できません。');
+        error('プラグインを有効化できません。');
     }
 } elseif ($_POST['exec'] == 'disable') {
     // プラグインを無効化
@@ -114,11 +173,11 @@ if ($_POST['exec'] == 'install') {
         error('データを編集できません。');
     }
 } else {
-    error('不正なアクセスです。');
+    error('プラグインを無効化できません。');
 }
 
 // トランザクションを終了
-db_commit();
+//db_commit();
 
 // リダイレクト
 redirect('/admin/plugin?ok=' . $_POST['exec']);

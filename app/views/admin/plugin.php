@@ -25,6 +25,8 @@
                                 プラグインをインストールしました。
                                 <?php elseif ($_GET['ok'] === 'uninstall') : ?>
                                 プラグインをアンインストールしました。
+                                <?php elseif ($_GET['ok'] === 'update') : ?>
+                                プラグインをアップデートしました。
                                 <?php elseif ($_GET['ok'] === 'setting') : ?>
                                 プラグインの設定を更新しました。
                                 <?php elseif ($_GET['ok'] === 'enable') : ?>
@@ -66,7 +68,9 @@
                                             <?php if (empty($plugin['installed'])) : ?>
                                                 <span class="badge <?php t(app_badge('installed', 0)) ?>">未インストール</span>
                                             <?php else : ?>
-                                                <?php if (empty($plugin['enabled'])) : ?>
+                                                <?php if (version_compare($plugin['version'], $plugin['installed'], '>')) : ?>
+                                                    <span class="badge <?php t(app_badge('update', 1)) ?>">要アップデート</span>
+                                                <?php elseif (empty($plugin['enabled'])) : ?>
                                                     <span class="badge <?php t(app_badge('enabled', 0)) ?>">無効</span>
                                                 <?php else : ?>
                                                     <span class="badge <?php t(app_badge('enabled', 1)) ?>">有効</span>
