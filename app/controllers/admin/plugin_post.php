@@ -34,6 +34,19 @@ if ($_POST['exec'] == 'install') {
         }
     }
 
+    if (isset($GLOBALS['plugin'][$_POST['code']]['sql']['update'])) {
+        foreach ($GLOBALS['plugin'][$_POST['code']]['sql']['update'] as $version => $update) {
+            if (version_compare($GLOBALS['plugin'][$_POST['code']]['version'], $version, '>=')) {
+                foreach ($update as $sql) {
+                    $resource = db_query($sql);
+                    if (!$resource) {
+                        error('プラグイン用SQLを実行できません。');
+                    }
+                }
+            }
+        }
+    }
+
     $resource = service_plugin_insert([
         'values' => [
             'code'    => $GLOBALS['plugin'][$_POST['code']]['code'],
@@ -69,27 +82,57 @@ if ($_POST['exec'] == 'install') {
     }
 } elseif ($_POST['exec'] == 'update') {
     // プラグインをアップデート
-    if (isset($GLOBALS['plugin'][$_POST['code']]['sql']['update'])) {
-        $plugins = model('select_plugins', [
-            'where' => [
-                'code = :code',
-                [
-                    'code' => $_POST['code'],
-                ],
+    $plugins = model('select_plugins', [
+        'where' => [
+            'code = :code',
+            [
+                'code' => $_POST['code'],
             ],
-        ]);
-        if (empty($plugins)) {
-            error('プラグイン情報を取得できません。');
-        } else {
-            foreach ($GLOBALS['plugin'][$_POST['code']]['sql']['update'] as $version => $update) {
-                if (version_compare($GLOBALS['plugin'][$_POST['code']]['version'], $version, '>=') && version_compare($plugins[0]['version'], $version, '<')) {
-                    foreach ($update as $sql) {
-                        $resource = db_query($sql);
-                        if (!$resource) {
-                            error('プラグイン用SQLを実行できません。');
-                        }
+        ],
+    ]);
+    if (empty($plugins)) {
+        error('プラグイン情報を取得できません。');
+    }
+
+    if (isset($GLOBALS['plugin'][$_POST['code']]['sql']['update'])) {
+        foreach ($GLOBALS['plugin'][$_POST['code']]['sql']['update'] as $version => $update) {
+            if (version_compare($GLOBALS['plugin'][$_POST['code']]['version'], $version, '>=') && version_compare($plugins[0]['version'], $version, '<')) {
+                foreach ($update as $sql) {
+                    $resource = db_query($sql);
+                    if (!$resource) {
+                        error('プラグイン用SQLを実行できません。');
                     }
                 }
+            }
+        }
+    }
+
+    if (isset($GLOBALS['plugin'][$_POST['code']]['setting_default'])) {
+        $setting = json_decode($plugins[0]['setting'], true);
+
+        $flag = false;
+        foreach ($GLOBALS['plugin'][$_POST['code']]['setting_default'] as $key => $value) {
+            if (!isset($setting[$key])) {
+                $setting[$key] = $value;
+
+                $flag = true;
+            }
+        }
+
+        if ($flag === true) {
+            $resource = service_plugin_update([
+                'set'   => [
+                    'setting' => json_encode($setting),
+                ],
+                'where' => [
+                    'code = :code',
+                    [
+                        'code' => $_POST['code'],
+                    ],
+                ],
+            ]);
+            if (!$resource) {
+                error('プラグイン設定を更新できません。');
             }
         }
     }

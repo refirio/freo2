@@ -227,7 +227,7 @@ foreach ($plugins as $plugin) {
         $flag = true;
     }
 
-    if ($flag) {
+    if ($flag === true) {
         if (is_file(MAIN_PATH . MAIN_APPLICATION_PATH . 'app/controllers/after.php')) {
             import('app/controllers/after.php');
         }
