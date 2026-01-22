@@ -21,7 +21,7 @@ if ($GLOBALS['authority']['power'] < 3) {
 import(MAIN_PATH . $GLOBALS['config']['theme_path'] . $_POST['code'] . '/' . 'config.php');
 
 // トランザクションを開始
-db_transaction();
+//db_transaction();
 
 if ($_POST['exec'] == 'install') {
     // テーマをインストール
@@ -48,6 +48,64 @@ if ($_POST['exec'] == 'install') {
     ]);
     if (!$resource) {
         error('データを削除できません。');
+    }
+} elseif ($_POST['exec'] == 'update') {
+    // テーマをアップデート
+    $themes = model('select_themes', [
+        'where' => [
+            'code = :code',
+            [
+                'code' => $_POST['code'],
+            ],
+        ],
+    ]);
+    if (empty($themes)) {
+        error('テーマ情報を取得できません。');
+    }
+
+    if (isset($GLOBALS['theme'][$_POST['code']]['setting_default'])) {
+        $setting = json_decode($themes[0]['setting'], true);
+
+        $flag = false;
+        foreach ($GLOBALS['theme'][$_POST['code']]['setting_default'] as $key => $value) {
+            if (!isset($setting[$key])) {
+                $setting[$key] = $value;
+
+                $flag = true;
+            }
+        }
+
+        if ($flag === true) {
+            $resource = service_theme_update([
+                'set'   => [
+                    'setting' => json_encode($setting),
+                ],
+                'where' => [
+                    'code = :code',
+                    [
+                        'code' => $_POST['code'],
+                    ],
+                ],
+            ]);
+            if (!$resource) {
+                error('テーマ設定を更新できません。');
+            }
+        }
+    }
+
+    $resource = service_theme_update([
+        'set'   => [
+            'version' => $GLOBALS['theme'][$_POST['code']]['version'],
+        ],
+        'where' => [
+            'code = :code',
+            [
+                'code' => $_POST['code'],
+            ],
+        ],
+    ]);
+    if (!$resource) {
+        error('テーマのバージョンを更新できません。');
     }
 } elseif ($_POST['exec'] == 'setting') {
     // テーマ設定を更新
@@ -129,7 +187,7 @@ if ($_POST['exec'] == 'install') {
 }
 
 // トランザクションを終了
-db_commit();
+//db_commit();
 
 // リダイレクト
 redirect('/admin/theme?ok=' . $_POST['exec']);

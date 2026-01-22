@@ -25,6 +25,8 @@
                                 テーマをインストールしました。
                                 <?php elseif ($_GET['ok'] === 'uninstall') : ?>
                                 テーマをアンインストールしました。
+                                <?php elseif ($_GET['ok'] === 'update') : ?>
+                                テーマをアップデートしました。
                                 <?php elseif ($_GET['ok'] === 'setting') : ?>
                                 テーマの設定を更新しました。
                                 <?php elseif ($_GET['ok'] === 'enable') : ?>
@@ -66,7 +68,9 @@
                                             <?php if (empty($theme['installed'])) : ?>
                                                 <span class="badge <?php t(app_badge('installed', 0)) ?>">未インストール</span>
                                             <?php else : ?>
-                                                <?php if (empty($theme['enabled'])) : ?>
+                                                <?php if (version_compare($theme['version'], $theme['installed'], '>')) : ?>
+                                                    <span class="badge <?php t(app_badge('update', 1)) ?>">要アップデート</span>
+                                                <?php elseif (empty($theme['enabled'])) : ?>
                                                     <span class="badge <?php t(app_badge('enabled', 0)) ?>">無効</span>
                                                 <?php else : ?>
                                                     <span class="badge <?php t(app_badge('enabled', 1)) ?>">有効</span>

@@ -51,7 +51,9 @@
                                             <?php if (empty($_view['theme'])) : ?>
                                                 <span class="badge <?php t(app_badge('installed', 0)) ?>">未インストール</span>
                                             <?php else : ?>
-                                                <?php if (empty($_view['theme']['enabled'])) : ?>
+                                                <?php if (version_compare($GLOBALS['theme'][$_GET['code']]['version'], $_view['theme']['version'], '>')) : ?>
+                                                    <span class="badge <?php t(app_badge('update', 1)) ?>">要アップデート</span>
+                                                <?php elseif (empty($_view['theme']['enabled'])) : ?>
                                                     <span class="badge <?php t(app_badge('enabled', 0)) ?>">無効</span>
                                                 <?php else : ?>
                                                     <span class="badge <?php t(app_badge('enabled', 1)) ?>">有効</span>
@@ -81,6 +83,26 @@
                                 </div>
                             </form>
                             <?php else : ?>
+                            <?php if (version_compare($GLOBALS['theme'][$_GET['code']]['version'], $_view['theme']['version'], '>')) : ?>
+                            <form action="<?php t(MAIN_FILE) ?>/admin/theme_post" method="post">
+                                <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
+                                <input type="hidden" name="code" value="<?php t($_GET['code']) ?>">
+                                <input type="hidden" name="exec" value="update">
+                                <div class="card shadow-sm mb-3">
+                                    <div class="card-header">
+                                        アップデート
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="form-group mb-4 for-public">
+                                            テーマをアップデートします。
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-warning px-4">更新</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <?php endif ?>
                             <?php if (!empty($_view['contents'])) : ?>
                             <form action="<?php t(MAIN_FILE) ?>/admin/theme_post" method="post">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
