@@ -80,8 +80,8 @@ if ($_POST['exec'] == 'install') {
     if (!$resource) {
         error('プラグインをアンインストールできません。');
     }
-} elseif ($_POST['exec'] == 'update') {
-    // プラグインをアップデート
+} elseif ($_POST['exec'] == 'upgrade') {
+    // プラグインをアップグレード
     $plugins = model('select_plugins', [
         'where' => [
             'code = :code',
@@ -94,10 +94,10 @@ if ($_POST['exec'] == 'install') {
         error('プラグイン情報を取得できません。');
     }
 
-    if (isset($GLOBALS['plugin'][$_POST['code']]['sql']['update'])) {
-        foreach ($GLOBALS['plugin'][$_POST['code']]['sql']['update'] as $version => $update) {
+    if (isset($GLOBALS['plugin'][$_POST['code']]['sql']['upgrade'])) {
+        foreach ($GLOBALS['plugin'][$_POST['code']]['sql']['upgrade'] as $version => $upgrade) {
             if (version_compare($GLOBALS['plugin'][$_POST['code']]['version'], $version, '>=') && version_compare($plugins[0]['version'], $version, '<')) {
-                foreach ($update as $sql) {
+                foreach ($upgrade as $sql) {
                     $resource = db_query($sql);
                     if (!$resource) {
                         error('プラグイン用SQLを実行できません。');
@@ -213,10 +213,10 @@ if ($_POST['exec'] == 'install') {
         ],
     ]);
     if (!$resource) {
-        error('データを編集できません。');
+        error('プラグインを無効化できません。');
     }
 } else {
-    error('プラグインを無効化できません。');
+    error('不正なアクセスです。');
 }
 
 // トランザクションを終了

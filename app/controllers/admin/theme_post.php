@@ -34,7 +34,7 @@ if ($_POST['exec'] == 'install') {
         ],
     ]);
     if (!$resource) {
-        error('データを登録できません。');
+        error('テーマをインストールできません。');
     }
 } elseif ($_POST['exec'] == 'uninstall') {
     // テーマをアンインストール
@@ -47,10 +47,10 @@ if ($_POST['exec'] == 'install') {
         ],
     ]);
     if (!$resource) {
-        error('データを削除できません。');
+        error('テーマをアンインストールできません。');
     }
-} elseif ($_POST['exec'] == 'update') {
-    // テーマをアップデート
+} elseif ($_POST['exec'] == 'upgrade') {
+    // テーマをアップグレード
     $themes = model('select_themes', [
         'where' => [
             'code = :code',
@@ -137,7 +137,7 @@ if ($_POST['exec'] == 'install') {
         ],
     ]);
     if (!$resource) {
-        error('データを編集できません。');
+        error('テーマ設定を更新できません。');
     }
 } elseif ($_POST['exec'] == 'enable') {
     // 他のテーマを無効化
@@ -148,7 +148,7 @@ if ($_POST['exec'] == 'install') {
         'where' => 'enabled = 1',
     ]);
     if (!$resource) {
-        error('データを編集できません。');
+        error('他のテーマを無効化できません。');
     }
 
     // テーマを有効化
@@ -164,7 +164,7 @@ if ($_POST['exec'] == 'install') {
         ],
     ]);
     if (!$resource) {
-        error('データを編集できません。');
+        error('テーマを有効化できません。');
     }
 } elseif ($_POST['exec'] == 'disable') {
     // テーマを無効化
@@ -180,7 +180,7 @@ if ($_POST['exec'] == 'install') {
         ],
     ]);
     if (!$resource) {
-        error('データを編集できません。');
+        error('テーマを無効化できません。');
     }
 } else {
     error('不正なアクセスです。');

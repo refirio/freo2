@@ -104,7 +104,7 @@ function app_badge($key, $value)
             $bg_color   = 'secondary';
         }
     }
-    if ($key === 'update') {
+    if ($key === 'upgrade') {
         if ($value === 1) {
             $text_color = 'dark';
             $bg_color   = 'warning';

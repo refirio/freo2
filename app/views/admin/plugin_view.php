@@ -52,7 +52,7 @@
                                                 <span class="badge <?php t(app_badge('installed', 0)) ?>">未インストール</span>
                                             <?php else : ?>
                                                 <?php if (version_compare($GLOBALS['plugin'][$_GET['code']]['version'], $_view['plugin']['version'], '>')) : ?>
-                                                    <span class="badge <?php t(app_badge('update', 1)) ?>">要アップデート</span>
+                                                    <span class="badge <?php t(app_badge('upgrade', 1)) ?>">要アップグレード</span>
                                                 <?php elseif (empty($_view['plugin']['enabled'])) : ?>
                                                     <span class="badge <?php t(app_badge('enabled', 0)) ?>">無効</span>
                                                 <?php else : ?>
@@ -87,17 +87,17 @@
                             <form action="<?php t(MAIN_FILE) ?>/admin/plugin_post" method="post">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <input type="hidden" name="code" value="<?php t($_GET['code']) ?>">
-                                <input type="hidden" name="exec" value="update">
+                                <input type="hidden" name="exec" value="upgrade">
                                 <div class="card shadow-sm mb-3">
                                     <div class="card-header">
-                                        アップデート
+                                        アップグレード
                                     </div>
                                     <div class="card-body">
                                         <div class="form-group mb-4 for-public">
-                                            プラグインをアップデートします。
+                                            プラグインをアップグレードします。
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-warning px-4">更新</button>
+                                            <button type="submit" class="btn btn-warning px-4">アップグレード</button>
                                         </div>
                                     </div>
                                 </div>
