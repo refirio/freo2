@@ -63,32 +63,12 @@ if ($_POST['exec'] == 'install') {
         error('テーマ情報を取得できません。');
     }
 
-    if (isset($GLOBALS['theme'][$_POST['code']]['setting_default'])) {
-        $setting = json_decode($themes[0]['setting'], true);
+    $setting = json_decode($themes[0]['setting'], true);
 
-        $flag = false;
+    if (isset($GLOBALS['theme'][$_POST['code']]['setting_default'])) {
         foreach ($GLOBALS['theme'][$_POST['code']]['setting_default'] as $key => $value) {
             if (!isset($setting[$key])) {
                 $setting[$key] = $value;
-
-                $flag = true;
-            }
-        }
-
-        if ($flag === true) {
-            $resource = service_theme_update([
-                'set'   => [
-                    'setting' => json_encode($setting),
-                ],
-                'where' => [
-                    'code = :code',
-                    [
-                        'code' => $_POST['code'],
-                    ],
-                ],
-            ]);
-            if (!$resource) {
-                error('テーマ設定を更新できません。');
             }
         }
     }
@@ -96,6 +76,7 @@ if ($_POST['exec'] == 'install') {
     $resource = service_theme_update([
         'set'   => [
             'version' => $GLOBALS['theme'][$_POST['code']]['version'],
+            'setting' => json_encode($setting),
         ],
         'where' => [
             'code = :code',

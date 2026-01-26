@@ -20,29 +20,33 @@ if ($GLOBALS['authority']['power'] < 3) {
 // プラグインを取得
 import(MAIN_PATH . $GLOBALS['config']['plugin_path'] . $_POST['code'] . '/' . 'config.php');
 
+// セットアップ用ディレクトリ
+$setup_dir = MAIN_PATH . $GLOBALS['config']['plugin_path'] . $_POST['code'] . '/setup/';
+
+// アップグレード用ファイルを取得
+$upgrades = [];
+if ($dh = opendir($setup_dir)) {
+    while (($entry = readdir($dh)) !== false) {
+        if (preg_match('/^upgrade_(.*)_(.*)_(.*)\.php$/', $entry, $matches)) {
+            $upgrades[$matches[1] . '.' . $matches[2] . '.' . $matches[3]] = $entry;
+        }
+    }
+    closedir($dh);
+}
+
 // トランザクションを開始
 //db_transaction();
 
 if ($_POST['exec'] == 'install') {
     // プラグインをインストール
-    if (isset($GLOBALS['plugin'][$_POST['code']]['sql']['install'])) {
-        foreach ($GLOBALS['plugin'][$_POST['code']]['sql']['install'] as $sql) {
-            $resource = db_query($sql);
-            if (!$resource) {
-                error('プラグイン用SQLを実行できません。');
-            }
-        }
+    if (file_exists($setup_dir . 'install.php')) {
+        import($setup_dir . 'install.php');
     }
 
-    if (isset($GLOBALS['plugin'][$_POST['code']]['sql']['update'])) {
-        foreach ($GLOBALS['plugin'][$_POST['code']]['sql']['update'] as $version => $update) {
+    if (!empty($upgrades)) {
+        foreach ($upgrades as $version => $entry) {
             if (version_compare($GLOBALS['plugin'][$_POST['code']]['version'], $version, '>=')) {
-                foreach ($update as $sql) {
-                    $resource = db_query($sql);
-                    if (!$resource) {
-                        error('プラグイン用SQLを実行できません。');
-                    }
-                }
+                import($setup_dir . $entry);
             }
         }
     }
@@ -60,13 +64,8 @@ if ($_POST['exec'] == 'install') {
     }
 } elseif ($_POST['exec'] == 'uninstall') {
     // プラグインをアンインストール
-    if (isset($GLOBALS['plugin'][$_POST['code']]['sql']['uninstall'])) {
-        foreach ($GLOBALS['plugin'][$_POST['code']]['sql']['uninstall'] as $sql) {
-            $resource = db_query($sql);
-            if (!$resource) {
-                error('プラグイン用SQLを実行できません。');
-            }
-        }
+    if (file_exists($setup_dir . 'uninstall.php')) {
+        import($setup_dir . 'uninstall.php');
     }
 
     $resource = service_plugin_delete([
@@ -94,45 +93,20 @@ if ($_POST['exec'] == 'install') {
         error('プラグイン情報を取得できません。');
     }
 
-    if (isset($GLOBALS['plugin'][$_POST['code']]['sql']['upgrade'])) {
-        foreach ($GLOBALS['plugin'][$_POST['code']]['sql']['upgrade'] as $version => $upgrade) {
+    if (!empty($upgrades)) {
+        foreach ($upgrades as $version => $entry) {
             if (version_compare($GLOBALS['plugin'][$_POST['code']]['version'], $version, '>=') && version_compare($plugins[0]['version'], $version, '<')) {
-                foreach ($upgrade as $sql) {
-                    $resource = db_query($sql);
-                    if (!$resource) {
-                        error('プラグイン用SQLを実行できません。');
-                    }
-                }
+                import($setup_dir . $entry);
             }
         }
     }
 
-    if (isset($GLOBALS['plugin'][$_POST['code']]['setting_default'])) {
-        $setting = json_decode($plugins[0]['setting'], true);
+    $setting = json_decode($plugins[0]['setting'], true);
 
-        $flag = false;
+    if (isset($GLOBALS['plugin'][$_POST['code']]['setting_default'])) {
         foreach ($GLOBALS['plugin'][$_POST['code']]['setting_default'] as $key => $value) {
             if (!isset($setting[$key])) {
                 $setting[$key] = $value;
-
-                $flag = true;
-            }
-        }
-
-        if ($flag === true) {
-            $resource = service_plugin_update([
-                'set'   => [
-                    'setting' => json_encode($setting),
-                ],
-                'where' => [
-                    'code = :code',
-                    [
-                        'code' => $_POST['code'],
-                    ],
-                ],
-            ]);
-            if (!$resource) {
-                error('プラグイン設定を更新できません。');
             }
         }
     }
@@ -140,6 +114,7 @@ if ($_POST['exec'] == 'install') {
     $resource = service_plugin_update([
         'set'   => [
             'version' => $GLOBALS['plugin'][$_POST['code']]['version'],
+            'setting' => json_encode($setting),
         ],
         'where' => [
             'code = :code',
