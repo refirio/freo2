@@ -55,7 +55,9 @@
                                             <th class="text-nowrap">承認</th>
                                             <?php endif ?>
                                             <th class="text-nowrap">公開</th>
+                                            <?php if (!empty($_view['category_count'])) : ?>
                                             <th class="text-nowrap d-none d-md-table-cell">カテゴリー</th>
+                                            <?php endif ?>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
                                     </thead>
@@ -69,7 +71,9 @@
                                             <th class="text-nowrap">承認</th>
                                             <?php endif ?>
                                             <th class="text-nowrap">公開</th>
+                                            <?php if (!empty($_view['category_count'])) : ?>
                                             <th class="text-nowrap d-none d-md-table-cell">カテゴリー</th>
+                                            <?php endif ?>
                                             <th class="text-nowrap">作業</th>
                                         </tr>
                                     </tfoot>
@@ -84,11 +88,13 @@
                                             <td class="text-nowrap"><span class="badge <?php t(app_badge('approved', $entry['approved'])) ?>"><?php h($GLOBALS['config']['option']['entry']['approved'][$entry['approved']]) ?></span></td>
                                             <?php endif ?>
                                             <td class="text-nowrap"><span class="badge <?php t(app_badge('public', $entry['public'])) ?>"><?php h($GLOBALS['config']['option']['entry']['public'][$entry['public']]) ?></span></td>
+                                            <?php if (!empty($_view['categories'])) : ?>
                                             <td class="d-none d-md-table-cell">
                                                 <?php foreach ($entry['category_sets'] as $category_sets) : ?>
                                                 <div class="text-nowrap"><?php h($category_sets['category_name']) ?></div>
                                                 <?php endforeach ?>
                                             </td>
+                                            <?php endif ?>
                                             <td><a href="<?php t(MAIN_FILE) ?>/admin/entry_form?id=<?php t($entry['id']) ?>" class="btn btn-primary text-nowrap">編集</a></td>
                                         </tr>
                                         <?php endforeach ?>

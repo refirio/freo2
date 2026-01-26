@@ -33,5 +33,13 @@ $entry_count = model('select_entries', [
 $_view['entry_count'] = $entry_count[0]['count'];
 $_view['entry_page']  = ceil($entry_count[0]['count'] / $GLOBALS['setting']['number_limit_admin_entry']);
 
+// カテゴリーを取得
+$_view['categories'] = model('select_categories', [
+    'where'    => 'types.code = ' .  db_escape('entry'),
+    'order_by' => 'categories.sort, categories.id',
+], [
+    'associate' => true,
+]);
+
 // タイトル
 $_view['title'] = 'エントリー管理';

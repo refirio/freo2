@@ -733,6 +733,10 @@ function set_category_entries($entry_id, $category_sets)
 
     // 新しいデータを登録
     foreach ($category_sets as $category_id) {
+        if (!$category_id) {
+            continue;
+        }
+
         $resource = model('insert_category_sets', [
             'values' => [
                 'category_id' => $category_id,

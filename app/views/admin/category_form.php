@@ -30,7 +30,6 @@
                             <form action="<?php t(MAIN_FILE) ?>/admin/category_form<?php $_view['category']['id'] ? t('?id=' . $_view['category']['id']) : '' ?>" method="post" class="register validate">
                                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                                 <input type="hidden" name="id" value="<?php t($_view['category']['id']) ?>">
-                                <input type="hidden" name="type_id" value="<?php t($_view['type']['id']) ?>">
                                 <div class="card shadow-sm mb-3">
                                     <div class="card-header">
                                         登録
@@ -43,6 +42,15 @@
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">名前 <span class="badge bg-danger">必須</span></label>
                                             <input type="text" name="name" size="30" value="<?php t($_view['category']['name']) ?>" class="form-control">
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">対象 <span class="badge bg-danger">必須</span></label>
+                                            <select name="type_id" class="form-select" style="width: 200px;">
+                                                <option value=""></option>
+                                                <?php foreach ($_view['types'] as $type) : ?>
+                                                <option value="<?php t($type['id']) ?>"<?php $type['id'] == $_view['category']['type_id'] ? e(' selected="selected"') : '' ?>><?php t($type['name']) ?></option>
+                                                <?php endforeach ?>
+                                            </select>
                                         </div>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">メモ <span class="badge text-light bg-secondary" data-toggle="tooltip" title="公開されないテキスト。">？</span></label>

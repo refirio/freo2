@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'text'           => isset($_POST['text'])           ? $_POST['text']           : '',
             'comment'        => isset($_POST['comment'])        ? $_POST['comment']        : '',
             'field_sets'     => isset($_POST['field_sets'])     ? $_POST['field_sets']     : [],
+            'category_sets'  => isset($_POST['category_sets'])  ? $_POST['category_sets']  : [],
             'attribute_sets' => isset($_POST['attribute_sets']) ? $_POST['attribute_sets'] : [],
             'picture_files'  => isset($_POST['picture_files'])  ? $_POST['picture_files']  : [],
         ]),
@@ -143,6 +144,12 @@ $_view['type'] = $types[0];
 
 // フィールドを取得
 $_view['fields'] = model('select_fields', [
+    'where'    => 'type_id = ' . intval($_view['type']['id']),
+    'order_by' => 'sort, id',
+]);
+
+// カテゴリーを取得
+$_view['categories'] = model('select_categories', [
     'where'    => 'type_id = ' . intval($_view['type']['id']),
     'order_by' => 'sort, id',
 ]);

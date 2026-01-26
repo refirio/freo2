@@ -74,10 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // 型を取得
-$types = model('select_types', [
-    'where' => 'code = ' . db_escape('entry'),
+$_view['types'] = model('select_types', [
+    'order_by' => 'sort, id',
 ]);
-$_view['type'] = $types[0];
 
 // タイトル
 if (empty($_GET['id'])) {

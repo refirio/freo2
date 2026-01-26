@@ -240,6 +240,13 @@ function validate_categories($queries, $options = [])
 
     $messages = [];
 
+    // 外部キー 型
+    if (isset($queries['type_id'])) {
+        if (!validator_required($queries['type_id'])) {
+            $messages['type_id'] = '型が入力されていません。';
+        }
+    }
+
     // コード
     if (isset($queries['code'])) {
         if (!validator_required($queries['code'])) {
@@ -322,6 +329,7 @@ function default_categories()
         'created'  => localdate('Y-m-d H:i:s'),
         'modified' => localdate('Y-m-d H:i:s'),
         'deleted'  => null,
+        'type_id'  => 0,
         'code'     => '',
         'name'     => '',
         'memo'     => null,

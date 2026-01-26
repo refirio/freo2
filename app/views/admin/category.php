@@ -44,6 +44,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th class="text-nowrap">対象</th>
                                             <th class="text-nowrap d-none d-md-table-cell">コード</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">並び順</th>
@@ -52,6 +53,7 @@
                                     </thead>
                                     <tfoot>
                                         <tr>
+                                            <th class="text-nowrap">対象</th>
                                             <th class="text-nowrap d-none d-md-table-cell">コード</th>
                                             <th class="text-nowrap">名前</th>
                                             <th class="text-nowrap">並び順</th>
@@ -61,6 +63,7 @@
                                     <tbody>
                                         <?php foreach ($_view['categories'] as $category) : ?>
                                         <tr id="sort_<?php h($category['id']) ?>">
+                                            <td><?php h($category['type_name']) ?></td>
                                             <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($category['code'], 50)) ?></code></td>
                                             <td><?php h(truncate($category['name'], 50)) ?></td>
                                             <td><span class="handle text-nowrap"><svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-arrow-down-up"/></svg></span></td>

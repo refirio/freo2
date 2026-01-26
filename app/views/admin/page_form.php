@@ -53,6 +53,17 @@
                                         登録
                                     </div>
                                     <div class="card-body">
+                                        <?php if (!empty($_view['categories'])) : ?>
+                                        <div class="form-group mb-2">
+                                            <label class="fw-bold">カテゴリー</label>
+                                            <div id="validate_category_sets">
+                                                <label><input type="radio" name="category_sets[]" value="" class="form-check-input"<?php empty($_view['entry']['category_sets']) ? e(' checked="checked"') : '' ?>> なし</label><br>
+                                                <?php foreach ($_view['categories'] as $category) : ?>
+                                                <label><input type="radio" name="category_sets[]" value="<?php t($category['id']) ?>" class="form-check-input"<?php in_array($category['id'], array_column($_view['entry']['category_sets'], 'category_id')) ? e(' checked="checked"') : '' ?>> <?php t($category['name']) ?></label><br>
+                                                <?php endforeach ?>
+                                            </div>
+                                        </div>
+                                        <?php endif ?>
                                         <div class="form-group mb-2">
                                             <label class="fw-bold">公開 <span class="badge bg-danger">必須</span></label>
                                             <select name="public" class="form-select" style="width: 200px;">

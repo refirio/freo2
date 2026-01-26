@@ -44,7 +44,10 @@ $_view['entry_page']  = ceil($entry_count[0]['count'] / $GLOBALS['setting']['num
 
 // カテゴリーを取得
 $_view['categories'] = model('select_categories', [
-    'order_by' => 'sort, id',
+    'where'    => 'types.code = ' .  db_escape('entry'),
+    'order_by' => 'categories.sort, categories.id',
+], [
+    'associate' => true,
 ]);
 
 // 月ごとのエントリー数を取得

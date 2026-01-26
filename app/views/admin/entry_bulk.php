@@ -47,7 +47,7 @@
                                         <th class="text-nowrap">日時</th>
                                         <th class="text-nowrap">承認</th>
                                         <th class="text-nowrap">公開</th>
-                                        <th class="text-nowrap">カテゴリー</th>
+                                        <th class="text-nowrap d-none d-md-table-cell">カテゴリー</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -57,7 +57,7 @@
                                         <th class="text-nowrap">日時</th>
                                         <th class="text-nowrap">承認</th>
                                         <th class="text-nowrap">公開</th>
-                                        <th class="text-nowrap">カテゴリー</th>
+                                        <th class="text-nowrap d-none d-md-table-cell">カテゴリー</th>
                                     </tr>
                                 </tfoot>
                                 <tbody>
@@ -68,7 +68,7 @@
                                         <td><?php h(localdate('Ymd', $entry['datetime']) == localdate('Ymd') ? localdate('H:i:s', $entry['datetime']) : localdate('Y/m/d', $entry['datetime'])) ?></td>
                                         <td><?php h($GLOBALS['config']['option']['entry']['approved'][$entry['approved']]) ?></td>
                                         <td><?php h($GLOBALS['config']['option']['entry']['public'][$entry['public']]) ?></td>
-                                        <td>
+                                        <td class="d-none d-md-table-cell">
                                             <?php foreach ($entry['category_sets'] as $category_sets) : ?>
                                             <div class="text-nowrap"><?php h($category_sets['category_name']) ?></div>
                                             <?php endforeach ?>
