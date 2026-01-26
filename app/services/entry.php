@@ -9,7 +9,7 @@ import('app/services/log.php');
  * @param array  $queries
  * @param array  $options
  *
- * @return resource
+ * @return array
  */
 function service_entry_select_published($type, $queries, $options = [])
 {

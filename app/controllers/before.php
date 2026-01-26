@@ -82,14 +82,14 @@ if (!empty($_SESSION['auth']['user']['id'])) {
         } elseif ($GLOBALS['authority']['power'] == 2) {
             // 投稿者
             if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
-                if (!preg_match('/^(index|entry|page|category|field|media|contact|comment|file)(_|$)/', $_REQUEST['_work'])) {
+                if (preg_match('/^(attribute|field|log|menu|plugin|setting|theme|user|version|widget)(_|$)/', $_REQUEST['_work'])) {
                     error('不正なアクセスです。');
                 }
             }
         } elseif ($GLOBALS['authority']['power'] == 1) {
             // 閲覧者
             if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
-                if (!preg_match('/^(index|contact|comment)(_|$)/', $_REQUEST['_work'])) {
+                if (preg_match('/^(attribute|category|entry|field|file|log|media|menu|page|plugin|setting|theme|user|version|widget)(_|$)/', $_REQUEST['_work'])) {
                     error('不正なアクセスです。');
                 }
             }
@@ -217,21 +217,19 @@ foreach ($plugins as $plugin) {
         $flag = true;
     }
 
-    if (is_file($view_dir . $_REQUEST['_mode'] . '/' . $file)) {
-        import($view_dir . $_REQUEST['_mode'] . '/' . $file);
-
-        $flag = true;
-    } elseif (is_file($view_dir . $_REQUEST['_mode'] . '/' . MAIN_DEFAULT_WORK . '.php')) {
-        import($view_dir . $_REQUEST['_mode'] . '/' . MAIN_DEFAULT_WORK . '.php');
-
-        $flag = true;
-    }
-
     if ($flag === true) {
         if (is_file(MAIN_PATH . MAIN_APPLICATION_PATH . 'app/controllers/after.php')) {
             import('app/controllers/after.php');
         }
+    }
 
+    if (is_file($view_dir . $_REQUEST['_mode'] . '/' . $file)) {
+        import($view_dir . $_REQUEST['_mode'] . '/' . $file);
+    } elseif (is_file($view_dir . $_REQUEST['_mode'] . '/' . MAIN_DEFAULT_WORK . '.php')) {
+        import($view_dir . $_REQUEST['_mode'] . '/' . MAIN_DEFAULT_WORK . '.php');
+    }
+
+    if ($flag === true) {
         exit;
     }
 }
