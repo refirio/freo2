@@ -50,13 +50,13 @@
                                 <td><?php t(truncate($comment['entry_title'] ? $comment['entry_title'] : $comment['contact_subject'], 100)) ?></td>
                                 <td>
                                     <?php if ($comment['type_code'] === 'entry') : ?>
-                                    <a href="<?php t(MAIN_FILE) ?>/<?php t($comment['type_code']) ?>/detail/<?php t($comment['entry_code']) ?>" class="btn btn-primary text-nowrap">表示</a>
+                                    <a href="<?php t(MAIN_FILE) ?>/<?php t($comment['type_code']) ?>/detail/<?php t($comment['entry_code']) ?>" class="btn btn-primary btn-sm text-nowrap">表示</a>
                                     <?php elseif ($comment['type_code'] === 'page') : ?>
-                                    <a href="<?php t(MAIN_FILE) ?>/<?php t($comment['type_code']) ?>/<?php t($comment['entry_code']) ?>" class="btn btn-primary text-nowrap">表示</a>
+                                    <a href="<?php t(MAIN_FILE) ?>/<?php t($comment['type_code']) ?>/<?php t($comment['entry_code']) ?>" class="btn btn-primary btn-sm text-nowrap">表示</a>
                                     <?php elseif ($comment['contact_id']) : ?>
-                                    <a href="<?php t(MAIN_FILE) ?>/auth/contact_view?id=<?php t($comment['contact_id']) ?>" class="btn btn-primary text-nowrap">表示</a>
+                                    <a href="<?php t(MAIN_FILE) ?>/auth/contact_view?id=<?php t($comment['contact_id']) ?>" class="btn btn-primary btn-sm text-nowrap">表示</a>
                                     <?php endif ?>
-                                    <a href="<?php t(MAIN_FILE) ?>/auth/comment_form?id=<?php t($comment['id']) ?>" class="btn btn-primary text-nowrap">編集</a>
+                                    <a href="<?php t(MAIN_FILE) ?>/auth/comment_form?id=<?php t($comment['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a>
                                 </td>
                             </tr>
                             <?php endforeach ?>

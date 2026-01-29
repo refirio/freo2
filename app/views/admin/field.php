@@ -67,7 +67,7 @@
                                             <td><?php h(truncate($field['name'], 50)) ?></td>
                                             <td class="text-nowrap d-none d-md-table-cell"><span class="badge <?php t(app_badge('kind', $field['kind'])) ?>"><?php h($GLOBALS['config']['option']['field']['kind'][$field['kind']]) ?></span></td>
                                             <td class="d-none d-md-table-cell"><span class="handle text-nowrap"><svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-arrow-down-up"/></svg></span></td>
-                                            <td><a href="<?php t(MAIN_FILE) ?>/admin/field_form?id=<?php t($field['id']) ?>" class="btn btn-primary">編集</a></td>
+                                            <td><a href="<?php t(MAIN_FILE) ?>/admin/field_form?id=<?php t($field['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
                                         </tr>
                                         <?php endforeach ?>
                                     </tbody>

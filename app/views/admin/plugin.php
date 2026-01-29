@@ -77,7 +77,7 @@
                                                 <?php endif ?>
                                             <?php endif ?>
                                         </td>
-                                        <td><a href="<?php t(MAIN_FILE) ?>/admin/plugin_view?code=<?php t($plugin['code']) ?>" class="btn btn-primary">詳細</a></td>
+                                        <td><a href="<?php t(MAIN_FILE) ?>/admin/plugin_view?code=<?php t($plugin['code']) ?>" class="btn btn-primary btn-sm text-nowrap">詳細</a></td>
                                     </tr>
                                     <?php endforeach ?>
                                 </tbody>

@@ -31,7 +31,7 @@
                             <tr>
                                 <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $contact['created']) == localdate('Ymd') ? localdate('H:i:s', $contact['created']) : localdate('Y/m/d', $contact['created'])) ?></td>
                                 <td><?php t(truncate($contact['subject'], 100)) ?></td>
-                                <td><a href="<?php t(MAIN_FILE) ?>/auth/contact_view?id=<?php t($contact['id']) ?>" class="btn btn-primary text-nowrap">表示</a></td>
+                                <td><a href="<?php t(MAIN_FILE) ?>/auth/contact_view?id=<?php t($contact['id']) ?>" class="btn btn-primary btn-sm text-nowrap">表示</a></td>
                             </tr>
                             <?php endforeach ?>
                         </tbody>

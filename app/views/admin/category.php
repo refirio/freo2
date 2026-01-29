@@ -67,7 +67,7 @@
                                             <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($category['code'], 50)) ?></code></td>
                                             <td><?php h(truncate($category['name'], 50)) ?></td>
                                             <td><span class="handle text-nowrap"><svg class="bi flex-shrink-0 me-1 mb-1" width="16" height="16"><use xlink:href="#symbol-arrow-down-up"/></svg></span></td>
-                                            <td><a href="<?php t(MAIN_FILE) ?>/admin/category_form?id=<?php t($category['id']) ?>" class="btn btn-primary">編集</a></td>
+                                            <td><a href="<?php t(MAIN_FILE) ?>/admin/category_form?id=<?php t($category['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
                                         </tr>
                                         <?php endforeach ?>
                                     </tbody>

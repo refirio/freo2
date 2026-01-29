@@ -96,9 +96,9 @@
                                             <td><span class="badge <?php t(app_badge('approved', $comment['approved'])) ?>"><?php h($GLOBALS['config']['option']['comment']['approved'][$comment['approved']]) ?></span></td>
                                             <?php endif ?>
                                             <td>
-                                                <a href="<?php t(MAIN_FILE) ?>/admin/comment_view?id=<?php t($comment['id']) ?>" class="btn btn-primary text-nowrap">表示</a>
+                                                <a href="<?php t(MAIN_FILE) ?>/admin/comment_view?id=<?php t($comment['id']) ?>" class="btn btn-primary btn-sm text-nowrap">表示</a>
                                                 <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
-                                                <a href="<?php t(MAIN_FILE) ?>/admin/comment_form?id=<?php t($comment['id']) ?>" class="btn btn-primary text-nowrap">編集</a>
+                                                <a href="<?php t(MAIN_FILE) ?>/admin/comment_form?id=<?php t($comment['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a>
                                                 <?php endif ?>
                                             </td>
                                         </tr>

@@ -81,9 +81,9 @@
                                             <td><?php h(truncate($contact['subject'], 50)) ?></td>
                                             <td><span class="badge <?php t(app_badge('status', $contact['status'])) ?>"><?php h(truncate($GLOBALS['config']['option']['contact']['status'][$contact['status']], 50)) ?></span></td>
                                             <td>
-                                                <a href="<?php t(MAIN_FILE) ?>/admin/contact_view?id=<?php t($contact['id']) ?>" class="btn btn-primary text-nowrap">表示</a>
+                                                <a href="<?php t(MAIN_FILE) ?>/admin/contact_view?id=<?php t($contact['id']) ?>" class="btn btn-primary btn-sm text-nowrap">表示</a>
                                                 <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
-                                                <a href="<?php t(MAIN_FILE) ?>/admin/contact_form?id=<?php t($contact['id']) ?>" class="btn btn-primary text-nowrap">編集</a>
+                                                <a href="<?php t(MAIN_FILE) ?>/admin/contact_form?id=<?php t($contact['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a>
                                                 <?php endif ?>
                                             </td>
                                         </tr>

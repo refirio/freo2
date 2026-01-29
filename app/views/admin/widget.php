@@ -50,7 +50,7 @@
                                         <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($widget['code'], 50)) ?></code></td>
                                         <td><?php h(truncate($widget['title'], 50)) ?></td>
                                         <td class="text-nowrap d-none d-md-table-cell"><span class="badge <?php t(app_badge('enabled', is_null($widget['text']) ? 'no' : 'yes')) ?>"><?php h(is_null($widget['text']) ? 'なし' : 'あり') ?></span></td>
-                                        <td><a href="<?php t(MAIN_FILE) ?>/admin/widget_form?id=<?php t($widget['id']) ?>" class="btn btn-primary">編集</a></td>
+                                        <td><a href="<?php t(MAIN_FILE) ?>/admin/widget_form?id=<?php t($widget['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
                                     </tr>
                                     <?php endforeach ?>
                                 </tbody>

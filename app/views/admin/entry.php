@@ -55,7 +55,7 @@
                                             <th class="text-nowrap">承認</th>
                                             <?php endif ?>
                                             <th class="text-nowrap">公開</th>
-                                            <?php if (!empty($_view['category_count'])) : ?>
+                                            <?php if (!empty($_view['categories'])) : ?>
                                             <th class="text-nowrap d-none d-md-table-cell">カテゴリー</th>
                                             <?php endif ?>
                                             <th class="text-nowrap">作業</th>
@@ -71,7 +71,7 @@
                                             <th class="text-nowrap">承認</th>
                                             <?php endif ?>
                                             <th class="text-nowrap">公開</th>
-                                            <?php if (!empty($_view['category_count'])) : ?>
+                                            <?php if (!empty($_view['categories'])) : ?>
                                             <th class="text-nowrap d-none d-md-table-cell">カテゴリー</th>
                                             <?php endif ?>
                                             <th class="text-nowrap">作業</th>
@@ -95,7 +95,7 @@
                                                 <?php endforeach ?>
                                             </td>
                                             <?php endif ?>
-                                            <td><a href="<?php t(MAIN_FILE) ?>/admin/entry_form?id=<?php t($entry['id']) ?>" class="btn btn-primary text-nowrap">編集</a></td>
+                                            <td><a href="<?php t(MAIN_FILE) ?>/admin/entry_form?id=<?php t($entry['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
                                         </tr>
                                         <?php endforeach ?>
                                     </tbody>

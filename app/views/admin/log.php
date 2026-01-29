@@ -55,7 +55,7 @@
                                             <?php h($log['message']) ?>
                                         </td>
                                         <td>
-                                            <a href="<?php t(MAIN_FILE) ?>/admin/log_view?id=<?php t($log['id']) ?>" class="btn btn-primary text-nowrap">表示</a>
+                                            <a href="<?php t(MAIN_FILE) ?>/admin/log_view?id=<?php t($log['id']) ?>" class="btn btn-primary btn-sm text-nowrap">表示</a>
                                         </td>
                                     </tr>
                                     <?php endforeach ?>

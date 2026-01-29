@@ -81,7 +81,7 @@
                                             <?php endif ?>
                                         </td>
                                         <td><span class="badge <?php t(app_badge('enabled', $user['enabled'])) ?>"><?php h($GLOBALS['config']['option']['user']['enabled'][$user['enabled']]) ?></span></td>
-                                        <td><a href="<?php t(MAIN_FILE) ?>/admin/user_form?id=<?php t($user['id']) ?>" class="btn btn-primary">編集</a></td>
+                                        <td><a href="<?php t(MAIN_FILE) ?>/admin/user_form?id=<?php t($user['id']) ?>" class="btn btn-primary btn-sm text-nowrap">編集</a></td>
                                     </tr>
                                     <?php endforeach ?>
                                 </tbody>
