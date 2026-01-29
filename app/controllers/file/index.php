@@ -4,14 +4,8 @@ import('app/services/entry.php');
 import('libs/modules/recaptcha.php');
 
 // 表示対象を取得
-if ($_params[1] === 'entry') {
-    if (isset($_params[2])) {
-        $_GET['code'] = $_params[2];
-    }
-} elseif ($_params[1] === 'page') {
-    if (isset($_params[2])) {
-        $_GET['code'] = implode('/', array_slice($_params, 2));
-    }
+if (!empty($_params[1]) && !empty($_params[2])) {
+    $_GET['code'] = implode('/', array_slice($_params, 2));
 } else {
     error('不正なアクセスです。');
 }

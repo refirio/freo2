@@ -2,7 +2,12 @@
 
 import('app/version.php');
 import('app/config.php');
-import('app/setting.php');
+
+import('app/services/user.php');
+import('app/services/storage.php');
+import('app/services/entry.php');
+
+import('libs/modules/loader.php');
 
 // 設定内容を取得
 $settings = model('select_settings', []);
@@ -10,12 +15,6 @@ $GLOBALS['setting'] = [];
 foreach ($settings as $setting) {
     $GLOBALS['setting'][$setting['id']] = $setting['value'];
 }
-
-// 読み込み
-import('app/services/user.php');
-import('app/services/storage.php');
-import('app/services/entry.php');
-import('libs/modules/loader.php');
 
 // ストレージ利用準備
 $config = [];
@@ -151,6 +150,9 @@ if (!preg_match('/^(auth|admin)$/', $_REQUEST['_mode'])) {
         $_view['menus'][] = $menu;
     }
 }
+
+// 設定項目定義を取得
+import('app/setting.php');
 
 // 文字列定義を取得
 import('app/string.php');

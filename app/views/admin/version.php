@@ -27,6 +27,8 @@
                                         <dd class="col-sm-10">freo</dd>
                                         <dt class="col-sm-2">バージョン</dt>
                                         <dd class="col-sm-10"><code class="text-dark"><?php h(APP_VERSION_NUMBER) ?></code></dd>
+                                        <dt class="col-sm-2">URL</dt>
+                                        <dd class="col-sm-10"><a href="https://freo.jp/" target="_blank">https://freo.jp/</a></dd>
                                         <dt class="col-sm-2">更新日</dt>
                                         <dd class="col-sm-10"><?php h(localdate('Y/m/d', APP_VERSION_UPDATE)) ?></dd>
                                     </dl>
@@ -42,6 +44,8 @@
                                         <dd class="col-sm-10">levis</dd>
                                         <dt class="col-sm-2">バージョン</dt>
                                         <dd class="col-sm-10"><code class="text-dark"><?php h(VERSION_NUMBER) ?></code></dd>
+                                        <dt class="col-sm-2">URL</dt>
+                                        <dd class="col-sm-10"><a href="https://refirio.org/levis/" target="_blank">https://refirio.org/levis/</a></dd>
                                         <dt class="col-sm-2">更新日</dt>
                                         <dd class="col-sm-10"><?php h(localdate('Y/m/d', VERSION_UPDATE)) ?></dd>
                                     </dl>

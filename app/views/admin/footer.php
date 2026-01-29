@@ -2,7 +2,7 @@
             </div>
         </div>
 
-        <?php if (preg_match('/^(entry_form|page_form)$/', $_REQUEST['_work'])) : ?>
+        <?php if (preg_match('/_form$/', $_REQUEST['_work'])) : ?>
         <div class="modal fade" id="mediaModal" tabindex="-1" aria-labelledby="mediaModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
