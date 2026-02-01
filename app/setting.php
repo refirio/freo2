@@ -337,20 +337,8 @@ $GLOBALS['setting_contents'] = [
             'type'        => 'textarea',
             'required'    => false,
         ],
-        'text_entry_detail_comment_form' => [
-            'name'        => 'エントリー コメント投稿',
-            'explanation' => null,
-            'type'        => 'textarea',
-            'required'    => false,
-        ],
         'text_page_index' => [
             'name'        => 'ページ',
-            'explanation' => null,
-            'type'        => 'textarea',
-            'required'    => false,
-        ],
-        'text_page_index_comment_form' => [
-            'name'        => 'ページ コメント投稿',
             'explanation' => null,
             'type'        => 'textarea',
             'required'    => false,
@@ -369,6 +357,12 @@ $GLOBALS['setting_contents'] = [
         ],
         'text_contact_complete' => [
             'name'        => 'お問い合わせ 完了',
+            'explanation' => null,
+            'type'        => 'textarea',
+            'required'    => false,
+        ],
+        'text_comment_form' => [
+            'name'        => 'コメント投稿',
             'explanation' => null,
             'type'        => 'textarea',
             'required'    => false,

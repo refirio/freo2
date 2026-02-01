@@ -44,10 +44,10 @@
                     <tr>
                         <th><?php h($field['name']) ?></th>
                         <td>
-                            <?php if ($field['kind'] === 'html' || $field['kind'] === 'wysiwyg') : ?>
-                            <?php e($_view['entry']['field_sets'][$field['id']]) ?>
-                            <?php elseif ($field['kind'] === 'text' || $field['kind'] === 'number' || $field['kind'] === 'alphabet' || $field['kind'] === 'textarea' || $field['kind'] === 'select' || $field['kind'] === 'radio' || $field['kind'] === 'checkbox') : ?>
+                            <?php if ($field['kind'] === 'text' || $field['kind'] === 'number' || $field['kind'] === 'alphabet' || $field['kind'] === 'textarea' || $field['kind'] === 'select' || $field['kind'] === 'radio' || $field['kind'] === 'checkbox') : ?>
                             <?php h($_view['entry']['field_sets'][$field['id']]) ?>
+                            <?php elseif ($field['kind'] === 'html' || $field['kind'] === 'wysiwyg') : ?>
+                            <?php e($_view['entry']['field_sets'][$field['id']]) ?>
                             <?php elseif ($field['kind'] === 'image' || $field['kind'] === 'file') : ?>
                             <a href="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['field'] . $_view['entry']['id'] . '_' . $field['id'] . '/' . $_view['entry']['field_sets'][$field['id']]) ?>"><?php h($_view['entry']['field_sets'][$field['id']]) ?></a>
                             <?php endif ?>
@@ -58,7 +58,7 @@
                 <?php endif ?>
 
                 <?php if ($_view['entry']['public'] === 'password' && empty($_SESSION['entry_passwords'][$_view['entry']['id']])) : ?>
-                <form action="<?php t(MAIN_FILE) ?>/entry/detail/<?php t($_view['entry']['code']) ?>" method="post">
+                <form action="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'page' ? '/page/' : '/' . $_view['entry']['type_code'] . '/detail/') ?><?php t($_view['entry']['code']) ?>" method="post">
                     <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                     <input type="hidden" name="exec" value="password">
                     <div class="form-group mb-2">
@@ -88,7 +88,7 @@
             <?php if ($_view['entry']['comment'] === 'opened' || ($_view['entry']['comment'] === 'user' && !empty($_SESSION['auth']['user']['id']))) : ?>
             <div id="comment_form">
                 <h3 class="h4 mt-4"><?php h($GLOBALS['string']['heading_comment_form']) ?></h3>
-                <?php e($GLOBALS['setting']['text_entry_detail_comment_form']) ?>
+                <?php e($GLOBALS['setting']['text_comment_form']) ?>
 
                 <?php if (isset($_view['warnings'])) : ?>
                 <div class="alert alert-danger">
@@ -99,7 +99,7 @@
                 </div>
                 <?php endif ?>
 
-                <form action="<?php t(MAIN_FILE) ?>/entry/detail/<?php t($_view['entry']['code']) ?>" method="post">
+                <form action="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'page' ? '/page/' : '/' . $_view['entry']['type_code'] . '/detail/') ?><?php t($_view['entry']['code']) ?>" method="post">
                     <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                     <input type="hidden" name="exec" value="comment">
                     <input type="hidden" name="entry_id" value="<?php t($_view['entry']['id']) ?>">

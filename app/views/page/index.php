@@ -1,47 +1,55 @@
 <?php import('app/views/header.php') ?>
 
-            <div id="page-<?php h($_view['page']['code']) ?>">
-                <h2 class="h3 mb-3"><?php h($_view['page']['title']) ?></h2>
+            <div id="page-<?php h($_view['entry']['code']) ?>">
+                <h2 class="h3 mb-3"><?php h($_view['entry']['title']) ?></h2>
                 <?php e($GLOBALS['setting']['text_page_index']) ?>
 
-                <?php if (!empty($_view['page']['pictures']) && !empty($_view['page']['thumbnail'])) : ?>
+                <?php if (!empty($_view['entry']['category_sets'])) : ?>
+                <ul class="category">
+                    <?php foreach ($_view['entry']['category_sets'] as $category_sets) : ?>
+                    <li><?php h($category_sets['category_name']) ?></li>
+                    <?php endforeach ?>
+                </ul>
+                <?php endif ?>
+
+                <?php if (!empty($_view['entry']['pictures']) && !empty($_view['entry']['thumbnail'])) : ?>
                 <div class="images">
-                    <div class="image my-3"><a href="<?php t(MAIN_FILE) ?>/file/page/<?php t($_view['page']['code']) ?>"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt="" class="img-fluid"></a></div>
+                    <div class="image my-3"><a href="<?php t(MAIN_FILE) ?>/file/page/<?php t($_view['entry']['code']) ?>"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['thumbnail']) ?>" alt="" class="img-fluid"></a></div>
                 </div>
-                <?php elseif (!empty($_view['page']['pictures']) || !empty($_view['page']['thumbnail'])) : ?>
+                <?php elseif (!empty($_view['entry']['pictures']) || !empty($_view['entry']['thumbnail'])) : ?>
                 <div class="images">
-                    <?php if (!empty($_view['page']['pictures'])) : ?>
+                    <?php if (!empty($_view['entry']['pictures'])) : ?>
                     <div class="image my-3">
-                        <?php foreach ($_view['page']['pictures'] as $picture) : ?>
-                        <img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $picture) ?>" alt="" class="img-fluid">
+                        <?php foreach ($_view['entry']['pictures'] as $picture) : ?>
+                        <img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $picture) ?>" alt="" class="img-fluid">
                         <?php endforeach ?>
                     </div>
-                    <?php elseif (!empty($_view['page']['thumbnail'])) : ?>
+                    <?php elseif (!empty($_view['entry']['thumbnail'])) : ?>
                     <div class="image my-3">
-                        <img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['page']['id'] . '/' . $_view['page']['thumbnail']) ?>" alt="" class="img-fluid">
+                        <img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['thumbnail']) ?>" alt="" class="img-fluid">
                     </div>
                     <?php endif ?>
                 </div>
                 <?php endif ?>
 
-                <?php if (!empty($_view['page']['text'])) : ?>
+                <?php if (!empty($_view['entry']['text'])) : ?>
                 <div class="text">
-                    <?php e($_view['page']['text']) ?>
+                    <?php e($_view['entry']['text']) ?>
                 </div>
                 <?php endif ?>
 
-                <?php if (!empty($_view['page']['field_sets'])) : ?>
+                <?php if (!empty($_view['entry']['field_sets'])) : ?>
                 <table class="table table-bordered">
-                    <?php foreach ($_view['fields'] as $field) : if (isset($_view['page']['field_sets'][$field['id']])) : ?>
+                    <?php foreach ($_view['fields'] as $field) : if (isset($_view['entry']['field_sets'][$field['id']])) : ?>
                     <tr>
                         <th><?php h($field['name']) ?></th>
                         <td>
                             <?php if ($field['kind'] === 'text' || $field['kind'] === 'number' || $field['kind'] === 'alphabet' || $field['kind'] === 'textarea' || $field['kind'] === 'select' || $field['kind'] === 'radio' || $field['kind'] === 'checkbox') : ?>
-                            <?php h($_view['page']['field_sets'][$field['id']]) ?>
+                            <?php h($_view['entry']['field_sets'][$field['id']]) ?>
                             <?php elseif ($field['kind'] === 'html' || $field['kind'] === 'wysiwyg') : ?>
-                            <?php e($_view['page']['field_sets'][$field['id']]) ?>
+                            <?php e($_view['entry']['field_sets'][$field['id']]) ?>
                             <?php elseif ($field['kind'] === 'image' || $field['kind'] === 'file') : ?>
-                            <a href="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['field'] . $_view['page']['id'] . '_' . $field['id'] . '/' . $_view['page']['field_sets'][$field['id']]) ?>"><?php h($_view['page']['field_sets'][$field['id']]) ?></a>
+                            <a href="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['field'] . $_view['entry']['id'] . '_' . $field['id'] . '/' . $_view['entry']['field_sets'][$field['id']]) ?>"><?php h($_view['entry']['field_sets'][$field['id']]) ?></a>
                             <?php endif ?>
                         </td>
                     </tr>
@@ -49,8 +57,8 @@
                 </table>
                 <?php endif ?>
 
-                <?php if ($_view['page']['public'] === 'password' && empty($_SESSION['entry_passwords'][$_view['page']['id']])) : ?>
-                <form action="<?php t(MAIN_FILE) ?>/page/<?php t($_view['page']['code']) ?>" method="post">
+                <?php if ($_view['entry']['public'] === 'password' && empty($_SESSION['entry_passwords'][$_view['entry']['id']])) : ?>
+                <form action="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'page' ? '/page/' : '/' . $_view['entry']['type_code'] . '/detail/') ?><?php t($_view['entry']['code']) ?>" method="post">
                     <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                     <input type="hidden" name="exec" value="password">
                     <div class="form-group mb-2">
@@ -77,10 +85,10 @@
             </div>
             <?php endif ?>
 
-            <?php if ($_view['page']['comment'] === 'opened' || ($_view['page']['comment'] === 'user' && !empty($_SESSION['auth']['user']['id']))) : ?>
+            <?php if ($_view['entry']['comment'] === 'opened' || ($_view['entry']['comment'] === 'user' && !empty($_SESSION['auth']['user']['id']))) : ?>
             <div id="comment_form">
                 <h3 class="h4 mt-4"><?php h($GLOBALS['string']['heading_comment_form']) ?></h3>
-                <?php e($GLOBALS['setting']['text_page_index_comment_form']) ?>
+                <?php e($GLOBALS['setting']['text_comment_form']) ?>
 
                 <?php if (isset($_view['warnings'])) : ?>
                 <div class="alert alert-danger">
@@ -91,10 +99,10 @@
                 </div>
                 <?php endif ?>
 
-                <form action="<?php t(MAIN_FILE) ?>/page/<?php t($_view['page']['code']) ?>" method="post">
+                <form action="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'page' ? '/page/' : '/' . $_view['entry']['type_code'] . '/detail/') ?><?php t($_view['entry']['code']) ?>" method="post">
                     <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                     <input type="hidden" name="exec" value="comment">
-                    <input type="hidden" name="entry_id" value="<?php t($_view['page']['id']) ?>">
+                    <input type="hidden" name="entry_id" value="<?php t($_view['entry']['id']) ?>">
                     <?php if (empty($_SESSION['auth']['user']['id'])) : ?>
                     <div class="form-group mb-2">
                         <label>お名前 <span class="badge bg-danger">必須</span></label>

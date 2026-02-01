@@ -13,7 +13,7 @@ if (!isset($_GET['code'])) {
     error('不正なアクセスです。');
 }
 
-// エントリーもしくはページを取得
+// エントリーを取得
 $entries = service_entry_select_published($_params[1], [
     'where' => [
         'entries.code = :code',

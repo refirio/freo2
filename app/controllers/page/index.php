@@ -12,7 +12,7 @@ if (!isset($_GET['code'])) {
 }
 
 // ページを取得
-$pages = service_entry_select_published('page', [
+$entries = service_entry_select_published('page', [
     'where' => [
         'entries.code = :code',
         [
@@ -20,10 +20,10 @@ $pages = service_entry_select_published('page', [
         ],
     ],
 ]);
-if (empty($pages)) {
+if (empty($entries)) {
     warning('ページが見つかりません。');
 } else {
-    $_view['page'] = $pages[0];
+    $_view['entry'] = $entries[0];
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -34,17 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (isset($_POST['exec']) && $_POST['exec'] === 'password') {
         // パスワード認証
-        if ($_POST['password'] === $pages[0]['password']) {
-            $_SESSION['entry_passwords'][$pages[0]['id']] = true;
+        if ($_POST['password'] === $entries[0]['password']) {
+            $_SESSION['entry_passwords'][$entries[0]['id']] = true;
 
             // リダイレクト
-            redirect('/page/' . $pages[0]['code']);
+            redirect('/page/' . $entries[0]['code']);
         } else {
             warning('パスワードが違います。');
         }
     } elseif (isset($_POST['exec']) && $_POST['exec'] === 'comment') {
         // コメントの受付を確認
-        if ($pages[0]['comment'] !== 'opened' && ($pages[0]['comment'] !== 'user' || empty($_SESSION['auth']['user']['id']))) {
+        if ($entries[0]['comment'] !== 'opened' && ($entries[0]['comment'] !== 'user' || empty($_SESSION['auth']['user']['id']))) {
             error('不正なアクセスです。');
         }
 
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // フィールドを取得
 $_view['fields'] = model('select_fields', [
-    'where'    => 'type_id = ' . intval($pages[0]['type_id']),
+    'where'    => 'type_id = ' . intval($entries[0]['type_id']),
     'order_by' => 'sort, id',
 ]);
 
@@ -132,8 +132,8 @@ $_view['comments'] = model('select_comments', [
 ]);
 
 // タイトル
-if (isset($_view['page']['title'])) {
-    $_view['title'] = $_view['page']['title'];
+if (isset($_view['entry']['title'])) {
+    $_view['title'] = $_view['entry']['title'];
 } else {
     $_view['title'] = 'ページ';
 }
