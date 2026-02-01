@@ -14,7 +14,7 @@
                     <form action="<?php t(MAIN_FILE) ?>/auth/leave" method="post">
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary px-4">進む</button>
+                            <button type="submit" class="btn btn-primary px-4"><?php h($GLOBALS['string']['button_auth_leave']) ?></button>
                         </div>
                     </form>
                 </div>

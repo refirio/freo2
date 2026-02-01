@@ -26,7 +26,7 @@
                     <label><input type="checkbox" name="session" value="keep" class="form-check-input"<?php isset($_view['user']['session']) ? e('checked="checked"') : '' ?>> ログイン状態を記憶する</label>
                 </div>
                 <div class="form-group mt-2">
-                    <button class="w-100 btn btn-lg btn-primary" type="submit">ログイン</button>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary"><?php h($GLOBALS['string']['button_auth_login']) ?></button>
                 </div>
                 <div class="form-group mt-4">
                     <a href="<?php t(MAIN_FILE) ?>/auth/password">パスワード再発行</a>

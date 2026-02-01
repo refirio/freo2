@@ -28,7 +28,7 @@
                             <input type="text" name="email" size="30" value="<?php t($_view['user']['email']) ?>" class="form-control">
                         </div>
                         <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary px-4">再設定</button>
+                            <button type="submit" class="btn btn-primary px-4"><?php h($GLOBALS['string']['button_auth_password_confirm']) ?></button>
                         </div>
                     </form>
                 </div>

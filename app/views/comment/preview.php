@@ -15,7 +15,7 @@
                     </dl>
                     <div class="form-group mt-4">
                         <a href="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'page' ? '/page/' : '/' . $_view['entry']['type_code'] . '/detail/') ?><?php t($_view['entry']['code']) ?>?referer=preview#comment_form" class="btn btn-secondary px-4">修正</a>
-                        <button type="submit" class="btn btn-primary px-4">投稿</button>
+                        <button type="submit" class="btn btn-primary px-4"><?php h($GLOBALS['string']['button_comment']) ?></button>
                     </div>
                 </form>
             </div>

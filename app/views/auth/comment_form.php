@@ -44,7 +44,7 @@
                             <textarea name="message" rows="10" cols="50" class="form-control"><?php t($_view['comment']['message']) ?></textarea>
                         </div>
                         <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary px-4">登録</button>
+                            <button type="submit" class="btn btn-primary px-4"><?php h($GLOBALS['string']['button_comment']) ?></button>
                         </div>
                     </form>
                 </div>
@@ -60,7 +60,7 @@
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <input type="hidden" name="id" value="<?php t($_view['comment']['id']) ?>">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-danger px-4">削除</button>
+                            <button type="submit" class="btn btn-danger px-4"><?php h($GLOBALS['string']['button_comment_delete']) ?></button>
                         </div>
                     </form>
                 </div>

@@ -39,7 +39,7 @@
                         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                         <div class="form-group mt-4">
                             <a href="<?php t(MAIN_FILE) ?>/auth/register?referer=preview" class="btn btn-secondary px-4">修正</a>
-                            <button type="submit" class="btn btn-primary px-4">登録</button>
+                            <button type="submit" class="btn btn-primary px-4"><?php h($GLOBALS['string']['button_auth_register']) ?></button>
                         </div>
                     </form>
                 </div>

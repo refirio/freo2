@@ -37,7 +37,7 @@
                             <input type="password" name="password_confirm" size="30" value="<?php t($_view['user']['password']) ?>" class="form-control">
                         </div>
                         <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary px-4">登録</button>
+                            <button type="submit" class="btn btn-primary px-4"><?php h($GLOBALS['string']['button_auth_password']) ?></button>
                         </div>
                     </form>
                 </div>

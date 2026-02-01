@@ -44,7 +44,7 @@
                         <?php if ($GLOBALS['config']['recaptcha_enable'] == true) : ?>
                         <?php recaptcha_input($GLOBALS['config']['recaptcha_site_key']) ?>
                         <?php endif ?>
-                        <button type="submit" class="btn btn-primary px-4">確認</button>
+                        <button type="submit" class="btn btn-primary px-4"><?php h($GLOBALS['string']['button_auth_contact_confirm']) ?></button>
                     </div>
                 </form>
 

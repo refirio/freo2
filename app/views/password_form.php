@@ -7,7 +7,7 @@
                         <input type="password" name="password" value="" class="form-control">
                     </div>
                     <div class="form-group mt-4">
-                        <button type="submit" class="btn btn-primary px-4">認証</button>
+                        <button type="submit" class="btn btn-primary px-4"><?php h($GLOBALS['string']['button_password']) ?></button>
                     </div>
                 </form>
                 <?php endif ?>

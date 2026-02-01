@@ -52,7 +52,7 @@
                             <textarea name="text" rows="10" cols="20" class="form-control"><?php t($_view['user']['text']) ?></textarea>
                         </div>
                         <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary px-4">確認</button>
+                            <button type="submit" class="btn btn-primary px-4"><?php h($GLOBALS['string']['button_auth_register_confirm']) ?></button>
                         </div>
                     </form>
                 </div>
