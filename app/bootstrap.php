@@ -70,29 +70,33 @@ function app_badge($key, $value)
     $text_color = 'light';
     $bg_color   = 'secondary';
 
-    if ($value === 1) {
-        $bg_color = 'success';
+    if (is_numeric($value) && $value == 1) {
+        $text_color = 'light';
+        $bg_color   = 'success';
     }
-    if ($value === 0) {
+    if (is_numeric($value) && $value == 0) {
+        $text_color = 'dark';
+        $bg_color   = 'warning';
+    }
+    if ($value === 'yes') {
+        $text_color = 'light';
+        $bg_color   = 'success';
+    }
+    if ($value === 'no') {
         $text_color = 'dark';
         $bg_color   = 'warning';
     }
 
-    if ($value === 'yes') {
-        $bg_color = 'success';
-    }
     if ($key === 'public') {
         if ($value === 'all' || $value === 'user' || $value === 'attribute' || $value === 'password') {
-            $bg_color = 'success';
+            $text_color = 'light';
+            $bg_color   = 'success';
         }
-    }
-    if ($key === 'kind' || $key === 'authority_id') {
-        $text_color = 'dark';
-        $bg_color   = 'info';
     }
     if ($key === 'status') {
         if ($value === 'closed') {
-            $bg_color = 'success';
+            $text_color = 'light';
+            $bg_color   = 'success';
         } else {
             $text_color = 'dark';
             $bg_color   = 'warning';
@@ -109,6 +113,11 @@ function app_badge($key, $value)
             $text_color = 'dark';
             $bg_color   = 'warning';
         }
+    }
+
+    if ($key === 'kind' || $key === 'authority_id') {
+        $text_color = 'dark';
+        $bg_color   = 'info';
     }
 
     return 'rounded-pill text-' . $text_color . ' bg-' . $bg_color;

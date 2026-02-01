@@ -14,18 +14,18 @@
 
                 <?php if (!empty($_view['entry']['pictures']) && !empty($_view['entry']['thumbnail'])) : ?>
                 <div class="images">
-                    <div class="image mt-2 mb-2"><a href="<?php t(MAIN_FILE) ?>/file/entry/<?php t($_view['entry']['code']) ?>"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['thumbnail']) ?>" alt="" class="img-fluid"></a></div>
+                    <div class="image my-3"><a href="<?php t(MAIN_FILE) ?>/file/entry/<?php t($_view['entry']['code']) ?>"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['thumbnail']) ?>" alt="" class="img-fluid"></a></div>
                 </div>
                 <?php elseif (!empty($_view['entry']['pictures']) || !empty($_view['entry']['thumbnail'])) : ?>
                 <div class="images">
                     <?php if (!empty($_view['entry']['pictures'])) : ?>
-                    <div class="image mt-2 mb-2">
+                    <div class="image my-3">
                         <?php foreach ($_view['entry']['pictures'] as $picture) : ?>
                         <img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $picture) ?>" alt="" class="img-fluid">
                         <?php endforeach ?>
                     </div>
                     <?php elseif (!empty($_view['entry']['thumbnail'])) : ?>
-                    <div class="image mt-2 mb-2">
+                    <div class="image my-3">
                         <img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $_view['entry']['thumbnail']) ?>" alt="" class="img-fluid">
                     </div>
                     <?php endif ?>
