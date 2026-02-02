@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $categories = model('select_categories', [
             'where' => [
-                'categories.id = :id AND types.code = ' . db_escape('entry'),
+                'categories.id = :id',
                 [
                     'id' => $_GET['id'],
                 ],
