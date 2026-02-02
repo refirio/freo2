@@ -61,6 +61,7 @@ db_transaction();
     // データ
     $test_category = $data_category;
     $test_category['type_id'] = '';
+    $test_category['code'] = 'test2';
 
     // 確認
     $test_category = model('normalize_categories', $test_category);

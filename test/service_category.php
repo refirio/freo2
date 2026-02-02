@@ -164,7 +164,7 @@ db_transaction();
         'order_by' => 'id',
     ]);
 
-    test_equals('sort_categories', array_column($categories, 'sort'), [1, 2, 3]);
+    test_equals('sort_categories', array_column($categories, 'sort'), ['1', '2', '3']);
 
     // 並び順を更新
     service_category_sort([
@@ -179,7 +179,7 @@ db_transaction();
         'order_by' => 'id',
     ]);
 
-    test_equals('sort_categories', array_column($categories, 'sort'), [3, 2, 1]);
+    test_equals('sort_categories', array_column($categories, 'sort'), ['3', '2', '1']);
 }
 
 // トランザクションを終了
