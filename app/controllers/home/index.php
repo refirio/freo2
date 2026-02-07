@@ -17,8 +17,10 @@ if ($GLOBALS['setting']['page_home_code']) {
     }
 }
 
-// エントリーを取得
-$_view['entries'] = service_entry_select_published('entry', [
-    'order_by' => 'entries.datetime DESC, entries.id',
-    'limit'    => $GLOBALS['setting']['number_limit_home_entry'],
-]);
+if ($GLOBALS['setting']['number_limit_home_entry']) {
+    // エントリーを取得
+    $_view['entries'] = service_entry_select_published('entry', [
+        'order_by' => 'entries.datetime DESC, entries.id',
+        'limit'    => $GLOBALS['setting']['number_limit_home_entry'],
+    ]);
+}
