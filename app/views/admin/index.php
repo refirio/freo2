@@ -11,6 +11,12 @@
                     <div class="dashboard card shadow-sm mb-3">
                         <div class="card-header heading">ダッシュボード</div>
                         <div class="card-body">
+                            <?php if (DEBUG_LEVEL > 0) : ?>
+                            <div class="alert alert-warning">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
+                                デバッグモードが有効になっています。運用環境では無効にすることを推奨します。
+                            </div>
+                            <?php endif ?>
                             <?php if ($GLOBALS['setting']['admin_description']) : ?>
                             <p><?php h($GLOBALS['setting']['admin_description']) ?></p>
                             <?php endif ?>
