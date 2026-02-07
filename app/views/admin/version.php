@@ -51,6 +51,21 @@
                                     </dl>
                                 </div>
                             </div>
+                            <div class="card shadow-sm mb-3">
+                                <div class="card-header">
+                                    ミドルウェア
+                                </div>
+                                <div class="card-body">
+                                    <dl class="row mb-0">
+                                        <dt class="col-sm-2">Webサーバー</dt>
+                                        <dd class="col-sm-10"><?php h($_view['version_info']['server_version']) ?></dd>
+                                        <dt class="col-sm-2">PHP</dt>
+                                        <dd class="col-sm-10"><?php h($_view['version_info']['php_version']) ?></dd>
+                                        <dt class="col-sm-2">データベース</dt>
+                                        <dd class="col-sm-10"><?php h($_view['version_info']['database_version']) ?></dd>
+                                    </dl>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <?php e($_view['widget_sets']['admin_page']) ?>
