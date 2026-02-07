@@ -546,10 +546,10 @@ function validate_entries($queries, $options = [])
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'は100文字以内で入力してください。';
                 } elseif (($field['kind'] === 'textarea') && !validator_max_length($queries['field_sets'][$field['id']], 2000)) {
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'は2000文字以内で入力してください。';
-                } elseif (($field['kind'] === 'html' || $field['kind'] === 'wysiwyg') && !validator_max_length($queries['field_sets'][$field['id']], 5000)) {
-                    $messages['field_sets_' . $field['id']] = $field['name'] . 'は5000文字以内で入力してください。';
                 } elseif (($field['kind'] === 'select' || $field['kind'] === 'radio' || $field['kind'] === 'checkbox') && $queries['field_sets'][$field['id']] && !validator_list(explode("\n", $queries['field_sets'][$field['id']]), array_fill_keys(explode("\n", $field['choices']), 1))) {
                     $messages['field_sets_' . $field['id']] = $field['name'] . 'の値が不正です。';
+                } elseif (!validator_max_length($queries['field_sets'][$field['id']], 5000)) {
+                    $messages['field_sets_' . $field['id']] = $field['name'] . 'は5000文字以内で入力してください。';
                 }
             }
         }

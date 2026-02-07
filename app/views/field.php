@@ -6,10 +6,10 @@
                         <td>
                             <?php if ($field['kind'] === 'text' || $field['kind'] === 'number' || $field['kind'] === 'alphabet' || $field['kind'] === 'textarea' || $field['kind'] === 'select' || $field['kind'] === 'radio' || $field['kind'] === 'checkbox') : ?>
                             <?php h($_view['entry']['field_sets'][$field['id']]) ?>
-                            <?php elseif ($field['kind'] === 'html' || $field['kind'] === 'wysiwyg') : ?>
-                            <?php e($_view['entry']['field_sets'][$field['id']]) ?>
                             <?php elseif ($field['kind'] === 'image' || $field['kind'] === 'file') : ?>
                             <a href="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['field'] . $_view['entry']['id'] . '_' . $field['id'] . '/' . $_view['entry']['field_sets'][$field['id']]) ?>"><?php h($_view['entry']['field_sets'][$field['id']]) ?></a>
+                            <?php else : ?>
+                            <?php e($_view['entry']['field_sets'][$field['id']]) ?>
                             <?php endif ?>
                         </td>
                     </tr>
