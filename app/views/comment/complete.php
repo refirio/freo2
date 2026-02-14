@@ -1,7 +1,7 @@
 <?php import('app/views/header.php') ?>
 
     <div id="comment">
-        <h2 class="h3 mb-3"><?php h($_view['title']) ?></h2>
+        <h2 class="h3 mt-4 mb-3"><?php h($_view['title']) ?></h2>
         <?php e($GLOBALS['setting']['text_comment_complete']) ?>
 
         <?php if ($GLOBALS['setting']['comment_use_approve']) : ?>
@@ -11,9 +11,7 @@
         </div>
         <?php endif ?>
 
-        <ul>
-            <li><a href="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'page' ? '/page/' : '/' . $_view['entry']['type_code'] . '/detail/') ?><?php t($_view['entry']['code']) ?>"><?php h($GLOBALS['string']['text_goto_entry']) ?></a></li>
-        </ul>
+        <p><a href="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'page' ? '/page/' : '/' . $_view['entry']['type_code'] . '/detail/') ?><?php t($_view['entry']['code']) ?>" class="btn btn-secondary"><?php h($GLOBALS['string']['text_goto_entry']) ?></a></p>
     </div>
 
     <?php e($_view['widget_sets']['public_page']) ?>

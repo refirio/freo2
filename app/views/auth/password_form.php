@@ -1,6 +1,6 @@
 <?php import('app/views/auth/header.php') ?>
 
-    <main class="col-11 col-md-6 mx-auto my-4">
+    <main class="col-11 col-md-7 mx-auto my-4">
         <div class="mb-4 text-center">
             <h1 class="h3">
                 <?php h($GLOBALS['string']['heading_password']) ?>

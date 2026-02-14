@@ -1,7 +1,7 @@
 <?php import('app/views/header.php') ?>
 
     <div id="contact">
-        <h2 class="h3 mb-3"><?php h($_view['title']) ?></h2>
+        <h2 class="h3 mt-4 mb-3"><?php h($_view['title']) ?></h2>
         <?php e($GLOBALS['setting']['text_contact_index']) ?>
 
         <?php if (isset($_view['warnings'])) : ?>

@@ -12,12 +12,13 @@ h1, h2 {
     font-family: 'Roboto', sans-serif;
 }
 a {
-    color: #222222;
+    color: #0D6EFD;
 }
 
 /********* ヘッダー ***********************************************************/
 
 header h1 a {
+    color: #222222;
     text-decoration: none;
 }
 header.navbar .navbar-toggler .navbar-toggler-icon {

@@ -1,7 +1,7 @@
 <?php import('app/views/header.php') ?>
 
     <div id="comment">
-        <h2 class="h3 mb-3"><?php h($_view['title']) ?></h2>
+        <h2 class="h3 mt-4 mb-3"><?php h($_view['title']) ?></h2>
         <?php e($GLOBALS['setting']['text_comment_preview']) ?>
         <form action="<?php t(MAIN_FILE) ?>/comment/preview" method="post">
             <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">

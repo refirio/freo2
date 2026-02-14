@@ -1,7 +1,7 @@
 <?php import('app/views/header.php') ?>
 
     <div id="entry">
-        <h2 class="h3 mb-3"><?php h($_view['entry']['title']) ?></h2>
+        <h2 class="h3 mt-4 mb-3"><?php h($_view['entry']['title']) ?></h2>
 
         <?php if (!empty($_view['entry']['pictures'])) : ?>
         <div class="images">

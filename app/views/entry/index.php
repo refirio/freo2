@@ -1,23 +1,23 @@
 <?php import('app/views/header.php') ?>
 
     <div id="entry">
-        <h2 class="h3 mb-3"><?php h($GLOBALS['string']['heading_entry_list']) ?></h2>
+        <h2 class="h3 mt-4 mb-3"><?php h($GLOBALS['string']['heading_entry_list']) ?></h2>
         <?php e($GLOBALS['setting']['text_entry_index']) ?>
 
         <?php foreach ($_view['entries'] as $entry) : ?>
-        <h3 class="h4"><time datetime="<?php h(localdate('Y-m-d', $entry['datetime'])) ?>"><?php h(localdate('Y/m/d', $entry['datetime'])) ?></time> <?php h($entry['title']) ?></h3>
+        <h3 class="h4 mb-3"><?php h($entry['title']) ?> <time datetime="<?php h(localdate('Y-m-d', $entry['datetime'])) ?>" class="d-block mt-1 text-secondary fs-6"><?php h(localdate('Y/m/d', $entry['datetime'])) ?></time></h3>
 
         <?php if (!empty($entry['category_sets'])) : ?>
-        <ul class="category">
+        <div class="category mb-4">
             <?php foreach ($entry['category_sets'] as $category_sets) : ?>
-            <li><?php h($category_sets['category_name']) ?></li>
+            <span class="badge text-light bg-secondary"><?php h($category_sets['category_name']) ?></span>
             <?php endforeach ?>
-        </ul>
+        </div>
         <?php endif ?>
 
-        <div class="text">
+        <div class="text mb-4">
             <?php if (!empty($entry['thumbnail'])) : ?>
-            <p class="mt-1"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $entry['id'] . '/' . $entry['thumbnail']) ?>" alt="" class="img-fluid"></p>
+            <p class="mt-1"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $entry['id'] . '/' . $entry['thumbnail']) ?>" alt="" class="img-fluid rounded"></p>
             <?php endif ?>
 
             <?php if (!empty($entry['text'])) : ?>
@@ -28,7 +28,7 @@
         <?php endforeach ?>
 
         <?php if ($_view['entry_page'] > 1) : ?>
-        <h3 class="h4"><?php h($GLOBALS['string']['heading_entry_page']) ?></h3>
+        <h3 class="h4 mb-3"><?php h($GLOBALS['string']['heading_entry_page']) ?></h3>
         <ul>
             <?php for ($i = 1; $i <= $_view['entry_page']; $i++) : ?>
             <li><a href="<?php t(MAIN_FILE) ?>/entry/?<?php t(empty($_GET['category_sets']) ? '' : 'category_sets[]=' . $_GET['category_sets'][0] . '&') ?><?php t(empty($_GET['archive']) ? '' : 'archive=' . $_GET['archive'] . '&') ?>page=<?php t($i) ?>" class="<?php if ($i == $_GET['page']) : ?>selected<?php endif ?>"><?php t($i) ?></a></li>
@@ -38,7 +38,7 @@
     </div>
 
     <div id="category">
-        <h3 class="h4"><?php h($GLOBALS['string']['heading_category_list']) ?></h3>
+        <h3 class="h4 mb-3"><?php h($GLOBALS['string']['heading_category_list']) ?></h3>
         <ul>
             <li><a href="<?php t(MAIN_FILE) ?>/entry/" class="selected"><?php h($GLOBALS['string']['text_category_all']) ?></a></li>
             <?php foreach ($_view['categories'] as $category) : ?>
@@ -48,7 +48,7 @@
     </div>
 
     <div id="archive">
-        <h3 class="h4"><?php h($GLOBALS['string']['heading_archive_list']) ?></h3>
+        <h3 class="h4 mb-3"><?php h($GLOBALS['string']['heading_archive_list']) ?></h3>
         <ul>
             <?php foreach ($_view['entry_archives'] as $entry_archive) : ?>
             <li><a href="<?php t(MAIN_FILE) ?>/entry/?archive=<?php t($entry_archive['month']) ?>"><?php h(localdate('Y年n月', $entry_archive['month'])) ?>（<?php h($entry_archive['count']) ?>）</a></li>
