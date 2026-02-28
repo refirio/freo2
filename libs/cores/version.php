@@ -6,5 +6,5 @@
 
 *******************************************************************************/
 
-define('VERSION_NUMBER', '9.2.0');
-define('VERSION_UPDATE', '2026-01-26');
+define('VERSION_NUMBER', '9.3.0');
+define('VERSION_UPDATE', '2026-02-28');
