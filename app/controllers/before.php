@@ -205,6 +205,13 @@ foreach ($plugins as $plugin) {
     if (is_file($target_dir . 'app/bootstrap.php')) {
         import($target_dir . 'app/bootstrap.php');
     }
+}
+foreach ($plugins as $plugin) {
+    if (empty($GLOBALS['plugin'][$plugin['code']])) {
+        continue;
+    }
+
+    $target_dir = MAIN_PATH . $GLOBALS['config']['plugin_path'] . $plugin['code'] . '/';
 
     if (is_file($target_dir . 'before.php')) {
         import($target_dir . 'before.php');
