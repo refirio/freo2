@@ -70,7 +70,7 @@
                                 </select>
                             </div>
                             <div class="form-group mb-2 for-kind">
-                                <label class="fw-bold">選択肢 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="改行区切りで複数指定可能。">？</span></label>
+                                <label class="fw-bold">選択肢 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="改行区切りで複数指定できます。">？</span></label>
                                 <textarea name="choices" rows="5" cols="50" class="form-control"><?php t($_view['field']['choices']) ?></textarea>
                             </div>
                             <div class="form-group mb-2">
@@ -78,11 +78,11 @@
                                 <textarea name="initial" rows="5" cols="50" class="form-control"><?php t($_view['field']['initial']) ?></textarea>
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">説明 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="入力画面に表示する説明。">？</span></label>
+                                <label class="fw-bold">説明 <span class="badge text-light bg-secondary" data-toggle="tooltip" title="入力画面に表示する説明です。">？</span></label>
                                 <input type="text" name="explanation" size="30" value="<?php t($_view['field']['explanation']) ?>" class="form-control">
                             </div>
                             <div class="form-group mb-2">
-                                <label class="fw-bold">メモ <span class="badge text-light bg-secondary" data-toggle="tooltip" title="公開されないテキスト。">？</span></label>
+                                <label class="fw-bold">メモ <span class="badge text-light bg-secondary" data-toggle="tooltip" title="公開されないテキストです。">？</span></label>
                                 <textarea name="memo" rows="10" cols="50" class="form-control"><?php t($_view['field']['memo']) ?></textarea>
                             </div>
                             <div class="form-group mt-4">
