@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'field' => model('normalize_fields', [
             'id'          => isset($_POST['id'])          ? $_POST['id']          : '',
             'type_id'     => isset($_POST['type_id'])     ? $_POST['type_id']     : '',
+            'code'        => isset($_POST['code'])        ? $_POST['code']        : '',
             'name'        => isset($_POST['name'])        ? $_POST['name']        : '',
             'kind'        => isset($_POST['kind'])        ? $_POST['kind']        : '',
             'validation'  => isset($_POST['validation'])  ? $_POST['validation']  : '',

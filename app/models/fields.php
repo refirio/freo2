@@ -171,6 +171,7 @@ function delete_fields($queries, $options = [])
             'update' => DATABASE_PREFIX . 'fields AS fields',
             'set'    => [
                 'deleted' => localdate('Y-m-d H:i:s'),
+                'code'    => ['CONCAT(\'DELETED ' . localdate('YmdHis') . ' \', code)'],
             ],
             'where'  => isset($queries['where']) ? $queries['where'] : '',
             'limit'  => isset($queries['limit']) ? $queries['limit'] : '',
@@ -230,12 +231,54 @@ function normalize_fields($queries, $options = [])
  */
 function validate_fields($queries, $options = [])
 {
+    $options = [
+        'duplicate' => isset($options['duplicate']) ? $options['duplicate'] : true,
+    ];
+
     $messages = [];
 
     // 外部キー 型
     if (isset($queries['type_id'])) {
         if (!validator_required($queries['type_id'])) {
             $messages['type_id'] = '型が入力されていません。';
+        }
+    }
+
+    // コード
+    if (isset($queries['code'])) {
+        if (!validator_required($queries['code'])) {
+        } elseif (!validator_alpha_dash($queries['code'])) {
+            $messages['code'] = 'コードは半角英数字で入力してください。';
+        } elseif (!validator_between($queries['code'], 2, 80)) {
+            $messages['code'] = 'コードは2文字以上80文字以内で入力してください。';
+        } elseif ($options['duplicate'] === true) {
+            if (empty($queries['id'])) {
+                $fields = db_select([
+                    'select' => 'id',
+                    'from'   => DATABASE_PREFIX . 'fields',
+                    'where'  => [
+                        'deleted IS NULL AND code = :code',
+                        [
+                            'code' => $queries['code'],
+                        ],
+                    ],
+                ]);
+            } else {
+                $fields = db_select([
+                    'select' => 'id',
+                    'from'   => DATABASE_PREFIX . 'fields',
+                    'where'  => [
+                        'id != :id AND deleted IS NULL AND code = :code',
+                        [
+                            'id'   => $queries['id'],
+                            'code' => $queries['code'],
+                        ],
+                    ],
+                ]);
+            }
+            if (!empty($fields)) {
+                $messages['code'] = '入力されたコードはすでに使用されています。';
+            }
         }
     }
 
@@ -324,6 +367,7 @@ function default_fields()
         'modified'    => localdate('Y-m-d H:i:s'),
         'deleted'     => null,
         'type_id'     => 0,
+        'code'        => null,
         'name'        => '',
         'kind'        => '',
         'validation'  => null,

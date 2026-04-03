@@ -31,6 +31,7 @@ function select_entries($queries, $options = [])
         $queries['from'] = DATABASE_PREFIX . 'entries AS entries '
                          . 'LEFT JOIN ' . DATABASE_PREFIX . 'types AS types ON entries.type_id = types.id '
                          . 'LEFT JOIN ' . DATABASE_PREFIX . 'field_sets AS field_sets ON entries.id = field_sets.entry_id '
+                         . 'LEFT JOIN ' . DATABASE_PREFIX . 'fields AS fields ON fields.id = field_sets.field_id '
                          . 'LEFT JOIN ' . DATABASE_PREFIX . 'category_sets AS category_sets ON entries.id = category_sets.entry_id '
                          . 'LEFT JOIN ' . DATABASE_PREFIX . 'attribute_sets AS attribute_sets ON entries.id = attribute_sets.entry_id';
 

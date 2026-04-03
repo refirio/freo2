@@ -22,6 +22,7 @@ if (empty($_SESSION['post']['field']['id'])) {
         'values' => [
             'name'        => $_SESSION['post']['field']['name'],
             'type_id'     => $_SESSION['post']['field']['type_id'],
+            'code'        => $_SESSION['post']['field']['code'],
             'name'        => $_SESSION['post']['field']['name'],
             'kind'        => $_SESSION['post']['field']['kind'],
             'validation'  => $_SESSION['post']['field']['validation'],
@@ -41,6 +42,7 @@ if (empty($_SESSION['post']['field']['id'])) {
         'set'   => [
             'name'        => $_SESSION['post']['field']['name'],
             'type_id'     => $_SESSION['post']['field']['type_id'],
+            'code'        => $_SESSION['post']['field']['code'],
             'name'        => $_SESSION['post']['field']['name'],
             'kind'        => $_SESSION['post']['field']['kind'],
             'validation'  => $_SESSION['post']['field']['validation'],
