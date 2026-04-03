@@ -180,3 +180,40 @@ function service_entry_delete($queries, $options = [])
 
     return $resource;
 }
+
+/**
+ * エントリーの並び順を一括変更
+ *
+ * @param array $data
+ *
+ * @return void
+ */
+function service_entry_sort($data)
+{
+    // 並び順を更新
+    foreach ($data as $id => $sort) {
+        if (!preg_match('/^[\w\-\/]+$/', $id)) {
+            continue;
+        }
+        if (!preg_match('/^\d+$/', $sort)) {
+            continue;
+        }
+
+        $resource = service_entry_update([
+            'set'   => [
+                'sort' => $sort,
+            ],
+            'where' => [
+                'id = :id',
+                [
+                    'id' => $id,
+                ],
+            ],
+        ]);
+        if (!$resource) {
+            error('データを編集できません。');
+        }
+    }
+
+    return;
+}

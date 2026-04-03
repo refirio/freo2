@@ -387,6 +387,20 @@ function normalize_entries($queries, $options = [])
         }
     }
 
+    // 並び順
+    if (isset($queries['sort'])) {
+        $queries['sort'] = mb_convert_kana($queries['sort'], 'n', MAIN_INTERNAL_ENCODING);
+    } else {
+        if (!$queries['id']) {
+            $entries = db_select([
+                'select' => 'MAX(sort) AS sort',
+                'from'   => DATABASE_PREFIX . 'entries',
+                'where'  => 'deleted IS NULL',
+            ]);
+            $queries['sort'] = $entries[0]['sort'] + 1;
+        }
+    }
+
     return $queries;
 }
 
@@ -559,6 +573,17 @@ function validate_entries($queries, $options = [])
     if (isset($queries['comment'])) {
         if (!validator_list($queries['comment'], $GLOBALS['config']['option']['entry']['comment'])) {
             $messages['comment'] = 'コメントの受付の値が不正です。';
+        }
+    }
+
+    // 並び順
+    if (isset($queries['sort'])) {
+        if (!validator_required($queries['sort'])) {
+            $messages['sort'] = '並び順が入力されていません。';
+        } elseif (!validator_numeric($queries['sort'])) {
+            $messages['sort'] = '並び順は半角数字で入力してください。';
+        } elseif (!validator_max_length($queries['sort'], 5)) {
+            $messages['sort'] = '並び順は5桁以内で入力してください。';
         }
     }
 
@@ -1077,6 +1102,7 @@ function default_entries()
         'pictures'       => null,
         'thumbnail'      => null,
         'comment'        => 'closed',
+        'sort'           => null,
         'field_sets'     => [],
         'category_sets'  => [],
         'attribute_sets' => [],
