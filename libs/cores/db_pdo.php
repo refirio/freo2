@@ -15,6 +15,7 @@ function db_driver_connect()
 {
     global $_db;
 
+    $dsn = null;
     if ($_db['resource'][$_db['target']]['config']['type'] === 'pdo_mysql') {
         $dsn = 'mysql:dbname=' . $_db['resource'][$_db['target']]['config']['name'] . ';host=' . $_db['resource'][$_db['target']]['config']['host'] . ($_db['resource'][$_db['target']]['config']['port'] ? ';port=' . $_db['resource'][$_db['target']]['config']['port'] : '');
     } elseif ($_db['resource'][$_db['target']]['config']['type'] === 'pdo_pgsql') {

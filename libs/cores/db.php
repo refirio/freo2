@@ -278,7 +278,7 @@ function db_unescape($data)
  *
  * @param array $data
  *
- * @return string
+ * @return array
  */
 function db_placeholder($data)
 {

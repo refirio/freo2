@@ -448,7 +448,7 @@ function controller($target = null)
  * @param string|null $target
  * @param bool        $return
  *
- * @return void
+ * @return string|void
  */
 function view($target = null, $return = false)
 {
@@ -586,8 +586,8 @@ function convert($data, $to_encoding = 'UTF-8', $from_encoding = 'UTF-8,EUCJP-WI
  * Get the alternative data.
  *
  * @param mixed       $data
- * @param string      $to_encoding
- * @param string|null $from_encoding
+ * @param string      $alternative
+ * @param string|null $pattern
  *
  * @return mixed
  */
@@ -1087,6 +1087,7 @@ function logging($type = 'message', $message = null)
             }
         }
 
+        $data = [];
         if ($type === 'post') {
             $data = $_POST;
         } elseif ($type === 'files') {
