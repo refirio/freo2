@@ -1,3 +1,4 @@
+<?php /** @var array $_view */ ?>
 <?php import('app/views/auth/header.php') ?>
 
     <main class="form-login my-5 text-center">

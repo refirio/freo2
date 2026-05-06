@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // ユーザーの表示用データ作成
-$_view['user'] = model('view_users', $_view['user']);
+$_view['user'] = model('view_users', $_view['user'] ?? []);
 
 // 権限を取得
 $_view['authorities'] = model('select_authorities', [

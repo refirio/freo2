@@ -1,3 +1,4 @@
+<?php /** @var array $_view */ ?>
     <?php if (!empty($_view['comments'])) : ?>
     <div id="comment">
         <h2 class="h3 mt-4 mb-3"><?php h($GLOBALS['string']['heading_comment_list']) ?></h3>

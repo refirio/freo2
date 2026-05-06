@@ -1,3 +1,4 @@
+<?php /** @var array $_view */ ?>
 <?php
 header('Content-Type: text/xml; charset=' . MAIN_CHARSET);
 e('<?xml version="1.0" encoding="utf-8"?>' . "\n");

@@ -1,3 +1,4 @@
+<?php /** @var array $_view */ ?>
     <?php if ($_view['entry']['public'] === 'password' && empty($_SESSION['entry_passwords'][$_view['entry']['id']])) : ?>
     <form action="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'page' ? '/page/' : '/' . $_view['entry']['type_code'] . '/detail/') ?><?php t($_view['entry']['code']) ?>" method="post">
         <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">

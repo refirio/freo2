@@ -18,7 +18,7 @@ function app_config($key, $default)
  *
  * @param string $get_key
  * @param array  $get_value
- * @param string $set_keykey
+ * @param string $set_key
  * @param string $set_value|null
  *
  * @return array

@@ -1,3 +1,4 @@
+<?php /** @var array $_view */ ?>
 <?php import('app/views/header.php') ?>
 
     <div id="page-<?php h($_view['entry']['code']) ?>">

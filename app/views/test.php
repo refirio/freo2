@@ -1,3 +1,4 @@
+<?php /** @var array $_view */ ?>
 <?php
 
 if (DEBUG_LEVEL) {

@@ -133,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if ((empty($_POST['view']) || $_POST['view'] !== 'preview')) {
     // エントリーの表示用データ作成
-    $_view['entry'] = model('view_entries', $_view['entry']);
+    $_view['entry'] = model('view_entries', $_view['entry'] ?? []);
 }
 
 // 型を取得

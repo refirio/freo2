@@ -1,3 +1,4 @@
+<?php /** @var array $_view */ ?>
 <?php import('app/views/header.php') ?>
 
     <?php if (!empty($GLOBALS['setting']['text_home_index'])) : ?>

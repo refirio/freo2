@@ -1,3 +1,4 @@
+<?php /** @var array $_view */ ?>
 <?php import('app/views/auth/header.php') ?>
 
     <main class="col-11 col-md-7 mx-auto my-4">

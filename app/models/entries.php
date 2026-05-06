@@ -737,7 +737,7 @@ function set_field_entries($entry_id, $field_sets)
 /**
  * 関連するカテゴリーを更新
  *
- * @param int   $id
+ * @param int   $entry_id
  * @param array $category_sets
  *
  * @return void
@@ -778,7 +778,7 @@ function set_category_entries($entry_id, $category_sets)
 /**
  * 関連する属性を更新
  *
- * @param int   $id
+ * @param int   $entry_id
  * @param array $attribute_sets
  *
  * @return void
@@ -815,20 +815,20 @@ function set_attribute_entries($entry_id, $attribute_sets)
 /**
  * ファイルを更新
  *
- * @param string $id
+ * @param string $entry_id
  * @param array  $files
  * @param array  $picture_files
  *
  * @return void
  */
-function set_file_entries($id, $files, $picture_files)
+function set_file_entries($entry_id, $files, $picture_files)
 {
     // フィールドの画像とエントリーのサムネイルを削除
     foreach (array_keys($files) as $file) {
         if (preg_match('/^field__(.*)$/', $file, $matches)) {
             $target = 'field';
             $field  = $matches[1];
-            $key    = $id . '_' . $matches[1];
+            $key    = $entry_id . '_' . $matches[1];
         } elseif (preg_match('/^field_(.*)_(.*)$/', $file, $matches)) {
             $target = 'field';
             $field  = $matches[2];
@@ -836,7 +836,7 @@ function set_file_entries($id, $files, $picture_files)
         } else {
             $target = 'entry';
             $field  = null;
-            $key    = intval($id);
+            $key    = intval($entry_id);
         }
         if (!empty($files[$file]['delete']) || !empty($files[$file]['name'])) {
             if ($target === 'field') {
@@ -847,7 +847,7 @@ function set_file_entries($id, $files, $picture_files)
                         'field_id = :field_id AND entry_id = :entry_id',
                         [
                             'field_id' => $field,
-                            'entry_id' => $id,
+                            'entry_id' => $entry_id,
                         ],
                     ],
                 ]);
@@ -862,7 +862,7 @@ function set_file_entries($id, $files, $picture_files)
                                 'field_id = :field_id AND entry_id = :entry_id',
                                 [
                                     'field_id' => $field,
-                                    'entry_id' => $id,
+                                    'entry_id' => $entry_id,
                                 ],
                             ],
                         ]);
@@ -879,7 +879,7 @@ function set_file_entries($id, $files, $picture_files)
                     'where'  => [
                         'id = :id AND deleted IS NULL',
                         [
-                            'id' => $id,
+                            'id' => $entry_id,
                         ],
                     ],
                 ]);
@@ -889,8 +889,8 @@ function set_file_entries($id, $files, $picture_files)
                     $entry = $entries[0];
                 }
 
-                if (service_storage_exist($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $entry['thumbnail'])) {
-                    service_storage_remove($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $entry['thumbnail']);
+                if (service_storage_exist($GLOBALS['config']['file_target']['entry'] . intval($entry_id) . '/' . $entry['thumbnail'])) {
+                    service_storage_remove($GLOBALS['config']['file_target']['entry'] . intval($entry_id) . '/' . $entry['thumbnail']);
 
                     $resource = db_update([
                         'update' => DATABASE_PREFIX . 'entries',
@@ -900,7 +900,7 @@ function set_file_entries($id, $files, $picture_files)
                         'where'  => [
                             'id = :id',
                             [
-                                'id' => $id,
+                                'id' => $entry_id,
                             ],
                         ],
                     ]);
@@ -919,7 +919,7 @@ function set_file_entries($id, $files, $picture_files)
         'where'  => [
             'id = :id AND deleted IS NULL',
             [
-                'id' => $id,
+                'id' => $entry_id,
             ],
         ],
     ]);
@@ -933,8 +933,8 @@ function set_file_entries($id, $files, $picture_files)
                 continue;
             }
 
-            if (service_storage_exist($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $picture)) {
-                service_storage_remove($GLOBALS['config']['file_target']['entry'] . intval($id) . '/' . $picture);
+            if (service_storage_exist($GLOBALS['config']['file_target']['entry'] . intval($entry_id) . '/' . $picture)) {
+                service_storage_remove($GLOBALS['config']['file_target']['entry'] . intval($entry_id) . '/' . $picture);
             }
         }
     }
@@ -944,7 +944,7 @@ function set_file_entries($id, $files, $picture_files)
         if (preg_match('/^field__(.*)$/', $file, $matches)) {
             $target = 'field';
             $field  = $matches[1];
-            $key    = $id . '_' . $matches[1];
+            $key    = $entry_id . '_' . $matches[1];
         } elseif (preg_match('/^field_(.*)_(.*)$/', $file, $matches)) {
             $target = 'field';
             $field  = $matches[2];
@@ -952,7 +952,7 @@ function set_file_entries($id, $files, $picture_files)
         } else {
             $target = 'entry';
             $field  = null;
-            $key    = intval($id);
+            $key    = intval($entry_id);
         }
         if (!empty($files[$file][0])) {
             // エントリーの画像を保存
@@ -991,7 +991,7 @@ function set_file_entries($id, $files, $picture_files)
                         $resource = model('insert_field_sets', [
                             'values' => [
                                 'field_id' => $field,
-                                'entry_id' => $id,
+                                'entry_id' => $entry_id,
                                 'text'     => $filename,
                             ],
                         ]);
@@ -1008,7 +1008,7 @@ function set_file_entries($id, $files, $picture_files)
                             'where'  => [
                                 'id = :id',
                                 [
-                                    'id' => $id,
+                                    'id' => $entry_id,
                                 ],
                             ],
                         ]);
@@ -1036,7 +1036,7 @@ function set_file_entries($id, $files, $picture_files)
         'where'  => [
             'id = :id',
             [
-                'id' => $id,
+                'id' => $entry_id,
             ],
         ],
     ]);

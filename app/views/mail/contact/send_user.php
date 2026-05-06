@@ -1,3 +1,4 @@
+<?php /** @var array $_view */ ?>
 <?php e($GLOBALS['setting']['mail_body_begin']) ?>
 
 以下のお問い合わせを受け付けました。
