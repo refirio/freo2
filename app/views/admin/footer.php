@@ -1,4 +1,3 @@
-<?php /** @var array $_view */ ?>
         <?php if ($_REQUEST['_type'] !== 'iframe') : ?>
             </div>
         </div>

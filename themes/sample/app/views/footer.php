@@ -1,4 +1,3 @@
-<?php /** @var array $_view */ ?>
                     </main>
                 </div>
             </div>

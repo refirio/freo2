@@ -1,4 +1,3 @@
-<?php /** @var array $_view */ ?>
 <!doctype html>
 <html>
     <head>

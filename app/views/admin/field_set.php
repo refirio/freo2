@@ -1,4 +1,3 @@
-<?php /** @var array $_view */ ?>
     <?php foreach ($_view['fields'] as $field) : ?>
     <div class="form-group mb-2">
         <label class="fw-bold"><?php h($field['name']) ?><?php if (!is_null($field['explanation'])) : ?> <span class="badge text-light bg-secondary" data-toggle="tooltip" title="<?php t($field['explanation']) ?>">？</span><?php endif ?><?php if ($field['validation'] === 'required') : ?> <span class="badge bg-danger">必須</span><?php endif ?></label>

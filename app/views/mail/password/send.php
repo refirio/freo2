@@ -1,4 +1,3 @@
-<?php /** @var array $_view */ ?>
 <?php e($GLOBALS['setting']['mail_body_begin']) ?>
 
 認証コード

@@ -1,4 +1,3 @@
-<?php /** @var array $_view */ ?>
     <?php if (!empty($_view['entry']['field_sets'])) : ?>
     <table class="table table-bordered">
         <?php foreach ($_view['fields'] as $field) : if (isset($_view['entry']['field_sets'][$field['id']])) : ?>

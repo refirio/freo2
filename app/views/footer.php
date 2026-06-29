@@ -1,4 +1,3 @@
-<?php /** @var array $_view */ ?>
         </main>
         <footer class="mt-5 ps-3 ps-md-0 py-3 border-top">
             <div class="container px-lg-5 px-0">

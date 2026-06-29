@@ -1,4 +1,3 @@
-<?php /** @var array $_view */ ?>
 <?php import('app/views/header.php') ?>
 
     <div id="contact">

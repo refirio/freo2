@@ -1,4 +1,3 @@
-<?php /** @var array $_view */ ?>
     <?php if ($_view['entry']['comment'] === 'opened' || ($_view['entry']['comment'] === 'user' && !empty($_SESSION['auth']['user']['id']))) : ?>
     <div id="comment_form">
         <h2 class="h3 mt-4 mb-3"><?php h($GLOBALS['string']['heading_comment_form']) ?></h2>

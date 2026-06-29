@@ -1,4 +1,3 @@
-<?php /** @var array $_view */ ?>
 <?php e($GLOBALS['setting']['mail_body_begin']) ?>
 
 メールアドレス存在確認用URL

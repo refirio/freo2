@@ -1,4 +1,3 @@
-<?php /** @var array $_view */ ?>
 <?php import('app/views/admin/header.php') ?>
 
     <main class="col-md-9 ms-sm-auto col-lg-10 mb-2 px-md-4">
