@@ -75,4 +75,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $_view['contact'] = model('view_contacts', $_view['contact'] ?? []);
 
 // タイトル
-$_view['title'] = $GLOBALS['string']['heading_contact_form'];
+$_view['title'] = $GLOBALS['string']['heading_contact'];

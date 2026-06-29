@@ -81,7 +81,7 @@
                                 <td><input type="checkbox" name="bulks[]" value="<?php h($comment['id']) ?>"<?php isset($_SESSION['bulk']['comment'][$comment['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
                                 <?php endif ?>
                                 <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $comment['created']) == localdate('Ymd') ? localdate('H:i:s', $comment['created']) : localdate('Y/m/d', $comment['created'])) ?></td>
-                                <td class="d-none d-md-table-cell"><?php if (!preg_match('/^DELETED /', $comment['user_username'])) :?><code class="text-dark"><?php h($comment['user_id'] ? truncate($comment['user_username'], 50) : '') ?></code><?php endif ?></td>
+                                <td class="d-none d-md-table-cell"><?php if ($comment['user_id'] && !preg_match('/^DELETED /', $comment['user_username'])) :?><code class="text-dark"><?php h($comment['user_id'] ? truncate($comment['user_username'], 50) : '') ?></code><?php endif ?></td>
                                 <td><?php h(truncate($comment['name'], 50)) ?></td>
                                 <td>
                                     <?php if ($comment['type_code'] === 'entry') : ?>

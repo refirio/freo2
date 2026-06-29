@@ -10,7 +10,7 @@ $GLOBALS['menu_group'] = [
     ],
     'auth' => [
         'home' => [
-            'name' => 'ホーム',
+            'name' => $GLOBALS['string']['menu_auth_home'],
             'show' => true,
         ],
     ],

@@ -12,9 +12,9 @@
             <div class="card-body">
                 <?php e($GLOBALS['setting']['text_auth_modify_complete']) ?>
                 <?php if ($GLOBALS['authority']['power'] >= 1) : ?>
-                <p><a href="<?php t(MAIN_FILE) ?>/admin/home" class="btn btn-secondary">戻る</a><p>
+                <p><a href="<?php t(MAIN_FILE) ?>/admin/home" class="btn btn-secondary"><?php h($GLOBALS['string']['button_back']) ?></a><p>
                 <?php else : ?>
-                <p><a href="<?php t(MAIN_FILE) ?>/auth/home" class="btn btn-secondary">戻る</a><p>
+                <p><a href="<?php t(MAIN_FILE) ?>/auth/home" class="btn btn-secondary"><?php h($GLOBALS['string']['button_back']) ?></a><p>
                 <?php endif ?>
             </div>
         </div>

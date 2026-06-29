@@ -12,7 +12,7 @@
         </div>
         <?php endif ?>
 
-        <form action="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'page' ? '/page/' : '/' . $_view['entry']['type_code'] . '/detail/') ?><?php t($_view['entry']['code']) ?>" method="post">
+        <form action="<?php t(MAIN_FILE) ?><?php t($_view['entry']['type_code'] === 'page' ? '/page/' : '/' . $_view['entry']['type_code'] . '/detail/') ?><?php t($_view['entry']['code']) ?>" method="post" class="register validate">
             <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
             <input type="hidden" name="exec" value="comment">
             <input type="hidden" name="entry_id" value="<?php t($_view['entry']['id']) ?>">

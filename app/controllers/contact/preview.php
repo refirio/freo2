@@ -19,4 +19,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // タイトル
-$_view['title'] = $GLOBALS['string']['heading_contact_form'];
+$_view['title'] = $GLOBALS['string']['heading_contact'];
