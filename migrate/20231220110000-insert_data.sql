@@ -54,4 +54,4 @@ URL: https://www.example.com/
 ('mail_password_subject', 'パスワード再設定'),
 ('mail_leave_subject', 'ユーザー削除完了'),
 ('mail_contact_subject', 'お問い合わせありがとうございます'),
-('mail_contact_subject_admin', 'お問い合わせがありました');
+('mail_contact_subject_admin', '問い合わせを受け付けました');
