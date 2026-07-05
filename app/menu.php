@@ -31,6 +31,10 @@ $GLOBALS['menu_group'] = [
             'name' => 'システム',
             'show' => isset($GLOBALS['authority']) && $GLOBALS['authority']['power'] >= 3,
         ],
+        'auth' => [
+            'name' => '認証',
+            'show' => true,
+        ],
     ],
 ];
 $GLOBALS['menu_contents'] = [
@@ -223,6 +227,22 @@ $GLOBALS['menu_contents'] = [
                 'link'   => '/admin/version',
                 'active' => '/^version$/',
                 'icon'   => '#symbol-list-ul',
+                'show'   => true,
+            ],
+        ],
+        'auth' => [
+            'modify' => [
+                'name'   => 'ユーザー情報編集',
+                'link'   => '/auth/modify',
+                'active' => null,
+                'icon'   => null,
+                'show'   => true,
+            ],
+            'logout' => [
+                'name'   => 'ログアウト',
+                'link'   => '/auth/logout',
+                'active' => null,
+                'icon'   => null,
                 'show'   => true,
             ],
         ],

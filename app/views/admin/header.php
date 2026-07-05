@@ -35,8 +35,9 @@
                             <?php h($_view['_user']['name'] ? $_view['_user']['name'] : $_view['_user']['username']) ?>さん
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end position-absolute mx-2">
-                            <li><a class="dropdown-item" href="<?php t(MAIN_FILE) ?>/auth/modify">ユーザー情報編集</a></li>
-                            <li><a class="dropdown-item" href="<?php t(MAIN_FILE) ?>/auth/logout">ログアウト</a></li>
+                            <?php foreach ($GLOBALS['menu_contents']['admin']['auth'] as $work_key => $work_value) : if ($work_value['show']) : ?>
+                            <li><a class="dropdown-item" href="<?php t(MAIN_FILE . $work_value['link']) ?>"><?php t($work_value['name']) ?></a></li>
+                            <?php endif; endforeach ?>
                         </ul>
                     </div>
                 </div>
@@ -48,7 +49,7 @@
                 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar collapse top-0 bottom-0 start-0">
                     <div class="sidebar-sticky py-3">
                         <h2 class="d-none">メニュー</h2>
-                        <?php foreach ($GLOBALS['menu_group']['admin'] as $menu_key => $menu_value) : if ($menu_value['show']) : ?>
+                        <?php foreach ($GLOBALS['menu_group']['admin'] as $menu_key => $menu_value) : if ($menu_key != 'auth' && $menu_value['show']) : ?>
                         <?php if ($menu_key != 'home') : ?>
                         <h3 class="h6 d-flex justify-content-between align-items-center px-3 mt-3">
                             <span><?php t($menu_value['name']) ?></span>
