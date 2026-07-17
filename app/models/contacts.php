@@ -228,11 +228,99 @@ function validate_contacts($queries, $options = [])
     if (isset($queries['memo'])) {
         if (!validator_required($queries['memo'])) {
         } elseif (!validator_max_length($queries['memo'], 5000)) {
-            $messages['memo'] = 'お問い合わせ内容は5000文字以内で入力してください。';
+            $messages['memo'] = 'メモは5000文字以内で入力してください。';
         }
     }
 
     return $messages;
+}
+
+/**
+ * お問い合わせの絞り込み
+ *
+ * @param array $queries
+ * @param array $options
+ *
+ * @return array
+ */
+function filter_contacts($queries, $options = [])
+{
+    $options = [
+        'associate' => isset($options['associate']) ? $options['associate'] : false,
+    ];
+
+    if ($options['associate'] === true) {
+        $wheres = [];
+        $pagers = [];
+
+        // 名前を取得
+        if (isset($queries['name'])) {
+            if ($queries['name'] !== '') {
+                $wheres[] = 'contacts.name LIKE ' . db_escape('%' . $queries['name'] . '%');
+                $pagers[] = 'name=' . rawurlencode($queries['name']);
+            }
+        }
+
+        // メールアドレスを取得
+        if (isset($queries['email'])) {
+            if ($queries['email'] !== '') {
+                $wheres[] = 'contacts.email LIKE ' . db_escape('%' . $queries['email'] . '%');
+                $pagers[] = 'email=' . rawurlencode($queries['email']);
+            }
+        }
+
+        // お問い合わせ件名を取得
+        if (isset($queries['subject'])) {
+            if ($queries['subject'] !== '') {
+                $wheres[] = 'contacts.subject LIKE ' . db_escape('%' . $queries['subject'] . '%');
+                $pagers[] = 'subject=' . rawurlencode($queries['subject']);
+            }
+        }
+
+        // お問い合わせ内容を取得
+        if (isset($queries['message'])) {
+            if ($queries['message'] !== '') {
+                $wheres[] = 'contacts.message LIKE ' . db_escape('%' . $queries['message'] . '%');
+                $pagers[] = 'message=' . rawurlencode($queries['message']);
+            }
+        }
+
+        // 状況を取得
+        if (isset($queries['status'])) {
+            if ($queries['status'] !== '') {
+                $wheres[] = 'contacts.status = ' . db_escape($queries['status']);
+                $pagers[] = 'status=' . rawurlencode($queries['status']);
+            }
+        }
+
+        // メモを取得
+        if (isset($queries['memo'])) {
+            if ($queries['memo'] !== '') {
+                $wheres[] = 'contacts.memo LIKE ' . db_escape('%' . $queries['memo'] . '%');
+                $pagers[] = 'memo=' . rawurlencode($queries['memo']);
+            }
+        }
+
+        // キーワードを取得
+        if (isset($queries['keyword'])) {
+            if ($queries['keyword'] !== '') {
+                $wheres[] = '(contacts.name LIKE ' . db_escape('%' . $queries['keyword'] . '%') . ' OR contacts.email LIKE ' . db_escape('%' . $queries['keyword'] . '%') . ' OR contacts.subject LIKE ' . db_escape('%' . $queries['keyword'] . '%') . ' OR contacts.message LIKE ' . db_escape('%' . $queries['keyword'] . '%') . ')';
+                $pagers[] = 'keyword=' . rawurlencode($queries['keyword']);
+            }
+        }
+
+        $results = [
+            'where' => implode(' AND ', $wheres),
+            'pager' => implode('&amp;', $pagers),
+        ];
+    } else {
+        $results = [
+            'where' => null,
+            'pager' => null,
+        ];
+    }
+
+    return $results;
 }
 
 /**

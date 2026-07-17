@@ -223,11 +223,91 @@ function validate_comments($queries, $options = [])
     if (isset($queries['memo'])) {
         if (!validator_required($queries['memo'])) {
         } elseif (!validator_max_length($queries['memo'], 5000)) {
-            $messages['memo'] = 'コメント内容は5000文字以内で入力してください。';
+            $messages['memo'] = 'メモ内容は5000文字以内で入力してください。';
         }
     }
 
     return $messages;
+}
+
+/**
+ * コメントの絞り込み
+ *
+ * @param array $queries
+ * @param array $options
+ *
+ * @return array
+ */
+function filter_comments($queries, $options = [])
+{
+    $options = [
+        'associate' => isset($options['associate']) ? $options['associate'] : false,
+    ];
+
+    if ($options['associate'] === true) {
+        $wheres = [];
+        $pagers = [];
+
+        // 承認を取得
+        if (isset($queries['approved'])) {
+            if ($queries['approved'] !== '') {
+                $wheres[] = 'comments.approved = ' . db_escape($queries['approved']);
+                $pagers[] = 'approved=' . rawurlencode($queries['approved']);
+            }
+        }
+
+        // 名前を取得
+        if (isset($queries['name'])) {
+            if ($queries['name'] !== '') {
+                $wheres[] = 'comments.name LIKE ' . db_escape('%' . $queries['name'] . '%');
+                $pagers[] = 'name=' . rawurlencode($queries['name']);
+            }
+        }
+
+        // URLを取得
+        if (isset($queries['url'])) {
+            if ($queries['url'] !== '') {
+                $wheres[] = 'comments.url LIKE ' . db_escape('%' . $queries['url'] . '%');
+                $pagers[] = 'url=' . rawurlencode($queries['url']);
+            }
+        }
+
+        // コメント内容を取得
+        if (isset($queries['message'])) {
+            if ($queries['message'] !== '') {
+                $wheres[] = 'comments.message LIKE ' . db_escape('%' . $queries['message'] . '%');
+                $pagers[] = 'message=' . rawurlencode($queries['message']);
+            }
+        }
+
+        // メモを取得
+        if (isset($queries['memo'])) {
+            if ($queries['memo'] !== '') {
+                $wheres[] = 'comments.memo LIKE ' . db_escape('%' . $queries['memo'] . '%');
+                $pagers[] = 'memo=' . rawurlencode($queries['memo']);
+            }
+        }
+
+        // キーワードを取得
+        if (isset($queries['keyword'])) {
+            if ($queries['keyword'] !== '') {
+                $wheres[] = '(comments.name LIKE ' . db_escape('%' . $queries['keyword'] . '%') . ' OR comments.url LIKE ' . db_escape('%' . $queries['keyword'] . '%') . ' OR comments.message LIKE ' . db_escape('%' . $queries['keyword'] . '%') . ')';
+                $pagers[] = 'keyword=' . rawurlencode($queries['keyword']);
+            }
+        }
+
+        $results = [
+            'where' => implode(' AND ', $wheres),
+            'pager' => implode('&amp;', $pagers),
+        ];
+    } else {
+        $results = [
+            'where' => null,
+            'pager' => null,
+        ];
+    }
+
+    return $results;
 }
 
 /**

@@ -1,5 +1,24 @@
 <?php
 
+// 絞り込み条件を作成
+$filters = model('filter_comments', $_GET, [
+    'associate' => true,
+]);
+if ($filters['where'] === '') {
+    $filters['where'] = null;
+}
+
+// 絞り込み条件を引き継ぎ
+$_view['comment_filter'] = $filters['pager'];
+
+// 絞り込み条件を初期化
+if (!isset($_GET['keyword'])) {
+    $_GET['keyword'] = null;
+}
+if (!isset($_GET['approved'])) {
+    $_GET['approved'] = null;
+}
+
 // ページを取得
 if (isset($_GET['page'])) {
     $_GET['page'] = intval($_GET['page']);
@@ -11,6 +30,7 @@ if (isset($_GET['page'])) {
 
 // コメントを取得
 $_view['comments'] = model('select_comments', [
+    'where'    => $filters['where'],
     'order_by' => 'comments.id DESC',
     'limit'    => [
         ':offset, :limit',
@@ -25,6 +45,7 @@ $_view['comments'] = model('select_comments', [
 
 $comment_count = model('select_comments', [
     'select' => 'COUNT(DISTINCT comments.id) AS count',
+    'where'  => $filters['where'],
 ], [
     'associate' => true,
 ]);

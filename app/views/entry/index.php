@@ -31,7 +31,7 @@
         <h3 class="h4 mb-3"><?php h($GLOBALS['string']['heading_entry_page']) ?></h3>
         <ul>
             <?php for ($i = 1; $i <= $_view['entry_page']; $i++) : ?>
-            <li><a href="<?php t(MAIN_FILE) ?>/entry/?<?php t(empty($_GET['category_sets']) ? '' : 'category_sets[]=' . $_GET['category_sets'][0] . '&') ?><?php t(empty($_GET['archive']) ? '' : 'archive=' . $_GET['archive'] . '&') ?>page=<?php t($i) ?>" class="<?php if ($i == $_GET['page']) : ?>selected<?php endif ?>"><?php t($i) ?></a></li>
+            <li><a href="<?php t(MAIN_FILE) ?>/entry/?<?php e($_view['entry_filter'] ? $_view['entry_filter'] . '&amp;' : '') ?>page=<?php t($i) ?>" class="<?php if ($i == $_GET['page']) : ?>selected<?php endif ?>"><?php t($i) ?></a></li>
             <?php endfor ?>
         </ul>
         <?php endif ?>

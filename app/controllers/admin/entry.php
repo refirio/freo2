@@ -1,5 +1,25 @@
 <?php
 
+// 絞り込み条件を作成
+$filters = model('filter_entries', $_GET, [
+    'associate' => true,
+]);
+if ($filters['where'] !== '') {
+    $filters['where'] .= ' AND ';
+}
+$filters['where'] .= 'types.code = ' . db_escape('entry');
+
+// 絞り込み条件を引き継ぎ
+$_view['entry_filter'] = $filters['pager'];
+
+// 絞り込み条件を初期化
+if (!isset($_GET['keyword'])) {
+    $_GET['keyword'] = null;
+}
+if (!isset($_GET['public'])) {
+    $_GET['public'] = null;
+}
+
 // ページを取得
 if (isset($_GET['page'])) {
     $_GET['page'] = intval($_GET['page']);
@@ -11,7 +31,7 @@ if (isset($_GET['page'])) {
 
 // エントリーを取得
 $_view['entries'] = model('select_entries', [
-    'where'    => 'types.code = ' . db_escape('entry'),
+    'where'    => $filters['where'],
     'order_by' => 'entries.datetime DESC, entries.id',
     'limit'    => [
         ':offset, :limit',
@@ -26,7 +46,7 @@ $_view['entries'] = model('select_entries', [
 
 $entry_count = model('select_entries', [
     'select' => 'COUNT(DISTINCT entries.id) AS count',
-    'where'  => 'types.code = ' . db_escape('entry'),
+    'where'  => $filters['where'],
 ], [
     'associate' => true,
 ]);

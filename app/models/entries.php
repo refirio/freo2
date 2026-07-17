@@ -609,6 +609,46 @@ function filter_entries($queries, $options = [])
         $wheres = [];
         $pagers = [];
 
+        // 型を取得
+        if (isset($queries['type_id'])) {
+            if ($queries['type_id'] !== '') {
+                $wheres[] = 'entries.type_id = ' . db_escape($queries['type_id']);
+                $pagers[] = 'type_id=' . rawurlencode($queries['type_id']);
+            }
+        }
+
+        // 公開を取得
+        if (isset($queries['public'])) {
+            if ($queries['public'] !== '') {
+                $wheres[] = 'entries.public = ' . db_escape($queries['public']);
+                $pagers[] = 'public=' . rawurlencode($queries['public']);
+            }
+        }
+
+        // 日時を取得
+        if (isset($queries['datetime'])) {
+            if ($queries['datetime'] !== '') {
+                $wheres[] = 'entries.datetime = ' . db_escape($queries['datetime']);
+                $pagers[] = 'datetime=' . rawurlencode($queries['datetime']);
+            }
+        }
+
+        // タイトルを取得
+        if (isset($queries['title'])) {
+            if ($queries['title'] !== '') {
+                $wheres[] = 'entries.title LIKE ' . db_escape('%' . $queries['title'] . '%');
+                $pagers[] = 'title=' . rawurlencode($queries['title']);
+            }
+        }
+
+        // 本文を取得
+        if (isset($queries['text'])) {
+            if ($queries['text'] !== '') {
+                $wheres[] = 'entries.text LIKE ' . db_escape('%' . $queries['text'] . '%');
+                $pagers[] = 'text=' . rawurlencode($queries['text']);
+            }
+        }
+
         // フィールドを取得
         if (isset($queries['field_sets'])) {
             if (is_array($queries['field_sets'])) {
@@ -641,27 +681,11 @@ function filter_entries($queries, $options = [])
             }
         }
 
-        // 日時を取得
-        if (isset($queries['datetime'])) {
-            if ($queries['datetime'] !== '') {
-                $wheres[] = 'entries.datetime = ' . db_escape($queries['datetime']);
-                $pagers[] = 'datetime=' . rawurlencode($queries['datetime']);
-            }
-        }
-
-        // 型を取得
-        if (isset($queries['type_id'])) {
-            if ($queries['type_id'] !== '') {
-                $wheres[] = 'entries.type_id = ' . db_escape($queries['type_id']);
-                $pagers[] = 'type_id=' . rawurlencode($queries['type_id']);
-            }
-        }
-
-        // タイトルを取得
-        if (isset($queries['title'])) {
-            if ($queries['title'] !== '') {
-                $wheres[] = 'entries.title = ' . db_escape($queries['title']);
-                $pagers[] = 'title=' . rawurlencode($queries['title']);
+        // キーワードを取得
+        if (isset($queries['keyword'])) {
+            if ($queries['keyword'] !== '') {
+                $wheres[] = '(entries.title LIKE ' . db_escape('%' . $queries['keyword'] . '%') . ' OR entries.text LIKE ' . db_escape('%' . $queries['keyword'] . '%') . ')';
+                $pagers[] = 'keyword=' . rawurlencode($queries['keyword']);
             }
         }
 

@@ -2,12 +2,15 @@
 
 import('app/services/entry.php');
 
-// エントリーの絞り込み
+// 絞り込み条件を作成
 $filters = model('filter_entries', $_GET, [
     'associate' => true,
 ]);
 
-// 検索用文字列を初期化
+// 絞り込み条件を引き継ぎ
+$_view['entry_filter'] = $filters['pager'];
+
+// 絞り込み条件を初期化
 if (!isset($_GET['category_sets'])) {
     $_GET['category_sets'] = [];
 }

@@ -40,6 +40,20 @@
                 </div>
                 <?php endif ?>
 
+                <form action="<?php t(MAIN_FILE) ?>/admin/comment" method="get" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="keyword" size="30" value="<?php t($_GET['keyword']) ?>" placeholder="名前、URL、内容" class="form-control" style="flex: 2 1 0;">
+                        <?php if ($GLOBALS['setting']['comment_use_approve']) : ?>
+                        <select name="approved" class="form-select" style="flex: 1 1 0;">
+                            <option></option>
+                            <?php foreach ($GLOBALS['config']['option']['comment']['approved'] as $key => $value) : ?>
+                            <option value="<?php t($key) ?>"<?php strval($key) == $_GET['approved'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
+                            <?php endforeach ?>
+                        </select>
+                        <?php endif ?>
+                        <button type="submit" class="btn btn-primary">絞り込み</button>
+                    </div>
+                </form>
                 <form action="<?php t(MAIN_FILE) ?>/admin/comment_bulk" method="post" class="bulk">
                     <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
                     <input type="hidden" name="page" value="<?php t($_GET['page']) ?>">
@@ -110,11 +124,11 @@
                     <?php endif ?>
                     <?php if ($_view['comment_page'] > 1) : ?>
                         <ul class="pagination d-flex justify-content-end">
-                            <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/comment?page=1" class="page-link">&laquo;</a></li>
+                            <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/comment?<?php e($_view['comment_filter'] ? $_view['comment_filter'] . '&amp;' : '') ?>page=1" class="page-link">&laquo;</a></li>
                             <?php for ($i = max(1, $_GET['page'] - floor($GLOBALS['setting']['number_width_admin_comment'] / 2)); $i <= min($_view['comment_page'], $_GET['page'] + floor($GLOBALS['setting']['number_width_admin_comment'] / 2)); $i++) : ?>
-                            <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/comment?page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
+                            <li class="page-item<?php if ($i == $_GET['page']) : ?> active<?php endif ?>"><a href="<?php t(MAIN_FILE) ?>/admin/comment?<?php e($_view['comment_filter'] ? $_view['comment_filter'] . '&amp;' : '') ?>page=<?php t($i) ?>" class="page-link"><?php t($i) ?></a></li>
                             <?php endfor ?>
-                            <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/comment?page=<?php t(ceil($_view['comment_count'] / $GLOBALS['setting']['number_limit_admin_entry'])) ?>" class="page-link">&raquo;</a></li>
+                            <li class="page-item"><a href="<?php t(MAIN_FILE) ?>/admin/comment?<?php e($_view['comment_filter'] ? $_view['comment_filter'] . '&amp;' : '') ?>page=<?php t(ceil($_view['comment_count'] / $GLOBALS['setting']['number_limit_admin_entry'])) ?>" class="page-link">&raquo;</a></li>
                         </ul>
                     <?php endif ?>
                 </form>
