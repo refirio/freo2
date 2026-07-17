@@ -23,14 +23,14 @@
                 <dl>
                     <dt>タイトル</dt>
                         <dd><?php h($_view['entry']['title']) ?></dd>
+                    <?php if ($GLOBALS['setting']['entry_text_type'] !== 'none') : ?>
                     <dt>本文</dt>
-                        <dd><?php h($_view['entry']['text']) ?></dd>
+                        <dd><?php if ($GLOBALS['setting']['entry_text_type'] === 'textarea') : ?><?php h($_view['entry']['text']) ?><?php else : ?><?php e($_view['entry']['text']) ?><?php endif ?></dd>
+                    <?php endif ?>
                     <dt>画像</dt>
                         <dd><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=pictures&amp;format=image&amp;index=0<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></dd>
                     <dt>サムネイル</dt>
                         <dd><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=thumbnail&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></dd>
-                    <dt>公開</dt>
-                        <dd><?php h($GLOBALS['config']['option']['entry']['public'][$_view['entry']['public']]) ?></dd>
                 </dl>
                 <p><a href="#" class="close">閉じる</a></p>
             <?php else : ?>
