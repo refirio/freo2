@@ -15,6 +15,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $files = [];
     for ($i = 0; $i < $file_count; $i++) {
         if (is_uploaded_file($_FILES['medias']['tmp_name'][$i])) {
+            if (!preg_match('/\.(' . implode('|', $GLOBALS['config']['media_ext']) . ')$/i', $_FILES['medias']['name'][$i])) {
+                error('指定された拡張子は使用できません。', ['token' => token('create')]);
+            }
             if ($GLOBALS['authority']['power'] < 3) {
                 if (!preg_match('/\.(' . implode('|', $GLOBALS['config']['media_author_ext']) . ')$/i', $_FILES['medias']['name'][$i])) {
                     error('指定された拡張子は使用できません。', ['token' => token('create')]);

@@ -105,6 +105,60 @@ $GLOBALS['config']['file_target'] = app_config('APP_FILE_TARGET', [
 /* ファイルアップロード許可 */
 $GLOBALS['config']['file_permission'] = app_config('APP_FILE_PERMISSION', [
     'file'  => [
+        'png' => [
+            'name'   => 'PNG',
+            'ext'    => 'png',
+            'regexp' => '/\.png$/i',
+            'mime'   => 'image/png',
+        ],
+        'jpeg' => [
+            'name'   => 'JPEG',
+            'ext'    => 'jpg',
+            'regexp' => '/\.(jpeg|jpg|jpe)$/i',
+            'mime'   => 'image/jpeg',
+        ],
+        'gif' => [
+            'name'   => 'GIF',
+            'ext'    => 'gif',
+            'regexp' => '/\.gif$/i',
+            'mime'   => 'image/gif',
+        ],
+        'txt' => [
+            'name'   => 'TXT',
+            'ext'    => 'txt',
+            'regexp' => '/\.txt$/i',
+            'mime'   => 'text/plain',
+        ],
+        'csv' => [
+            'name'   => 'CSV',
+            'ext'    => 'csv',
+            'regexp' => '/\.csv$/i',
+            'mime'   => 'text/csv',
+        ],
+        'pdf' => [
+            'name'   => 'PDF',
+            'ext'    => 'pdf',
+            'regexp' => '/\.pdf$/i',
+            'mime'   => 'application/pdf',
+        ],
+        'docx' => [
+            'name'   => 'DOCX',
+            'ext'    => 'docx',
+            'regexp' => '/\.docx$/i',
+            'mime'   => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        ],
+        'xlsx' => [
+            'name'   => 'XLSX',
+            'ext'    => 'xlsx',
+            'regexp' => '/\.xlsx$/i',
+            'mime'   => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ],
+        'pptx' => [
+            'name'   => 'PPTX',
+            'ext'    => 'pptx',
+            'regexp' => '/\.pptx$/i',
+            'mime'   => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        ],
     ],
     'image' => [
         'png' => [
@@ -146,6 +200,9 @@ $GLOBALS['config']['resize_height'] = app_config('APP_RESIZE_HEIGHT', 80);
 
 /* 画像リサイズ時のJpeg画質 */
 $GLOBALS['config']['resize_quality'] = app_config('APP_RESIZE_QUALITY', 85);
+
+/* アップロードできるメディア拡張子 */
+$GLOBALS['config']['media_ext'] = app_config('APP_MEDIA_EXT', ['png', 'jpeg', 'jpg', 'jpe', 'gif', 'txt', 'csv', 'pdf', 'docx', 'xlsx', 'pptx']);
 
 /* 投稿者がアップロードできるメディア領域 */
 $GLOBALS['config']['media_author_dir'] = app_config('APP_MEDIA_AUTHOR_DIR', 'images');
