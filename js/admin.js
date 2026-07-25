@@ -79,6 +79,7 @@ $(document).ready(function() {
                     error: function(message) {
                         // 結果を表示
                         target.find('p').html('<div class="warning">アップロードに失敗しました。' + message + '</div>');
+                        target.find('p').show();
                     },
                 });
             })(value);
@@ -133,6 +134,7 @@ $(document).ready(function() {
                     error: function(message) {
                         // 結果を表示
                         target.find('p').html('<div class="warning">アップロードに失敗しました。' + message + '</div>');
+                        target.find('p').show();
                     },
                 });
             })(value);
