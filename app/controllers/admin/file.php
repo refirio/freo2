@@ -67,7 +67,7 @@ if (empty($_SESSION['file'][$_GET['target']][$_GET['key']]['delete'])) {
             $result = $results[0];
         }
 
-        if ($_GET['key'] === 'pictures') {
+        if ($_GET['key'] === 'pictures' && !empty($result['pictures'])) {
             $pictures = explode("\n", $result['pictures']);
             if (isset($pictures[$_GET['index']])) {
                 $result[$_GET['key']] = $pictures[$_GET['index']];
