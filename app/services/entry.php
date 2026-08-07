@@ -69,7 +69,7 @@ function service_entry_select_published($type, $queries, $options = [])
                 if ($GLOBALS['setting']['entry_text_type'] === 'none') {
                     $entry['text'] = null;
                 } elseif ($GLOBALS['setting']['entry_text_type'] === 'textarea') {
-                    $entry['text'] = h($entry['text'], true);
+                    $entry['text'] = '<p>' . h($entry['text'], true) . '</p>';
                 }
 
                 if (!empty($entry['pictures'])) {

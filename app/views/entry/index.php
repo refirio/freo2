@@ -21,7 +21,7 @@
             <?php endif ?>
 
             <?php if (!empty($entry['text'])) : ?>
-            <p class="mb-1"><?php h(truncate(strip_tags($entry['text'] ?? ''), 100)) ?></p>
+            <p class="mb-1"><?php e(truncate(strip_tags($entry['text'] ?? ''), 100)) ?></p>
             <?php endif ?>
             <p class="mt-1"><a href="<?php t(MAIN_FILE) ?>/entry/detail/<?php h($entry['code']) ?>"><?php h($GLOBALS['string']['text_entry_continue']) ?></a></p>
         </div>
