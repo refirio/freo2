@@ -38,6 +38,13 @@ $GLOBALS['config']['option'] = app_config('APP_OPTION', [
             'password'  => 'パスワード認証で公開',
             'none'      => '非公開',
         ],
+        // 本文形式
+        'text_type' => [
+            'none'     => 'なし',
+            'textarea' => '複数行入力',
+            'html'     => 'HTML直接入力',
+            'wysiwyg'  => 'WYSIWYGエディタ',
+        ],
         // コメントの受付
         'comment' => [
             'opened' => '受け付ける',

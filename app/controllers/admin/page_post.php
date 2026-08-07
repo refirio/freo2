@@ -58,6 +58,7 @@ if (empty($_SESSION['post']['entry']['id'])) {
             'code'         => $_SESSION['post']['entry']['code'],
             'title'        => $_SESSION['post']['entry']['title'],
             'text'         => $_SESSION['post']['entry']['text'],
+            'text_type'    => $_SESSION['post']['entry']['text_type'],
             'comment'      => $_SESSION['post']['entry']['comment'],
         ],
     ], [
@@ -83,6 +84,7 @@ if (empty($_SESSION['post']['entry']['id'])) {
             'code'         => $_SESSION['post']['entry']['code'],
             'title'        => $_SESSION['post']['entry']['title'],
             'text'         => $_SESSION['post']['entry']['text'],
+            'text_type'    => $_SESSION['post']['entry']['text_type'],
             'comment'      => $_SESSION['post']['entry']['comment'],
         ],
         'where' => [

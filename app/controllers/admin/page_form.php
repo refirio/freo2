@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'code'           => isset($_POST['code'])           ? $_POST['code']           : '',
             'title'          => isset($_POST['title'])          ? $_POST['title']          : '',
             'text'           => isset($_POST['text'])           ? $_POST['text']           : '',
+            'text_type'      => isset($_POST['text_type'])      ? $_POST['text_type']      : '',
             'comment'        => isset($_POST['comment'])        ? $_POST['comment']        : '',
             'field_sets'     => isset($_POST['field_sets'])     ? $_POST['field_sets']     : [],
             'category_sets'  => isset($_POST['category_sets'])  ? $_POST['category_sets']  : [],
@@ -63,7 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 初期データを取得
     if (empty($_GET['id'])) {
         $_view['entry'] = model('default_entries');
-        $_view['entry']['code'] = $GLOBALS['setting']['page_default_code'] ? localdate($GLOBALS['setting']['page_default_code']) : '';
+
+        $_view['entry']['code']      = $GLOBALS['setting']['page_default_code'] ? localdate($GLOBALS['setting']['page_default_code']) : '';
+        $_view['entry']['text_type'] = $GLOBALS['setting']['page_text_type'];
     } else {
         $entries = model('select_entries', [
             'where' => [

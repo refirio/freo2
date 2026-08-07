@@ -535,6 +535,13 @@ function validate_entries($queries, $options = [])
         }
     }
 
+    // 本文形式
+    if (isset($queries['text_type'])) {
+        if (!validator_list($queries['text_type'], $GLOBALS['config']['option']['entry']['text_type'])) {
+            $messages['text_type'] = '本文形式の値が不正です。';
+        }
+    }
+
     // フィールド
     if (isset($queries['field_sets'])) {
         // フィールドを取得
@@ -1124,6 +1131,7 @@ function default_entries()
         'title'          => '',
         'code'           => '',
         'text'           => null,
+        'text_type'      => 'wysiwyg',
         'pictures'       => null,
         'thumbnail'      => null,
         'comment'        => 'closed',

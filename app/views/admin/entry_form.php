@@ -23,14 +23,16 @@
                 <dl>
                     <dt>タイトル</dt>
                         <dd><?php h($_view['entry']['title']) ?></dd>
-                    <?php if ($GLOBALS['setting']['entry_text_type'] !== 'none') : ?>
+                    <?php if ($_view['entry']['text_type'] !== 'none') : ?>
                     <dt>本文</dt>
-                        <dd><?php if ($GLOBALS['setting']['entry_text_type'] === 'textarea') : ?><?php h($_view['entry']['text']) ?><?php else : ?><?php e($_view['entry']['text']) ?><?php endif ?></dd>
+                        <dd><?php if ($_view['entry']['text_type'] === 'textarea') : ?><?php h($_view['entry']['text']) ?><?php else : ?><?php e($_view['entry']['text']) ?><?php endif ?></dd>
                     <?php endif ?>
+                    <!--
                     <dt>画像</dt>
                         <dd><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=pictures&amp;format=image&amp;index=0<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></dd>
                     <dt>サムネイル</dt>
                         <dd><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=thumbnail&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></dd>
+                    -->
                 </dl>
                 <p><a href="#" class="close">閉じる</a></p>
             <?php else : ?>
@@ -105,10 +107,22 @@
                                 <label class="fw-bold">タイトル <span class="badge bg-danger">必須</span></label>
                                 <input type="text" name="title" size="30" value="<?php t($_view['entry']['title']) ?>" class="form-control">
                             </div>
-                            <?php if ($GLOBALS['setting']['entry_text_type'] !== 'none') : ?>
+                            <?php if ($_view['entry']['text_type'] !== 'none') : ?>
                             <div class="form-group mb-2">
                                 <label class="fw-bold">本文（<a href="#" data-bs-toggle="modal" data-bs-target="#mediaModal">メディア</a>）</label>
-                                <textarea name="text" rows="10" cols="50" class="form-control<?php if ($GLOBALS['setting']['entry_text_type'] === 'wysiwyg') : ?> editor<?php endif ?>"><?php t($_view['entry']['text']) ?></textarea>
+                                <textarea name="text" rows="10" cols="50" class="form-control<?php if ($_view['entry']['text_type'] === 'wysiwyg') : ?> editor<?php endif ?>"><?php t($_view['entry']['text']) ?></textarea>
+                            </div>
+                            <?php endif ?>
+                            <?php if ($GLOBALS['setting']['entry_text_type'] === $_view['entry']['text_type']) : ?>
+                            <input type="hidden" name="text_type" value="<?php t($_view['entry']['text_type']) ?>">
+                            <?php else : ?>
+                            <div class="form-group mb-2">
+                                <label class="fw-bold">本文形式 <span class="badge bg-danger">必須</span></label>
+                                <select name="text_type" class="form-select" style="width: 200px;">
+                                    <?php foreach ($GLOBALS['config']['option']['entry']['text_type'] as $key => $value) : ?>
+                                    <option value="<?php t($key) ?>"<?php $key == $_view['entry']['text_type'] ? e(' selected="selected"') : '' ?>><?php t($value) ?></option>
+                                    <?php endforeach ?>
+                                </select>
                             </div>
                             <?php endif ?>
                             <?php if ($GLOBALS['setting']['entry_use_pictures']) : ?>
