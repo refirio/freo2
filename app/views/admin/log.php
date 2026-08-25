@@ -6,7 +6,7 @@
                 <svg class="bi flex-shrink-0 me-1 mb-1" width="24" height="24"><use xlink:href="#symbol-list-ul"/></svg>
                 システム
             </h2>
-            <div class="btn-toolbar align-middl">
+            <div class="btn-toolbar align-middle">
                 <nav style="--bs-breadcrumb-divider: '>';">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="<?php t(MAIN_FILE) ?>/admin/">ホーム</a></li>
