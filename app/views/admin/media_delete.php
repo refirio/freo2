@@ -1,6 +1,6 @@
 <?php import('app/views/admin/header.php') ?>
 
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="col-md-9 ms-sm-auto col-lg-10 mb-2 px-md-4">
         <?php if ($_REQUEST['_type'] !== 'iframe') : ?>
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 mb-2">
             <h2 class="h3">

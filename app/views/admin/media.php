@@ -44,7 +44,7 @@
 
                 <form action="<?php t(MAIN_FILE) ?>/admin/media_delete?directory=<?php t($_view['current_dir']) ?><?php t(empty($_REQUEST['_type']) ? '' : '&_type=' . $_REQUEST['_type']) ?>" method="post">
                     <input type="hidden" name="_token" value="<?php t($_view['token']) ?>" class="token">
-                    <input type="hidden" name="confirm" value=1">
+                    <input type="hidden" name="confirm" value="1">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
