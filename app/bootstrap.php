@@ -122,3 +122,23 @@ function app_badge($key, $value)
 
     return 'rounded-pill text-' . $text_color . ' bg-' . $bg_color;
 }
+
+/**
+ * Return the formatted file size.
+ *
+ * @param int $size
+ *
+ * @return string
+ */
+function app_filesize($size)
+{
+    $units = array('B', 'KB', 'MB', 'GB', 'TB');
+
+    $index = 0;
+    while ($size >= 1024 && $index < count($units) - 1) {
+        $size /= 1024;
+        $index++;
+    }
+
+    return number_format($size) . ' ' . $units[$index];
+}

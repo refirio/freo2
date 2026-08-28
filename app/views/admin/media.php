@@ -97,7 +97,7 @@
                                 <td><svg class="bi flex-shrink-0 me-1" width="16" height="16"><use xlink:href="#symbol-file-text"/></svg> <code class="text-dark"><?php h($media['name']) ?></code></td>
                                 <?php if ($_REQUEST['_type'] !== 'iframe') : ?>
                                 <td class="d-none d-md-table-cell"><?php h(localdate('Y/m/d H:i:s', $media['modified'])) ?></td>
-                                <td class="d-none d-md-table-cell text-end"><?php h(number_format($media['size'] / 1024)) ?>KB</td>
+                                <td class="d-none d-md-table-cell text-end"><?php h(app_filesize($media['size'])) ?></td>
                                 <?php endif ?>
                                 <td>
                                     <?php if ($_REQUEST['_type'] === 'iframe') : ?>
