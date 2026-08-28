@@ -155,7 +155,7 @@ function delete_contacts($queries, $options = [])
     } else {
         // データを削除
         $resource = db_delete([
-            'delete_from' => DATABASE_PREFIX . 'contacts AS contacts',
+            'delete_from' => DATABASE_PREFIX . 'contacts',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
         ]);

@@ -136,7 +136,7 @@ function delete_plugins($queries, $options = [])
     } else {
         // データを削除
         $resource = db_delete([
-            'delete_from' => DATABASE_PREFIX . 'plugins AS plugins',
+            'delete_from' => DATABASE_PREFIX . 'plugins',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
         ]);

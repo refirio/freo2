@@ -185,7 +185,7 @@ function delete_categories($queries, $options = [])
     } else {
         // データを削除
         $resource = db_delete([
-            'delete_from' => DATABASE_PREFIX . 'categories AS categories',
+            'delete_from' => DATABASE_PREFIX . 'categories',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
         ]);

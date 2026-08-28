@@ -182,7 +182,7 @@ function delete_fields($queries, $options = [])
     } else {
         // データを削除
         $resource = db_delete([
-            'delete_from' => DATABASE_PREFIX . 'fields AS fields',
+            'delete_from' => DATABASE_PREFIX . 'fields',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
         ]);

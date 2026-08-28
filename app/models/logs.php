@@ -150,7 +150,7 @@ function delete_logs($queries, $options = [])
     } else {
         // データを削除
         $resource = db_delete([
-            'delete_from' => DATABASE_PREFIX . 'logs AS logs',
+            'delete_from' => DATABASE_PREFIX . 'logs',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
         ]);

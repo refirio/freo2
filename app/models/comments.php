@@ -162,7 +162,7 @@ function delete_comments($queries, $options = [])
     } else {
         // データを削除
         $resource = db_delete([
-            'delete_from' => DATABASE_PREFIX . 'comments AS comments',
+            'delete_from' => DATABASE_PREFIX . 'comments',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
         ]);

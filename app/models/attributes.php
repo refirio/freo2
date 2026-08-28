@@ -135,7 +135,7 @@ function delete_attributes($queries, $options = [])
     } else {
         // データを削除
         $resource = db_delete([
-            'delete_from' => DATABASE_PREFIX . 'attributes AS attributes',
+            'delete_from' => DATABASE_PREFIX . 'attributes',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
         ]);

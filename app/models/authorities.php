@@ -135,7 +135,7 @@ function delete_authorities($queries, $options = [])
     } else {
         // データを削除
         $resource = db_delete([
-            'delete_from' => DATABASE_PREFIX . 'authorities AS authorities',
+            'delete_from' => DATABASE_PREFIX . 'authorities',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
         ]);

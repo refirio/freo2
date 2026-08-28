@@ -294,7 +294,7 @@ function delete_entries($queries, $options = [])
     } else {
         // データを削除
         $resource = db_delete([
-            'delete_from' => DATABASE_PREFIX . 'entries AS entries',
+            'delete_from' => DATABASE_PREFIX . 'entries',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
         ]);

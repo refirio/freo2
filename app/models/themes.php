@@ -136,7 +136,7 @@ function delete_themes($queries, $options = [])
     } else {
         // データを削除
         $resource = db_delete([
-            'delete_from' => DATABASE_PREFIX . 'themes AS themes',
+            'delete_from' => DATABASE_PREFIX . 'themes',
             'where'       => isset($queries['where']) ? $queries['where'] : '',
             'limit'       => isset($queries['limit']) ? $queries['limit'] : '',
         ]);
