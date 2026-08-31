@@ -9,7 +9,7 @@ if (!preg_match('/^[\w\-]+$/', $_GET['key'])) {
 }
 
 // 形式を検証
-if (!preg_match('/^[\w\-]+$/', $_GET['format'])) {
+if (!preg_match('/^[\w\-]+$/', $_GET['format']) || empty($GLOBALS['config']['file_permission'][$_GET['format']])) {
     error('不正なアクセスです。', ['token' => token('create')]);
 }
 
@@ -20,29 +20,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // 入力データを検証＆登録
-    if (is_array($_FILES[$_GET['key']]['tmp_name'])) {
+    $files = [];
+    if (!isset($_FILES[$_GET['key']]['tmp_name'])) {
+        error('ファイルが送信されていません。', ['token' => token('create')]);
+    } elseif (is_array($_FILES[$_GET['key']]['tmp_name'])) {
         // ファイル一括アップロード
         $key = 0;
         if (isset($_SESSION['file'][$_GET['target']][$_GET['key']])) {
             $key = count($_SESSION['file'][$_GET['target']][$_GET['key']]);
         }
 
-        $files = [];
         foreach ($_FILES[$_GET['key']]['tmp_name'] as $index => $tmp_name) {
             if (is_uploaded_file($tmp_name)) {
                 $names = [];
                 $ext   = null;
-                if (empty($GLOBALS['config']['file_permission'][$_GET['format']])) {
-                    $ext = '*';
-                } else {
-                    foreach (array_keys($GLOBALS['config']['file_permission'][$_GET['format']]) as $permission) {
-                        $names[] = $GLOBALS['config']['file_permission'][$_GET['format']][$permission]['name'];
+                foreach (array_keys($GLOBALS['config']['file_permission'][$_GET['format']]) as $permission) {
+                    $names[] = $GLOBALS['config']['file_permission'][$_GET['format']][$permission]['name'];
 
-                        if (preg_match($GLOBALS['config']['file_permission'][$_GET['format']][$permission]['regexp'], $_FILES[$_GET['key']]['name'][$index])) {
-                            $ext = $GLOBALS['config']['file_permission'][$_GET['format']][$permission]['ext'];
+                    if (preg_match($GLOBALS['config']['file_permission'][$_GET['format']][$permission]['regexp'], $_FILES[$_GET['key']]['name'][$index])) {
+                        $ext = $GLOBALS['config']['file_permission'][$_GET['format']][$permission]['ext'];
 
-                            break;
-                        }
+                        break;
                     }
                 }
                 if ($ext === null) {
@@ -65,17 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (is_uploaded_file($_FILES[$_GET['key']]['tmp_name'])) {
             $names = [];
             $ext   = null;
-            if (empty($GLOBALS['config']['file_permission'][$_GET['format']])) {
-                $ext = '*';
-            } else {
-                foreach (array_keys($GLOBALS['config']['file_permission'][$_GET['format']]) as $permission) {
-                    $names[] = $GLOBALS['config']['file_permission'][$_GET['format']][$permission]['name'];
+            foreach (array_keys($GLOBALS['config']['file_permission'][$_GET['format']]) as $permission) {
+                $names[] = $GLOBALS['config']['file_permission'][$_GET['format']][$permission]['name'];
 
-                    if (preg_match($GLOBALS['config']['file_permission'][$_GET['format']][$permission]['regexp'], $_FILES[$_GET['key']]['name'])) {
-                        $ext = $GLOBALS['config']['file_permission'][$_GET['format']][$permission]['ext'];
+                if (preg_match($GLOBALS['config']['file_permission'][$_GET['format']][$permission]['regexp'], $_FILES[$_GET['key']]['name'])) {
+                    $ext = $GLOBALS['config']['file_permission'][$_GET['format']][$permission]['ext'];
 
-                        break;
-                    }
+                    break;
                 }
             }
             if ($ext === null) {
