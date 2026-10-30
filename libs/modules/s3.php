@@ -99,6 +99,42 @@ function s3_get($key)
 }
 
 /**
+ * 署名付きURLを取得
+ *
+ * @param string      $key
+ * @param int         $expire
+ * @param string|null $mime
+ *
+ * @return string|bool
+ */
+function s3_url($key, $expire, $mime = null)
+{
+    list($client, $setting) = s3_init();
+
+    $result = false;
+    try {
+        $queries = [
+            'Bucket' => $setting['bucket'],
+            'Key'    => $key,
+        ];
+        if ($mime !== null) {
+            $queries['ResponseContentType'] = $mime;
+        }
+
+        $command = $client->getCommand('GetObject', $queries);
+        $request = $client->createPresignedRequest($command, '+' . intval($expire) . ' seconds');
+
+        $result = (string)$request->getUri();
+    } catch (S3Exception $e) {
+        error('S3Exception: ' . $e->getMessage());
+    } catch (Exception $e) {
+        error('Exception: ' . $e->getMessage());
+    }
+
+    return $result;
+}
+
+/**
  * オブジェクトを保存
  *
  * @param string $key

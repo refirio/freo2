@@ -7,7 +7,7 @@
         <div class="images">
             <div class="image my-3">
                 <?php foreach ($_view['entry']['pictures'] as $picture) : ?>
-                <img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $_view['entry']['id'] . '/' . $picture) ?>" alt="" class="img-fluid rounded mx-auto d-block mb-3">
+                <img src="<?php t(app_file_url('entry', $_view['entry']['id'], $picture)) ?>" alt="" class="img-fluid rounded mx-auto d-block mb-3">
                 <?php endforeach ?>
             </div>
         </div>

@@ -152,6 +152,111 @@ function service_storage_remove($key)
 }
 
 /**
+ * オブジェクトを出力（プログラムを通して表示する）
+ *
+ * 出力したら終了する。オブジェクトが無ければ false を返す
+ *
+ * @param string $key
+ *
+ * @return bool
+ */
+function service_storage_output($key)
+{
+    // マイムタイプ（アップロードを許可している形式から判断する）
+    $mime = 'application/octet-stream';
+    foreach ($GLOBALS['config']['file_permission']['file'] as $permission) {
+        if (preg_match($permission['regexp'], $key)) {
+            $mime = $permission['mime'];
+
+            break;
+        }
+    }
+
+    if ($GLOBALS['config']['storage_type'] === 's3') {
+        // 署名付きURLへリダイレクトする（PHP で中継しない。オブジェクトの有無は確認しないので、無ければ S3 がエラーを返す）
+        $url = s3_url($key, $GLOBALS['config']['storage_signed_expire'], $mime);
+        if ($url === false) {
+            return false;
+        }
+
+        // 同じ画像を見返すたびに URL を作り直さないよう、署名の期限の半分までは、ブラウザにリダイレクトを覚えさせる
+        header('Cache-Control: private, max-age=' . intval($GLOBALS['config']['storage_signed_expire'] / 2));
+        header('Location: ' . $url, true, 302);
+        exit;
+    } elseif ($GLOBALS['config']['storage_type'] === 'file') {
+        if (!is_file($key)) {
+            return false;
+        }
+
+        // ブラウザのキャッシュが最新なら、内容を送らない
+        $modified = filemtime($key);
+        if (isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) >= $modified) {
+            header('HTTP/1.1 304 Not Modified');
+            exit;
+        }
+
+        // 見る人によって表示できるかが変わるので、共有のキャッシュには置かせず、ブラウザにも毎回確認させる
+        header('Content-Type: ' . $mime);
+        header('Content-Length: ' . filesize($key));
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $modified) . ' GMT');
+        header('Cache-Control: private, no-cache');
+
+        // 出力バッファがあると内容をすべてメモリに溜めるので、外してから流す
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+        readfile($key);
+        exit;
+    }
+
+    return false;
+}
+
+/**
+ * 公開のURLを開いたときのステータスを取得（署名を付けずに開けるかの確認に使う）
+ *
+ * 確認できなければ null を返す
+ *
+ * @param string $url
+ * @param int    $timeout
+ *
+ * @return int|null
+ */
+function service_storage_status($url, $timeout = 3)
+{
+    $status = null;
+
+    if (function_exists('curl_init')) {
+        // 中身は要らないので、ヘッダーだけを取得する
+        $curl = curl_init($url);
+        curl_setopt_array($curl, [
+            CURLOPT_NOBODY         => true,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CONNECTTIMEOUT => $timeout,
+            CURLOPT_TIMEOUT        => $timeout,
+        ]);
+        if (curl_exec($curl) !== false) {
+            $status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
+        }
+    } elseif (ini_get('allow_url_fopen')) {
+        $context = stream_context_create([
+            'http' => [
+                'method'        => 'HEAD',
+                'timeout'       => $timeout,
+                'ignore_errors' => true,
+            ],
+        ]);
+
+        $headers = @get_headers($url, false, $context);
+        if ($headers && preg_match('/^HTTP\/\S+\s+(\d{3})/', $headers[0], $matches)) {
+            $status = $matches[1];
+        }
+    }
+
+    return $status ? intval($status) : null;
+}
+
+/**
  * 古い一時ファイルを削除（アップロードしたまま登録されなかったもの）
  *
  * @return void
@@ -222,7 +327,7 @@ function service_storage_list($key)
     } elseif ($GLOBALS['config']['storage_type'] === 'file') {
         if ($dh = opendir($key)) {
             while (($entry = readdir($dh)) !== false) {
-                if ($entry == '.' || $entry == '..' || $entry == '.gitkeep') {
+                if ($entry == '.' || $entry == '..' || $entry == '.gitkeep' || $entry == '.htaccess') {
                     continue;
                 }
 

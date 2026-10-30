@@ -68,6 +68,33 @@
                         </dl>
                     </div>
                 </div>
+                <?php if (!empty($_view['aws_info'])) : ?>
+                <div class="card shadow-sm mb-3">
+                    <div class="card-header">
+                        AWS SDK
+                    </div>
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-2">バージョン</dt>
+                            <dd class="col-sm-10"><?php h($_view['aws_info']['sdk_version']) ?></dd>
+                            <dt class="col-sm-2">バケット</dt>
+                            <dd class="col-sm-10"><code class="text-dark"><?php h($_view['aws_info']['bucket']) ?></code></dd>
+                            <dt class="col-sm-2">リージョン</dt>
+                            <dd class="col-sm-10"><code class="text-dark"><?php h($_view['aws_info']['region']) ?></code></dd>
+                            <dt class="col-sm-2">画像の表示</dt>
+                            <dd class="col-sm-10"><?php if ($_view['aws_info']['protect']) : ?>署名付きURLで表示する<?php else : ?>直接のURLで表示する<?php endif ?></dd>
+                            <dt class="col-sm-2">直接アクセス</dt>
+                            <dd class="col-sm-10">
+                                <span class="badge bg-<?php t($_view['aws_info']['direct_level']) ?><?php if ($_view['aws_info']['direct_level'] === 'warning' || $_view['aws_info']['direct_level'] === 'info') : ?> text-dark<?php endif ?>"><?php h($_view['aws_info']['direct_label']) ?></span>
+                                <?php h($_view['aws_info']['direct_text']) ?>
+                                <?php if ($_view['aws_info']['direct_key'] !== null) : ?>
+                                <div class="small text-secondary mt-1">確認したファイル: <code><?php h($_view['aws_info']['direct_key']) ?></code><?php if ($_view['aws_info']['direct_status'] !== null) : ?>（HTTP <?php h($_view['aws_info']['direct_status']) ?>）<?php endif ?></div>
+                                <?php endif ?>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <?php endif ?>
             </div>
         </div>
         <?php e($_view['widget_sets']['admin_page']) ?>

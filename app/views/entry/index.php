@@ -17,7 +17,7 @@
 
         <div class="text mb-4">
             <?php if (!empty($entry['thumbnail'])) : ?>
-            <p class="mt-1"><img src="<?php t($GLOBALS['config']['storage_url'] . '/' . $GLOBALS['config']['file_target']['entry'] . $entry['id'] . '/' . $entry['thumbnail']) ?>" alt="" class="img-fluid rounded"></p>
+            <p class="mt-1"><img src="<?php t(app_file_url('entry', $entry['id'], $entry['thumbnail'])) ?>" alt="" class="img-fluid rounded"></p>
             <?php endif ?>
 
             <?php if (!empty($entry['text'])) : ?>

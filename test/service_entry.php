@@ -206,6 +206,29 @@ model('insert_attribute_sets', [
 
 // パスワード認証エントリーの表示制限テスト
 {
+    // データ（フィールドの値を1つ持たせる）
+    model('insert_fields', [
+        'values' => [
+            'type_id' => 1,
+            'code'    => 'test_password_field',
+            'name'    => 'テストフィールド',
+            'kind'    => 'file',
+            'sort'    => 1,
+        ],
+    ]);
+    $fields = model('select_fields', [
+        'where' => 'fields.code = ' . db_escape('test_password_field'),
+    ]);
+    $password_field_id = intval($fields[0]['id']);
+
+    model('insert_field_sets', [
+        'values' => [
+            'field_id' => $password_field_id,
+            'entry_id' => $entry_ids['pub_password'],
+            'text'     => 'secret.pdf',
+        ],
+    ]);
+
     // 取得（パスワードを入力していない状態）
     unset($_SESSION['entry_passwords']);
 
@@ -213,12 +236,13 @@ model('insert_attribute_sets', [
         'where' => 'entries.code = ' . db_escape('pub_password'),
     ]);
 
-    // 結果（タイトルに文言が付き、本文・画像・サムネイルが伏せられること）
+    // 結果（タイトルに文言が付き、本文・画像・サムネイル・フィールドの値が伏せられること）
     test_equals('select published entry (password)', count($entries), 1);
     test_equals('select published entry (password title)', $entries[0]['title'], '要認証: タイトル');
     test_equals('select published entry (password text)', $entries[0]['text'], '<p>パスワード認証により公開されます。</p>');
     test_equals('select published entry (password pictures)', $entries[0]['pictures'], null);
     test_equals('select published entry (password thumbnail)', $entries[0]['thumbnail'], null);
+    test_equals('select published entry (password field_sets)', $entries[0]['field_sets'], []);
 }
 
 // パスワード認証エントリーの表示（認証後）テスト
@@ -237,6 +261,96 @@ model('insert_attribute_sets', [
     test_equals('select published entry (authorized text)', $entries[0]['text'], '<p>認証後の本文です。</p>');
     test_equals('select published entry (authorized pictures)', $entries[0]['pictures'], ['a.jpg', 'b.jpg']);
     test_equals('select published entry (authorized thumbnail)', $entries[0]['thumbnail'], 'thumb.jpg');
+    test_equals('select published entry (authorized field_sets)', $entries[0]['field_sets'], [$password_field_id => 'secret.pdf']);
+}
+
+// ファイルのURLテスト
+{
+    // データ（設定を退避する）
+    $storage_protect = $GLOBALS['config']['storage_protect'];
+    $storage_url     = $GLOBALS['config']['storage_url'];
+
+    $GLOBALS['config']['storage_url'] = 'http://example.com';
+
+    // 確認（直接表示する）
+    $GLOBALS['config']['storage_protect'] = false;
+
+    $entry_url = app_file_url('entry', 1, 'a.jpg');
+    $field_url = app_file_url('field', '1_2', 'b.pdf');
+    $multi_url = app_file_url('entry', 1, '%E5%86%99.jpg');
+
+    // 結果（保存先のURLになり、保存したファイル名はもう一度エンコードされること）
+    test_equals('file url', $entry_url, 'http://example.com/' . $GLOBALS['config']['file_target']['entry'] . '1/a.jpg');
+    test_equals('file url (field)', $field_url, 'http://example.com/' . $GLOBALS['config']['file_target']['field'] . '1_2/b.pdf');
+    test_equals('file url (encoded)', $multi_url, 'http://example.com/' . $GLOBALS['config']['file_target']['entry'] . '1/%25E5%2586%2599.jpg');
+
+    // 確認（プログラムを通して表示する）
+    $GLOBALS['config']['storage_protect'] = true;
+
+    $entry_url = app_file_url('entry', 1, 'a.jpg');
+    $field_url = app_file_url('field', '1_2', 'b.pdf');
+    $multi_url = app_file_url('entry', 1, '%E5%86%99.jpg');
+
+    // 結果（/storage/ のURLになること）
+    test_equals('file url (protect)', $entry_url, MAIN_FILE . '/storage/entry/1/a.jpg');
+    test_equals('file url (protect field)', $field_url, MAIN_FILE . '/storage/field/1_2/b.pdf');
+    test_equals('file url (protect encoded)', $multi_url, MAIN_FILE . '/storage/entry/1/%25E5%2586%2599.jpg');
+
+    // 設定を戻す
+    $GLOBALS['config']['storage_protect'] = $storage_protect;
+    $GLOBALS['config']['storage_url']     = $storage_url;
+}
+
+// 公開側で表示できるファイルの判定テスト
+{
+    // データ（公開のエントリーにもフィールドの値を持たせる）
+    model('insert_field_sets', [
+        'values' => [
+            'field_id' => $password_field_id,
+            'entry_id' => $entry_ids['pub_all'],
+            'text'     => 'doc.pdf',
+        ],
+    ]);
+
+    unset($_SESSION['entry_passwords']);
+
+    $entry_target = $GLOBALS['config']['file_target']['entry'];
+    $field_target = $GLOBALS['config']['file_target']['field'];
+    $all_key      = $entry_ids['pub_all'];
+    $field_key    = $entry_ids['pub_all'] . '_' . $password_field_id;
+
+    // 結果（公開のエントリーの画像・サムネイル・フィールドのファイルは、保存先が返ること）
+    test_equals('file published', service_entry_file_published('entry', $all_key, 'a.jpg'), $entry_target . $all_key . '/a.jpg');
+    test_equals('file published (thumbnail)', service_entry_file_published('entry', $all_key, 'thumb.jpg'), $entry_target . $all_key . '/thumb.jpg');
+    test_equals('file published (field)', service_entry_file_published('field', $field_key, 'doc.pdf'), $field_target . $field_key . '/doc.pdf');
+
+    // 結果（エントリーに登録されていないファイルは表示できないこと）
+    test_equals('file published (not registered)', service_entry_file_published('entry', $all_key, 'c.jpg'), null);
+    test_equals('file published (not registered field)', service_entry_file_published('field', $field_key, 'other.pdf'), null);
+
+    // 結果（公開側で見えないエントリーのファイルは表示できないこと）
+    test_equals('file published (user)', service_entry_file_published('entry', $entry_ids['pub_user'], 'a.jpg'), null);
+    test_equals('file published (none)', service_entry_file_published('entry', $entry_ids['pub_none'], 'a.jpg'), null);
+    test_equals('file published (nothing)', service_entry_file_published('entry', 999999, 'a.jpg'), null);
+
+    // 結果（パスワード認証の前は表示できず、認証すると表示できること）
+    $password_key = $entry_ids['pub_password'] . '_' . $password_field_id;
+
+    test_equals('file published (password)', service_entry_file_published('entry', $entry_ids['pub_password'], 'a.jpg'), null);
+    test_equals('file published (password field)', service_entry_file_published('field', $password_key, 'secret.pdf'), null);
+
+    $_SESSION['entry_passwords'][$entry_ids['pub_password']] = true;
+
+    test_equals('file published (authorized)', service_entry_file_published('entry', $entry_ids['pub_password'], 'a.jpg'), $entry_target . $entry_ids['pub_password'] . '/a.jpg');
+    test_equals('file published (authorized field)', service_entry_file_published('field', $password_key, 'secret.pdf'), $field_target . $password_key . '/secret.pdf');
+
+    unset($_SESSION['entry_passwords']);
+
+    // 結果（対象・キーの形が正しくなければ表示できないこと）
+    test_equals('file published (target)', service_entry_file_published('media', $all_key, 'a.jpg'), null);
+    test_equals('file published (entry key)', service_entry_file_published('entry', $all_key . 'a', 'a.jpg'), null);
+    test_equals('file published (field key)', service_entry_file_published('field', $all_key, 'doc.pdf'), null);
+    test_equals('file published (entry key for field)', service_entry_file_published('entry', $field_key, 'a.jpg'), null);
 }
 
 // 本文形式の変換テスト

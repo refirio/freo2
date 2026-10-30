@@ -60,6 +60,11 @@ function service_entry_select_published($type, $queries, $options = [])
                 $entry['text']      = $GLOBALS['setting']['restricted_password_text'];
                 $entry['pictures']  = null;
                 $entry['thumbnail'] = null;
+
+                // フィールドの値も伏せる（画像・ファイルのフィールドは、公開側でファイルを開けなくなる）
+                if (isset($entry['field_sets'])) {
+                    $entry['field_sets'] = [];
+                }
             } else {
                 if ($entry['text_type'] === 'none') {
                     $entry['text'] = null;
@@ -95,6 +100,107 @@ function service_entry_url($entry)
     }
 
     return '/' . $entry['type_code'] . '/detail/' . $entry['code'];
+}
+
+/**
+ * 公開側で表示できるファイルの保存先を取得
+ *
+ * エントリーの公開範囲で判定し、表示できなければ null を返す
+ *
+ * @param string $target
+ * @param string $key
+ * @param string $name
+ *
+ * @return string|null
+ */
+function service_entry_file_published($target, $key, $name)
+{
+    // 対象（エントリーの画像はエントリーのID、フィールドのファイルは「<エントリーのID>_<フィールドのID>」）
+    if ($target === 'entry' && preg_match('/^\d+$/', $key)) {
+        $entry_id = $key;
+        $field_id = null;
+    } elseif ($target === 'field' && preg_match('/^(\d+)_(\d+)$/', $key, $matches)) {
+        $entry_id = $matches[1];
+        $field_id = $matches[2];
+    } else {
+        return null;
+    }
+
+    // 公開エントリーの取得には型が要るので、先に型を調べる
+    $entries = model('select_entries', [
+        'where' => [
+            'entries.id = :id',
+            [
+                'id' => $entry_id,
+            ],
+        ],
+    ], [
+        'associate' => true,
+    ]);
+    if (empty($entries)) {
+        return null;
+    }
+
+    $entries = service_entry_select_published($entries[0]['type_code'], [
+        'where' => [
+            'entries.id = :id',
+            [
+                'id' => $entry_id,
+            ],
+        ],
+    ]);
+    if (empty($entries)) {
+        return null;
+    }
+    $entry = $entries[0];
+
+    // 表示しているエントリーのファイルか（パスワード認証の前は画像が外れているので、ここで表示できなくなる）
+    if ($target === 'entry') {
+        $names = empty($entry['pictures']) ? [] : $entry['pictures'];
+        if (!empty($entry['thumbnail'])) {
+            $names[] = $entry['thumbnail'];
+        }
+        if (!in_array($name, $names, true)) {
+            return null;
+        }
+    } elseif (!isset($entry['field_sets'][$field_id]) || $entry['field_sets'][$field_id] !== $name) {
+        return null;
+    }
+
+    return $GLOBALS['config']['file_target'][$target] . $key . '/' . $name;
+}
+
+/**
+ * 公開側でファイルを出力
+ *
+ * /storage/<対象>/<キー>/<ファイル名> のコントローラーから呼ぶ。表示できなければ 404 で終了する
+ *
+ * @param string $target
+ *
+ * @return void
+ */
+function service_entry_file_output($target)
+{
+    global $_params;
+
+    // 同じ人の画像を並べて取得できるよう、セッションのロックを外す（この後はセッションに書き込まない）
+    session_write_close();
+
+    // ファイル名（拡張子は routing() で分かれているので戻す）
+    if ($GLOBALS['config']['storage_protect'] && count($_params) === 5) {
+        $file = service_entry_file_published($target, $_params[2], $_params[3] . '.' . $_params[4]);
+
+        if ($file !== null) {
+            service_storage_output($file);
+        }
+    }
+
+    // 表示できないときは、ファイルがあるかどうかも分からないよう、同じ 404 にする（画像の取得が多いので、画面は組み立てない）
+    header('HTTP/1.0 404 Not Found');
+    header('Content-Type: text/plain; charset=' . MAIN_CHARSET);
+
+    echo '404 Not Found';
+    exit;
 }
 
 /**

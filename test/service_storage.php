@@ -145,8 +145,13 @@ directory_mkdir($test_directory);
     service_storage_put($test_directory . 'temps/old.jpg', 'データ');
     service_storage_put($test_directory . 'temps/new.jpg', 'データ');
     service_storage_put($test_directory . 'temps/directory/');
+    service_storage_put($test_directory . 'temps/.htaccess', 'Require all denied');
     touch($test_directory . 'temps/old.jpg', localdate() - 60 * 60 * 9);
     touch($test_directory . 'temps/new.jpg', localdate() - 60 * 60 * 7);
+    touch($test_directory . 'temps/.htaccess', localdate() - 60 * 60 * 9);
+
+    // 一覧
+    $list = service_storage_list($test_directory . 'temps/');
 
     // 削除
     service_storage_temp_clean();
@@ -155,6 +160,10 @@ directory_mkdir($test_directory);
     test_equals('temp clean storage old', service_storage_exist($test_directory . 'temps/old.jpg'), false);
     test_equals('temp clean storage new', service_storage_exist($test_directory . 'temps/new.jpg'), true);
     test_equals('temp clean storage directory', is_dir($test_directory . 'temps/directory/'), true);
+
+    // 結果（直接のアクセスを拒否する .htaccess は、一覧に出ず、古くても消えないこと）
+    test_equals('list storage htaccess', in_array('.htaccess', array_column($list, 'name'), true), false);
+    test_equals('temp clean storage htaccess', service_storage_exist($test_directory . 'temps/.htaccess'), true);
 
     // 設定を戻す
     $GLOBALS['config']['file_target']['temp'] = $temp_target;

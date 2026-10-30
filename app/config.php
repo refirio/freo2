@@ -126,6 +126,12 @@ $GLOBALS['config']['code_failed_limit'] = app_config('APP_CODE_FAILED_LIMIT', 10
 $GLOBALS['config']['storage_type'] = app_test() ? 'file' : app_config('APP_STORAGE_TYPE', 'file');
 $GLOBALS['config']['storage_url'] = app_test() ? $GLOBALS['config']['http_url'] : app_config('APP_STORAGE_URL', $GLOBALS['config']['http_url']);
 
+/* エントリーの画像・フィールドのファイルをプログラムを通して表示するか（有効にすると、エントリーの公開範囲で表示できるかを判定する。直接のURLは、Webサーバーやバケットの設定で別に拒否する） */
+$GLOBALS['config']['storage_protect'] = app_config('APP_STORAGE_PROTECT', false);
+
+/* プログラムを通して表示するとき、S3 の署名付きURLを使える時間（秒） */
+$GLOBALS['config']['storage_signed_expire'] = app_config('APP_STORAGE_SIGNED_EXPIRE', 60 * 5);
+
 /* ファイルアップロード先（テスト中は設定に関係なく tests の中を使う。テスト用データベースのIDで、実際のファイルを消さないため。scenario はシナリオテストのスクリーンショットの保存先） */
 $GLOBALS['config']['file_target'] = app_test() ? [
     'entry'     => 'files/tests/entries/',
