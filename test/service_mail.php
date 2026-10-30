@@ -29,6 +29,7 @@ $data_recipients = [
     'boundary' => 'test3@example.com',
     'disabled' => 'test4@example.com',
     'invalid'  => 'test5@example.com',
+    'envelope' => 'test6@example.com',
 ];
 
 // 前回の実行で残ったファイルを削除
@@ -144,6 +145,39 @@ foreach ($data_recipients as $to) {
 
     // 設定を戻す
     $GLOBALS['config']['mail_send'] = null;
+}
+
+// エンベロープFromの設定が正しくないときのテスト
+{
+    // 設定（sendmail のコマンドに別の引数を紛れ込ませる値など）
+    $envelope = $GLOBALS['config']['mail_envelope'];
+
+    $results = [];
+    foreach (['no-reply', 'no-reply@example.com -X/tmp/log', "no-reply@example.com\n"] as $value) {
+        $GLOBALS['config']['mail_envelope'] = $value;
+
+        // 送信（エラーログに出る内容は、テストの出力に混ざらないよう捨てる）
+        $error_log = ini_set('error_log', '/dev/null');
+
+        $results[] = service_mail_send($data_recipients['envelope'], '件名', '本文。');
+
+        ini_set('error_log', $error_log);
+    }
+
+    // 結果（送信の失敗として扱い、記録もしない）
+    test_equals('send mail invalid envelope from', $results, [false, false, false]);
+    test_equals('send mail invalid envelope from record', count(test_mail_records($directory, $data_recipients['envelope'])), 0);
+
+    // 正しいメールアドレスなら送信（記録）できること
+    $GLOBALS['config']['mail_envelope'] = 'no-reply@example.com';
+
+    $result = service_mail_send($data_recipients['envelope'], '件名', '本文。');
+
+    test_not_equals('send mail envelope from', $result, false);
+    test_equals('send mail envelope from record', count(test_mail_records($directory, $data_recipients['envelope'])), 1);
+
+    // 設定を戻す
+    $GLOBALS['config']['mail_envelope'] = $envelope;
 }
 
 // テストで作成したファイルを削除

@@ -17,15 +17,16 @@ import('libs/modules/mail.php');
  * @param string $message
  * @param array  $headers
  * @param array  $files
+ * @param string $envelope 送信元のメールアドレス（エンベロープ）。省略すると From ヘッダーのアドレス
  *
  * @return bool
  */
-function smtp_send($config, $to, $subject, $message, $headers = [], $files = [])
+function smtp_send($config, $to, $subject, $message, $headers = [], $files = [], $envelope = null)
 {
     // mail() で送るときと同じく組み立てる
     $mail = mail_build($to, $subject, $message, $headers, $files);
 
-    // 送信元のメールアドレス（From の「名前 <アドレス>」からアドレスを取り出す）
+    // From ヘッダーのメールアドレス（「名前 <アドレス>」からアドレスを取り出す）
     if (preg_match('/<([^>]*)>/', $mail['headers']['From'], $matches)) {
         $from = $matches[1];
     } else {
@@ -45,7 +46,7 @@ function smtp_send($config, $to, $subject, $message, $headers = [], $files = [])
         $lines[] = $key . ': ' . $value;
     }
 
-    return smtp_transfer($config, $from, $mail['to'], implode("\r\n", $lines) . "\r\n\r\n" . $mail['body']);
+    return smtp_transfer($config, $envelope === null || $envelope === '' ? $from : $envelope, $mail['to'], implode("\r\n", $lines) . "\r\n\r\n" . $mail['body']);
 }
 
 /**

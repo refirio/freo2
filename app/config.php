@@ -275,6 +275,9 @@ $GLOBALS['config']['mail_send'] = app_test() ? null : app_config('APP_MAIL_SEND'
 /* メールの記録（テスト中は設定に関係なく記録する。シナリオテストが記録からメールの内容を確かめるため） */
 $GLOBALS['config']['mail_log'] = app_test() ? true : app_config('APP_MAIL_LOG', false);
 
+/* メールのエンベロープFrom（Return-Path になるメールアドレス。sendmail なら -f で渡し、smtp なら MAIL FROM に使う。null なら指定しない） */
+$GLOBALS['config']['mail_envelope'] = app_config('APP_MAIL_ENVELOPE', null);
+
 /* SMTPサーバー（mail_send が smtp のときに使う。encryption は tls（STARTTLS）・ssl・none） */
 $GLOBALS['config']['mail_smtp'] = app_config('APP_MAIL_SMTP', [
     'host'       => '',

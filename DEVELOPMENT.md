@@ -720,6 +720,17 @@ define('APP_MAIL_SMTP', [
 - 送れなかったときは、ほかの送信の失敗と同じくエラー画面になり、理由(接続できない・認証に失敗したなど)を PHP のエラーログに出します。
 - SMTP の処理は [libs/modules/smtp.php](libs/modules/smtp.php) の `smtp_send()` です。引数は levis の `mail_send()` と同じ(先頭に接続設定)で、メールの組み立て(文字コードの変換・ヘッダー)も `mail()` で送るときと同じ `mail_build()` を使います。
 
+**エンベロープFrom(Return-Path)を指定する:** 届かなかったメールの戻り先や SPF の判定に使われる送信元です。指定しないと、`mail()` で送るときはサーバーの既定のアドレス(`www-data@<ホスト名>` など)、SMTP で送るときは `From` ヘッダーのアドレスになります。変えたいときは、直下の `config.php` で `APP_MAIL_ENVELOPE` を定義します。
+
+```php
+define('APP_MAIL_ENVELOPE', 'no-reply@example.com');
+```
+
+- `'sendmail'` のときは `mail()` の第5引数に `-f<アドレス>` を渡し、`'smtp'` のときは `MAIL FROM` に使います。送り方を切り替えても同じ意味で効きます。
+- sendmail のコマンドの引数にもなるので、メールアドレスの形でない値(空白や改行を含むなど)のときは送信せず、送信の失敗として扱ってエラーログに出します。
+- `service_mail_send()` の第5引数(`$parameters`)を呼び出し側で指定したときは、`'sendmail'` ではそちらを優先します。
+- レンタルサーバーによっては、`-f` に指定できるアドレスが制限されていることがあります(サーバーで管理しているドメインのアドレスだけ、など)。
+
 ### メニュー
 
 各画面のメニュー構成は [app/menu.php](app/menu.php) の `$GLOBALS['menu_group']` / `$GLOBALS['menu_contents']` で定義されています。

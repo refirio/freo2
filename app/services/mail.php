@@ -23,14 +23,27 @@ function service_mail_send($to, $subject, $message, $headers = [], $parameters =
 
     $result = false;
 
+    // エンベロープFrom（sendmail のコマンドの引数にもなるので、メールアドレスの形でなければ送信しない）
+    $envelope = $GLOBALS['config']['mail_envelope'];
+    if ($envelope !== null && $envelope !== '' && !filter_var($envelope, FILTER_VALIDATE_EMAIL)) {
+        error_log('エンベロープFrom（mail_envelope）の設定が正しくありません。');
+
+        return false;
+    }
+
     // メールを送信
     if ($GLOBALS['config']['mail_send'] === 'sendmail') {
+        // 呼び出し側が引数を指定していなければ、エンベロープFromを -f で渡す
+        if ($parameters === '' && $envelope !== null && $envelope !== '') {
+            $parameters = '-f' . $envelope;
+        }
+
         $result = mail_send($to, $subject, $message, $headers, $parameters, $files);
         if (!$result) {
             return $result;
         }
     } elseif ($GLOBALS['config']['mail_send'] === 'smtp') {
-        $result = smtp_send($GLOBALS['config']['mail_smtp'], $to, $subject, $message, $headers, $files);
+        $result = smtp_send($GLOBALS['config']['mail_smtp'], $to, $subject, $message, $headers, $files, $envelope);
         if (!$result) {
             error_log('SMTP: ' . smtp_error());
 
