@@ -3,6 +3,11 @@
 // ワンタイムトークン
 $_view['token'] = token('create');
 
+// HTML出力では、コメントを受け付けない（静的なページからは投稿できないため。承認済みのコメントは表示する）
+if (app_export() && isset($_view['entry']['comment'])) {
+    $_view['entry']['comment'] = 'closed';
+}
+
 // 入力中の内容の一時保存を削除（ログアウトの直後）
 if (isset($_SESSION['draft_clear']) && (!isset($_REQUEST['_type']) || $_REQUEST['_type'] === 'html')) {
     $_view['script'] = ($_view['script'] ?? '') . '<script>

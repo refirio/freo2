@@ -229,6 +229,13 @@ $GLOBALS['menu_contents'] = [
                 'icon'   => '#symbol-list-ul',
                 'show'   => true,
             ],
+            'export' => [
+                'name'   => 'HTML出力',
+                'link'   => '/admin/export',
+                'active' => '/^export(_|$)/',
+                'icon'   => '#symbol-list-ul',
+                'show'   => $GLOBALS['setting']['export_use_html'],
+            ],
             'version' => [
                 'name'   => 'バージョン情報',
                 'link'   => '/admin/version',

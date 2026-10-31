@@ -30,6 +30,21 @@ function app_test()
 }
 
 /**
+ * Return whether the page is rendered for the HTML export.
+ *
+ * @return bool
+ */
+function app_export()
+{
+    // HTML出力の処理がヘッダーで渡したトークンを、作業用のディレクトリがあるかで確かめる（設定の読み込みの後に呼ぶこと）
+    if (!isset($_SERVER['HTTP_X_FREO2_EXPORT']) || !preg_match('/^[0-9a-f]{32}$/', $_SERVER['HTTP_X_FREO2_EXPORT'])) {
+        return false;
+    }
+
+    return is_dir($GLOBALS['config']['file_target']['temp'] . 'export_' . $_SERVER['HTTP_X_FREO2_EXPORT'] . '/');
+}
+
+/**
  * Return the dataset from association.
  *
  * @param string $get_key

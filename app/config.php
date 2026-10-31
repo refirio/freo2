@@ -244,6 +244,15 @@ $GLOBALS['config']['file_dummy'] = app_config('APP_FILE_DUMMY', [
 /* 一時ファイルを残す時間（秒。アップロードしたまま登録されなかった一時ファイルは、これより古くなったら削除する） */
 $GLOBALS['config']['temp_retention'] = app_config('APP_TEMP_RETENTION', 60 * 60 * 8);
 
+/* HTML出力でページを取得するURL（サーバーの中から公開URLを開けない環境で変える） */
+$GLOBALS['config']['export_fetch_url'] = app_config('APP_EXPORT_FETCH_URL', $GLOBALS['config']['http_url']);
+
+/* HTML出力で1回に取得するページ数 */
+$GLOBALS['config']['export_step'] = app_config('APP_EXPORT_STEP', 5);
+
+/* HTML出力で複製する静的なファイル（公開ディレクトリからの相対パス。アップロードしたファイルは、ストレージがファイルのときに別に複製する） */
+$GLOBALS['config']['export_static'] = app_config('APP_EXPORT_STATIC', ['css/', 'js/', 'img/', 'themes/', 'plugins/']);
+
 /* 画像リサイズ時のサイズ（メディアのサムネイルに使用。縦横比を保ってこの範囲に収める） */
 $GLOBALS['config']['resize_width'] = app_config('APP_RESIZE_WIDTH', 400);
 $GLOBALS['config']['resize_height'] = app_config('APP_RESIZE_HEIGHT', 400);

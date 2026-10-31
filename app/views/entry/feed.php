@@ -8,14 +8,16 @@ e('<?xml version="1.0" encoding="utf-8"?>' . "\n");
         <link><?php h($GLOBALS['config']['http_url']) ?>/</link>
         <description><?php h($GLOBALS['setting']['description']) ?></description>
         <language>ja</language>
+        <?php if (!empty($_view['entries'])) : ?>
         <lastBuildDate><?php h(localdate('D, d M Y H:i:s +0900', $_view['entries'][0]['datetime'])) ?></lastBuildDate>
+        <?php endif ?>
         <docs><?php h($GLOBALS['config']['http_url']) ?>/entry/feed</docs>
         <?php foreach ($_view['entries'] as $entry) : ?>
         <item>
             <title><?php h($entry['title']) ?></title>
             <link><?php h($GLOBALS['config']['http_url']) ?>/entry/detail/<?php h($entry['code']) ?></link>
             <guid isPermaLink="true"><?php h($GLOBALS['config']['http_url']) ?>/entry/detail/<?php h($entry['code']) ?></guid>
-            <description><?php e(truncate(strip_tags($entry['text']), 200)) ?></description>
+            <description><?php t(truncate(html_entity_decode(strip_tags($entry['text'] ?? ''), ENT_QUOTES, MAIN_CHARSET), 200)) ?></description>
             <pubDate><?php h(localdate('D, d M Y H:i:s +0900', $entry['datetime'])) ?></pubDate>
         </item>
         <?php endforeach ?>

@@ -92,14 +92,14 @@ if (!empty($_SESSION['auth']['user']['id'])) {
         } elseif ($GLOBALS['authority']['power'] == 2) {
             // 投稿者
             if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
-                if (preg_match('/^(attribute|field|log|menu|plugin|setting|theme|user|version|widget)(_|$)/', $_REQUEST['_work'])) {
+                if (preg_match('/^(attribute|export|field|log|menu|plugin|setting|theme|user|version|widget)(_|$)/', $_REQUEST['_work'])) {
                     error('不正なアクセスです。');
                 }
             }
         } elseif ($GLOBALS['authority']['power'] == 1) {
             // 閲覧者
             if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
-                if (preg_match('/^(attribute|category|entry|field|file|log|media|menu|page|plugin|setting|theme|user|version|widget)(_|$)/', $_REQUEST['_work'])) {
+                if (preg_match('/^(attribute|category|entry|export|field|file|log|media|menu|page|plugin|setting|theme|user|version|widget)(_|$)/', $_REQUEST['_work'])) {
                     error('不正なアクセスです。');
                 }
             }
@@ -134,6 +134,11 @@ if (!empty($_SESSION['auth']['user']['id'])) {
     }
 }
 
+// HTML出力（設定で有効にしたときだけ使える）
+if (preg_match('/^(admin)$/', $_REQUEST['_mode']) && preg_match('/^export(_|$)/', $_REQUEST['_work']) && !$GLOBALS['setting']['export_use_html']) {
+    error('不正なアクセスです。');
+}
+
 if (!preg_match('/^(auth|admin)$/', $_REQUEST['_mode'])) {
     // ページURLの省略
     if ($GLOBALS['setting']['page_url_omission']) {
@@ -162,6 +167,11 @@ if (!preg_match('/^(auth|admin)$/', $_REQUEST['_mode'])) {
     ]);
     $_view['menus'] = [];
     foreach ($menus as $menu) {
+        // HTML出力では、静的なページで使えない画面（お問い合わせ・ログイン）へのメニューを出さない
+        if (app_export() && preg_match('/^\/(auth|contact)(\/|$)/', $menu['url'])) {
+            continue;
+        }
+
         if (preg_match('/^\//', $menu['url'])) {
             $menu['url'] = MAIN_FILE . $menu['url'];
         }
@@ -177,6 +187,15 @@ import('app/string.php');
 
 // メニュー定義を取得
 import('app/menu.php');
+
+// HTML出力では、静的なページで使えない画面（お問い合わせ・ログイン）をメニューに出さない
+if (app_export()) {
+    foreach (['contact', 'auth'] as $key) {
+        if (isset($GLOBALS['menu_contents']['public']['home'][$key])) {
+            $GLOBALS['menu_contents']['public']['home'][$key]['show'] = false;
+        }
+    }
+}
 
 // ウィジェットを取得
 $widgets = model('select_widgets', []);

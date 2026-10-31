@@ -103,6 +103,140 @@ function service_entry_url($entry)
 }
 
 /**
+ * 公開側のエントリー一覧のURLを取得
+ *
+ * /entry/、/entry/category/<コード>/、/entry/archive/<年月>/ のいずれかで、2ページ目以降は page/<ページ>/ を付ける
+ *
+ * @param string|null $category
+ * @param string|null $archive
+ * @param int         $page
+ *
+ * @return string
+ */
+function service_entry_list_url($category = null, $archive = null, $page = 1)
+{
+    $url = '/entry/';
+    if ($category !== null) {
+        $url .= 'category/' . rawurlencode($category) . '/';
+    } elseif ($archive !== null) {
+        $url .= 'archive/' . rawurlencode($archive) . '/';
+    }
+    if ($page > 1) {
+        $url .= 'page/' . intval($page) . '/';
+    }
+
+    return $url;
+}
+
+/**
+ * 公開側のエントリー一覧のパスを解析
+ *
+ * $_params のうち mode より後ろを受け取り、絞り込み条件を返す。形が正しくなければ null を返す
+ *
+ * @param array $params
+ *
+ * @return array|null ['category' => コード, 'archive' => 年月, 'page' => ページ]
+ */
+function service_entry_list_parse($params)
+{
+    // 末尾のスラッシュでできる空の要素は除く
+    $params = array_values(array_filter($params, function ($param) {
+        return $param !== '';
+    }));
+
+    $results = [
+        'category' => null,
+        'archive'  => null,
+        'page'     => 1,
+    ];
+
+    if (isset($params[0], $params[1]) && $params[0] === 'category') {
+        $results['category'] = $params[1];
+        $params = array_slice($params, 2);
+    } elseif (isset($params[0], $params[1]) && $params[0] === 'archive' && preg_match('/^\d{4}-\d{2}$/', $params[1])) {
+        $results['archive'] = $params[1];
+        $params = array_slice($params, 2);
+    }
+    if (isset($params[0], $params[1]) && $params[0] === 'page' && preg_match('/^[1-9]\d*$/', $params[1])) {
+        $results['page'] = intval($params[1]);
+        $params = array_slice($params, 2);
+    }
+    if (!empty($params)) {
+        return null;
+    }
+
+    return $results;
+}
+
+/**
+ * 公開側のエントリー一覧の絞り込み条件を、パスで表せる形に変換
+ *
+ * カテゴリー1つ・年月・ページだけで絞り込んでいるときに条件を返し、パスで表せない絞り込み（複数のカテゴリー、カテゴリーと年月の組み合わせ、キーワードなど）があれば null を返す
+ *
+ * @param array $queries
+ *
+ * @return array|null ['category' => コード, 'archive' => 年月, 'page' => ページ]
+ */
+function service_entry_list_filter($queries)
+{
+    foreach (['type_id', 'public', 'datetime', 'title', 'text', 'field_sets', 'keyword'] as $key) {
+        if (isset($queries[$key]) && $queries[$key] !== '' && $queries[$key] !== []) {
+            return null;
+        }
+    }
+
+    $results = [
+        'category' => null,
+        'archive'  => null,
+        'page'     => 1,
+    ];
+
+    // カテゴリー
+    if (isset($queries['category_sets']) && $queries['category_sets'] !== []) {
+        if (!is_array($queries['category_sets']) || count($queries['category_sets']) !== 1 || !is_scalar(reset($queries['category_sets']))) {
+            return null;
+        }
+
+        $categories = model('select_categories', [
+            'where' => [
+                'categories.id = :id AND types.code = :type',
+                [
+                    'id'   => reset($queries['category_sets']),
+                    'type' => 'entry',
+                ],
+            ],
+        ], [
+            'associate' => true,
+        ]);
+        if (empty($categories)) {
+            return null;
+        }
+        $results['category'] = $categories[0]['code'];
+    }
+
+    // 年月
+    if (isset($queries['archive']) && $queries['archive'] !== '') {
+        if (!is_string($queries['archive']) || !preg_match('/^\d{4}-\d{2}$/', $queries['archive'])) {
+            return null;
+        }
+        $results['archive'] = $queries['archive'];
+    }
+    if ($results['category'] !== null && $results['archive'] !== null) {
+        return null;
+    }
+
+    // ページ
+    if (isset($queries['page'])) {
+        if (!is_scalar($queries['page']) || !preg_match('/^[1-9]\d*$/', (string)$queries['page'])) {
+            return null;
+        }
+        $results['page'] = intval($queries['page']);
+    }
+
+    return $results;
+}
+
+/**
  * 公開側で表示できるファイルの保存先を取得
  *
  * エントリーの公開範囲で判定し、表示できなければ null を返す

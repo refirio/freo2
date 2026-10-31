@@ -698,6 +698,81 @@ $inserted_id = intval($entries[0]['id']);
     test_equals('entry url (plugin type)', service_entry_url(['type_code' => 'gallery', 'code' => 'work1']), '/gallery/detail/work1');
 }
 
+// 公開側のエントリー一覧のURLの作成テスト
+{
+    // 結果（1ページ目は page/ を付けない。カテゴリーと年月の両方を渡したらカテゴリーを使う）
+    test_equals('list url', service_entry_list_url(), '/entry/');
+    test_equals('list url (page)', service_entry_list_url(null, null, 2), '/entry/page/2/');
+    test_equals('list url (category)', service_entry_list_url('news'), '/entry/category/news/');
+    test_equals('list url (category page)', service_entry_list_url('news', null, 3), '/entry/category/news/page/3/');
+    test_equals('list url (archive)', service_entry_list_url(null, '2026-10'), '/entry/archive/2026-10/');
+    test_equals('list url (archive page 1)', service_entry_list_url(null, '2026-10', 1), '/entry/archive/2026-10/');
+    test_equals('list url (both)', service_entry_list_url('news', '2026-10'), '/entry/category/news/');
+}
+
+// 公開側のエントリー一覧のパスの解析テスト
+{
+    // 結果（末尾のスラッシュの有無に関係なく解析する）
+    test_equals('list parse (empty)', service_entry_list_parse([]), ['category' => null, 'archive' => null, 'page' => 1]);
+    test_equals('list parse (slash)', service_entry_list_parse(['']), ['category' => null, 'archive' => null, 'page' => 1]);
+    test_equals('list parse (page)', service_entry_list_parse(['page', '2', '']), ['category' => null, 'archive' => null, 'page' => 2]);
+    test_equals('list parse (category)', service_entry_list_parse(['category', 'news', '']), ['category' => 'news', 'archive' => null, 'page' => 1]);
+    test_equals('list parse (category page)', service_entry_list_parse(['category', 'news', 'page', '3']), ['category' => 'news', 'archive' => null, 'page' => 3]);
+    test_equals('list parse (archive)', service_entry_list_parse(['archive', '2026-10', '']), ['category' => null, 'archive' => '2026-10', 'page' => 1]);
+
+    // 結果（形が正しくなければ null）
+    test_equals('list parse (unknown)', service_entry_list_parse(['foo']), null);
+    test_equals('list parse (category only)', service_entry_list_parse(['category', '']), null);
+    test_equals('list parse (archive format)', service_entry_list_parse(['archive', '2026-1']), null);
+    test_equals('list parse (page zero)', service_entry_list_parse(['page', '0']), null);
+    test_equals('list parse (page string)', service_entry_list_parse(['page', 'abc']), null);
+    test_equals('list parse (category and archive)', service_entry_list_parse(['category', 'news', 'archive', '2026-10']), null);
+    test_equals('list parse (page first)', service_entry_list_parse(['page', '2', 'category', 'news']), null);
+    test_equals('list parse (extra)', service_entry_list_parse(['category', 'news', 'page', '2', 'foo']), null);
+}
+
+// 公開側のエントリー一覧の絞り込み条件の変換テスト
+{
+    // データ（エントリーとページのカテゴリー）
+    foreach ([1 => 'test_list_entry', 2 => 'test_list_page'] as $type_id => $code) {
+        model('insert_categories', [
+            'values' => [
+                'type_id' => $type_id,
+                'code'    => $code,
+                'name'    => 'テスト',
+                'sort'    => 1,
+            ],
+        ]);
+    }
+    $list_categories = array_column(model('select_categories', [
+        'where' => 'code LIKE ' . db_escape('test_list_%'),
+    ]), 'id', 'code');
+
+    // 結果（カテゴリー1つ・年月・ページはパスで表せる。カテゴリーはコードにする）
+    test_equals('list filter (empty)', service_entry_list_filter([]), ['category' => null, 'archive' => null, 'page' => 1]);
+    test_equals('list filter (page)', service_entry_list_filter(['page' => '2']), ['category' => null, 'archive' => null, 'page' => 2]);
+    test_equals('list filter (page int)', service_entry_list_filter(['page' => 2]), ['category' => null, 'archive' => null, 'page' => 2]);
+    test_equals('list filter (category)', service_entry_list_filter(['category_sets' => [$list_categories['test_list_entry']], 'page' => '3']), ['category' => 'test_list_entry', 'archive' => null, 'page' => 3]);
+    test_equals('list filter (archive)', service_entry_list_filter(['archive' => '2026-10']), ['category' => null, 'archive' => '2026-10', 'page' => 1]);
+    test_equals('list filter (empty values)', service_entry_list_filter(['category_sets' => [], 'archive' => '', 'keyword' => '']), ['category' => null, 'archive' => null, 'page' => 1]);
+    test_equals('list filter (other key)', service_entry_list_filter(['test' => 'start', 'archive' => '2026-10']), ['category' => null, 'archive' => '2026-10', 'page' => 1]);
+
+    // 結果（パスで表せない絞り込みは null）
+    test_equals('list filter (categories)', service_entry_list_filter(['category_sets' => [$list_categories['test_list_entry'], $list_categories['test_list_entry']]]), null);
+    test_equals('list filter (category and archive)', service_entry_list_filter(['category_sets' => [$list_categories['test_list_entry']], 'archive' => '2026-10']), null);
+    test_equals('list filter (category of other type)', service_entry_list_filter(['category_sets' => [$list_categories['test_list_page']]]), null);
+    test_equals('list filter (category not found)', service_entry_list_filter(['category_sets' => [0]]), null);
+    test_equals('list filter (category string)', service_entry_list_filter(['category_sets' => 'abc']), null);
+    test_equals('list filter (category array)', service_entry_list_filter(['category_sets' => [['1']]]), null);
+    test_equals('list filter (archive format)', service_entry_list_filter(['archive' => '2026-1']), null);
+    test_equals('list filter (archive array)', service_entry_list_filter(['archive' => ['2026-10']]), null);
+    test_equals('list filter (page zero)', service_entry_list_filter(['page' => '0']), null);
+    test_equals('list filter (page string)', service_entry_list_filter(['page' => 'abc']), null);
+    test_equals('list filter (keyword)', service_entry_list_filter(['keyword' => 'a']), null);
+    test_equals('list filter (title)', service_entry_list_filter(['title' => 'a', 'page' => '2']), null);
+    test_equals('list filter (field_sets)', service_entry_list_filter(['field_sets' => ['1']]), null);
+}
+
 // パスワード認証テスト
 {
     // データ

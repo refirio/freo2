@@ -12,6 +12,7 @@ $GLOBALS['setting_title'] = [
     'menu'       => 'メニュー設定',
     'text'       => '文言設定',
     'mail'       => 'メール設定',
+    'export'     => 'HTML出力設定',
 ];
 $GLOBALS['setting_contents'] = [
     'basis' => [
@@ -554,6 +555,20 @@ $GLOBALS['setting_contents'] = [
             'explanation' => null,
             'type'        => 'text',
             'required'    => true,
+        ],
+    ],
+    'export' => [
+        'export_use_html' => [
+            'name'        => 'HTML出力',
+            'explanation' => '公開側のページをHTMLファイルに出力できるようにします。有効にすると、システムのメニューに「HTML出力」が表示されます。',
+            'type'        => 'boolean',
+            'required'    => false,
+        ],
+        'export_url' => [
+            'name'        => '公開用URL',
+            'explanation' => '出力したHTMLを置くサイトのURLです（例: https://example.com）。HTMLの中の管理用のURLを、このURLに置き換えます。',
+            'type'        => 'text',
+            'required'    => false,
         ],
     ],
 ];
