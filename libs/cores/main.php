@@ -15,6 +15,17 @@ import('libs/cores/info.php');
 import('libs/cores/db.php');
 import('libs/cores/test.php');
 
+if (cliurl()) {
+    $_SERVER['REQUEST_METHOD'] = 'GET';
+    $_SERVER['REQUEST_URI']    = $_SERVER['argv'][1];
+    $_SERVER['SCRIPT_NAME']    = '/' . basename($_SERVER['SCRIPT_NAME']);
+    $_SERVER['QUERY_STRING']   = (string)parse_url($_SERVER['argv'][1], PHP_URL_QUERY);
+
+    parse_str($_SERVER['QUERY_STRING'], $_GET);
+
+    $_SESSION = array();
+}
+
 bootstrap();
 
 if (SESSION_AUTOSTART === true) {
@@ -38,7 +49,7 @@ if (LOGGING_FILES && !empty($_FILES)) {
     logging('files');
 }
 
-if (php_sapi_name() === 'cli') {
+if (php_sapi_name() === 'cli' && !cliurl()) {
     if (isset($_SERVER['argv'][1])) {
         $_REQUEST['_mode'] = $_SERVER['argv'][1];
     } else {
@@ -70,7 +81,7 @@ switch ($_REQUEST['_mode']) {
         break;
 }
 
-if (php_sapi_name() === 'cli') {
+if (php_sapi_name() === 'cli' && !cliurl()) {
     exit;
 }
 

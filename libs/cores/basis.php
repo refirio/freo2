@@ -890,6 +890,16 @@ function ssl($proxy = false)
 }
 
 /**
+ * Determine if a page is requested from the command line.
+ *
+ * @return bool
+ */
+function cliurl()
+{
+    return php_sapi_name() === 'cli' && isset($_SERVER['argv'][1]) && substr($_SERVER['argv'][1], 0, 1) === '/';
+}
+
+/**
  * Get or check the token.
  *
  * @param string $type
