@@ -790,7 +790,7 @@ $associate_id = intval($entries[0]['id']);
     // データ（上限ちょうどのため警告は出ない）
     $test_entry = $data_entry;
     $test_entry['code'] = 'test3';
-    $test_entry['text'] = str_repeat('あ', 5000);
+    $test_entry['text'] = str_repeat('あ', 50000);
 
     // 確認
     $test_entry = model('normalize_entries', $test_entry);
@@ -805,7 +805,7 @@ $associate_id = intval($entries[0]['id']);
     // データ
     $test_entry = $data_entry;
     $test_entry['code'] = 'test3';
-    $test_entry['text'] = str_repeat('あ', 5001);
+    $test_entry['text'] = str_repeat('あ', 50001);
 
     // 確認
     $test_entry = model('normalize_entries', $test_entry);
@@ -813,6 +813,37 @@ $associate_id = intval($entries[0]['id']);
 
     // 結果
     test_equals('validate max_length entry text', count($warnings), 1);
+}
+
+// 本文の保存（上限）テスト
+{
+    // データ（上限の文字数をすべて4バイトの文字にしても、列に収まること。後のテストとコードがぶつからないよう、確認したら消す）
+    $test_entry = $data_entry;
+    $test_entry['code'] = 'test_text';
+    $test_entry['text'] = str_repeat('😀', 50000);
+
+    // 登録
+    $test_entry = model('normalize_entries', $test_entry);
+    $warnings   = model('validate_entries', $test_entry);
+
+    test_equals('validate max_length entry text (4 bytes)', count($warnings), 0);
+
+    $text_id = test_entry_insert($test_entry);
+
+    // 結果（切り詰められずに、そのまま保存されること）
+    $entries = model('select_entries', [
+        'select' => 'text',
+        'where'  => 'id = ' . intval($text_id),
+    ]);
+
+    test_equals('insert max_length entry text', $entries[0]['text'], $test_entry['text']);
+
+    // 後始末
+    model('delete_entries', [
+        'where' => 'id = ' . intval($text_id),
+    ], [
+        'softdelete' => false,
+    ]);
 }
 
 // 本文形式の値テスト

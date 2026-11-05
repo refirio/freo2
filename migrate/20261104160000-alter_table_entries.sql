@@ -1,0 +1,1 @@
+ALTER TABLE entries MODIFY text MEDIUMTEXT COMMENT '本文';

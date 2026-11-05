@@ -533,8 +533,8 @@ function validate_entries($queries, $options = [])
     // 本文
     if (isset($queries['text'])) {
         if (!validator_required($queries['text'])) {
-        } elseif (!validator_max_length($queries['text'], 5000)) {
-            $messages['text'] = '本文は5000文字以内で入力してください。';
+        } elseif (!validator_max_length($queries['text'], 50000)) {
+            $messages['text'] = '本文は50000文字以内で入力してください。';
         }
     }
 
