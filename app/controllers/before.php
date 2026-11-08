@@ -7,6 +7,7 @@ import('app/services/user.php');
 import('app/services/storage.php');
 import('app/services/entry.php');
 import('app/services/attribute.php');
+import('app/services/update.php');
 
 import('libs/modules/loader.php');
 
@@ -18,6 +19,37 @@ foreach ($GLOBALS['config']['security_headers'] as $header_name => $header_value
 }
 if ($GLOBALS['config']['hsts_max_age'] > 0 && ssl(true)) {
     header('Strict-Transport-Security: max-age=' . intval($GLOBALS['config']['hsts_max_age']));
+}
+
+// DB の更新待ち（未実行のマイグレーションがあれば、更新が済むまで通常の画面を出さない。テーブルが新しいコードと合わないことがあるため、設定などを読む前に判定する）
+if (!empty(service_update_pending()) && !($_REQUEST['_mode'] === 'auth' && $_REQUEST['_work'] === 'index')) {
+    if (service_update_admin()) {
+        if ($_REQUEST['_mode'] === 'admin' && $_REQUEST['_work'] === 'update') {
+            // 更新画面（プラグインを読み込む after.php は通さず、ここで表示して終了する）
+            import('app/controllers/admin/update.php');
+
+            $_view['token'] = token('create');
+
+            import('app/views/admin/update.php');
+
+            exit;
+        }
+
+        // 管理者のほかのアクセスは、更新画面へ
+        redirect('/admin/update');
+    } elseif ($_REQUEST['_mode'] === 'admin' && empty($_SESSION['auth']['user']['id'])) {
+        // 未ログインで管理画面を開いたら、ログインしてから更新画面へ
+        redirect('/auth/?referer=' . rawurlencode('/admin/update'));
+    }
+
+    // それ以外は、メンテナンス中
+    header('HTTP/1.1 503 Service Unavailable');
+    header('Retry-After: 600');
+    header('Cache-Control: no-store');
+
+    import('app/views/admin/update_maintenance.php');
+
+    exit;
 }
 
 // 設定内容を取得
@@ -92,14 +124,14 @@ if (!empty($_SESSION['auth']['user']['id'])) {
         } elseif ($GLOBALS['authority']['power'] == 2) {
             // 投稿者
             if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
-                if (preg_match('/^(attribute|export|field|log|menu|plugin|setting|theme|user|version|widget)(_|$)/', $_REQUEST['_work'])) {
+                if (preg_match('/^(attribute|export|field|log|menu|plugin|setting|theme|update|user|version|widget)(_|$)/', $_REQUEST['_work'])) {
                     error('不正なアクセスです。');
                 }
             }
         } elseif ($GLOBALS['authority']['power'] == 1) {
             // 閲覧者
             if (preg_match('/^(admin)$/', $_REQUEST['_mode'])) {
-                if (preg_match('/^(attribute|category|entry|export|field|file|log|media|menu|page|plugin|setting|theme|user|version|widget)(_|$)/', $_REQUEST['_work'])) {
+                if (preg_match('/^(attribute|category|entry|export|field|file|log|media|menu|page|plugin|setting|theme|update|user|version|widget)(_|$)/', $_REQUEST['_work'])) {
                     error('不正なアクセスです。');
                 }
             }
