@@ -1,0 +1,159 @@
+# app/version.php のバージョンが上がったら、Release を公開する
+# （ZIP には、更新画面（/admin/update）が使う削除済みファイルの一覧 app/removed_files.txt を入れる。一覧はリポジトリにはコミットしない）
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - app/version.php
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+
+jobs:
+  release:
+    # 手動で実行するときも main だけ
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # 削除済みファイルの一覧を作るため、全履歴とタグを取得する
+          fetch-depth: 0
+
+      - name: Read version
+        id: version
+        run: |
+          if [ ! -f app/version.php ]; then
+            echo "app/version.php が見つかりません。" >&2
+            exit 1
+          fi
+
+          version=$(sed -n "s/^define('APP_VERSION_NUMBER', '\([^']*\)');.*$/\1/p" app/version.php)
+          if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
+            echo "APP_VERSION_NUMBER を読み取れません: '$version'" >&2
+            exit 1
+          fi
+
+          # alpha・beta など、ハイフンの後ろが付いた版はプレリリースにする
+          case "$version" in
+            *-*) prerelease=true ;;
+            *)   prerelease=false ;;
+          esac
+
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=v$version" >> "$GITHUB_OUTPUT"
+          echo "prerelease=$prerelease" >> "$GITHUB_OUTPUT"
+
+      - name: Check tag
+        id: tag
+        env:
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          # 同じタグがあれば、何もしない（日付だけ直した場合など）
+          if git rev-parse -q --verify "refs/tags/$TAG" > /dev/null; then
+            echo "タグ $TAG はすでにあるので、Release は作りません。"
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build removed file list
+        if: steps.tag.outputs.exists == 'false'
+        run: |
+          work="$RUNNER_TEMP/removed"
+          mkdir -p "$work"
+
+          # 履歴で一度でも追跡したファイルのうち、今は無いもの
+          git log --diff-filter=D --no-renames --name-only --format= HEAD | sort -u > "$work/deleted"
+          git ls-tree -r --name-only HEAD | sort > "$work/current"
+          comm -23 "$work/deleted" "$work/current" > "$work/gone"
+
+          # 更新画面と同じ規則で、対象外のパスを除く（service_update_removed_path()）
+          #   使える文字と形、.・.. のディレクトリ名、files/・libs/vendor/、sample 以外のプラグイン・テーマ
+          grep -E '^[A-Za-z0-9_.-]+(/[A-Za-z0-9_.-]+)*$' "$work/gone" \
+            | grep -Ev '(^|/)\.\.?(/|$)' \
+            | grep -Ev '^(files|libs/vendor)/' \
+            | awk '!/^(plugins|themes)\// || /^(plugins|themes)\/sample\//' \
+            > "$work/targets" || true
+
+          # 今あるファイルと大文字・小文字だけが違うものは除く（大文字・小文字を区別しないサーバーで、今のファイルを消さないため）
+          tr 'A-Z' 'a-z' < "$work/current" | sort -u > "$work/current_lower"
+          : > "$work/paths"
+          while IFS= read -r path; do
+            lower=$(printf '%s' "$path" | tr 'A-Z' 'a-z')
+            if ! grep -qxF "$lower" "$work/current_lower"; then
+              printf '%s\n' "$path" >> "$work/paths"
+            fi
+          done < "$work/targets"
+
+          # 過去の全版の内容のハッシュ（CRLF を LF にそろえてから SHA-256。service_update_hash() と同じ）
+          : > "$work/removed_files.txt"
+          while IFS= read -r path; do
+            git log --no-renames --raw --no-abbrev --format= HEAD -- "$path" \
+              | awk '{ print $3; print $4 }' \
+              | grep -v '^0\{40\}$' \
+              | sort -u \
+              | while IFS= read -r blob; do
+                  if [ "$(git cat-file -t "$blob")" = "blob" ]; then
+                    hash=$(git cat-file blob "$blob" | perl -0777 -pe 's/\r\n/\n/g' | sha256sum | cut -c1-64)
+                    printf '%s  %s\n' "$hash" "$path"
+                  fi
+                done
+          done < "$work/paths" | sort -u -k2,2 -k1,1 > "$work/removed_files.txt"
+
+          echo "削除済みファイル: $(wc -l < "$work/paths") 件（過去の版: $(wc -l < "$work/removed_files.txt") 件）"
+          cat "$work/removed_files.txt"
+
+      - name: Build ZIP
+        if: steps.tag.outputs.exists == 'false'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          name="freo2-$VERSION"
+          cd "$RUNNER_TEMP"
+
+          # コミットされているファイル（.github/ は除く）に、削除済みファイルの一覧を足す
+          git -C "$GITHUB_WORKSPACE" archive --format=tar --prefix="$name/" HEAD -- . ':(exclude).github' | tar -x
+          cp removed/removed_files.txt "$name/app/removed_files.txt"
+
+          zip -r -q "$name.zip" "$name"
+          ls -l "$name.zip"
+
+      - name: Create release
+        if: steps.tag.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.version.outputs.version }}
+          TAG: ${{ steps.version.outputs.tag }}
+          PRERELEASE: ${{ steps.version.outputs.prerelease }}
+        run: |
+          cat > "$RUNNER_TEMP/notes.md" << EOF
+          ## 更新のしかた
+
+          1. 下の \`freo2-$VERSION.zip\` をダウンロードして展開する
+          2. データベースのバックアップを取り、管理画面にログインしておく
+          3. 展開したファイルを、FTP などでサーバーに上書きする
+          4. 管理画面の「バージョン情報」→「システムの更新」（\`/admin/update\`）を開き、画面の案内に従う
+
+          「Source code」の ZIP には不要なファイルの一覧が入っていないため、更新には \`freo2-$VERSION.zip\` を使ってください。
+          新しく設置するときは、[設置方法](https://freo.jp/freo2/setup/) を参照してください。
+          EOF
+
+          options=""
+          if [ "$PRERELEASE" = "true" ]; then
+            options="--prerelease"
+          fi
+
+          gh release create "$TAG" "$RUNNER_TEMP/freo2-$VERSION.zip" \
+            --target "$GITHUB_SHA" \
+            --title "$TAG" \
+            --notes-file "$RUNNER_TEMP/notes.md" \
+            $options

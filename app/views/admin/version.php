@@ -31,6 +31,8 @@
                             <dd class="col-sm-10"><a href="https://freo.jp/" target="_blank">https://freo.jp/</a></dd>
                             <dt class="col-sm-2">更新日</dt>
                             <dd class="col-sm-10"><?php h(localdate('Y/m/d', APP_VERSION_UPDATE)) ?></dd>
+                            <dt class="col-sm-2">更新</dt>
+                            <dd class="col-sm-10"><a href="<?php t(MAIN_FILE) ?>/admin/update">システムの更新</a></dd>
                         </dl>
                     </div>
                 </div>
