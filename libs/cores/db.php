@@ -1473,7 +1473,7 @@ function db_migrate()
     }
 
     // target
-    $targets = db_migrate_targets();
+    $targets = db_migrate_targets(true);
 
     // limit
     if (isset($_GET['limit'])) {
@@ -1611,16 +1611,22 @@ function db_migrate_installed()
 /**
  * Get the unexecuted migration files.
  *
+ * @param bool|null $installed
+ *
  * @return array
  */
-function db_migrate_targets()
+function db_migrate_targets($installed = null)
 {
     if (!file_exists(DATABASE_MIGRATE_PATH)) {
         return array();
     }
 
+    if ($installed === null) {
+        $installed = db_migrate_installed();
+    }
+
     $succeeded = array();
-    if (db_migrate_installed() === true) {
+    if ($installed === true) {
         $resource = db_query('SELECT * FROM ' . DATABASE_PREFIX . 'levis_migrations WHERE status = ' . db_escape('success') . ';');
         $results  = db_result($resource);
 
