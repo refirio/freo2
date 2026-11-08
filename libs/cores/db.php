@@ -1435,21 +1435,7 @@ function db_migrate()
     }
 
     // initialize
-    $resource = db_query(db_sql('table_list'));
-    $results  = db_result($resource);
-
-    $flag = false;
-    foreach ($results as $result) {
-        $table = array_shift($result);
-
-        if ($table === DATABASE_PREFIX . 'levis_migrations') {
-            $flag = true;
-
-            break;
-        }
-    }
-
-    if ($flag === false) {
+    if (db_migrate_installed() === false) {
         if (DATABASE_TYPE === 'pdo_mysql' || DATABASE_TYPE === 'mysql') {
             db_query('
                 CREATE TABLE ' . DATABASE_PREFIX . 'levis_migrations(
@@ -1486,45 +1472,8 @@ function db_migrate()
         }
     }
 
-    // succeeded
-    $resource = db_query('SELECT * FROM ' . DATABASE_PREFIX . 'levis_migrations WHERE status = ' . db_escape('success') . ';');
-    $results  = db_result($resource);
-
-    $succeeded = array();
-    foreach ($results as $result) {
-        $succeeded[$result['version']] = true;
-    }
-
     // target
-    $targets = array();
-    if ($dh = opendir(DATABASE_MIGRATE_PATH)) {
-        while (($entry = readdir($dh)) !== false) {
-            if (!is_file(DATABASE_MIGRATE_PATH  . $entry)) {
-                continue;
-            }
-
-            if ($regexp = regexp_match('^([0-9\-]{14})-[_a-zA-Z0-9\-]+\.sql$', $entry)) {
-                $version = $regexp[1];
-            } else {
-                continue;
-            }
-
-            if (isset($succeeded[$version])) {
-                continue;
-            }
-
-            $targets[] = $entry;
-        }
-        closedir($dh);
-    } else {
-        if (LOGGING_MESSAGE) {
-            logging('message', 'db: Opendir error: ' . db_error());
-        }
-
-        error('db: Opendir error' . (DEBUG_LEVEL ? ': ' . db_error(): ''));
-    }
-
-    sort($targets, SORT_STRING);
+    $targets = db_migrate_targets();
 
     // limit
     if (isset($_GET['limit'])) {
@@ -1541,132 +1490,27 @@ function db_migrate()
     }
 
     // migrate
-    $resource = db_query('DELETE FROM ' . DATABASE_PREFIX . 'levis_migrations WHERE status = ' . db_escape('pending') . ';');
-    if (!$resource) {
-        if (LOGGING_MESSAGE) {
-            logging('message', 'db: Query error: ' . db_error());
-        }
-
-        error('db: Query error' . (DEBUG_LEVEL ? ': ' . db_error(): ''));
-    }
+    $results = db_migrate_execute($targets);
 
     $migrate = '';
-    foreach ($targets as $target) {
-        if ($regexp = regexp_match('^([0-9\-]{14})-([_a-zA-Z0-9\-]+)\.sql$', $target)) {
-            $version     = $regexp[1];
-            $description = $regexp[2];
-        } else {
-            continue;
-        }
+    foreach ($results as $result) {
+        $migrate .= $em_begin . $result['target'] . $em_end . "\n";
+        foreach ($result['migrations'] as $migration) {
+            $migration['sql'] = regexp_replace("\s+", ' ', $migration['sql']);
+            $migration['sql'] = regexp_replace("(\r|\n)", '', $migration['sql']);
 
-        $resource = db_query('INSERT INTO ' . DATABASE_PREFIX . 'levis_migrations(version, description, status) VALUES(' . db_escape($version) . ', ' . db_escape($description) . ', ' . db_escape('pending') . ');');
-        if (!$resource) {
-            if (LOGGING_MESSAGE) {
-                logging('message', 'db: Query error: ' . db_error());
-            }
-
-            error('db: Query error' . (DEBUG_LEVEL ? ': ' . db_error(): ''));
-        }
-
-        $migrations = array();
-        $error      = false;
-        $i          = 0;
-        if ($fp = fopen(DATABASE_MIGRATE_PATH . $target, 'r')) {
-            $sql  = '';
-            $flag = true;
-
-            while ($line = fgets($fp)) {
-                $line = str_replace("\r\n", "\n", $line);
-                $line = str_replace("\r", "\n", $line);
-
-                if ((substr_count($line, '\'') - substr_count($line, '\\\'')) % 2 !== 0) {
-                    $flag = !$flag;
-                }
-
-                $sql .= $line;
-
-                if (preg_match('/;$/', trim($line)) && $flag) {
-                    $i++;
-
-                    $migrations[$target][$i]['sql'] = trim($sql);
-
-                    list($micro, $second) = explode(' ', microtime());
-                    $time_start = $micro + $second;
-
-                    $resource = db_query($sql, false, false);
-
-                    list($micro, $second) = explode(' ', microtime());
-                    $time_end = $micro + $second;
-
-                    $migrations[$target][$i]['time'] = ceil(($time_end - $time_start) * 10000) / 10000;
-
-                    if ($resource) {
-                        $migrations[$target][$i]['result']   = 'OK';
-                        $migrations[$target][$i]['affected'] = db_affected_count($resource);
-                    } else {
-                        $migrations[$target][$i]['result']   = 'NG';
-                        $migrations[$target][$i]['affected'] = 0;
-
-                        $error = true;
-
-
-                        $migrate .= $em_begin . $target . $em_end . "\n";
-                        foreach ($migrations[$target] as $migration) {
-                            $migration['sql'] = regexp_replace("(\r|\n)", '', $migration['sql']);
-                            $migration['sql'] = regexp_replace("\s+", ' ', $migration['sql']);
-
-                            $migrate .= t(truncate($migration['sql'], 80, ''), true) . ' ... ' . $em_begin . $migration['result'] . $em_end;
-                            if ($migration['result'] == 'OK') {
-                                $migrate .= ' (';
-                                $migrate .= $migration['affected'] ? $migration['affected'] . ' rows affected. ' : '';
-                                $migrate .= $migration['time'] . ' sec.)';
-                            }
-                            $migrate .= "\n";
-                        }
-                        $migrate .= "\n";
-                        $migrate .= db_error() . "\n";
-                        $migrate .= "\n";
-
-                        break;
-                    }
-
-                    $sql = '';
-                }
-            }
-            fclose($fp);
-
-            if ($error === true) {
-                break;
-            }
-        } else {
-            if (LOGGING_MESSAGE) {
-                logging('message', 'db: File can\'t read: ' . db_error());
-            }
-
-            error('db: File can\'t read' . (DEBUG_LEVEL ? ': ' . db_error(): ''));
-        }
-
-        if ($error === false) {
-            $resource = db_query('UPDATE ' . DATABASE_PREFIX . 'levis_migrations SET status = ' . db_escape('success') . ', installed = ' . db_escape(localdate('Y-m-d H:i:s')) . ' WHERE version = \'' . $version . '\';');
-            if (!$resource) {
-                if (LOGGING_MESSAGE) {
-                    logging('message', 'db: Query error: ' . db_error());
-                }
-
-                error('db: Query error' . (DEBUG_LEVEL ? ': ' . db_error(): ''));
-            }
-
-            $migrate .= $em_begin . $target . $em_end . "\n";
-            foreach ($migrations[$target] as $migration) {
-                $migration['sql'] = regexp_replace("\s+", ' ', $migration['sql']);
-                $migration['sql'] = regexp_replace("(\r|\n)", '', $migration['sql']);
-
-                $migrate .= t(truncate($migration['sql'], 80, ''), true) . ' ... ' . $em_begin . $migration['result'] . $em_end;
+            $migrate .= t(truncate($migration['sql'], 80, ''), true) . ' ... ' . $em_begin . $migration['result'] . $em_end;
+            if ($migration['result'] == 'OK') {
                 $migrate .= ' (';
                 $migrate .= $migration['affected'] ? $migration['affected'] . ' rows affected. ' : '';
                 $migrate .= $migration['time'] . ' sec.)';
-                $migrate .= "\n";
             }
+            $migrate .= "\n";
+        }
+        $migrate .= "\n";
+
+        if ($result['error'] !== null) {
+            $migrate .= $result['error'] . "\n";
             $migrate .= "\n";
         }
     }
@@ -1741,6 +1585,203 @@ function db_migrate()
     echo "</html>\n";
 
     exit;
+}
+
+/**
+ * Check whether the migration table exists.
+ *
+ * @return bool
+ */
+function db_migrate_installed()
+{
+    $resource = db_query(db_sql('table_list'));
+    $results  = db_result($resource);
+
+    foreach ($results as $result) {
+        $table = array_shift($result);
+
+        if ($table === DATABASE_PREFIX . 'levis_migrations') {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Get the unexecuted migration files.
+ *
+ * @return array
+ */
+function db_migrate_targets()
+{
+    if (!file_exists(DATABASE_MIGRATE_PATH)) {
+        return array();
+    }
+
+    $succeeded = array();
+    if (db_migrate_installed() === true) {
+        $resource = db_query('SELECT * FROM ' . DATABASE_PREFIX . 'levis_migrations WHERE status = ' . db_escape('success') . ';');
+        $results  = db_result($resource);
+
+        foreach ($results as $result) {
+            $succeeded[$result['version']] = true;
+        }
+    }
+
+    $targets = array();
+    if ($dh = opendir(DATABASE_MIGRATE_PATH)) {
+        while (($entry = readdir($dh)) !== false) {
+            if (!is_file(DATABASE_MIGRATE_PATH  . $entry)) {
+                continue;
+            }
+
+            if ($regexp = regexp_match('^([0-9\-]{14})-[_a-zA-Z0-9\-]+\.sql$', $entry)) {
+                $version = $regexp[1];
+            } else {
+                continue;
+            }
+
+            if (isset($succeeded[$version])) {
+                continue;
+            }
+
+            $targets[] = $entry;
+        }
+        closedir($dh);
+    } else {
+        if (LOGGING_MESSAGE) {
+            logging('message', 'db: Opendir error: ' . db_error());
+        }
+
+        error('db: Opendir error' . (DEBUG_LEVEL ? ': ' . db_error(): ''));
+    }
+
+    sort($targets, SORT_STRING);
+
+    return $targets;
+}
+
+/**
+ * Execute the migration files.
+ *
+ * @param array $targets
+ *
+ * @return array
+ */
+function db_migrate_execute($targets)
+{
+    $resource = db_query('DELETE FROM ' . DATABASE_PREFIX . 'levis_migrations WHERE status = ' . db_escape('pending') . ';');
+    if (!$resource) {
+        if (LOGGING_MESSAGE) {
+            logging('message', 'db: Query error: ' . db_error());
+        }
+
+        error('db: Query error' . (DEBUG_LEVEL ? ': ' . db_error(): ''));
+    }
+
+    $results = array();
+    foreach ($targets as $target) {
+        if ($regexp = regexp_match('^([0-9\-]{14})-([_a-zA-Z0-9\-]+)\.sql$', $target)) {
+            $version     = $regexp[1];
+            $description = $regexp[2];
+        } else {
+            continue;
+        }
+
+        $resource = db_query('INSERT INTO ' . DATABASE_PREFIX . 'levis_migrations(version, description, status) VALUES(' . db_escape($version) . ', ' . db_escape($description) . ', ' . db_escape('pending') . ');');
+        if (!$resource) {
+            if (LOGGING_MESSAGE) {
+                logging('message', 'db: Query error: ' . db_error());
+            }
+
+            error('db: Query error' . (DEBUG_LEVEL ? ': ' . db_error(): ''));
+        }
+
+        $migrations = array();
+        $error      = null;
+        if ($fp = fopen(DATABASE_MIGRATE_PATH . $target, 'r')) {
+            $sql  = '';
+            $flag = true;
+
+            while ($line = fgets($fp)) {
+                $line = str_replace("\r\n", "\n", $line);
+                $line = str_replace("\r", "\n", $line);
+
+                if ((substr_count($line, '\'') - substr_count($line, '\\\'')) % 2 !== 0) {
+                    $flag = !$flag;
+                }
+
+                $sql .= $line;
+
+                if (preg_match('/;$/', trim($line)) && $flag) {
+                    $migration = array(
+                        'sql' => trim($sql),
+                    );
+
+                    list($micro, $second) = explode(' ', microtime());
+                    $time_start = $micro + $second;
+
+                    $resource = db_query($sql, false, false);
+
+                    list($micro, $second) = explode(' ', microtime());
+                    $time_end = $micro + $second;
+
+                    $migration['time'] = ceil(($time_end - $time_start) * 10000) / 10000;
+
+                    if ($resource) {
+                        $migration['result']   = 'OK';
+                        $migration['affected'] = db_affected_count($resource);
+                    } else {
+                        $migration['result']   = 'NG';
+                        $migration['affected'] = 0;
+
+                        $error = (string)db_error();
+                    }
+
+                    $migrations[] = $migration;
+
+                    if ($error !== null) {
+                        break;
+                    }
+
+                    $sql = '';
+                }
+            }
+            fclose($fp);
+        } else {
+            if (LOGGING_MESSAGE) {
+                logging('message', 'db: File can\'t read: ' . db_error());
+            }
+
+            error('db: File can\'t read' . (DEBUG_LEVEL ? ': ' . db_error(): ''));
+        }
+
+        if ($error === null) {
+            $resource = db_query('UPDATE ' . DATABASE_PREFIX . 'levis_migrations SET status = ' . db_escape('success') . ', installed = ' . db_escape(localdate('Y-m-d H:i:s')) . ' WHERE version = \'' . $version . '\';');
+            if (!$resource) {
+                if (LOGGING_MESSAGE) {
+                    logging('message', 'db: Query error: ' . db_error());
+                }
+
+                error('db: Query error' . (DEBUG_LEVEL ? ': ' . db_error(): ''));
+            }
+        }
+
+        $results[] = array(
+            'target'      => $target,
+            'version'     => $version,
+            'description' => $description,
+            'migrations'  => $migrations,
+            'error'       => $error,
+        );
+
+        if ($error !== null) {
+            break;
+        }
+    }
+
+    return $results;
 }
 
 /**
