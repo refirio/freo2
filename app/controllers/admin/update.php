@@ -22,7 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         error('不正なアクセスです。');
     }
 
-    if (isset($_POST['exec']) && $_POST['exec'] === 'migrate') {
+    if (isset($_POST['exec']) && $_POST['exec'] === 'backup') {
+        // すでに更新が済んでいる
+        if (empty($update_targets)) {
+            redirect('/admin/update');
+        }
+
+        // DB のバックアップをダウンロード
+        service_update_backup();
+    } elseif (isset($_POST['exec']) && $_POST['exec'] === 'migrate') {
         // 二重送信などで、すでに更新が済んでいる
         if (empty($update_targets)) {
             redirect('/admin/update');

@@ -111,6 +111,13 @@
                 <?php endforeach ?>
             </ul>
             <?php if (empty($_view['update_results'])) : ?>
+            <h2 class="h5">データベースのバックアップ</h2>
+            <p>更新に失敗したときに、元に戻すためのファイルです。データベースの内容をすべて含むので、大切に保管してください。データが多くてダウンロードできないときは、サーバーのデータベース管理ツール（phpMyAdmin など）でバックアップを取ってください。</p>
+            <form action="<?php t(MAIN_FILE) ?>/admin/update" method="post" class="mb-4">
+                <input type="hidden" name="_token" value="<?php t($_view['token']) ?>">
+                <input type="hidden" name="exec" value="backup">
+                <button type="submit" class="btn btn-outline-secondary">バックアップをダウンロード</button>
+            </form>
             <div class="alert alert-info">
                 実行する前に、次の2つを確認してください。
                 <ul class="mb-0">

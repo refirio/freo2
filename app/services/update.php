@@ -209,6 +209,22 @@ function service_update_migrate($targets)
 }
 
 /**
+ * DB のバックアップをダウンロードさせる
+ * （サーバーには保存しない。呼ぶとダウンロードの応答を返して終了する）
+ *
+ * @return void
+ */
+function service_update_backup()
+{
+    // データの多いサイトでも途中で止まらないようにする
+    if (function_exists('set_time_limit')) {
+        set_time_limit(0);
+    }
+
+    db_export(null, db_tables());
+}
+
+/**
  * DB の更新に失敗したか
  *
  * @param array $results
