@@ -840,13 +840,7 @@ function db_admin_import()
  */
 function db_admin_export()
 {
-    $resource = db_query(db_sql('table_list'));
-    $results  = db_result($resource);
-
-    $_view['tables'] = array();
-    foreach ($results as $result) {
-        $_view['tables'][] = array_shift($result);
-    }
+    $_view['tables'] = db_tables();
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $table    = empty($_POST['table']) ? array() : $_POST['table'];
@@ -951,7 +945,7 @@ function db_admin_backup()
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        db_export(DATABASE_BACKUP_PATH . localdate('YmdHis') . '.sql');
+        db_export(DATABASE_BACKUP_PATH . localdate('YmdHis') . '.sql', db_tables());
 
         $_view['message'] = 'completed.';
     }
@@ -1486,7 +1480,7 @@ function db_migrate()
 
     // backup
     if (!empty($targets) && file_exists(DATABASE_BACKUP_PATH)) {
-        db_export(DATABASE_BACKUP_PATH . localdate('YmdHis') . '.sql');
+        db_export(DATABASE_BACKUP_PATH . localdate('YmdHis') . '.sql', db_tables());
     }
 
     // migrate
@@ -1594,18 +1588,7 @@ function db_migrate()
  */
 function db_migrate_installed()
 {
-    $resource = db_query(db_sql('table_list'));
-    $results  = db_result($resource);
-
-    foreach ($results as $result) {
-        $table = array_shift($result);
-
-        if ($table === DATABASE_PREFIX . 'levis_migrations') {
-            return true;
-        }
-    }
-
-    return false;
+    return in_array(DATABASE_PREFIX . 'levis_migrations', db_tables(), true);
 }
 
 /**
@@ -2631,17 +2614,13 @@ function db_export($file = null, $target = array(), $combined = true)
         return;
     }
 
-    $resource = db_query(db_sql('table_list'));
-    $results  = db_result($resource);
+    $tables = db_tables();
 
-    $tables = array();
-    foreach ($results as $result) {
-        $tables[] = array_shift($result);
-    }
+    $address = clientip();
 
     $text  = '-- Database: ' . DATABASE_NAME . ' (' . DATABASE_TYPE . ")\n";
     $text .= '-- Datetime: ' . localdate('Y-m-d H:i:s') . "\n";
-    $text .= '-- Host: ' . gethostbyaddr(clientip()) . "\n";
+    $text .= '-- Host: ' . ($address === null ? 'cli' : gethostbyaddr($address)) . "\n";
     $text .= "\n";
 
     foreach ($tables as $table) {
@@ -2720,6 +2699,24 @@ function db_export($file = null, $target = array(), $combined = true)
     }
 
     return;
+}
+
+/**
+ * Get the table names of the database.
+ *
+ * @return array
+ */
+function db_tables()
+{
+    $resource = db_query(db_sql('table_list'));
+    $results  = db_result($resource);
+
+    $tables = array();
+    foreach ($results as $result) {
+        $tables[] = array_shift($result);
+    }
+
+    return $tables;
 }
 
 /**

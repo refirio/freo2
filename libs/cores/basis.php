@@ -1525,22 +1525,8 @@ function about()
         echo "<li><a href=\"" . t(MAIN_FILE, true) . "/?_mode=db_admin\">database</a></li>\n";
     }
     if (file_exists(DATABASE_MIGRATE_PATH)) {
-        $resource = db_query(db_sql('table_list'));
-        $results  = db_result($resource);
-
-        $flag = false;
-        foreach ($results as $result) {
-            $table = array_shift($result);
-
-            if ($table === DATABASE_PREFIX . 'levis_migrations') {
-                $flag = true;
-
-                break;
-            }
-        }
-
         $succeeded = 0;
-        if ($flag === true) {
+        if (db_migrate_installed()) {
             $resource = db_query('SELECT COUNT(*) as count FROM ' . DATABASE_PREFIX . 'levis_migrations WHERE status = ' . db_escape('success') . ';');
             $results  = db_result($resource);
 
