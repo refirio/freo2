@@ -15,6 +15,9 @@
  */
 function environment_useragent($useragent)
 {
+    // 未記録（null）のときも、空の文字列として判定する
+    $useragent = (string)$useragent;
+
     $browser = null;
     $os      = null;
 

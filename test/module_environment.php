@@ -141,6 +141,24 @@ import('libs/modules/environment.php');
     test_equals('environment unknown (os)', $os, null);
 }
 
+// 未記録（null）の場合テスト
+{
+    // 確認（Deprecated を出さずに、判定できない場合と同じ結果になること）
+    $deprecated = [];
+    set_error_handler(function ($errno, $errstr) use (&$deprecated) {
+        $deprecated[] = $errstr;
+
+        return true;
+    }, E_DEPRECATED);
+    list($environment, $browser, $os) = environment_useragent(null);
+    restore_error_handler();
+
+    // 結果
+    test_equals('environment null', $environment, 'Unknown');
+    test_equals('environment null (browser)', $browser, null);
+    test_equals('environment null (deprecated)', $deprecated, []);
+}
+
 // コードカバレッジの記録を終了
 if (!isset($_GET['_test'])) {
     $coverages = service_coverage_end();
