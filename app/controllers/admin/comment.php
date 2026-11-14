@@ -1,5 +1,7 @@
 <?php
 
+import('app/services/comment.php');
+
 // 絞り込み条件を作成
 $filters = model('filter_comments', $_GET, [
     'associate' => true,
@@ -42,6 +44,11 @@ $_view['comments'] = model('select_comments', [
 ], [
     'associate' => true,
 ]);
+
+// 対象（型の名前は、データの定義から）
+foreach ($_view['comments'] as $index => $comment) {
+    $_view['comments'][$index]['target'] = service_comment_target($comment);
+}
 
 $comment_count = model('select_comments', [
     'select' => 'COUNT(DISTINCT comments.id) AS count',

@@ -284,6 +284,58 @@ if ($auth !== null) {
     test_equals('comment select approved', array_column($comments, 'message'), ['コメント1', 'コメント2']);
 }
 
+// コメントの対象の取得テスト
+{
+    // データ（プラグインの型は、データの定義を持つ有効なプラグインとして用意する）
+    $plugin_backup = isset($GLOBALS['plugin']) ? $GLOBALS['plugin'] : null;
+    $GLOBALS['plugin'] = [
+        'gallerytest' => [
+            'data' => [
+                'gallerytest' => [
+                    'type' => 'gallerytest',
+                    'name' => 'テストギャラリー',
+                ],
+            ],
+        ],
+    ];
+
+    // 結果（本体の型）
+    test_equals('target entry', service_comment_target(['entry_id' => 1, 'contact_id' => null, 'type_code' => 'entry', 'entry_code' => 'hello']), [
+        'name' => 'エントリー',
+        'url'  => '/entry/detail/hello',
+    ]);
+    test_equals('target page', service_comment_target(['entry_id' => 2, 'contact_id' => null, 'type_code' => 'page', 'entry_code' => 'about/company']), [
+        'name' => 'ページ',
+        'url'  => '/page/about/company',
+    ]);
+
+    // 結果（プラグインの型は、データの定義の名前）
+    test_equals('target plugin type', service_comment_target(['entry_id' => 3, 'contact_id' => null, 'type_code' => 'gallerytest', 'entry_code' => 'work1']), [
+        'name' => 'テストギャラリー',
+        'url'  => '/gallerytest/detail/work1',
+    ]);
+
+    // 結果（データの定義に無い型は、型のコードだけでリンクしない）
+    test_equals('target unknown type', service_comment_target(['entry_id' => 4, 'contact_id' => null, 'type_code' => 'disabledtest', 'entry_code' => 'x']), [
+        'name' => 'disabledtest',
+        'url'  => null,
+    ]);
+
+    // 結果（お問い合わせのやりとり・対象なし）
+    test_equals('target contact', service_comment_target(['entry_id' => null, 'contact_id' => 5, 'type_code' => null, 'entry_code' => null]), [
+        'name' => 'お問い合わせ',
+        'url'  => '/admin/contact_view?id=5',
+    ]);
+    test_equals('target none', service_comment_target(['entry_id' => null, 'contact_id' => null, 'type_code' => null, 'entry_code' => null]), null);
+
+    // プラグインを元に戻す
+    if ($plugin_backup === null) {
+        unset($GLOBALS['plugin']);
+    } else {
+        $GLOBALS['plugin'] = $plugin_backup;
+    }
+}
+
 // トランザクションを終了
 db_rollback();
 

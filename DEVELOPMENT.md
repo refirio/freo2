@@ -987,6 +987,42 @@ $GLOBALS['plugin']['myplugin']['export'] = false;
 - 書いていないプラグインは、出力の画面で「対応しているか分かりません」と表示し、ページを出力しません。
 - 記事の一覧を返すときは、`service_export_select_published()`([app/services/export.php](app/services/export.php))で「全体に公開」のものだけを取得します。管理者がログインした状態で呼ばれるので、`service_entry_select_published()` では会員向けの記事まで入ります。
 
+**プラグインが持つデータ(独自の型や独自のテーブル)は、`data` に書きます。** 本体が持つデータ(エントリー・ページ・カテゴリーなど)は [app/config.php](app/config.php) の `data` に同じ形で並んでいて、本体は両方をまとめて使います。
+
+```php
+$GLOBALS['plugin']['myplugin']['data'] = [
+    // 型を持つデータ
+    'myitem' => [
+        'type'    => 'myitem',                // 型のコード
+        'name'    => 'マイアイテム',           // 名前
+        'list'    => '/admin/myitem',         // 一覧画面
+        'form'    => '/admin/myitem_form',    // 登録・編集画面（?id=<ID> を付けると編集）
+        'setting' => [                        // 型の設定が、プラグインの設定のどのキーにあるか
+            'use_approve'   => 'use_approve',
+            'use_pictures'  => 'use_pictures',
+            'use_thumbnail' => 'use_thumbnail',
+            'default_code'  => 'default_code',
+            'text_type'     => 'text_type',
+        ],
+    ],
+    // 型を持たないデータ（独自のテーブル）
+    'mytag' => [
+        'table' => 'myplugin_tags',           // テーブル名（操作ログに記録される名前）
+        'name'  => 'マイタグ',
+        'list'  => '/admin/mytag',
+        'form'  => '/admin/mytag_form',
+    ],
+];
+```
+
+- **書かなくても、プラグインは今までどおり動きます。** 本体の表示などに、そのプラグインのデータが加わらないだけです。どの項目も省略できます(無い画面の `list`・`form` は書きません)。
+- 本体は次のところで使います。
+  - ダッシュボード: 型を持つデータの件数のボックス(`name`・`list`。承認を使う設定(`setting` の `use_approve`)なら「未承認」、使わないなら「非公開」の件数も出す)
+  - コメントの一覧・詳細: コメント先の型の名前(`name`)と、公開側へのリンク
+- `form` と `setting` は、ほかのプラグインからも使えるように持っておく情報です(たとえば、AIから下書きを作るプラグインが、編集画面のURLや型の設定を知るのに使えます)。
+- まとめて取得するのは `app_data()`、型やテーブルから探すのは `app_data_type()`・`app_data_table()`、`setting` の値を読むのは `app_data_setting()` です([app/bootstrap.php](app/bootstrap.php))。`app_data_setting()` は、本体のデータなら本体の設定、プラグインのデータならそのプラグインの設定(保存されていなければ `setting_default`)から読みます。
+- 本体と同じコード(`entry` など)を書いても、本体の定義が優先されます。有効なプラグインの `data` だけが使われます。
+
 **プラグインの `config.php` では `app_config()` を使わず、そのまま代入してください**(`$GLOBALS['plugin']['myplugin']['option'] = [...]`)。`app_config()` は本体の設定を定数で上書きするための仕組みなので、本体と同じ定数名を書くと、**本体を上書きしたときにプラグインの値まで同じ配列に差し替わります。**
 
 ### 書くときのポイント

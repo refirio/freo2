@@ -231,3 +231,98 @@ function app_filesize($size)
 
     return number_format($size) . ' ' . $units[$index];
 }
+
+/**
+ * Return the definitions of data.
+ *
+ * @return array
+ */
+function app_data()
+{
+    // 本体の定義（plugin が null）
+    $data = [];
+    foreach ($GLOBALS['config']['data'] as $code => $definition) {
+        $data[$code] = $definition + ['plugin' => null];
+    }
+
+    // 有効なプラグインの定義（data を持たないプラグインは何も足さない。本体と同じコードは本体を優先する）
+    if (isset($GLOBALS['plugin']) && is_array($GLOBALS['plugin'])) {
+        foreach ($GLOBALS['plugin'] as $plugin_code => $plugin) {
+            if (empty($plugin['data']) || !is_array($plugin['data'])) {
+                continue;
+            }
+            foreach ($plugin['data'] as $code => $definition) {
+                if (isset($data[$code]) || !is_array($definition)) {
+                    continue;
+                }
+                $data[$code] = $definition + ['plugin' => $plugin_code];
+            }
+        }
+    }
+
+    return $data;
+}
+
+/**
+ * Return the definition of data by type.
+ *
+ * @param string $type
+ *
+ * @return array|null
+ */
+function app_data_type($type)
+{
+    foreach (app_data() as $code => $definition) {
+        if (isset($definition['type']) && $definition['type'] === $type) {
+            return $definition + ['code' => $code];
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Return the definition of data by table.
+ *
+ * @param string $table
+ *
+ * @return array|null
+ */
+function app_data_table($table)
+{
+    foreach (app_data() as $code => $definition) {
+        if (isset($definition['table']) && $definition['table'] === $table) {
+            return $definition + ['code' => $code];
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Return the setting of data.
+ *
+ * @param array  $definition
+ * @param string $key
+ * @param mixed  $default
+ *
+ * @return mixed
+ */
+function app_data_setting($definition, $key, $default = null)
+{
+    // setting に無い項目は既定値（設定のキーを書いていない、または設定が保存されていない）
+    if (!isset($definition['setting'][$key])) {
+        return $default;
+    }
+    $name = $definition['setting'][$key];
+
+    // 本体は本体の設定、プラグインはそのプラグインの設定から読む（保存されていなければ、プラグインの設定の初期値）
+    if (empty($definition['plugin'])) {
+        $setting = isset($GLOBALS['setting']) ? $GLOBALS['setting'] : [];
+    } else {
+        $plugin  = isset($GLOBALS['plugin'][$definition['plugin']]) ? $GLOBALS['plugin'][$definition['plugin']] : [];
+        $setting = (isset($plugin['setting']) ? $plugin['setting'] : []) + (isset($plugin['setting_default']) ? $plugin['setting_default'] : []);
+    }
+
+    return array_key_exists($name, $setting) ? $setting[$name] : $default;
+}

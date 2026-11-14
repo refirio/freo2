@@ -1,58 +1,45 @@
 <?php
 
-// エントリー数を取得
-$entry_count = model('select_entries', [
-    'select' => 'COUNT(DISTINCT entries.id) AS count',
-    'where'  => 'types.code = ' . db_escape('entry'),
-], [
-    'associate' => true,
-]);
-$_view['entry_count'] = $entry_count[0]['count'];
+// コンテンツの件数を取得（データの定義のうち、型を持つもの。承認を使う型は未承認、使わない型は非公開の件数も出す）
+$_view['contents'] = [];
+foreach (app_data() as $data) {
+    if (empty($data['type'])) {
+        continue;
+    }
 
-// エントリー（未承認）数を取得
-$entry_not_approved_count = model('select_entries', [
-    'select' => 'COUNT(DISTINCT entries.id) AS count',
-    'where'  => 'types.code = ' . db_escape('entry') . ' AND entries.approved = 0',
-], [
-    'associate' => true,
-]);
-$_view['entry_not_approved_count'] = $entry_not_approved_count[0]['count'];
+    $count = model('select_entries', [
+        'select' => 'COUNT(DISTINCT entries.id) AS count',
+        'where'  => [
+            'types.code = :type',
+            [
+                'type' => $data['type'],
+            ],
+        ],
+    ], [
+        'associate' => true,
+    ]);
 
-// エントリー（非公開）数を取得
-$entry_public_none_count = model('select_entries', [
-    'select' => 'COUNT(DISTINCT entries.id) AS count',
-    'where'  => 'types.code = ' . db_escape('entry') . ' AND entries.public = ' . db_escape('none'),
-], [
-    'associate' => true,
-]);
-$_view['entry_public_none_count'] = $entry_public_none_count[0]['count'];
+    $approve = (bool)app_data_setting($data, 'use_approve', false);
+    $other   = model('select_entries', [
+        'select' => 'COUNT(DISTINCT entries.id) AS count',
+        'where'  => [
+            'types.code = :type AND ' . ($approve ? 'entries.approved = 0' : 'entries.public = ' . db_escape('none')),
+            [
+                'type' => $data['type'],
+            ],
+        ],
+    ], [
+        'associate' => true,
+    ]);
 
-// ページ数を取得
-$page_count = model('select_entries', [
-    'select' => 'COUNT(DISTINCT entries.id) AS count',
-    'where'  => 'types.code = ' . db_escape('page'),
-], [
-    'associate' => true,
-]);
-$_view['page_count'] = $page_count[0]['count'];
-
-// ページ数（未承認）を取得
-$page_not_approved_count = model('select_entries', [
-    'select' => 'COUNT(DISTINCT entries.id) AS count',
-    'where'  => 'types.code = ' . db_escape('page') . ' AND entries.approved = 0',
-], [
-    'associate' => true,
-]);
-$_view['page_not_approved_count'] = $page_not_approved_count[0]['count'];
-
-// ページ数（非公開）を取得
-$page_public_none_count = model('select_entries', [
-    'select' => 'COUNT(DISTINCT entries.id) AS count',
-    'where'  => 'types.code = ' . db_escape('page') . ' AND entries.public = ' . db_escape('none'),
-], [
-    'associate' => true,
-]);
-$_view['page_public_none_count'] = $page_public_none_count[0]['count'];
+    $_view['contents'][] = [
+        'name'    => $data['name'],
+        'list'    => isset($data['list']) ? $data['list'] : null,
+        'count'   => $count[0]['count'],
+        'approve' => $approve,
+        'other'   => $other[0]['count'],
+    ];
+}
 
 // お問い合わせ数を取得
 $contact_count = model('select_contacts', [

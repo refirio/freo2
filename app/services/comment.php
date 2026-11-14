@@ -1,6 +1,47 @@
 <?php
 
 import('app/services/log.php');
+import('app/services/entry.php');
+
+/**
+ * コメントの対象を取得
+ *
+ * エントリーへのコメントは型の名前（データの定義）と公開側のURL、お問い合わせのやりとりは管理画面の詳細のURL
+ * 型がデータの定義に無いとき（無効にしたプラグインの型など）は、型のコードだけでURLは無し
+ *
+ * @param array $comment associate 付きで取得したコメント
+ *
+ * @return array|null name と url（url は MAIN_FILE を付けずに返す。対象が無ければ null）
+ */
+function service_comment_target($comment)
+{
+    if (!empty($comment['entry_id']) && $comment['type_code'] !== null) {
+        $data = app_data_type($comment['type_code']);
+        if ($data === null) {
+            return [
+                'name' => $comment['type_code'],
+                'url'  => null,
+            ];
+        }
+
+        return [
+            'name' => $data['name'],
+            'url'  => service_entry_url([
+                'type_code' => $comment['type_code'],
+                'code'      => $comment['entry_code'],
+            ]),
+        ];
+    }
+
+    if (!empty($comment['contact_id'])) {
+        return [
+            'name' => 'お問い合わせ',
+            'url'  => '/admin/contact_view?id=' . intval($comment['contact_id']),
+        ];
+    }
+
+    return null;
+}
 
 /**
  * コメントを受け付けるか

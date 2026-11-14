@@ -23,22 +23,16 @@
                 <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
                 <h3 class="h5">コンテンツ</h3>
                 <div class="row">
+                    <?php foreach ($_view['contents'] as $content) : ?>
                     <div class="col-md-3">
                         <div class="card shadow-sm mb-3">
-                            <div class="card-header">エントリー数</div>
+                            <div class="card-header"><?php h($content['name']) ?>数</div>
                             <div class="card-body text-center">
-                                <span class="fs-4"><a href="<?php t(MAIN_FILE) ?>/admin/entry"><?php h($_view['entry_count']) ?></a></span><?php if ($GLOBALS['setting']['entry_use_approve']) : ?> / 未承認 <?php h($_view['entry_not_approved_count']) ?><?php else :?> / 非公開 <?php h($_view['page_not_approved_count']) ?><?php endif ?>
+                                <span class="fs-4"><?php if ($content['list'] !== null) : ?><a href="<?php t(MAIN_FILE) ?><?php t($content['list']) ?>"><?php h($content['count']) ?></a><?php else : ?><?php h($content['count']) ?><?php endif ?></span><?php if ($content['approve']) : ?> / 未承認 <?php h($content['other']) ?><?php else :?> / 非公開 <?php h($content['other']) ?><?php endif ?>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="card shadow-sm mb-3">
-                            <div class="card-header">ページ数</div>
-                            <div class="card-body text-center">
-                                <span class="fs-4"><a href="<?php t(MAIN_FILE) ?>/admin/page"><?php h($_view['page_count']) ?></a></span><?php if ($GLOBALS['setting']['page_use_approve']) : ?> / 未承認 <?php h($_view['page_not_approved_count']) ?><?php else :?> / 非公開 <?php h($_view['page_public_none_count']) ?><?php endif ?>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach ?>
                 </div>
                 <?php endif ?>
                 <h3 class="h5">コミュニケーション</h3>
