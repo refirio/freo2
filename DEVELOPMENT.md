@@ -1250,7 +1250,7 @@ CLIで実行するときは、設定ファイルやマイグレーションの�
 
 書くときの決まりごとです。
 
-- **ファイル名がそのままテスト名になります。** 対象に合わせて `model_<テーブル名>`・`service_<名前>`・`module_<モジュール名>` とします。
+- **ファイル名がそのままテスト名になります。** 対象に合わせて `model_<テーブル名>`・`service_<名前>`・`module_<モジュール名>` とします。`app/bootstrap.php` の関数は `bootstrap` です。
 - **プラグインのテストは、頭にプラグインコードを付けます**(`plugin_myplugin_model_myplugin_items`・`plugin_myplugin_service_myplugin_item`)。一覧で本体のテストと混ざらないようにするためです。プラグインのモデルは `model()` では読み込めないので `import('plugins/myplugin/app/models/myplugin_items.php')` と書き、検証が選択肢(`$GLOBALS['plugin'][<コード>]['option']`)を参照するなら `import('plugins/myplugin/config.php')` も読み込みます。**プラグインの設定(`['setting']`)は画面からしか入らない**ので、設定で分岐する処理はテスト側で固定します。
 - **冒頭と末尾で対象のテーブルを `TRUNCATE` します。** `TRUNCATE` は暗黙のコミットが走るため、`db_rollback()` では元に戻りません。
 - **前提データのあるテーブルは `TRUNCATE` しないでください。** `users`(`admin`)・`authorities`・`types`・`settings`・`widgets` はマイグレーションで入るデータが前提になっているので、テスト用に作った行だけを `DELETE` します。`plugins` も同じです(テスト用データベースにインストールしたプラグインを、プラグインのシナリオが前提にするため)。
