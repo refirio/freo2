@@ -137,7 +137,7 @@
                                 </div>
                             </div>
                             <?php endif ?>
-                            <?php if ($GLOBALS['setting']['entry_use_thumbnail']) : ?>
+                            <?php if ($GLOBALS['setting']['page_use_thumbnail']) : ?>
                             <div class="form-group mb-2">
                                 <label class="fw-bold">サムネイル</label>
                                 <div class="upload" id="thumbnail" data-upload="<?php t(MAIN_FILE) ?>/admin/file_upload?_type=json&amp;target=entry&amp;key=thumbnail&amp;format=image">
