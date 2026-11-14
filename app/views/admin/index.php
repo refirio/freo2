@@ -20,45 +20,21 @@
                 <?php if ($GLOBALS['setting']['admin_description']) : ?>
                 <p><?php h($GLOBALS['setting']['admin_description']) ?></p>
                 <?php endif ?>
-                <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
-                <h3 class="h5">コンテンツ</h3>
+                <?php foreach ($_view['dashboard'] as $group) : ?>
+                <h3 class="h5"><?php h($group['name']) ?></h3>
                 <div class="row">
-                    <?php foreach ($_view['contents'] as $content) : ?>
+                    <?php foreach ($group['boxes'] as $box) : ?>
                     <div class="col-md-3">
                         <div class="card shadow-sm mb-3">
-                            <div class="card-header"><?php h($content['name']) ?>数</div>
+                            <div class="card-header"><?php h($box['name']) ?>数</div>
                             <div class="card-body text-center">
-                                <span class="fs-4"><?php if ($content['list'] !== null) : ?><a href="<?php t(MAIN_FILE) ?><?php t($content['list']) ?>"><?php h($content['count']) ?></a><?php else : ?><?php h($content['count']) ?><?php endif ?></span><?php if ($content['approve']) : ?> / 未承認 <?php h($content['other']) ?><?php else :?> / 非公開 <?php h($content['other']) ?><?php endif ?>
+                                <span class="fs-4"><?php if ($box['list'] !== null) : ?><a href="<?php t(MAIN_FILE) ?><?php t($box['list']) ?>"><?php h($box['count']) ?></a><?php else : ?><?php h($box['count']) ?><?php endif ?></span><?php if ($box['label'] !== null) : ?> / <?php h($box['label']) ?> <?php h($box['other']) ?><?php endif ?>
                             </div>
                         </div>
                     </div>
                     <?php endforeach ?>
                 </div>
-                <?php endif ?>
-                <h3 class="h5">コミュニケーション</h3>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="card shadow-sm mb-3">
-                            <div class="card-header">お問い合わせ数</div>
-                            <div class="card-body text-center">
-                                <span class="fs-4"><a href="<?php t(MAIN_FILE) ?>/admin/contact"><?php h($_view['contact_count']) ?></a></span> / 未対応 <?php h($_view['contact_status_opened_count']) ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php if ($GLOBALS['authority']['power'] >= 3) : ?>
-                <h3 class="h5">システム</h3>
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="card shadow-sm mb-3">
-                            <div class="card-header">ユーザー数</div>
-                            <div class="card-body text-center">
-                                <span class="fs-4"><a href="<?php t(MAIN_FILE) ?>/admin/user"><?php h($_view['user_count']) ?></a></span> / 無効 <?php h($_view['user_enabled_count']) ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <?php endif ?>
+                <?php endforeach ?>
             </div>
         </div>
         <?php e($_view['widget_sets']['admin_home']) ?>

@@ -282,24 +282,6 @@ function app_data_type($type)
 }
 
 /**
- * Return the definition of data by table.
- *
- * @param string $table
- *
- * @return array|null
- */
-function app_data_table($table)
-{
-    foreach (app_data() as $code => $definition) {
-        if (isset($definition['table']) && $definition['table'] === $table) {
-            return $definition + ['code' => $code];
-        }
-    }
-
-    return null;
-}
-
-/**
  * Return the setting of data.
  *
  * @param array  $definition

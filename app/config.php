@@ -331,8 +331,7 @@ $GLOBALS['config']['recaptcha_secret_key'] = app_config('APP_RECAPTCHA_SECRET_KE
 
 /*
  * データの定義（本体が持つデータ。プラグインは config.php の data に同じ形で書く）
- * type: 型のコード（型を持つデータ）、table: テーブル名（型を持たないデータ）
- * name: 名前、list: 一覧画面、edit: 編集画面（?id=<ID> を付けて開く。無い画面は書かない）
+ * type: 型のコード、name: 名前、list: 一覧画面、form: 登録・編集画面（?id=<ID> を付けると編集。無い画面は書かない）
  * setting: 型の設定のキー（本体は $GLOBALS['setting']、プラグインはそのプラグインの設定から読む）
  */
 $GLOBALS['config']['data'] = app_config('APP_DATA', [
@@ -340,7 +339,7 @@ $GLOBALS['config']['data'] = app_config('APP_DATA', [
         'type'    => 'entry',
         'name'    => 'エントリー',
         'list'    => '/admin/entry',
-        'form'    =>'/admin/entry_form',
+        'form'    => '/admin/entry_form',
         'setting' => [
             'use_approve'   => 'entry_use_approve',
             'use_pictures'  => 'entry_use_pictures',
@@ -353,7 +352,7 @@ $GLOBALS['config']['data'] = app_config('APP_DATA', [
         'type'    => 'page',
         'name'    => 'ページ',
         'list'    => '/admin/page',
-        'form'    =>'/admin/page_form',
+        'form'    => '/admin/page_form',
         'setting' => [
             'use_approve'   => 'page_use_approve',
             'use_pictures'  => 'page_use_pictures',
@@ -361,69 +360,6 @@ $GLOBALS['config']['data'] = app_config('APP_DATA', [
             'default_code'  => 'page_default_code',
             'text_type'     => 'page_text_type',
         ],
-    ],
-    'category'  => [
-        'table' => 'categories',
-        'name'  => 'カテゴリー',
-        'list'  => '/admin/category',
-        'form'  =>'/admin/category_form',
-    ],
-    'field'     => [
-        'table' => 'fields',
-        'name'  => 'フィールド',
-        'list'  => '/admin/field',
-        'form'  =>'/admin/field_form',
-    ],
-    'menu'      => [
-        'table' => 'menus',
-        'name'  => 'メニュー',
-        'list'  => '/admin/menu',
-        'form'  =>'/admin/menu_form',
-    ],
-    'widget'    => [
-        'table' => 'widgets',
-        'name'  => 'ウィジェット',
-        'list'  => '/admin/widget',
-        'form'  =>'/admin/widget_form',
-    ],
-    'contact'   => [
-        'table' => 'contacts',
-        'name'  => 'お問い合わせ',
-        'list'  => '/admin/contact',
-        'form'  =>'/admin/contact_form',
-    ],
-    'comment'   => [
-        'table' => 'comments',
-        'name'  => 'コメント',
-        'list'  => '/admin/comment',
-        'form'  =>'/admin/comment_form',
-    ],
-    'user'      => [
-        'table' => 'users',
-        'name'  => 'ユーザー',
-        'list'  => '/admin/user',
-        'form'  =>'/admin/user_form',
-    ],
-    'attribute' => [
-        'table' => 'attributes',
-        'name'  => '属性',
-        'list'  => '/admin/attribute',
-        'form'  =>'/admin/attribute_form',
-    ],
-    'setting'   => [
-        'table' => 'settings',
-        'name'  => '設定',
-        'list'  => '/admin/setting',
-    ],
-    'plugin'    => [
-        'table' => 'plugins',
-        'name'  => 'プラグイン',
-        'list'  => '/admin/plugin',
-    ],
-    'theme'     => [
-        'table' => 'themes',
-        'name'  => 'テーマ',
-        'list'  => '/admin/theme',
     ],
 ]);
 

@@ -29,7 +29,7 @@ $setting_backup = isset($GLOBALS['setting']) ? $GLOBALS['setting'] : null;
     test_equals('data body only', array_keys($data), array_keys($GLOBALS['config']['data']));
     test_equals('data body entry', $data['entry']['type'], 'entry');
     test_equals('data body plugin', $data['entry']['plugin'], null);
-    test_equals('data body category', $data['category']['table'], 'categories');
+    test_equals('data body page', $data['page']['type'], 'page');
 }
 
 // データの定義の取得テスト（プラグインが無いとき）
@@ -66,9 +66,9 @@ $setting_backup = isset($GLOBALS['setting']) ? $GLOBALS['setting'] : null;
                     'name' => '本体と同じコード',
                 ],
                 'broken'      => 'not array',
-                'ruletest'    => [
-                    'table' => 'ruletest_rules',
-                    'name'  => 'テストのルール',
+                'nosetting'   => [
+                    'type' => 'nosetting',
+                    'name' => '設定の無い型',
                 ],
             ],
             'setting'         => [
@@ -91,23 +91,19 @@ $setting_backup = isset($GLOBALS['setting']) ? $GLOBALS['setting'] : null;
     // 結果
     test_equals('data plugin added', $data['gallerytest']['name'], 'テストギャラリー');
     test_equals('data plugin code', $data['gallerytest']['plugin'], 'gallerytest');
-    test_equals('data plugin table', $data['ruletest']['plugin'], 'gallerytest');
+    test_equals('data plugin second', $data['nosetting']['plugin'], 'gallerytest');
     test_equals('data plugin cannot override body', $data['entry']['type'], 'entry');
     test_array_not_haskey('data plugin broken definition', $data, 'broken');
     test_equals('data plugin count', count($data), count($GLOBALS['config']['data']) + 2);
 }
 
-// 型・テーブルからの取得テスト
+// 型からの取得テスト
 {
     // 結果
     test_equals('data type body', app_data_type('page')['code'], 'page');
     test_equals('data type plugin', app_data_type('gallerytest')['code'], 'gallerytest');
     test_equals('data type plugin form', app_data_type('gallerytest')['form'], '/admin/gallerytest_form');
     test_equals('data type unknown', app_data_type('nothing'), null);
-    test_equals('data table body', app_data_table('categories')['name'], 'カテゴリー');
-    test_equals('data table plugin', app_data_table('ruletest_rules')['code'], 'ruletest');
-    test_equals('data table unknown', app_data_table('nothing'), null);
-    test_equals('data table entries', app_data_table('entries'), null);
 }
 
 // 設定の取得テスト
@@ -132,7 +128,7 @@ $setting_backup = isset($GLOBALS['setting']) ? $GLOBALS['setting'] : null;
 
     // 結果（setting に書いていない項目は既定値）
     test_equals('data setting not defined', app_data_setting($test_gallery, 'use_pictures', false), false);
-    test_equals('data setting no setting', app_data_setting(app_data_table('categories'), 'use_approve', 0), 0);
+    test_equals('data setting no setting', app_data_setting(app_data_type('nosetting'), 'use_approve', 0), 0);
 }
 
 // プラグインと設定を元に戻す
