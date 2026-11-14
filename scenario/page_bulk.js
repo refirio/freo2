@@ -22,7 +22,7 @@ var bulkCheckbox = function(code) {
     return pageRow(code).find('input.bulk');
 };
 
-/* チェックボックスを切り替えて、選択を控える Ajax が終わってからコールバックを実行する */
+/* チェックボックスを切り替えて、選択を控えるAjaxが終わってからコールバックを実行する */
 var bulkCheck = function(codes, checked, callback) {
     for (var i = 0; i < codes.length; i++) {
         if (bulkCheckbox(codes[i]).length !== 1) {

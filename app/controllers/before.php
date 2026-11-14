@@ -21,7 +21,7 @@ if ($GLOBALS['config']['hsts_max_age'] > 0 && ssl(true)) {
     header('Strict-Transport-Security: max-age=' . intval($GLOBALS['config']['hsts_max_age']));
 }
 
-// DB の更新待ち（未実行のマイグレーションがあれば、更新が済むまで通常の画面を出さない。テーブルが新しいコードと合わないことがあるため、設定などを読む前に判定する）
+// DBの更新待ち（未実行のマイグレーションがあれば、更新が済むまで通常の画面を出さない。テーブルが新しいコードと合わないことがあるため、設定などを読む前に判定する）
 if (!empty(service_update_pending()) && !($_REQUEST['_mode'] === 'auth' && $_REQUEST['_work'] === 'index')) {
     if (service_update_admin()) {
         if ($_REQUEST['_mode'] === 'admin' && $_REQUEST['_work'] === 'update') {

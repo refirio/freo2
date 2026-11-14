@@ -133,7 +133,7 @@ model('insert_category_sets', [
     test_array_not_haskey('urls file none', $export_files, '/file/entry/export_all2');
     test_array_not_haskey('urls page omission', $export_files, '/export_page');
 
-    // 結果（RSS と 404 のページ）
+    // 結果（RSSと404のページ）
     test_equals('urls feed', $export_files['/entry/feed'], 'entry/feed.xml');
     test_equals('urls 404', array_search('404.html', $export_files), '/export-not-found/');
 
@@ -319,7 +319,7 @@ model('insert_category_sets', [
     test_equals('convert path (protocol relative)', service_export_convert('<script src="//cdn.example.com/a.js">', $export_replaces), '<script src="//cdn.example.com/a.js">');
     test_equals('convert path (text)', service_export_convert('<p>/entry/ を開く</p>', $export_replaces), '<p>/entry/ を開く</p>');
 
-    // 結果（RSS は feed.xml。属性とタグの中だけ）
+    // 結果（RSSは feed.xml。属性とタグの中だけ）
     test_equals('convert feed', service_export_convert('<link href="http://admin.example.com/entry/feed">', $export_replaces), '<link href="https://static.example.com/sub/entry/feed.xml">');
     test_equals('convert feed (xml)', service_export_convert('<docs>http://admin.example.com/entry/feed</docs>', $export_replaces), '<docs>https://static.example.com/sub/entry/feed.xml</docs>');
     test_equals('convert feed (text)', service_export_convert('<p>/entry/feed から</p>', $export_replaces), '<p>/entry/feed から</p>');
@@ -331,7 +331,7 @@ model('insert_category_sets', [
     test_equals('convert path (to)', service_export_convert('<a href="/entry/">', $export_replaces), '<a href="/$1\\/entry/">');
 }
 
-// ページの描画テスト（コマンドラインから出力するとき。別のプロセスで描画するので、CLI で実行したときだけ確認する）
+// ページの描画テスト（コマンドラインから出力するとき。別のプロセスで描画するので、CLIで実行したときだけ確認する）
 if (php_sapi_name() !== 'cli') {
     test_skip('render tests', 'CLI で実行したときだけ確認します。');
 } else {
@@ -345,7 +345,7 @@ if (php_sapi_name() !== 'cli') {
     $export_body       = service_export_render(str_repeat('b', 32), '/');
     $export_token_body = service_export_render($export_token, '/');
 
-    // 結果（画面の HTML を返す。出力中でなければログインのメニューが出て、出力中なら出ない）
+    // 結果（画面のHTMLを返す。出力中でなければログインのメニューが出て、出力中なら出ない）
     test_contains('render', (string)$export_body, '</html>');
     test_contains('render (not export)', (string)$export_body, '/auth/"');
     test_contains('render (export)', (string)$export_token_body, '</html>');
@@ -366,7 +366,7 @@ if (php_sapi_name() !== 'cli') {
 
     directory_mkdir($export_dir . 'html/');
 
-    // 結果（HTML と XML だけ。ディレクトリは作る）
+    // 結果（HTMLとXMLだけ。ディレクトリは作る）
     test_equals('save', service_export_save($export_token, 'entry/detail/a/index.html', 'a'), true);
     test_equals('save content', file_get_contents($export_dir . 'html/entry/detail/a/index.html'), 'a');
     test_equals('save xml', service_export_save($export_token, 'entry/feed.xml', 'b'), true);
@@ -375,7 +375,7 @@ if (php_sapi_name() !== 'cli') {
     test_equals('save absolute', service_export_save($export_token, '/a.html', 'c'), false);
     test_equals('save outside', is_file($export_dir . 'a.html'), false);
 
-    // 結果（ディレクトリの複製。. で始まるファイルと PHP のファイルは複製しない）
+    // 結果（ディレクトリの複製。. で始まるファイルとPHPのファイルは複製しない）
     directory_mkdir($export_dir . 'from/sub/');
     file_put_contents($export_dir . 'from/a.css', 'a');
     file_put_contents($export_dir . 'from/sub/b.js', 'b');
@@ -387,7 +387,7 @@ if (php_sapi_name() !== 'cli') {
     test_equals('copy dot', is_file($export_dir . 'to/.htaccess'), false);
     test_equals('copy php', is_file($export_dir . 'to/c.php'), false);
 
-    // 結果（ZIP にまとめる）
+    // 結果（ZIPにまとめる）
     test_equals('zip', service_export_zip($export_token), true);
 
     $zip = new ZipArchive();

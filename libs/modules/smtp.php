@@ -17,7 +17,7 @@ import('libs/modules/mail.php');
  * @param string $message
  * @param array  $headers
  * @param array  $files
- * @param string $envelope 送信元のメールアドレス（エンベロープ）。省略すると From ヘッダーのアドレス
+ * @param string $envelope 送信元のメールアドレス（エンベロープ）。省略するとFromヘッダーのアドレス
  *
  * @return bool
  */
@@ -26,7 +26,7 @@ function smtp_send($config, $to, $subject, $message, $headers = [], $files = [],
     // mail() で送るときと同じく組み立てる
     $mail = mail_build($to, $subject, $message, $headers, $files);
 
-    // From ヘッダーのメールアドレス（「名前 <アドレス>」からアドレスを取り出す）
+    // Fromヘッダーのメールアドレス（「名前 <アドレス>」からアドレスを取り出す）
     if (preg_match('/<([^>]*)>/', $mail['headers']['From'], $matches)) {
         $from = $matches[1];
     } else {
@@ -135,7 +135,7 @@ function smtp_session($socket, $host, $encryption, $username, $password, $from, 
         return false;
     }
 
-    // STARTTLS で暗号化し、挨拶をやり直す
+    // STARTTLSで暗号化し、挨拶をやり直す
     if ($encryption === 'tls') {
         if (smtp_command($socket, 'STARTTLS') !== 220) {
             return false;
@@ -152,7 +152,7 @@ function smtp_session($socket, $host, $encryption, $username, $password, $from, 
         }
     }
 
-    // 認証（サーバーが PLAIN に対応していれば PLAIN、そうでなければ LOGIN）
+    // 認証（サーバーがPLAINに対応していればPLAIN、そうでなければLOGIN）
     if ($username !== '') {
         if (preg_match('/^AUTH\s.*\bPLAIN\b/im', $extensions)) {
             if (smtp_command($socket, 'AUTH PLAIN ' . base64_encode("\0" . $username . "\0" . $password)) !== 235) {
@@ -181,7 +181,7 @@ function smtp_session($socket, $host, $encryption, $username, $password, $from, 
         return false;
     }
 
-    // 本文（改行を CRLF にそろえ、行頭の「.」は「..」にする）
+    // 本文（改行をCRLFにそろえ、行頭の「.」は「..」にする）
     if (smtp_command($socket, 'DATA') !== 354) {
         return false;
     }
@@ -269,7 +269,7 @@ function smtp_response($socket, &$response = null)
 }
 
 /**
- * 直前の PHP の警告（証明書の検証の失敗など、@ で抑えた警告の理由）
+ * 直前のPHPの警告（証明書の検証の失敗など、@ で抑えた警告の理由）
  *
  * @return string
  */

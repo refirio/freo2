@@ -9,7 +9,7 @@ if (!isset($_GET['_test'])) {
     service_coverage_start();
 }
 
-// 実際のストレージ（S3 など）に書き込まないよう、テスト中はファイルに固定する
+// 実際のストレージ（S3など）に書き込まないよう、テスト中はファイルに固定する
 $GLOBALS['config']['storage_type'] = 'file';
 
 // ライブラリを読み込み
@@ -66,7 +66,7 @@ foreach ([
     $japanese = service_media_name_valid('写真.jpg');
     $space    = service_media_name_valid('my photo.jpg');
 
-    // 結果（S3 でそのままキーにすると S3Exception になるため、許可されないこと）
+    // 結果（S3でそのままキーにするとS3Exceptionになるため、許可されないこと）
     test_equals('valid media name (japanese)', $japanese, false);
     test_equals('valid media name (space)', $space, false);
 }
@@ -129,7 +129,7 @@ foreach ([
 }
 
 if (!$gd) {
-    // サムネイルの確認は飛ばす（テスト用の画像の作成も GD に依存するため）
+    // サムネイルの確認は飛ばす（テスト用の画像の作成もGDに依存するため）
     test_skip('thumbnail tests', 'GDが有効ではありません。');
 } else {
     // 一時ファイルが残らないことを確認するため、テスト開始時の数を控えておく
@@ -148,7 +148,7 @@ if (!$gd) {
         // 作成
         $result = service_media_thumbnail_create($directory . '/landscape.jpg');
 
-        // 結果（縦横比を保って 400×400 に収まること）
+        // 結果（縦横比を保って400×400に収まること）
         test_equals('create thumbnail landscape', $result, true);
         test_equals('create thumbnail landscape size', test_media_size($thumbnail_directory . 'landscape.jpg'), [400, 300]);
 
@@ -161,7 +161,7 @@ if (!$gd) {
         // 作成
         $result = service_media_thumbnail_create($directory . '/portrait.png');
 
-        // 結果（幅は 300 × 400 / 900 = 133.3 を丸める）
+        // 結果（幅は300 × 400 / 900 = 133.3 を丸める）
         test_equals('create thumbnail portrait', $result, true);
         test_equals('create thumbnail portrait size', test_media_size($thumbnail_directory . 'portrait.png'), [133, 400]);
     }
@@ -217,7 +217,7 @@ if (!$gd) {
 
     // サムネイルの作成（メモリ不足）テスト
     {
-        // データ（展開に約 36MB 必要な画像を作成してから、メモリの上限を現在の使用量 + 32MB に下げる）
+        // データ（展開に約36MB必要な画像を作成してから、メモリの上限を現在の使用量 + 32MBに下げる）
         test_media_image($media_directory . 'large.jpg', 3000, 3000);
 
         $memory_limit = ini_get('memory_limit');
@@ -270,7 +270,7 @@ if (!$gd) {
         // 削除
         $result = service_media_thumbnail_remove($directory . '/text.txt');
 
-        // 結果（Warning を出さずに成功すること）
+        // 結果（Warningを出さずに成功すること）
         test_equals('remove thumbnail nothing', $result, true);
     }
 

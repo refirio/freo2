@@ -14,7 +14,7 @@ if (!isset($_GET['_test'])) {
 import('libs/modules/loader.php');
 
 // テスト用のファイルを作成
-// パスは公開ディレクトリ（index.php のある場所）からの相対パスで、CLI もそこで実行する
+// パスは公開ディレクトリ（index.php のある場所）からの相対パスで、CLIもそこで実行する
 $test_file = $GLOBALS['config']['file_target']['temp'] . 'test_loader.css';
 
 file_put_contents($test_file, 'body { color: #000000; }');

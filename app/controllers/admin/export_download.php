@@ -2,7 +2,7 @@
 
 import('app/services/export.php');
 
-// 出力した ZIP ファイルを取得
+// 出力したZIPファイルを取得
 if (empty($_SESSION['export']['token'])) {
     error('出力したファイルが見つかりません。');
 }

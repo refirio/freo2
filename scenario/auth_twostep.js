@@ -7,7 +7,7 @@ var scenarioMember = {
     authority:    'ゲスト'
 };
 
-/* メールから読み取ったコードの控え（メールを見に行くとコードの画面には戻れないため、sessionStorage に置く） */
+/* メールから読み取ったコードの控え（メールを見に行くとコードの画面には戻れないため、sessionStorageに置く） */
 var scenarioKeyCode = 'scenario_twostep_code';
 
 /* ユーザー一覧から、ユーザー名で対象の行を取得する（メールアドレスの列も code なので先頭の td だけを見る） */
@@ -143,7 +143,7 @@ test.scenario = [
         test.visit('/auth/');
     },
     // 正しいコードを送り、このブラウザを信頼する
-    // （コードの画面は POST の結果なので、メールを見に行くと戻れない。認証待ちの状態はセッションに残っているので、同じ内容のフォームを組み立てて送る）
+    // （コードの画面はPOSTの結果なので、メールを見に行くと戻れない。認証待ちの状態はセッションに残っているので、同じ内容のフォームを組み立てて送る）
     function() {
         var code  = sessionStorage.getItem(scenarioKeyCode);
         var token = $('form input[name="_token"]').first().val();

@@ -7,9 +7,9 @@ if (!$GLOBALS['setting']['export_use_html']) {
     error('設定「HTML出力」が有効ではありません。');
 }
 
-// 出力先（ZIP ファイル）
+// 出力先（ZIPファイル）
 if (empty($_GET['zip']) || !is_string($_GET['zip']) || !preg_match('/\.zip$/i', $_GET['zip'])) {
-    error('出力先の ZIP ファイルを指定してください。（例: php index.php "/cli/export?zip=/path/to/export.zip"）');
+    error('出力先のZIPファイルを指定してください。（例: php index.php "/cli/export?zip=/path/to/export.zip"）');
 }
 if (!is_dir(dirname($_GET['zip'])) || !is_writable(dirname($_GET['zip']))) {
     error('出力先のディレクトリに書き込めません。');
@@ -44,7 +44,7 @@ foreach ($export['urls'] as $index => $url) {
     echo '[' . ($index + 1) . '/' . count($export['urls']) . '] ' . $url['url'] . "\n";
 }
 
-// 静的なファイルを複製して、ZIP にまとめる
+// 静的なファイルを複製して、ZIPにまとめる
 if (!service_export_static($export['token'])) {
     error('静的なファイルを複製できません。');
 }

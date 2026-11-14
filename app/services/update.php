@@ -42,7 +42,7 @@ function service_update_roots()
 
 /**
  * 削除済みファイルの一覧の取得
- * （リリースの ZIP に入っている app/removed_files.txt。形式は sha256sum の出力と同じで、1行に「ハッシュ、空白2つ、パス」）
+ * （リリースのZIPに入っている app/removed_files.txt。形式は sha256sum の出力と同じで、1行に「ハッシュ、空白2つ、パス」）
  *
  * @param string|null $file
  *
@@ -87,7 +87,7 @@ function service_update_removed_path($path)
         return false;
     }
 
-    // アップロードしたファイル、Composer で入れたライブラリ、同梱していないプラグイン・テーマは対象外
+    // アップロードしたファイル、Composerで入れたライブラリ、同梱していないプラグイン・テーマは対象外
     if (preg_match('/^(files|libs\/vendor)\//', $path) || preg_match('/^(plugins|themes)\/(?!sample\/)/', $path)) {
         return false;
     }
@@ -97,7 +97,7 @@ function service_update_removed_path($path)
 
 /**
  * ファイルの内容のハッシュ
- * （改行コードの違いで判定が変わらないよう、CRLF を LF にそろえてから計算する）
+ * （改行コードの違いで判定が変わらないよう、CRLFをLFにそろえてから計算する）
  *
  * @param string $file
  *
@@ -190,7 +190,7 @@ function service_update_remove($list = null, $roots = null)
 }
 
 /**
- * DB の更新
+ * DBの更新
  * （最初に失敗したところで止まる。戻り値の最後の要素の error が null でなければ失敗）
  *
  * @param array $targets
@@ -209,7 +209,7 @@ function service_update_migrate($targets)
 }
 
 /**
- * DB のバックアップをダウンロードさせる
+ * DBのバックアップをダウンロードさせる
  * （サーバーには保存しない。呼ぶとダウンロードの応答を返して終了する）
  *
  * @return void
@@ -225,7 +225,7 @@ function service_update_backup()
 }
 
 /**
- * DB の更新に失敗したか
+ * DBの更新に失敗したか
  *
  * @param array $results
  *
@@ -242,7 +242,7 @@ function service_update_failed($results)
 
 /**
  * 更新できる管理者がログインしているか
- * （DB の更新が済むまで、テーブルが新しいコードと合わないことがあるので、読む列はユーザーの有効状態と権限の強さだけにする）
+ * （DBの更新が済むまで、テーブルが新しいコードと合わないことがあるので、読む列はユーザーの有効状態と権限の強さだけにする）
  *
  * @return bool
  */

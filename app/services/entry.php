@@ -307,7 +307,7 @@ function service_entry_file_published($target, $key, $name)
 /**
  * 公開側でファイルを出力
  *
- * /storage/<対象>/<キー>/<ファイル名> のコントローラーから呼ぶ。表示できなければ 404 で終了する
+ * /storage/<対象>/<キー>/<ファイル名> のコントローラーから呼ぶ。表示できなければ404で終了する
  *
  * @param string $target
  *
@@ -329,7 +329,7 @@ function service_entry_file_output($target)
         }
     }
 
-    // 表示できないときは、ファイルがあるかどうかも分からないよう、同じ 404 にする（画像の取得が多いので、画面は組み立てない）
+    // 表示できないときは、ファイルがあるかどうかも分からないよう、同じ404にする（画像の取得が多いので、画面は組み立てない）
     header('HTTP/1.0 404 Not Found');
     header('Content-Type: text/plain; charset=' . MAIN_CHARSET);
 

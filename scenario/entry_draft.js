@@ -10,7 +10,7 @@ var scenarioEntry = {
 var scenarioTitleEdited  = 'シナリオで書きかけたタイトル';
 var scenarioTitleEdited2 = 'ログアウト前に書きかけたタイトル';
 
-/* 一時保存のキーを控える場所（ページをまたいで使うため sessionStorage に置く） */
+/* 一時保存のキーを控える場所（ページをまたいで使うためsessionStorageに置く） */
 var scenarioKeyStorage = 'scenario_entry_draft';
 
 /* エントリー一覧から、コードで対象の行を取得する */
@@ -60,13 +60,13 @@ var fillText = function(html, callback) {
     }, 'WYSIWYGエディタ（CKEditor）が初期化されませんでした。CDNから読み込めているか確認してください。');
 };
 
-/* 復元の確認を出すかの判定は CKEditor の準備ができてから行われるので、それを待ってからコールバックを実行する */
+/* 復元の確認を出すかの判定はCKEditorの準備ができてから行われるので、それを待ってからコールバックを実行する */
 var whenReady = function(callback) {
     if (!$('form.register textarea[name="text"]').hasClass('editor')) {
         return callback();
     }
 
-    // admin.js がインスタンスを保持した時点で、判定（Promise の後続処理）も済んでいる
+    // admin.js がインスタンスを保持した時点で、判定（Promiseの後続処理）も済んでいる
     return test.wait(function() {
         return window.text != null && typeof window.text.setData === 'function';
     }, callback, 'WYSIWYGエディタ（CKEditor）が初期化されませんでした。CDNから読み込めているか確認してください。');

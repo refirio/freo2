@@ -5,7 +5,7 @@ freo（フレオ）は、PHPで作成されたコンテンツ管理システム�
 
 - 公式サイト: https://freo.jp/freo2/
 
-> **開発中のバージョンです。** freo2 は現在アルファ版で、機能や画面は今後変わることがあります。
+> **開発中のバージョンです。** freo2は現在アルファ版で、機能や画面は今後変わることがあります。
 
 ## 特徴
 
@@ -15,14 +15,14 @@ freo（フレオ）は、PHPで作成されたコンテンツ管理システム�
 
 ## ドキュメント
 
-- [OVERVIEW.md](OVERVIEW.md): freo2 で何ができるか(機能の紹介)
+- [OVERVIEW.md](OVERVIEW.md): freo2で何ができるか(機能の紹介)
 - [DEVELOPMENT.md](DEVELOPMENT.md): コードを読む・改修する・テーマやプラグインを作る人向けの開発ガイド
 
 ## 動作環境
 
 - PHP 8 以上
 - MySQL 8 以上、または MariaDB 10 以上
-- (任意)Apache の mod_rewrite: 有効なら URL から `index.php` を省略できます
+- (任意)Apache の mod_rewrite: 有効ならURLから `index.php` を省略できます
 
 ## 設置方法
 
@@ -32,7 +32,7 @@ freo（フレオ）は、PHPで作成されたコンテンツ管理システム�
 ## プラグイン
 
 すぐに使えるプラグインは、別のリポジトリで提供しています。
-ギャラリー、商品・注文管理、マークダウンでの本文入力、URL のリライトなどがあります。
+ギャラリー、商品・注文管理、マークダウンでの本文入力、URLのリライトなどがあります。
 
 - freo2-plugins: https://github.com/refirio/freo2-plugins
 

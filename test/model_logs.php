@@ -132,7 +132,7 @@ $inserted_id = intval($logs[0]['id']);
 
 // IPアドレスの必須テスト
 {
-    // データ（CLI から実行すると clientip() が null を返すため、NOT NULL のカラムで止まる）
+    // データ（CLIから実行すると clientip() が null を返すため、NOT NULL のカラムで止まる）
     $test_log = $data_log;
     $test_log['ip'] = '';
 

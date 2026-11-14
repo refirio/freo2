@@ -72,7 +72,7 @@ db_transaction();
 
 // 設定の初期値テスト
 {
-    // 結果（config.php で定義した値が 180 日であること）
+    // 結果（config.php で定義した値が180日であること）
     test_equals('log retention default', $backup_log_retention, 180);
 }
 

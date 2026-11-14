@@ -13,7 +13,7 @@ if (!isset($_GET['_test'])) {
 // データベースを使わないので、トランザクションもテーブルの初期化も行わない
 service('recaptcha.php');
 
-// 設定とセッションを退避（Google に接続しない範囲だけを確認する）
+// 設定とセッションを退避（Googleに接続しない範囲だけを確認する）
 $recaptcha_enable  = $GLOBALS['config']['recaptcha_enable'];
 $session_recaptcha = isset($_SESSION['recaptcha']) ? $_SESSION['recaptcha'] : null;
 $post_recaptcha    = isset($_POST['g-recaptcha-response']) ? $_POST['g-recaptcha-response'] : null;
@@ -36,7 +36,7 @@ unset($_POST['g-recaptcha-response']);
     // データ
     $GLOBALS['config']['recaptcha_enable'] = true;
 
-    // 結果（通らないこと。トークンが無ければ Google には接続しない）
+    // 結果（通らないこと。トークンが無ければGoogleには接続しない）
     test_equals('recaptcha (no token)', service_recaptcha_verify(), false);
     test_equals('recaptcha (no token session)', isset($_SESSION['recaptcha']), false);
 }

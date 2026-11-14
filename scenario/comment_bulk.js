@@ -34,7 +34,7 @@ var bulkCheckbox = function(name) {
     return commentRow(name).find('input.bulk');
 };
 
-/* チェックボックスを切り替えて、選択を控える Ajax が終わってからコールバックを実行する */
+/* チェックボックスを切り替えて、選択を控えるAjaxが終わってからコールバックを実行する */
 var bulkCheck = function(names, checked, callback) {
     for (var i = 0; i < names.length; i++) {
         if (bulkCheckbox(names[i]).length !== 1) {
@@ -229,7 +229,7 @@ test.scenario = [
     },
     // 確認画面に、選んだ2件だけが並ぶことを確認して削除する
     function() {
-        // 確認画面の列は ID・日時・名前の順
+        // 確認画面の列はID・日時・名前の順
         var names = $('table tbody tr').map(function() {
             return $(this).find('td').eq(2).text().trim();
         }).get();

@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         foreach (array_slice($urls, $offset, $GLOBALS['config']['export_step']) as $url) {
             $response = service_export_fetch($token, $url['url']);
 
-            // 404 のページだけは 404 で返るので、それも保存する
+            // 404のページだけは404で返るので、それも保存する
             if ($response === null || ($response['status'] !== 200 && !($url['file'] === '404.html' && $response['status'] === 404))) {
                 $_SESSION['export']['failures'][] = $url['url'] . '（' . ($response === null ? '取得できません' : 'ステータス ' . $response['status']) . '）';
             } elseif (!service_export_save($token, $url['file'], service_export_convert($response['body'], $replaces))) {
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (isset($_POST['exec']) && $_POST['exec'] === 'finish') {
-        // 静的なファイルを複製して、ZIP にまとめる
+        // 静的なファイルを複製して、ZIPにまとめる
         if (!service_export_static($token)) {
             error('静的なファイルを複製できません。');
         }

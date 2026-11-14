@@ -36,7 +36,7 @@ var fillText = function(html, callback) {
     }, 'WYSIWYGエディタ（CKEditor）が初期化されませんでした。CDNから読み込めているか確認してください。');
 };
 
-/* PNG 画像のファイルを作る（canvas で塗りつぶした画像） */
+/* PNG画像のファイルを作る（canvas で塗りつぶした画像） */
 var makePng = function(name, color, callback) {
     var canvas = document.createElement('canvas');
 

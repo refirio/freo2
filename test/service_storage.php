@@ -9,7 +9,7 @@ if (!isset($_GET['_test'])) {
     service_coverage_start();
 }
 
-// 実際のストレージ（S3 など）を操作しないよう、テスト中はファイルに固定する
+// 実際のストレージ（S3など）を操作しないよう、テスト中はファイルに固定する
 $GLOBALS['config']['storage_type'] = 'file';
 
 // ライブラリを読み込み

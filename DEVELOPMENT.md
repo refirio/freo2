@@ -1,12 +1,12 @@
-# freo2 開発ガイド(はじめて触る人向け)
+# freo2開発ガイド(はじめて触る人向け)
 
-freo2 のコードをはじめて読む・改修する・プラグインやテーマを作る人向けの案内です。
+freo2のコードをはじめて読む・改修する・プラグインやテーマを作る人向けの案内です。
 「どこに何があるか」「1リクエストがどう処理されるか」「どう書くのがこのコードベースの作法か」を、実際のファイルを示しながら説明します。
 
 - 公式サイト: https://freo.jp/freo2/
   - [設置方法](https://freo.jp/freo2/setup/) / [開発環境構築方法](https://freo.jp/freo2/develop/) / [テーマ](https://freo.jp/freo2/theme/) / [プラグイン](https://freo.jp/freo2/plugin/)
   - このガイドと公式サイトの内容が食い違う場合、設置・テーマ・プラグインの手順は公式サイトを正とします
-- freo2 で何ができるか(機能の紹介): [OVERVIEW.md](OVERVIEW.md)
+- freo2で何ができるか(機能の紹介): [OVERVIEW.md](OVERVIEW.md)
 - すぐに使えるプラグイン: https://github.com/refirio/freo2-plugins
 - フレームワーク(levis): https://refirio.org/levis/
 - ライセンス: MIT
@@ -17,7 +17,7 @@ freo2 のコードをはじめて読む・改修する・プラグインやテ�
 
 ## 目次
 
-1. [freo2 とは](#1-freo2-とは)
+1. [freo2とは](#1-freo2-とは)
 2. [セットアップ](#2-セットアップ)
 3. [ディレクトリ構成](#3-ディレクトリ構成)
 4. [リクエストの流れ](#4-リクエストの流れ)
@@ -34,7 +34,7 @@ freo2 のコードをはじめて読む・改修する・プラグインやテ�
 
 ---
 
-## 1. freo2 とは
+## 1. freo2とは
 
 freo2(フレオ)は、独自の軽量PHPフレームワーク **levis** の上に作られた汎用CMSです。
 
@@ -49,9 +49,9 @@ freo2(フレオ)は、独自の軽量PHPフレームワーク **levis** の上�
 ブログ記事も固定ページも、プラグインが独自の型で追加するコンテンツも、すべて `entries` の1行です。
 本体に手を加えずに、プラグインで機能を足せる作りになっています(→ [10. プラグイン](#10-プラグイン))。
 
-**levis はクラスを使わない、関数ベースのフレームワークです。** 名前空間やオートローダー、DIコンテナはありません。
+**levisはクラスを使わない、関数ベースのフレームワークです。** 名前空間やオートローダー、DIコンテナはありません。
 ファイルを `import()` で読み込み、`model('select_xxx', ...)` のような関数呼び出しと、`$_view` などのグローバル変数でデータを受け渡します。
-Laravel などに慣れていると最初は戸惑いますが、処理はファイルを上から読めば追える単純な作りです。
+Laravelなどに慣れていると最初は戸惑いますが、処理はファイルを上から読めば追える単純な作りです。
 
 ---
 
@@ -64,19 +64,19 @@ Laravel などに慣れていると最初は戸惑いますが、処理はファ
 
 - PHP 8 以上
 - MariaDB 10 以上、もしくは MySQL 8 以上
-- (任意)Apache の `mod_rewrite`: 有効なら URL から `index.php` を省略できる(`.htaccess`)
-- (任意)PHP の GD: **メディアに画像を登録したときのサムネイルの作成にだけ使います。** 無効でもエラーにはならず、サムネイルが作られないだけです(一覧ではアイコンで表示されます)。GD が有効でも、ビルドによっては JPEG を扱えないことがあるため、**形式ごとに `imagecreatefromjpeg()` などの有無を確認しています**。扱える形式は、管理画面の「バージョン情報」(`/admin/version`)で確認できます
+- (任意)Apache の `mod_rewrite`: 有効ならURLから `index.php` を省略できる(`.htaccess`)
+- (任意)PHP の GD: **メディアに画像を登録したときのサムネイルの作成にだけ使います。** 無効でもエラーにはならず、サムネイルが作られないだけです(一覧ではアイコンで表示されます)。GDが有効でも、ビルドによってはJPEGを扱えないことがあるため、**形式ごとに `imagecreatefromjpeg()` などの有無を確認しています**。扱える形式は、管理画面の「バージョン情報」(`/admin/version`)で確認できます
 
 ### 手順
 
 1. **データベースを作る**
-   MariaDB または MySQL で、文字コード `utf8mb4` のデータベースを作成します(例: `freo2`)。
+   MariaDBまたはMySQLで、文字コード `utf8mb4` のデータベースを作成します(例: `freo2`)。
 
 2. **プログラムを置く**
    https://github.com/refirio/freo2 からプログラムを取得し、`index.php` などのファイルを公開ディレクトリ(またはその中のサブディレクトリ)に置きます。
 
 3. **書き込み権限を付ける**
-   `files/` 内の各ディレクトリのパーミッションを `0777` にして、PHPから読み書きできるようにします。XAMPP などでは設定が不要な場合もあります。
+   `files/` 内の各ディレクトリのパーミッションを `0777` にして、PHPから読み書きできるようにします。XAMPPなどでは設定が不要な場合もあります。
 
 4. **設定ファイルを作る**
    `config.default.php` を複製して、同じ階層に `config.php` を作ります。
@@ -99,14 +99,14 @@ Laravel などに慣れていると最初は戸惑いますが、処理はファ
    ```
 
    ```php
-   // 公開ディレクトリ直下の freo2 ディレクトリに設置する場合
+   // 公開ディレクトリ直下のfreo2ディレクトリに設置する場合
    define('APP_HTTP_URL', 'http://example.net');
    define('APP_HTTP_PATH', '/freo2/');
    define('APP_STORAGE_TYPE', 'file');
    define('APP_STORAGE_URL', APP_HTTP_URL . '/freo2/');
    ```
 
-   **設置URLとメール**(開発環境。公式の開発環境構築方法の例。`http://localhost/freo2/` に設置し、URL に `index.php` を含める):
+   **設置URLとメール**(開発環境。公式の開発環境構築方法の例。`http://localhost/freo2/` に設置し、URLに `index.php` を含める):
 
    ```php
    define('APP_HTTP_URL', 'http://localhost/freo2/index.php');
@@ -175,12 +175,12 @@ home/
 4. プラグインとテーマに公開すべきファイル(CSS・JavaScriptなど)が含まれていれば、**そのファイルだけ**を公開ディレクトリ内の同じパスに移します。
    例: `sample` テーマの `themes/sample/css/public.css` は、`html/themes/sample/css/public.css` に移します。
 
-この配置では、`mail` フォルダは `levis/mail/` に作ります(記録先が `MAIN_APPLICATION_PATH . 'mail/'` のため)。CLI のコマンドは `html/` で実行します。
+この配置では、`mail` フォルダは `levis/mail/` に作ります(記録先が `MAIN_APPLICATION_PATH . 'mail/'` のため)。CLIのコマンドは `html/` で実行します。
 
-### アップロードファイルの保存先に S3 を使う
+### アップロードファイルの保存先にS3を使う
 
-1. S3 バケットと、必要な権限を持つアクセスキーを用意します。
-2. `import('libs/vendor/autoload.php');` で読み込めるように、AWS SDK を `libs/vendor/` に配置します(例: `composer require aws/aws-sdk-php`)。
+1. S3バケットと、必要な権限を持つアクセスキーを用意します。
+2. `import('libs/vendor/autoload.php');` で読み込めるように、AWS SDKを `libs/vendor/` に配置します(例: `composer require aws/aws-sdk-php`)。
 3. `config.php` を次のように設定します。
 
    ```php
@@ -201,19 +201,19 @@ home/
 freo2/
 ├── index.php               エントリーポイント(全リクエストがここを通る)
 ├── .htaccess               URLから index.php を省略するためのリライト
-├── .github/workflows/      リリース用の GitHub Actions
+├── .github/workflows/      リリース用のGitHub Actions
 ├── config.default.php      設定ファイルのひな形 → config.php にコピーして使う
 ├── README.md               リポジトリの説明
-├── OVERVIEW.md             freo2 で何ができるか(機能の紹介)
+├── OVERVIEW.md             freo2で何ができるか(機能の紹介)
 ├── DEVELOPMENT.md          このガイド
-├── css/ js/ img/           本体用の静的ファイル(jQuery など)
+├── css/ js/ img/           本体用の静的ファイル(jQueryなど)
 ├── files/                  アップロードファイルの保存先(要書き込み権限)
 ├── scenario/               ブラウザで動かすシナリオテスト
 ├── libs/
 │   ├── cores/              フレームワークの中核(ルーティング、DB、テストランナー)
-│   ├── modules/            汎用モジュール(バリデーター、メール、ファイル、S3 など)
-│   └── vendor/             Composer で入れた外部ライブラリ(AWS SDK など)
-├── app/                    freo2 本体のアプリケーションコード
+│   ├── modules/            汎用モジュール(バリデーター、メール、ファイル、S3など)
+│   └── vendor/             Composerで入れた外部ライブラリ(AWS SDKなど)
+├── app/                    freo2本体のアプリケーションコード
 │   ├── bootstrap.php       起動時に読み込まれる共通関数
 │   ├── config.php          アプリの設定値(選択肢のラベル、アップロード可能な形式など)
 │   ├── setting.php         管理画面「設定」の項目定義
@@ -224,8 +224,8 @@ freo2/
 │   ├── services/           サービス(モデル操作 + 操作ログ・排他制御など)
 │   └── views/              ビュー(PHPテンプレート)
 ├── migrate/                本体のマイグレーションSQL
-├── plugins/                プラグイン(同梱は最小例の sample のみ。JS・CSS も各プラグインのディレクトリに入る)
-├── themes/                 テーマ(sample など。CSS も各テーマのディレクトリに入る)
+├── plugins/                プラグイン(同梱は最小例の sample のみ。JS・CSSも各プラグインのディレクトリに入る)
+├── themes/                 テーマ(sample など。CSSも各テーマのディレクトリに入る)
 └── test/                   単体テスト
 ```
 
@@ -235,28 +235,28 @@ freo2/
 
 ### `libs/` は編集しない
 
-**`libs/` の中は、原則として編集しません。** フレームワーク [levis](https://github.com/refirio/levis) のファイルで、levis を更新すると上書きされるためです。修正が必要になったら、levis 側で対応します。
+**`libs/` の中は、原則として編集しません。** フレームワーク [levis](https://github.com/refirio/levis) のファイルで、levisを更新すると上書きされるためです。修正が必要になったら、levis側で対応します。
 
-ただし `libs/modules/` の次の6つは、**freo2 のために追加したモジュール**です。levis には含まれないので、freo2 側で修正してかまいません。
+ただし `libs/modules/` の次の6つは、**freo2のために追加したモジュール**です。levisには含まれないので、freo2側で修正してかまいません。
 
 | ファイル | 内容 |
 | --- | --- |
 | `environment.php` | ユーザーエージェントからの環境判定 |
-| `loader.php` | CSS・JavaScript の読み込み(キャッシュ回避のため、更新日時をクエリに付ける) |
+| `loader.php` | CSS・JavaScriptの読み込み(キャッシュ回避のため、更新日時をクエリに付ける) |
 | `recaptcha.php` | reCAPTCHA |
 | `s3.php` | Amazon S3 |
-| `smtp.php` | SMTP でのメールの送信 |
+| `smtp.php` | SMTPでのメールの送信 |
 | `validator.php` | 入力値の検証 |
 
-`libs/cores/` のすべてと、`libs/modules/` のそれ以外(`cookie.php`・`directory.php`・`file.php`・`hash.php`・`mail.php`・`string.php`・`ui.php`)は levis のファイルです。
+`libs/cores/` のすべてと、`libs/modules/` のそれ以外(`cookie.php`・`directory.php`・`file.php`・`hash.php`・`mail.php`・`string.php`・`ui.php`)はlevisのファイルです。
 
 ---
 
 ## 4. リクエストの流れ
 
-### URL とファイルの対応
+### URLとファイルの対応
 
-URL は `/<mode>/<work>/<以降のパラメーター>` という形です。
+URLは `/<mode>/<work>/<以降のパラメーター>` という形です。
 
 | URL | コントローラー | ビュー |
 | --- | --- | --- |
@@ -280,7 +280,7 @@ bootstrap()    app/bootstrap.php を読み込む(共通関数・設定値)
 session()      セッション開始
 database()     DB接続(app/database.php があれば読み込む)
 normalize()    $_GET/$_POST などの NULL バイト除去・改行コード統一
-routing()      URL を解析して $_REQUEST['_mode'] / ['_work'] と $_params を決める
+routing()      URLを解析して $_REQUEST['_mode'] / ['_work'] と $_params を決める
 model()        app/models/*.php をすべて読み込む
 controller()   ↓ の順にコントローラーを読み込む
                  app/controllers/before.php
@@ -306,16 +306,22 @@ view()         app/views/<mode>/<work>.php を読み込む
 
 ## 5. コードの書き方
 
-**配列は `[]` で書きます**(`array()` は使いません)。`libs/` の中は levis のファイルなので `array()` のままですが、`app/` と `plugins/` は `[]` にそろえています(→ [3. ディレクトリ構成](#libs-は編集しない))。
+**配列は `[]` で書きます**(`array()` は使いません)。`libs/` の中はlevisのファイルなので `array()` のままですが、`app/` と `plugins/` は `[]` にそろえています(→ [3. ディレクトリ構成](#libs-は編集しない))。
 
 **日本語のコメントで補足を括弧に入れるときは、全角の `（` `）` を使います**(`// パスワード認証（失敗したら、失敗した回数を記録する）`)。関数呼び出し(`cookie_set()`)や記法の例(`[text](url)`)など、コードとして書く部分は半角のままです。
+
+**日本語と半角英数字の間には、空白を入れません**(`// PHPのバージョンを取得`、`'ZIPファイルを指定してください。'`)。画面の文言・メッセージ・コメントのどれも同じです。数字と単位の間も空けません(`100件`、`5MB`)。ただし、次の場合は空白を入れます。
+
+- コード名・変数名・設定値とつながるとき(`// 確認できなければ null を返す`、`// $lines の行数`)。SQLのキーワード(`NULL`・`INSERT` など)も同じです。HTTPのメソッドは詰めます(`POSTだけを受ける`)
+- 値としての数字(`// 0 なら削除しない`)
+- バージョンの付いたソフトウェア名(`PHP 8 以上`、`もしくは MySQL 8 以上`)
 
 ### 5.1 よく使うグローバル変数
 
 | 変数 | 内容 |
 | --- | --- |
 | `$_view` | コントローラーからビューへ渡すデータ。`$_view['title']` など |
-| `$_params` | URL をスラッシュで分割した配列 |
+| `$_params` | URLをスラッシュで分割した配列 |
 | `$_REQUEST['_mode']` / `['_work']` | 現在の mode / work |
 | `$_REQUEST['_type']` | 応答形式。`json` なら `ok()`/`warning()`/`error()` がJSONを返す |
 | `$GLOBALS['config']` | [app/config.php](app/config.php) の設定値(選択肢のラベルなど) |
@@ -376,7 +382,7 @@ $categories = model('select_categories', [
   - 接頭辞が付くのは**重複を確認する列だけ**です(`code`、ユーザーは `username` と `email`)。そのため、**削除したものと同じコードやメールアドレスで登録し直せます。**
   - **元に戻す仕組みはありません。** `deleted` を空に戻す処理は本体にないので、論理削除は「一覧から隠して記録を残す」ためのものと考えてください。
   - ひも付け(`category_sets` など)は、**既定で一緒に物理削除**されます。消すかどうかは、ひも付けのテーブル名から `_sets` を取った名前のオプションで指定します(`entries` なら `'field'`・`'category'`・`'attribute'`、`categories` なら `'category'`)。残したいときだけ `false` を渡します(`['category' => false]`)。
-  - 自分で `delete_<テーブル>()` を書いて関連データも消すときは、同じ形のオプション(既定 `true`)にし、**削除する行が無いときは関連データの削除を飛ばします**(`if ($options['category'] === true && !empty($ids))`)。IDが空のまま `IN()` を組み立てると、SQL の構文エラーになります。
+  - 自分で `delete_<テーブル>()` を書いて関連データも消すときは、同じ形のオプション(既定 `true`)にし、**削除する行が無いときは関連データの削除を飛ばします**(`if ($options['category'] === true && !empty($ids))`)。IDが空のまま `IN()` を組み立てると、SQLの構文エラーになります。
 - `app/models/` にファイルを置くと、`select_`/`insert_`/`update_`/`delete_`/`normalize_`/`validate_` のうち**定義していないものは、ファイル名をテーブル名とみなして自動で作られます。**
 
 ### 5.4 サービス
@@ -475,27 +481,27 @@ PHPテンプレートです。共通のヘッダー・フッターは、画面�
 
 ### 5.8 セキュリティ
 
-- **CSRF対策:** フォームには `<input type="hidden" name="_token" value="<?php t($_view['token']) ?>">` を入れ、POST を受けた側で `token('check')` を確認します。`$_view['token']` は [app/controllers/after.php](app/controllers/after.php) が全画面で用意します。
-- **アクセス元の確認:** 管理画面の POST では、`HTTP_REFERER` が `APP_HTTP_URL` から始まるかも確認しています。
+- **CSRF対策:** フォームには `<input type="hidden" name="_token" value="<?php t($_view['token']) ?>">` を入れ、POSTを受けた側で `token('check')` を確認します。`$_view['token']` は [app/controllers/after.php](app/controllers/after.php) が全画面で用意します。
+- **アクセス元の確認:** 管理画面のPOSTでは、`HTTP_REFERER` が `APP_HTTP_URL` から始まるかも確認しています。
 - **権限:** 管理画面の権限チェックは `before.php` に `work` 名の正規表現でまとまっています。投稿者(power 2)が触れない画面を増やすときは、ここに追記します。
 - **SQL:** 値はプレースホルダーで渡します(→ [5.3](#53-モデル))。
 - **出力:** エスケープ関数を使います(→ [5.6](#56-ビュー))。
-- **クッキー:** セッション(`PHPSESSID`)と、`cookie_set()` で発行するクッキー(ログイン状態を保持する `auth[session]` など)には、`HttpOnly` と `SameSite=Lax` が付きます(SameSite は PHP 7.3 以上のとき)。`Secure` は HTTPS で開いているときに付き、ロードバランサーなどで HTTPS を終えている構成でも `X-Forwarded-Proto: https` で判定します。`cookie_set()` で発行するクッキーの `Secure` は、`config.php` の `APP_COOKIE_SECURE` で固定することもできます。
-- **セキュリティヘッダー:** [app/controllers/before.php](app/controllers/before.php) が、すべての画面で次のヘッダーを送ります(値は [app/config.php](app/config.php) の `security_headers`)。あわせて、PHP のバージョンが分かる `X-Powered-By` を消します。
+- **クッキー:** セッション(`PHPSESSID`)と、`cookie_set()` で発行するクッキー(ログイン状態を保持する `auth[session]` など)には、`HttpOnly` と `SameSite=Lax` が付きます(SameSiteは PHP 7.3 以上のとき)。`Secure` はHTTPSで開いているときに付き、ロードバランサーなどでHTTPSを終えている構成でも `X-Forwarded-Proto: https` で判定します。`cookie_set()` で発行するクッキーの `Secure` は、`config.php` の `APP_COOKIE_SECURE` で固定することもできます。
+- **セキュリティヘッダー:** [app/controllers/before.php](app/controllers/before.php) が、すべての画面で次のヘッダーを送ります(値は [app/config.php](app/config.php) の `security_headers`)。あわせて、PHPのバージョンが分かる `X-Powered-By` を消します。
 
   | ヘッダー | 値 | 目的 |
   | --- | --- | --- |
   | `X-Content-Type-Options` | `nosniff` | ブラウザがファイルの種類を中身から推測しないようにする |
   | `X-Frame-Options` | `SAMEORIGIN` | ほかのサイトの iframe に埋め込ませない(クリックジャッキング対策) |
   | `Content-Security-Policy` | `frame-ancestors 'self'` | 同上(今のブラウザ向け)。スクリプトの読み込み元などは制限しません |
-  | `Referrer-Policy` | `strict-origin-when-cross-origin` | ほかのサイトへは URL ではなくドメインだけを送る |
+  | `Referrer-Policy` | `strict-origin-when-cross-origin` | ほかのサイトへはURLではなくドメインだけを送る |
 
-  - 変えたいときは `config.php` で `APP_SECURITY_HEADERS` を配列ごと定義します(空の配列にすると送りません)。たとえば freo2 の画面をほかのサイトに埋め込みたいなら、`X-Frame-Options` と `Content-Security-Policy` を外します。
-  - **HSTS(`Strict-Transport-Security`)は、既定では送りません。** `config.php` で `define('APP_HSTS_MAX_AGE', 31536000);` のように秒数を指定すると、HTTPS で開いているときだけ送ります。一度送るとブラウザがその期間 HTTPS でしか開かなくなるので、HTTPS で問題なく運用できることを確かめてから、短い期間で始めてください。
-  - **静的なファイル(CSS・画像・アップロードしたファイル)には付きません。** PHP を通らないためです。付けたいときは、Web サーバーの設定(Apache の `mod_headers` など)で付けます。
+  - 変えたいときは `config.php` で `APP_SECURITY_HEADERS` を配列ごと定義します(空の配列にすると送りません)。たとえばfreo2の画面をほかのサイトに埋め込みたいなら、`X-Frame-Options` と `Content-Security-Policy` を外します。
+  - **HSTS(`Strict-Transport-Security`)は、既定では送りません。** `config.php` で `define('APP_HSTS_MAX_AGE', 31536000);` のように秒数を指定すると、HTTPSで開いているときだけ送ります。一度送るとブラウザがその期間HTTPSでしか開かなくなるので、HTTPSで問題なく運用できることを確かめてから、短い期間で始めてください。
+  - **静的なファイル(CSS・画像・アップロードしたファイル)には付きません。** PHPを通らないためです。付けたいときは、Webサーバーの設定(Apacheの `mod_headers` など)で付けます。
 - **アップロードしたファイルへの直接アクセス:** 既定では、エントリーの画像・フィールドのファイルは保存先のURL(`files/entries/<エントリーID>/<ファイル名>` など)をそのまま出します。**エントリーを公開範囲で制限しても、画像のURLを知っていれば誰でも開けます。** 作品など、画像そのものを制限したいときは、`config.php` で `define('APP_STORAGE_PROTECT', true);` にします。
-  - 有効にすると、画像のURLが `/storage/entry/<エントリーID>/<ファイル名>`(フィールドは `/storage/field/<エントリーID>_<フィールドID>/<ファイル名>`)になり、エントリーの公開側と同じ判定(`service_entry_select_published()`)で、見られる人にだけ返します。パスワード認証の前は、画像もフィールドのファイルも返しません。見られないときは 404 です。
-  - **これだけでは、保存先のURLは開けたままです。直接のURLは、Web サーバーやバケットの設定で別に塞ぎます。**
+  - 有効にすると、画像のURLが `/storage/entry/<エントリーID>/<ファイル名>`(フィールドは `/storage/field/<エントリーID>_<フィールドID>/<ファイル名>`)になり、エントリーの公開側と同じ判定(`service_entry_select_published()`)で、見られる人にだけ返します。パスワード認証の前は、画像もフィールドのファイルも返しません。見られないときは404です。
+  - **これだけでは、保存先のURLは開けたままです。直接のURLは、Webサーバーやバケットの設定で別に塞ぎます。**
     - ファイルに保存するとき(Apache): `files/entries/` と `files/fields/` に、次の `.htaccess` を置きます(同梱していません)。設定を無効に戻すときは、この `.htaccess` も消します(消さないと画像が表示されなくなります)。
 
       ```apache
@@ -509,7 +515,7 @@ PHPテンプレートです。共通のヘッダー・フッターは、画面�
       ```
 
     - ファイルに保存するとき(nginx): `.htaccess` は効かないので、サーバーの設定で拒否します(例: `location ~ ^/files/(entries|fields|temps)/ { deny all; }`)。
-    - S3 に保存するとき: 画像は**有効期限付きの署名付きURL**へリダイレクトして返します(PHP では中継しません。期限は `APP_STORAGE_SIGNED_EXPIRE`、初期値300秒)。バケットポリシーで誰でも読めるようにしている範囲を、メディアとそのサムネイルだけに絞ります。署名付きURLは freo2 のアクセスキーの権限で読むので、絞っても開けます。
+    - S3に保存するとき: 画像は**有効期限付きの署名付きURL**へリダイレクトして返します(PHPでは中継しません。期限は `APP_STORAGE_SIGNED_EXPIRE`、初期値300秒)。バケットポリシーで誰でも読めるようにしている範囲を、メディアとそのサムネイルだけに絞ります。署名付きURLはfreo2のアクセスキーの権限で読むので、絞っても開けます。
 
       ```json
       {
@@ -525,11 +531,11 @@ PHPテンプレートです。共通のヘッダー・フッターは、画面�
 
       「パブリックアクセスをすべてブロック」は使いません。バケットポリシーによる公開(メディア)まで止まるためです。
 
-      塞げているかは、管理画面の「バージョン情報」(`/admin/version`)の「AWS SDK」で確かめられます。画像のある記事を1件選び、サーバーから署名を付けずに開いた結果を出します。設定と食い違っているとき(有効なのに開ける・無効なのに開けない)は「注意」になります。この項目は S3 を使っているときだけ表示され、開くたびにバケットへ1回リクエストします。
+      塞げているかは、管理画面の「バージョン情報」(`/admin/version`)の「AWS SDK」で確かめられます。画像のある記事を1件選び、サーバーから署名を付けずに開いた結果を出します。設定と食い違っているとき(有効なのに開ける・無効なのに開けない)は「注意」になります。この項目はS3を使っているときだけ表示され、開くたびにバケットへ1回リクエストします。
   - **メディア(`files/medias/`)とそのサムネイルは対象外です。** メディアはエントリーに結び付いておらず、本文には直接のURLで入るためです。公開範囲で制限したい画像は、エントリーの画像(またはフィールドの画像)として登録します。
-  - **アップロード中の一時ファイル(`files/temps/`)は、設定に関係なく直接開けないようにしています**(同梱の `files/temps/.htaccess`)。S3 では `.htaccess` が効かないので、上のバケットポリシーで塞ぎます。
-  - **有効にすると、画像1枚ごとに PHP が動きます。** 負荷を抑えるため、受け口では最初にセッションのロックを外し(同じ人の画像を並べて取得できるように)、ファイルは `readfile()` で流し、`Last-Modified` を付けて変わっていなければ `304` を返します。S3 のリダイレクトは、ブラウザが署名の期限の半分まで覚えます。
-  - `mod_rewrite` で URL から `index.php` を省略しているときは、同梱の `.htaccess` の `RewriteRule ^(storage/.*)$ index.php/$1 [L]` が必要です(拡張子の付いたURLは、ほかの行では `index.php` に回さないため)。
+  - **アップロード中の一時ファイル(`files/temps/`)は、設定に関係なく直接開けないようにしています**(同梱の `files/temps/.htaccess`)。S3では `.htaccess` が効かないので、上のバケットポリシーで塞ぎます。
+  - **有効にすると、画像1枚ごとにPHPが動きます。** 負荷を抑えるため、受け口では最初にセッションのロックを外し(同じ人の画像を並べて取得できるように)、ファイルは `readfile()` で流し、`Last-Modified` を付けて変わっていなければ `304` を返します。S3のリダイレクトは、ブラウザが署名の期限の半分まで覚えます。
+  - `mod_rewrite` でURLから `index.php` を省略しているときは、同梱の `.htaccess` の `RewriteRule ^(storage/.*)$ index.php/$1 [L]` が必要です(拡張子の付いたURLは、ほかの行では `index.php` に回さないため)。
 
 ---
 
@@ -553,10 +559,10 @@ types(型) ─< entries(エントリー) ─────────────
 
 - **`types`(型):** 初期データは `entry` と `page`。プラグインが独自の型を追加することもあります(`setup/install.php` で `types` に行を登録する)。
 - **`entries`(エントリー):** 型を問わず、すべてのコンテンツがここに入ります。主な列は次のとおりです。
-  - `code`: URL に使う識別子(`/entry/detail/<code>`、`/page/<code>`)。**一意かどうかは型ごとに見ます**。型が違えば同じコードを使えます
+  - `code`: URLに使う識別子(`/entry/detail/<code>`、`/page/<code>`)。**一意かどうかは型ごとに見ます**。型が違えば同じコードを使えます
     - 使える文字は半角英数字・`_`・`-`・`/` です。`/` は階層の区切りなので、**先頭・末尾に置くことと、続けて書くことはできません**(`about/company` は可、`/about`・`about/`・`about//company` は不可)
     - 管理画面のページ一覧(`/admin/page`)は、この階層で親子を判定してまとめます。コードを末尾から `/` ごとに遡り、**存在する最も近い祖先**を親とします(`about/staff` が無ければ、`about/staff/yamada` の親は `about`)。祖先が1つも無ければ一覧のトップに出ます。子のある行はタイトルが `?parent=<親のコード>` へのリンクになり、存在しないコードを `parent` に渡すとエラーになります。子の一覧から開いた登録画面(`/admin/page_form?parent=<親のコード>`)では、コードの初期値が `<親のコード>/` になります。判定は [app/services/entry.php](app/services/entry.php) の `service_entry_parent()`
-  - `title`, `text`, `text_type`(本文形式: 複数行入力 / HTML / WYSIWYG など)
+  - `title`, `text`, `text_type`(本文形式: 複数行入力 / HTML / WYSIWYGなど)
   - `public`(公開範囲): `all`(公開)/ `user`(登録ユーザー)/ `attribute`(指定の属性を持つユーザー)/ `password`(パスワード認証)/ `none`(非公開)
   - `public_begin`/`public_end`(公開期間)、`approved`(承認)
   - `pictures`, `thumbnail`, `comment`(コメントの受付), `sort`
@@ -602,10 +608,10 @@ types(型) ─< entries(エントリー) ─────────────
   - ゲスト: 公開側で会員登録したユーザーです。管理画面には入れません。
   - どの権限がどの画面に入れるかは [app/controllers/before.php](app/controllers/before.php) に `work` 名の正規表現でまとまっています。
   - `enabled` が 0 のユーザーは、パスワードが合っていてもログインできません。
-  - **パスワードは `users.password` にハッシュで保存します。** 方式は `app/config.php` の `hash_algorithm`(`APP_HASH_ALGORITHM` で上書き可)で選び、既定は **bcrypt**(どの環境でも `password_hash()` の組み込みで使える)です。`argon2` は可用性チェック付きのオプション、`md5` は古い PHP 環境向けの互換用です。保存するときは `service_user_password_hash()`、照合するときは `service_user_password_verify()` を使います(`app/services/user.php`)。秘密のペッパー(`config.php` の `hash_pepper`)を HMAC で前処理してからハッシュ化するので、ペッパーを効かせつつ bcrypt の72バイト上限・NUL バイト問題も避けられます。古い方式で保存されたパスワードは、ログインに成功した時点で現在の方式に作り直されます(rehash-on-login)。
+  - **パスワードは `users.password` にハッシュで保存します。** 方式は `app/config.php` の `hash_algorithm`(`APP_HASH_ALGORITHM` で上書き可)で選び、既定は **bcrypt**(どの環境でも `password_hash()` の組み込みで使える)です。`argon2` は可用性チェック付きのオプション、`md5` は古いPHP環境向けの互換用です。保存するときは `service_user_password_hash()`、照合するときは `service_user_password_verify()` を使います(`app/services/user.php`)。秘密のペッパー(`config.php` の `hash_pepper`)をHMACで前処理してからハッシュ化するので、ペッパーを効かせつつ bcrypt の72バイト上限・NULバイト問題も避けられます。古い方式で保存されたパスワードは、ログインに成功した時点で現在の方式に作り直されます(rehash-on-login)。
   - **ログインに10回続けて失敗すると、そのアカウントは5分間凍結されます**(`users.failed`/`failed_last` で判定)。正しいパスワードでも入れなくなり、ログインに成功すると回数はリセットされます。前の失敗から5分以上たってから失敗したときは、1回目から数え直します(凍結が明けた後も、改めて10回試せます)。
   - **2段階認証:** `users.twostep` が 1 のユーザーは、パスワードが通った後に `users.twostep_email` へ送られるコード(`twostep_code`。パスワード再設定の暗証コードと同じく8桁の数字で、どちらも `service_user_code()` が作ります。有効期限 `twostep_expire` は10分)を入力して、はじめてログインできます。設定するのは管理画面のユーザー編集(`/admin/user_form`)と、本人のユーザー情報編集(`/auth/modify`)です。
-    - **コードやトークンは、暗号用の乱数で作ります。** コードは `service_user_code()`(`random_int()`)、URL のトークンとログイン状態を保持するセッションIDは `service_user_token()`(`random_bytes()`。16進数32文字)です。推測されると困る値を新しく作るときも、この2つを使います。levis の `rand_number()` は `mt_rand()` をもとにしていて予測できるので、こうした用途には使いません。`rand_string()` も、古い PHP では予測できる方法に切り替わることがあるので、推測されると困る値には `service_user_token()` を使います。
+    - **コードやトークンは、暗号用の乱数で作ります。** コードは `service_user_code()`(`random_int()`)、URLのトークンとログイン状態を保持するセッションIDは `service_user_token()`(`random_bytes()`。16進数32文字)です。推測されると困る値を新しく作るときも、この2つを使います。levisの `rand_number()` は `mt_rand()` をもとにしていて予測できるので、こうした用途には使いません。`rand_string()` も、古いPHPでは予測できる方法に切り替わることがあるので、推測されると困る値には `service_user_token()` を使います。
     - **コードを続けて10回間違えると、そのコードは無効になります**(上限は `app/config.php` の `code_failed_limit`。回数は `users.twostep_failed`)。再送信すると新しいコードで数え直します。アカウントは凍結しません。パスワード再設定の暗証コード(`users.token_failed`)も同じです。
     - パスワードが通った時点では `$_SESSION['auth']['twostep']` に「認証待ち」を記録するだけで、コードの画面にユーザー名・パスワードは受け渡しません。使ったコードは、ログインに成功した時点で消します。
     - 本人が有効にするとき、または有効のまま `twostep_email` を変えるときは、確認画面の後のコード入力画面(`/auth/modify_verify`)で、そのアドレスに送ったコードを入力しないと登録できません(判定は `service_user_twostep_verify_required()`)。送ったコードと確認中のアドレスはセッションに持ちます。管理画面からの設定では確認しません。
@@ -630,7 +636,7 @@ types(型) ─< entries(エントリー) ─────────────
 | `contacts` | お問い合わせ。`status`(未対応 / 対応中 / 完了 / 対応不要)で進捗を管理します。管理画面の一覧は、状況を指定しないと `app/config.php` の `contact_status_hidden`(既定は完了・対応不要)を除いて表示します |
 | `comments` | コメント。`entry_id` が入ればエントリーへのコメント、`contact_id` が入れば**お問い合わせのやりとり**(管理者と会員の双方が書き込めます) |
 | `plugins` / `themes` | インストール済みのプラグイン・テーマと、その有効状態・設定値 |
-| `logs` | 管理画面での操作ログ。**同じ操作(対象と種類の組み合わせ)は、1リクエストにつき1件だけ**記録されます(並び順を10件まとめて変えても1件)。**保存日数(`app/config.php` の `log_retention`、初期値180日)を過ぎたログは、ログを記録するときに物理削除されます**(Cron は不要。`0` にすると削除しません) |
+| `logs` | 管理画面での操作ログ。**同じ操作(対象と種類の組み合わせ)は、1リクエストにつき1件だけ**記録されます(並び順を10件まとめて変えても1件)。**保存日数(`app/config.php` の `log_retention`、初期値180日)を過ぎたログは、ログを記録するときに物理削除されます**(Cronは不要。`0` にすると削除しません) |
 
 ---
 
@@ -676,10 +682,10 @@ types(型) ─< entries(エントリー) ─────────────
 | `/auth/filter` | フィルター。フィルター対象の属性を持つゲストだけ、メニューに出る(→ [ユーザーと公開制御](#ユーザーと公開制御)) |
 | `/auth/logout` | ログアウト |
 
-- **会員登録と退会は、設定「訪問者によるユーザー新規登録」(`user_use_register`)を有効にしないと使えません。** 無効のままだとログイン画面にリンクが出ず、URL を直接開いてもエラーになります。初期値は無効です。
+- **会員登録と退会は、設定「訪問者によるユーザー新規登録」(`user_use_register`)を有効にしないと使えません。** 無効のままだとログイン画面にリンクが出ず、URLを直接開いてもエラーになります。初期値は無効です。
 - 公開側から登録したユーザーの権限は、`power` が 0 の権限(ゲスト)になります。
 - **メールアドレスの存在確認:** 登録直後は `users.email_verified` が 0 で、会員ページに確認をうながす案内が出ます。`/auth/email_send` からメールを送り、本文に書かれたURL(`/auth/email_verify?key=<メールアドレス>&token=<トークン>`)を開くと 1 になります。トークンはメールを送るたびに作り直し、有効期限は24時間です。期限を過ぎたURLや誤ったURLを開くとエラーになります。
-- **パスワード再設定:** メールアドレスを送ると、そのユーザーに `token`(URL用)と `token_code`(暗証コード。8桁の数字)が記録されます。画面は `token` 付きのURLへ進み、**メールで届いた暗証コードと新しいパスワード**を入力して完了です。メールに入るのは暗証コードと有効期限だけで、URL は画面の遷移で渡されます。**有効期限(`token_expire`)は発行から10分**で、URL を開くときと送信するときの両方で確認します(期限を過ぎてから送信すると、暗証コードの入力エラーになります)。**暗証コードを続けて10回間違えると、その暗証コードは無効になり、再発行からやり直します**(送信前の入力内容検証で間違えた分も数えます)。
+- **パスワード再設定:** メールアドレスを送ると、そのユーザーに `token`(URL用)と `token_code`(暗証コード。8桁の数字)が記録されます。画面は `token` 付きのURLへ進み、**メールで届いた暗証コードと新しいパスワード**を入力して完了です。メールに入るのは暗証コードと有効期限だけで、URLは画面の遷移で渡されます。**有効期限(`token_expire`)は発行から10分**で、URLを開くときと送信するときの両方で確認します(期限を過ぎてから送信すると、暗証コードの入力エラーになります)。**暗証コードを続けて10回間違えると、その暗証コードは無効になり、再発行からやり直します**(送信前の入力内容検証で間違えた分も数えます)。
 - ログインしていると、お問い合わせやコメントの入力欄には登録した名前・メールアドレスが読み取り専用で入り、`contacts.user_id`/`comments.user_id` にユーザーがひも付きます。
 
 ### 管理画面(`/admin/`)
@@ -729,7 +735,7 @@ types(型) ─< entries(エントリー) ─────────────
 
 **無効のときは、承認のボタンも列も画面に出ません。** 動きを確認したいときは、先に設定から有効にします。
 
-### freo2 が送るメール
+### freo2が送るメール
 
 本文は `app/views/mail/` のテンプレート、件名と共通の前書き・後書きは管理画面の「設定」→「メール設定」です。
 
@@ -749,32 +755,32 @@ types(型) ─< entries(エントリー) ─────────────
 
 | `APP_MAIL_SEND` | 動作 |
 | --- | --- |
-| `'sendmail'`(初期値) | PHP の `mail()` で送る |
-| `'smtp'` | `APP_MAIL_SMTP` で指定した SMTP サーバーから送る(下記) |
+| `'sendmail'`(初期値) | PHPの `mail()` で送る |
+| `'smtp'` | `APP_MAIL_SMTP` で指定したSMTPサーバーから送る(下記) |
 | `null` | 送らない |
 
 それ以外の値(書き間違いなど)のときは、送信の失敗として扱い、エラーログに出します。**テスト中(単体テスト・シナリオテスト)は、`APP_MAIL_SEND` に関係なく `null`(送らない)、`APP_MAIL_LOG` に関係なく記録あり**になります(→ [13. テスト](#13-テスト))。`APP_MAIL_SEND` を `null`、`APP_MAIL_LOG` を `true` にしておくと、実際には送らずに `mail/<日付>/<時刻>_<宛先>.txt` に記録されます(→ [2. セットアップ](#手順))。
 
-**SMTP で送る:** Amazon SES やレンタルサーバーの SMTP サーバーから送りたいときは、直下の `config.php` で `APP_MAIL_SEND` を `'smtp'` にし、`APP_MAIL_SMTP` を定義します(項目は [app/config.php](app/config.php) の `mail_smtp`)。
+**SMTPで送る:** Amazon SESやレンタルサーバーのSMTPサーバーから送りたいときは、直下の `config.php` で `APP_MAIL_SEND` を `'smtp'` にし、`APP_MAIL_SMTP` を定義します(項目は [app/config.php](app/config.php) の `mail_smtp`)。
 
 ```php
 define('APP_MAIL_SEND', 'smtp');
 define('APP_MAIL_SMTP', [
     'host'       => 'email-smtp.ap-northeast-1.amazonaws.com',
     'port'       => 587,
-    'encryption' => 'tls',   // tls(587番などで STARTTLS)/ ssl(465番)/ none(暗号化しない)
+    'encryption' => 'tls',   // tls(587番などでSTARTTLS)/ ssl(465番)/ none(暗号化しない)
     'username'   => 'XXXXXXXXXX',
     'password'   => 'YYYYYYYYYY',
     'timeout'    => 10,      // 接続・応答を待つ秒数
 ]);
 ```
 
-- 送信元(エンベロープ)には、設定「メール設定」の送信元(`From` ヘッダー)のアドレスを使います。Amazon SES では、このアドレス(またはドメイン)を SES で認証しておきます。
-- 認証は AUTH PLAIN か AUTH LOGIN(サーバーが対応しているほう)、`username` が空なら認証しません。サーバーの証明書は検証します。
-- 送れなかったときは、ほかの送信の失敗と同じくエラー画面になり、理由(接続できない・認証に失敗したなど)を PHP のエラーログに出します。
-- SMTP の処理は [libs/modules/smtp.php](libs/modules/smtp.php) の `smtp_send()` です。引数は levis の `mail_send()` と同じ(先頭に接続設定)で、メールの組み立て(文字コードの変換・ヘッダー)も `mail()` で送るときと同じ `mail_build()` を使います。
+- 送信元(エンベロープ)には、設定「メール設定」の送信元(`From` ヘッダー)のアドレスを使います。Amazon SESでは、このアドレス(またはドメイン)をSESで認証しておきます。
+- 認証はAUTH PLAINかAUTH LOGIN(サーバーが対応しているほう)、`username` が空なら認証しません。サーバーの証明書は検証します。
+- 送れなかったときは、ほかの送信の失敗と同じくエラー画面になり、理由(接続できない・認証に失敗したなど)をPHPのエラーログに出します。
+- SMTPの処理は [libs/modules/smtp.php](libs/modules/smtp.php) の `smtp_send()` です。引数はlevisの `mail_send()` と同じ(先頭に接続設定)で、メールの組み立て(文字コードの変換・ヘッダー)も `mail()` で送るときと同じ `mail_build()` を使います。
 
-**エンベロープFrom(Return-Path)を指定する:** 届かなかったメールの戻り先や SPF の判定に使われる送信元です。指定しないと、`mail()` で送るときはサーバーの既定のアドレス(`www-data@<ホスト名>` など)、SMTP で送るときは `From` ヘッダーのアドレスになります。変えたいときは、直下の `config.php` で `APP_MAIL_ENVELOPE` を定義します。
+**エンベロープFrom(Return-Path)を指定する:** 届かなかったメールの戻り先やSPFの判定に使われる送信元です。指定しないと、`mail()` で送るときはサーバーの既定のアドレス(`www-data@<ホスト名>` など)、SMTPで送るときは `From` ヘッダーのアドレスになります。変えたいときは、直下の `config.php` で `APP_MAIL_ENVELOPE` を定義します。
 
 ```php
 define('APP_MAIL_ENVELOPE', 'no-reply@example.com');
@@ -787,24 +793,24 @@ define('APP_MAIL_ENVELOPE', 'no-reply@example.com');
 
 ### HTML出力
 
-管理画面の「HTML出力」(`/admin/export`)で、公開側のページを HTML ファイルに出力し、CSS・画像などと一緒に ZIP ファイルでダウンロードできます。設定「HTML出力設定」の `export_use_html` を有効にしたときだけ使えます(初期値は無効。無効のときはメニューに出ず、URL を開いてもエラーになります)。処理は [app/services/export.php](app/services/export.php) です。
+管理画面の「HTML出力」(`/admin/export`)で、公開側のページをHTMLファイルに出力し、CSS・画像などと一緒にZIPファイルでダウンロードできます。設定「HTML出力設定」の `export_use_html` を有効にしたときだけ使えます(初期値は無効。無効のときはメニューに出ず、URLを開いてもエラーになります)。処理は [app/services/export.php](app/services/export.php) です。
 
-**出力のしかた:** freo2 が、自分自身の公開側のページを1つずつ HTTP で取得して保存します(画面の JavaScript が、`APP_EXPORT_STEP` で指定した数(初期値5)ずつ繰り返し頼みます)。
+**出力のしかた:** freo2が、自分自身の公開側のページを1つずつHTTPで取得して保存します(画面のJavaScriptが、`APP_EXPORT_STEP` で指定した数(初期値5)ずつ繰り返し頼みます)。
 
 - 取得するときはクッキーを付けないので、**ページは未ログインの訪問者と同じ内容になります。** 管理者がログインして出力しても、会員向けの記事は入りません。出力するURLの一覧を作るときも、権限と属性を外して判定します(`service_export_select_published()`)。
-- 取得先は `APP_HTTP_URL` です。サーバーの中から公開URLを開けない環境(Docker のコンテナの中など)では、直下の `config.php` で `APP_EXPORT_FETCH_URL` を定義して変えます。**Basic 認証や IP アドレスの制限で、サーバーが自分自身のページを開けない環境では使えません。**
-- ページ数ぶんのリクエストが、アクセスログやアクセス解析に残ります。WAF のレート制限を設定しているサーバーでは、制限に掛かることがあります。
+- 取得先は `APP_HTTP_URL` です。サーバーの中から公開URLを開けない環境(Dockerのコンテナの中など)では、直下の `config.php` で `APP_EXPORT_FETCH_URL` を定義して変えます。**Basic認証やIPアドレスの制限で、サーバーが自分自身のページを開けない環境では使えません。**
+- ページ数ぶんのリクエストが、アクセスログやアクセス解析に残ります。WAFのレート制限を設定しているサーバーでは、制限に掛かることがあります。
 - 作業用のファイルは `files/temps/export_<トークン>/` に置きます(直接は開けません)。`temp_retention`(初期値8時間)より古いものは、次に出力を始めたときに削除します。
 
-**コマンドラインから出力する:** ページ数の多いサイトや、Basic 認証・IP アドレスの制限があるサーバーでは、`index.php` のあるディレクトリで次のコマンドを実行します。設定「HTML出力」が有効なときだけ動きます。
+**コマンドラインから出力する:** ページ数の多いサイトや、Basic認証・IPアドレスの制限があるサーバーでは、`index.php` のあるディレクトリで次のコマンドを実行します。設定「HTML出力」が有効なときだけ動きます。
 
 ```
 php index.php "/cli/export?zip=/path/to/export.zip"
 ```
 
-- 出力する前の確認(`NOTICE:`)、ページごとの進み具合、最後に結果(`OK:`)を表示し、`zip` に指定したパスへ ZIP ファイルを書き出します。出力できなかったページは `FAILURE:` で表示します。
-- HTTP を使わず、ページを1つずつ別のプロセス(`php index.php <URL>`)で描画します(`service_export_render()`)。アクセスログや WAF の影響を受けず、クッキーも無いので、必ず未ログインの訪問者と同じ内容になります。出力中であることは、環境変数 `HTTP_X_FREO2_EXPORT` で子のプロセスに渡します。
-- コマンドラインでは HTTP のステータスが分からないので、何も出力されなかったページ(転送されたページ)と、`WARNING:`・`ERROR:` を出したページを、出力できなかったものとして数えます。
+- 出力する前の確認(`NOTICE:`)、ページごとの進み具合、最後に結果(`OK:`)を表示し、`zip` に指定したパスへZIPファイルを書き出します。出力できなかったページは `FAILURE:` で表示します。
+- HTTPを使わず、ページを1つずつ別のプロセス(`php index.php <URL>`)で描画します(`service_export_render()`)。アクセスログやWAFの影響を受けず、クッキーも無いので、必ず未ログインの訪問者と同じ内容になります。出力中であることは、環境変数 `HTTP_X_FREO2_EXPORT` で子のプロセスに渡します。
+- コマンドラインではHTTPのステータスが分からないので、何も出力されなかったページ(転送されたページ)と、`WARNING:`・`ERROR:` を出したページを、出力できなかったものとして数えます。
 - `php index.php /cli/<コマンド>` の形のコマンドは `app/controllers/cli/` に置きます。[app/controllers/before_cli.php](app/controllers/before_cli.php) が、コマンドライン以外から開いたときはエラーにします。
 
 **出力するもの:**
@@ -818,11 +824,11 @@ php index.php "/cli/export?zip=/path/to/export.zip"
 | RSS | `entry/feed.xml` |
 | 存在しないページ | `404.html` |
 | プラグインのページ | プラグインの `config.php` の `export`(→ [10. プラグイン](#10-プラグイン)) |
-| 静的なファイル | `APP_EXPORT_STATIC` のディレクトリ(初期値 `css/`・`js/`・`img/`・`themes/`・`plugins/`)と、ストレージがファイルのときはアップロードしたファイル。`.` で始まるファイルと PHP のファイルは除きます |
+| 静的なファイル | `APP_EXPORT_STATIC` のディレクトリ(初期値 `css/`・`js/`・`img/`・`themes/`・`plugins/`)と、ストレージがファイルのときはアップロードしたファイル。`.` で始まるファイルとPHPのファイルは除きます |
 
-- URL は `/entry/detail/<コード>` のように末尾に `/` が無くても、`<コード>/index.html` に出力します。配信先で、ディレクトリの URL に `index.html` を返す設定が要ります(Amazon S3 の静的ウェブサイトホスティングや Apache は既定で返します。CloudFront で S3 を直接オリジンにするときは、CloudFront Functions などで `index.html` を補います)。
-- HTML の中の管理用のURL(`APP_HTTP_URL`、ストレージがファイルのときは `APP_STORAGE_URL` も)は、設定の「公開用URL」(`export_url`)に置き換えます。`href`・`src`・`action` に書かれたサイトの中の絶対パス(`/entry/` など)も、公開用URLのパスに合わせ、`index.php` を外します。CSS・JavaScript の中の URL は置き換えません。
-- **セキュリティヘッダーは付きません**(→ [5.8](#58-セキュリティ))。配信先(CloudFront のレスポンスヘッダーポリシーなど)で付けます。
+- URLは `/entry/detail/<コード>` のように末尾に `/` が無くても、`<コード>/index.html` に出力します。配信先で、ディレクトリのURLに `index.html` を返す設定が要ります(Amazon S3の静的ウェブサイトホスティングやApacheは既定で返します。CloudFrontでS3を直接オリジンにするときは、CloudFront Functionsなどで `index.html` を補います)。
+- HTMLの中の管理用のURL(`APP_HTTP_URL`、ストレージがファイルのときは `APP_STORAGE_URL` も)は、設定の「公開用URL」(`export_url`)に置き換えます。`href`・`src`・`action` に書かれたサイトの中の絶対パス(`/entry/` など)も、公開用URLのパスに合わせ、`index.php` を外します。CSS・JavaScriptの中のURLは置き換えません。
+- **セキュリティヘッダーは付きません**(→ [5.8](#58-セキュリティ))。配信先(CloudFrontのレスポンスヘッダーポリシーなど)で付けます。
 
 **出力中のページで変わること:** 出力の処理はヘッダー `X-Freo2-Export` にトークンを付けて取得し、`app_export()`([app/bootstrap.php](app/bootstrap.php))はそのトークンの作業用ディレクトリがあれば `true` を返します。出力中は次のようになります。
 
@@ -835,16 +841,16 @@ php index.php "/cli/export?zip=/path/to/export.zip"
 
 - 「全体に公開」以外の記事(会員向けの公開・パスワード認証)、コメントの投稿、お問い合わせ、ログイン
 - 公開期間: 開始・終了の日時になっても、出力し直すまで反映されません
-- エントリー一覧の絞り込みのうち、パスで表せないもの(→ [7. 画面とURL](#7-画面とurl))
-- `APP_STORAGE_PROTECT`: 画像を PHP で返す仕組みなので、HTML では画像を表示できません
-- メニュー管理で登録したメニューのうち、リンク先のサイトの中のページを出力しないもの(対応していないプラグインのページなど): HTML ではリンクが切れます。メニューは自動では外さないので、無効にするかリンク先を直します
+- エントリー一覧の絞り込みのうち、パスで表せないもの(→ [7.画面とURL](#7-画面とurl))
+- `APP_STORAGE_PROTECT`: 画像をPHPで返す仕組みなので、HTMLでは画像を表示できません
+- メニュー管理で登録したメニューのうち、リンク先のサイトの中のページを出力しないもの(対応していないプラグインのページなど): HTMLではリンクが切れます。メニューは自動では外さないので、無効にするかリンク先を直します
 
 ### メニュー
 
 各画面のメニュー構成は [app/menu.php](app/menu.php) の `$GLOBALS['menu_group']` / `$GLOBALS['menu_contents']` で定義されています。
 プラグインは、この配列に項目を差し込んで管理画面にメニューを追加します(→ [10. プラグイン](#10-プラグイン))。
 
-**メニューは権限と設定で出し分けられます。** たとえばフィールド管理とウィジェット管理は管理者だけ、システム系のグループも管理者だけ、といった具合です(`show` の条件)。**画面に入れるかどうかの判定は [app/controllers/before.php](app/controllers/before.php) が別に行う**ので、メニューを消しただけでは URL を直接開けてしまいます。画面を増やすときは両方に手を入れます。
+**メニューは権限と設定で出し分けられます。** たとえばフィールド管理とウィジェット管理は管理者だけ、システム系のグループも管理者だけ、といった具合です(`show` の条件)。**画面に入れるかどうかの判定は [app/controllers/before.php](app/controllers/before.php) が別に行う**ので、メニューを消しただけではURLを直接開けてしまいます。画面を増やすときは両方に手を入れます。
 
 ---
 
@@ -973,7 +979,7 @@ $GLOBALS['plugin']['myplugin']['export'] = 'myplugin_export_urls';
 // 対応する。ただし、出力するページは増えない（本文の表示を変えるだけなど、本体のページの出力で足りるとき）
 $GLOBALS['plugin']['myplugin']['export'] = [];
 
-// 対応しない（注文のように、PHP が動かないと使えない機能）
+// 対応しない（注文のように、PHPが動かないと使えない機能）
 $GLOBALS['plugin']['myplugin']['export'] = false;
 ```
 
@@ -990,7 +996,7 @@ $GLOBALS['plugin']['myplugin']['export'] = false;
 - **独自の型を追加するなら、詳細ページのURLは `/<型コード>/detail/<コード>` にします**(エントリーの `/entry/detail/<コード>` と同じ形)。本体のパスワード認証のフォーム(`app/views/password_form.php`)やコメントのフォームは、この形で送信先を組み立てます。認証などの後にリダイレクトするときも、同じURLに戻します。
   - 存在しない `work` のURL(たとえば `/<型コード>/<コード>`)は、エラーにならず `<mode>/index.php` が表示されます。リダイレクト先を間違えても一覧が出るだけなので、気付きにくい点に注意してください。
   - 詳細ページのURLは `service_entry_url($entry)`([app/services/entry.php](app/services/entry.php))で組み立てられます。パスワード認証(`service_entry_password()`)と、コメントの受け付け(`service_comment_acceptable()`・`service_comment_normalize()`・`service_comment_default()`・`service_comment_select_approved()`。[app/services/comment.php](app/services/comment.php))もサービスにあるので、本体の `app/controllers/entry/detail.php` と同じ形で書けます。
-- **公開側のフォームで reCAPTCHA を確認するときは、`service_recaptcha_verify()`([app/services/recaptcha.php](app/services/recaptcha.php))を使います。** 設定(`recaptcha_enable`)が無効なら確認せずに `true` を返し、一度通ったら同じセッションでは確認しません。ビューの `recaptcha_input()`・`recaptcha_import()` は `libs/modules/recaptcha.php` の関数で、このサービスを読み込めば一緒に読み込まれます。
+- **公開側のフォームでreCAPTCHAを確認するときは、`service_recaptcha_verify()`([app/services/recaptcha.php](app/services/recaptcha.php))を使います。** 設定(`recaptcha_enable`)が無効なら確認せずに `true` を返し、一度通ったら同じセッションでは確認しません。ビューの `recaptcha_input()`・`recaptcha_import()` は `libs/modules/recaptcha.php` の関数で、このサービスを読み込めば一緒に読み込まれます。
   - **コメント先のエントリーは、`service_comment_normalize()` が表示しているエントリーにします。** フォームから送られた `entry_id` は使いません(書き換えて送ると、コメントを受け付けていないエントリーに登録できてしまうため)。
 - **テーブルは `setup/install.php` で作り、`setup/uninstall.php` で削除します。** 関数 `db_query()` / `db_insert()` を使い、失敗したら `error()` で止めます。テーブル名には `DATABASE_PREFIX` を付け、本体や他のプラグインとぶつからないようプラグインコードで始めます。
 
@@ -1057,7 +1063,7 @@ $GLOBALS['plugin']['myplugin']['export'] = false;
   - 登録されずに残った一時ファイルは、`app/config.php` の `temp_retention`(初期値8時間)を過ぎると、次にアップロードしたときに削除されます。
 - **静的ファイル(JS/CSS)はプラグインのディレクトリに置き(例: `plugins/<コード>/js/admin.js`)、そのファイルを使う画面のプラグインのビューから読み込みます。** 本体の `js/admin.js` などには書き足さないでください(プラグインを入れ外しするたびに本体を直す必要が出るため)。
   - 読み込みには `loader_file()` を使います(キャッシュ回避のため、ファイルの更新日時をクエリに付ける)。`loader_js()` は本体の `js/` 配下専用なので、プラグインのファイルには使えません。
-  - 公開側・会員向け(`auth`)・管理画面のフッターはどれも、`$_view['script']` の内容を `</body>` の直前(jQuery などの読み込みより後)に出力します。ビューで `footer.php` を import する前に代入します。
+  - 公開側・会員向け(`auth`)・管理画面のフッターはどれも、`$_view['script']` の内容を `</body>` の直前(jQueryなどの読み込みより後)に出力します。ビューで `footer.php` を import する前に代入します。
   - 他のプラグインも同じ `$_view['script']` に書き込むので、`=` で上書きせず**追記**します。
 
   ```php
@@ -1074,19 +1080,19 @@ $GLOBALS['plugin']['myplugin']['export'] = false;
 
 ## 11. データベースのマイグレーション
 
-本体のテーブル定義を変えるときは、`migrate/` に SQL ファイルを追加します。
+本体のテーブル定義を変えるときは、`migrate/` にSQLファイルを追加します。
 
 - ファイル名は `YYYYMMDDHHMMSS-<内容>.sql`(例: `20260807223000-alter_table_entries.sql`)
 - 実行: `/?_mode=db_migrate` を開く、または `index.php` のあるディレクトリで `php index.php db_migrate`
 - 実行済みのファイルは `levis_migrations` テーブルに記録され、未実行のものだけが日付順に実行されます
 - **実行済みのファイルを書き換えても、再実行はされません。** 変更は新しいファイルとして追加します
-- **テーブルを作るときは `DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci` と、照合順序まで指定します。** `DEFAULT CHARSET=utf8mb4` だけだと、MariaDB では `utf8mb4_general_ci`、MySQL 8 では `utf8mb4_0900_ai_ci` になり、データベースによって文字列の比較結果が変わります(`0900_ai_ci` では「は」と「ぱ」、「あ」と「ア」が一致する)。照合順序の違うテーブルが混ざると、列どうしの比較で `Illegal mix of collations` のエラーにもなります。プラグインの `setup/install.php` で作るテーブルも同じです
+- **テーブルを作るときは `DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci` と、照合順序まで指定します。** `DEFAULT CHARSET=utf8mb4` だけだと、MariaDBでは `utf8mb4_general_ci`、MySQL 8 では `utf8mb4_0900_ai_ci` になり、データベースによって文字列の比較結果が変わります(`0900_ai_ci` では「は」と「ぱ」、「あ」と「ア」が一致する)。照合順序の違うテーブルが混ざると、列どうしの比較で `Illegal mix of collations` のエラーにもなります。プラグインの `setup/install.php` で作るテーブルも同じです
 
 プラグインのテーブルはこの仕組みではなく、`setup/install.php` / `upgrade_x_x_x.php` で管理します。
 
 ### 本体のバージョンアップとリリース
 
-利用者の手順は [OVERVIEW.md](OVERVIEW.md) の「バージョンアップ」にあります。ZIP を全部上書きしてから、管理画面の `/admin/update` でデータベースの更新と不要なファイルの削除を行います。処理は [app/services/update.php](app/services/update.php) です。
+利用者の手順は [OVERVIEW.md](OVERVIEW.md) の「バージョンアップ」にあります。ZIPを全部上書きしてから、管理画面の `/admin/update` でデータベースの更新と不要なファイルの削除を行います。処理は [app/services/update.php](app/services/update.php) です。
 
 **未実行のマイグレーションがあるあいだは、通常の画面を出しません。** テーブルが新しいコードと合わないことがあるため、[app/controllers/before.php](app/controllers/before.php) の先頭(設定を読む前)で判定して、次のように振り分けます。
 
@@ -1102,15 +1108,15 @@ $GLOBALS['plugin']['myplugin']['export'] = false;
 - 更新画面の「バックアップをダウンロード」は、未実行のマイグレーションがあるときだけ使えます(`service_update_backup()`)。**ファイルはサーバーに保存しません**(内容にパスワードのハッシュも含むため)。全データをメモリに載せてから出力するので、データの多いサイトでは `memory_limit` で止まることがあります。
 - **開発中にマイグレーションを追加すると、実行するまで画面がメンテナンス中になります。** テスト用データベースにも実行しておかないと、シナリオテストがメンテナンス画面で止まります(→ `/?_mode=db_migrate&test=<任意>` で実行できます)。
 - データベースの形式が変わる更新では、新しいコードで未ログインからログインできないことがあります。そのため、利用者の手順は「先にログインしてから上書き」にしています。それでも入れないときは、`DEBUG_PASSWORD` を設定して `/?_mode=db_migrate` を開きます。
-- マイグレーションの実行は levis の `db_migrate_execute()` です。
+- マイグレーションの実行はlevisの `db_migrate_execute()` です。
 
-**リリースは自動です。** `main` への push で `app/version.php` が変わると、[.github/workflows/release.yml](.github/workflows/release.yml) がタグ(`v<バージョン>`)と Release を作り、`freo2-<バージョン>.zip` を添付します。同じタグがあるときは何もしません。ハイフンの付いたバージョン(`2.0.0-alpha-27` など)には Pre-release の印が付きます。
+**リリースは自動です。** `main` への push で `app/version.php` が変わると、[.github/workflows/release.yml](.github/workflows/release.yml) がタグ(`v<バージョン>`)とReleaseを作り、`freo2-<バージョン>.zip` を添付します。同じタグがあるときは何もしません。ハイフンの付いたバージョン(`2.0.0-alpha-27` など)には Pre-release の印が付きます。
 
-**ZIP には `app/removed_files.txt`(削除済みファイルの一覧)が入ります。** リポジトリにはコミットしません。
+**ZIPには `app/removed_files.txt`(削除済みファイルの一覧)が入ります。** リポジトリにはコミットしません。
 
 - 中身は、履歴で一度でも追跡して今は無いファイルです。リリースのたびに全履歴から作り直すので、バージョンを飛ばしても漏れず、もう一度追加したファイルは載りません。ファイルを消すときに、一覧を手で直す必要はありません。
 - `files/`・`libs/vendor/` と、`sample` 以外のプラグイン・テーマは対象外です。
-- 形式は `sha256sum` の出力と同じ(ハッシュ、空白2つ、パス)で、1つのパスに過去の版の数だけ行があります。ハッシュは CRLF を LF にそろえてから計算します。
+- 形式は `sha256sum` の出力と同じ(ハッシュ、空白2つ、パス)で、1つのパスに過去の版の数だけ行があります。ハッシュはCRLFをLFにそろえてから計算します。
 - サーバーのファイルの内容が過去の版のどれかと一致するときだけ削除し、一致しないものは一覧で知らせます。
 - 一覧に載ったマイグレーションは、サーバーに残っていても実行しません。
 
@@ -1136,9 +1142,9 @@ $GLOBALS['plugin']['myplugin']['export'] = false;
 | `/?_mode=db_migrate` | `php index.php db_migrate` | マイグレーション |
 | `/?_mode=test_index` | `php index.php test_index` | 単体テストの一覧 |
 
-CLI で実行するときは、設定ファイルやマイグレーションの場所を相対パスで扱うため、**必ず `index.php` のあるディレクトリをカレントディレクトリにします。**
+CLIで実行するときは、設定ファイルやマイグレーションの場所を相対パスで扱うため、**必ず `index.php` のあるディレクトリをカレントディレクトリにします。**
 
-**CLI で画面を描画する:** 最初の引数を `/` で始めると、そのURLを GET で開いたときと同じ画面を標準出力に出します(`php index.php /entry/`、`php index.php "/entry/?keyword=a"`)。判定は levis の `cliurl()` です。セッションとクッキーは無いので、未ログインとして描画されます。`warning()`・`error()` は画面ではなく `WARNING: ...`・`ERROR: ...` の1行を出し、`redirect()` は何も出しません。
+**CLIで画面を描画する:** 最初の引数を `/` で始めると、そのURLをGETで開いたときと同じ画面を標準出力に出します(`php index.php /entry/`、`php index.php "/entry/?keyword=a"`)。判定はlevisの `cliurl()` です。セッションとクッキーは無いので、未ログインとして描画されます。`warning()`・`error()` は画面ではなく `WARNING: ...`・`ERROR: ...` の1行を出し、`redirect()` は何も出しません。
 
 ### その他
 
@@ -1156,9 +1162,9 @@ CLI で実行するときは、設定ファイルやマイグレーションの�
 | --- | --- | --- |
 | `mail_send` | `null`(送らない) | テスト用の宛先に実際に送らないため |
 | `mail_log` | `true`(記録する) | シナリオテストが記録からメールの内容を確かめるため(`mail/` フォルダが必要です) |
-| `storage_type`・`storage_url` | `'file'`・設置URL | S3 などを使う環境でも、テスト用データベースのIDで実際のストレージのファイルを消さないため |
+| `storage_type`・`storage_url` | `'file'`・設置URL | S3などを使う環境でも、テスト用データベースのIDで実際のストレージのファイルを消さないため |
 | `file_target` | `files/tests/` の中(`entries/`・`fields/`・`medias/`・`thumbnails/`。一時ファイルの `temps/` はそのまま) | 同じく、テスト用データベースのIDで `files/entries/<ID>/` などの実際のファイルを消さないため。テスト中だけ、シナリオテストのスクリーンショットの保存先 `scenario`(`files/scenarios/`)も加わります |
-| `recaptcha_enable` | `false` | シナリオテストのブラウザでは reCAPTCHA の確認を通れないため |
+| `recaptcha_enable` | `false` | シナリオテストのブラウザではreCAPTCHAの確認を通れないため |
 
 入力中の内容の一時保存のキー(`app_draft_key()`)にも、テスト中は `test:` が入ります。普段使っているブラウザでシナリオを流しても、テスト用データベースの記事の一時保存が、同じ番号の普段の記事に出てこないためです。
 
@@ -1240,9 +1246,9 @@ db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'categories;');
 - **データベースへの変更はトランザクションで元に戻します。** ファイルの作成など、トランザクションで戻らないものはテストの中で消します。
 - **確認する内容ごとに `{ }` のブロックへ分け、「データ → 確認 → 結果」の順に書きます。** ただし **`{ }` はスコープを作りません。** ブロックの中で使った変数名は、テスト全体の変数を上書きします。
 - 検証のテストは、**意図した1件だけ警告が出ること**(`count($warnings) === 1`)を確認する形が定型です。ほかの項目に巻き込まれないよう、重複を確認する `code` などは登録済みの値と衝突させません。
-- **設定で変わる挙動は、テスト側で固定します。** メール・ストレージ・reCAPTCHA はテスト中は自動で固定されます(上の表)が、テストで確かめたい値があれば、冒頭で `$GLOBALS['config']` を書き換え、末尾で戻します。アップロード先(`file_target`)はテスト中は `files/tests/` の中になりますが、ファイルを作ったり消したりする単体テストは、ほかのテストやシナリオと混ざらないよう、さらに専用のディレクトリに向けて最後に消します。
+- **設定で変わる挙動は、テスト側で固定します。** メール・ストレージ・reCAPTCHAはテスト中は自動で固定されます(上の表)が、テストで確かめたい値があれば、冒頭で `$GLOBALS['config']` を書き換え、末尾で戻します。アップロード先(`file_target`)はテスト中は `files/tests/` の中になりますが、ファイルを作ったり消したりする単体テストは、ほかのテストやシナリオと混ざらないよう、さらに専用のディレクトリに向けて最後に消します。
 - **サービスのテストは、モデルのテストの写しにしません。** サービスが足しているのは操作ログの記録と排他制御(編集画面を開いた後に更新されていないかの確認)、失敗したときの `error()` なので、そこを確認します。
-- CLI から実行するときは、冒頭で `$_SERVER['REMOTE_ADDR']` を設定します。操作ログはこの値を `logs.ip`(`NOT NULL`)に入れるので、無いとサービスのテストが途中で止まります。
+- CLIから実行するときは、冒頭で `$_SERVER['REMOTE_ADDR']` を設定します。操作ログはこの値を `logs.ip`(`NOT NULL`)に入れるので、無いとサービスのテストが途中で止まります。
 
 検証に使う関数です([libs/cores/test.php](libs/cores/test.php))。
 
@@ -1255,8 +1261,8 @@ db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'categories;');
 | `test_array_haskey()` / `test_array_not_haskey()` | 配列にキーがある / 無い |
 | `test_array_subset()` | 配列の中にその行が含まれる(比較は**非厳密**) |
 
-- `test_equals()` は型も見ます。数値の列は `intval()` でそろえてから比較します(データベースから返る型は PHP のバージョンによって変わります)。
-- **環境が整っていなくて確認できないテストは、`test_skip($title, $reason)` で飛ばします。** 実行した時点で `SKIP: <タイトル> (<理由>)` と出力され、集計は OK / NG / SKIP の3行になります。たとえば [test/service_media.php](test/service_media.php) は、GD が使えない環境ではサムネイルのテストをまとめて飛ばします。**確認できなかったものを、成功として数えないため**です。
+- `test_equals()` は型も見ます。数値の列は `intval()` でそろえてから比較します(データベースから返る型はPHPのバージョンによって変わります)。
+- **環境が整っていなくて確認できないテストは、`test_skip($title, $reason)` で飛ばします。** 実行した時点で `SKIP: <タイトル> (<理由>)` と出力され、集計はOK / NG / SKIPの3行になります。たとえば [test/service_media.php](test/service_media.php) は、GDが使えない環境ではサムネイルのテストをまとめて飛ばします。**確認できなかったものを、成功として数えないため**です。
 
   ```php
   if (!function_exists('imagecreatetruecolor')) {
@@ -1266,7 +1272,7 @@ db_query('TRUNCATE TABLE ' . DATABASE_PREFIX . 'categories;');
   }
   ```
 
-- コードカバレッジを出すなら、冒頭で `service('coverage.php'); service_coverage_start();`、末尾で `service_coverage_output(service_coverage_end(), ['app/models/categories.php']);` を呼びます(Xdebug の `coverage` モードが必要)。一括テストのときは邪魔になるので、参考実装のように `if (!isset($_GET['_test']))` で囲みます。
+- コードカバレッジを出すなら、冒頭で `service('coverage.php'); service_coverage_start();`、末尾で `service_coverage_output(service_coverage_end(), ['app/models/categories.php']);` を呼びます(Xdebugの `coverage` モードが必要)。一括テストのときは邪魔になるので、参考実装のように `if (!isset($_GET['_test']))` で囲みます。
 
 ### シナリオテスト(`scenario/`)
 
@@ -1361,6 +1367,6 @@ test.scenario = [
 - **物理削除(`DELETE`)の `delete_from` に、テーブルの別名(`AS xxx`)を付けないでください。** MariaDB 11.6 未満 / MySQL 8.0.16 未満では構文エラーになります。`select_*`/`update_*` をコピーして作るときに紛れ込みやすい点です。
 - **テーブルを作るときは、`COLLATE=utf8mb4_general_ci` まで指定します。** `CHARSET` だけだと、MySQL 8 では照合順序が変わります(→ [11. データベースのマイグレーション](#11-データベースのマイグレーション))。
 - **`before.php` の権限チェックは、メニュー・文言を読み込む前に `error()` を呼ぶことがあります。** 公開側のヘッダー・フッターに値を追加するときは、`$GLOBALS['menu_contents']` などが未定義でも動くように `isset()`/`!empty()` で確認します。
-- **POST のフォームでは、送信ボタンの `name`/`value` は送られません。** 二重送信を防ぐため、`js/common.js` が送信時に `form[method=post]` の送信ボタンをすべて無効にするからです(無効なボタンの値はブラウザが送らない)。ボタンで処理を分けたいときは、フォームを分けて `<input type="hidden" name="exec" value="...">` で送ります。
+- **POSTのフォームでは、送信ボタンの `name`/`value` は送られません。** 二重送信を防ぐため、`js/common.js` が送信時に `form[method=post]` の送信ボタンをすべて無効にするからです(無効なボタンの値はブラウザが送らない)。ボタンで処理を分けたいときは、フォームを分けて `<input type="hidden" name="exec" value="...">` で送ります。
 - **`_post` 系のコントローラーはURLを直接開いても動きません**(`forward()` 経由でしか実行できない)。動作を確認するときはフォームから送信します。
 - **本番では `DEBUG_LEVEL` を必ず `0` にします。** `1` のままだと、誰でもDB管理画面やマイグレーションを開けてしまいます。

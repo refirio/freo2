@@ -95,7 +95,7 @@ function service_media_thumbnail_create($path)
         } else {
             $limit = ini_get('memory_limit');
             if ($limit !== false && $limit !== '' && $limit !== '-1') {
-                // 単位（128M など）をバイトに換算する（break せずに下の単位まで掛ける）
+                // 単位（128Mなど）をバイトに換算する（break せずに下の単位まで掛ける）
                 $bytes = (int) $limit;
                 switch (strtoupper(substr($limit, -1))) {
                     case 'G':

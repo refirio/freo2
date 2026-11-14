@@ -15,7 +15,7 @@ $GLOBALS['config']['http_path'] = app_config('APP_HTTP_PATH', dirname($_SERVER['
 /* ハッシュ作成用ペッパー（DBには保存しない秘密値。公開しない） */
 $GLOBALS['config']['hash_pepper'] = app_config('APP_HASH_PEPPER', 'RKH7X92N4P');
 
-/* パスワードのハッシュ方式（bcrypt / argon2 / md5）。argon2 は PHP が対応している環境のみ。md5 は古いPHP環境向けの互換用 */
+/* パスワードのハッシュ方式（bcrypt / argon2 / md5）。argon2 はPHPが対応している環境のみ。md5 は古いPHP環境向けの互換用 */
 $GLOBALS['config']['hash_algorithm'] = app_config('APP_HASH_ALGORITHM', 'bcrypt');
 
 /* オプション項目 */
@@ -129,7 +129,7 @@ $GLOBALS['config']['storage_url'] = app_test() ? $GLOBALS['config']['http_url'] 
 /* エントリーの画像・フィールドのファイルをプログラムを通して表示するか（有効にすると、エントリーの公開範囲で表示できるかを判定する。直接のURLは、Webサーバーやバケットの設定で別に拒否する） */
 $GLOBALS['config']['storage_protect'] = app_config('APP_STORAGE_PROTECT', false);
 
-/* プログラムを通して表示するとき、S3 の署名付きURLを使える時間（秒） */
+/* プログラムを通して表示するとき、S3の署名付きURLを使える時間（秒） */
 $GLOBALS['config']['storage_signed_expire'] = app_config('APP_STORAGE_SIGNED_EXPIRE', 60 * 5);
 
 /* ファイルアップロード先（テスト中は設定に関係なく tests の中を使う。テスト用データベースのIDで、実際のファイルを消さないため。scenario はシナリオテストのスクリーンショットの保存先） */
@@ -290,7 +290,7 @@ $GLOBALS['config']['mail_send'] = app_test() ? null : app_config('APP_MAIL_SEND'
 /* メールの記録（テスト中は設定に関係なく記録する。シナリオテストが記録からメールの内容を確かめるため） */
 $GLOBALS['config']['mail_log'] = app_test() ? true : app_config('APP_MAIL_LOG', false);
 
-/* メールのエンベロープFrom（Return-Path になるメールアドレス。sendmail なら -f で渡し、smtp なら MAIL FROM に使う。null なら指定しない） */
+/* メールのエンベロープFrom（Return-Path になるメールアドレス。sendmail なら -f で渡し、smtp ならMAIL FROMに使う。null なら指定しない） */
 $GLOBALS['config']['mail_envelope'] = app_config('APP_MAIL_ENVELOPE', null);
 
 /* SMTPサーバー（mail_send が smtp のときに使う。encryption は tls（STARTTLS）・ssl・none） */

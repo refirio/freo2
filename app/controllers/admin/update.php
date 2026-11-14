@@ -5,7 +5,7 @@ import('app/services/update.php');
 // 未実行のマイグレーション
 $update_targets = service_update_pending();
 
-// DB の更新の結果
+// DBの更新の結果
 $_view['update_results'] = [];
 
 // 不要なファイルの削除の結果
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             redirect('/admin/update');
         }
 
-        // DB のバックアップをダウンロード
+        // DBのバックアップをダウンロード
         service_update_backup();
     } elseif (isset($_POST['exec']) && $_POST['exec'] === 'migrate') {
         // 二重送信などで、すでに更新が済んでいる
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             redirect('/admin/update');
         }
 
-        // DB を更新
+        // DBを更新
         $_view['update_results'] = service_update_migrate($update_targets);
 
         // 成功したら、完了の画面へ
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 失敗したら、結果をこの画面に出す（残っている更新を取り直す）
         $update_targets = service_update_pending();
     } elseif (isset($_POST['exec']) && $_POST['exec'] === 'remove') {
-        // DB の更新が残っているうちは消さない
+        // DBの更新が残っているうちは消さない
         if (!empty($update_targets)) {
             redirect('/admin/update');
         }
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $_view['update_targets'] = $update_targets;
 
-// サーバーに残っている削除済みファイル（DB の更新が済んでから扱う）
+// サーバーに残っている削除済みファイル（DBの更新が済んでから扱う）
 $_view['update_removed'] = empty($update_targets) ? service_update_removed() : ['delete' => [], 'keep' => []];
 
 // タイトル

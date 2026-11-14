@@ -73,7 +73,7 @@ $_view['version_info'] = [
     'database_version' => $database_version,
 ];
 
-// AWS SDK（S3 を使っているときだけ表示する）
+// AWS SDK（S3を使っているときだけ表示する）
 $_view['aws_info'] = null;
 
 if ($GLOBALS['config']['storage_type'] === 's3') {

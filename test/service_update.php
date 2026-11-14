@@ -65,7 +65,7 @@ directory_mkdir($test_html_root . 'css/');
 
 // 削除済みファイルの一覧の読み込みテスト
 {
-    // データ（2つめの行は CRLF、不正なハッシュ・不正なパス・空白1つの行は読み飛ばす）
+    // データ（2つめの行はCRLF、不正なハッシュ・不正なパス・空白1つの行は読み飛ばす）
     $test_list_file = $test_directory . 'removed_files.txt';
     file_put_contents($test_list_file, implode('', [
         hash('sha256', 'v1') . '  app/models/pages.php' . "\n",
@@ -88,7 +88,7 @@ directory_mkdir($test_html_root . 'css/');
 
 // サーバーに残っている削除済みファイルの取得テスト
 {
-    // データ（pages.php は過去の版と同じ内容（改行は CRLF）、edited.php は編集したもの、css は公開ディレクトリ側にある）
+    // データ（pages.php は過去の版と同じ内容（改行はCRLF）、edited.php は編集したもの、css は公開ディレクトリ側にある）
     file_put_contents($test_app_root . 'app/models/pages.php', "<?php\r\n// v2\r\n");
     file_put_contents($test_app_root . 'app/models/edited.php', "<?php\n// edited\n");
     file_put_contents($test_html_root . 'css/pages.css', "body {}\n");
@@ -135,7 +135,7 @@ directory_mkdir($test_html_root . 'css/');
     test_equals('remove again deleted', $results['deleted'], []);
 }
 
-// DB の更新に失敗したかの判定テスト
+// DBの更新に失敗したかの判定テスト
 {
     // 結果
     test_equals('failed empty', service_update_failed([]), false);

@@ -17,7 +17,7 @@
         <div class="card shadow-sm mb-3">
             <div class="card-header heading">HTML出力</div>
             <div class="card-body">
-                <p>公開側のページをHTMLファイルに出力し、CSS・画像などと一緒に ZIP ファイルにまとめてダウンロードします。ページを1つずつ取得するので、ページ数が多いと時間がかかります。</p>
+                <p>公開側のページをHTMLファイルに出力し、CSS・画像などと一緒にZIPファイルにまとめてダウンロードします。ページを1つずつ取得するので、ページ数が多いと時間がかかります。</p>
 
                 <?php if (!empty($_view['errors'])) : ?>
                 <div class="alert alert-danger">
@@ -98,7 +98,7 @@ $_view['script'] = ($_view['script'] ?? '') . '<script>
                         if (values.done < values.total) {
                             step(values.done, values.total);
                         } else {
-                            $("#export_status").text("CSS・画像などを複製して、ZIP ファイルにまとめています。");
+                            $("#export_status").text("CSS・画像などを複製して、ZIPファイルにまとめています。");
 
                             request({exec: "finish"}, function(values) {
                                 $("#export_status").text(total + " ページを出力しました。");

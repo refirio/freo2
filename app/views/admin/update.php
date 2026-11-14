@@ -55,7 +55,7 @@
 
             <?php if (!empty($_view['update_remove_results']['failed'])) : ?>
             <div class="alert alert-danger">
-                次のファイルは、書き込みの権限が無いなどの理由で削除できませんでした。FTP などで削除してください。
+                次のファイルは、書き込みの権限が無いなどの理由で削除できませんでした。FTPなどで削除してください。
             </div>
             <ul class="mb-4">
                 <?php foreach ($_view['update_remove_results']['failed'] as $update_removed) : ?>
@@ -89,7 +89,7 @@
 
             <?php if (!empty($_view['update_removed']['keep'])) : ?>
             <h2 class="h5">確認が必要なファイル</h2>
-            <p>以前のバージョンにあったファイルと同じ名前ですが、内容が違うため削除していません。編集したファイルや、自分で作ったファイルの可能性があります。不要であれば、FTP などで削除してください。</p>
+            <p>以前のバージョンにあったファイルと同じ名前ですが、内容が違うため削除していません。編集したファイルや、自分で作ったファイルの可能性があります。不要であれば、FTPなどで削除してください。</p>
             <ul class="mb-4">
                 <?php foreach ($_view['update_removed']['keep'] as $update_removed) : ?>
                 <li><code><?php h($update_removed['path']) ?></code></li>
@@ -112,7 +112,7 @@
             </ul>
             <?php if (empty($_view['update_results'])) : ?>
             <h2 class="h5">データベースのバックアップ</h2>
-            <p>更新に失敗したときに、元に戻すためのファイルです。データベースの内容をすべて含むので、大切に保管してください。データが多くてダウンロードできないときは、サーバーのデータベース管理ツール（phpMyAdmin など）でバックアップを取ってください。</p>
+            <p>更新に失敗したときに、元に戻すためのファイルです。データベースの内容をすべて含むので、大切に保管してください。データが多くてダウンロードできないときは、サーバーのデータベース管理ツール（phpMyAdminなど）でバックアップを取ってください。</p>
             <form action="<?php t(MAIN_FILE) ?>/admin/update" method="post" class="mb-4">
                 <input type="hidden" name="_token" value="<?php t($_view['token']) ?>">
                 <input type="hidden" name="exec" value="backup">

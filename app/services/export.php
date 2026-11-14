@@ -197,13 +197,13 @@ function service_export_urls()
         ];
     }
 
-    // RSS（index.html では HTML として配信されるので、拡張子を付ける）
+    // RSS（index.html ではHTMLとして配信されるので、拡張子を付ける）
     $results[] = [
         'url'  => '/entry/feed',
         'file' => 'entry/feed.xml',
     ];
 
-    // 存在しないページ（どこにも無いURLを取得して、404 のページを出力する）
+    // 存在しないページ（どこにも無いURLを取得して、404のページを出力する）
     $results[] = [
         'url'  => '/export-not-found/',
         'file' => '404.html',
@@ -301,7 +301,7 @@ function service_export_fetch($token, $url)
 /**
  * ページを描画（コマンドラインから出力するとき）
  *
- * ページごとに別のプロセス（php index.php <URL>）で描画する。トークンは環境変数で渡す（CLI では環境変数が $_SERVER に入る）
+ * ページごとに別のプロセス（php index.php <URL>）で描画する。トークンは環境変数で渡す（CLIでは環境変数が $_SERVER に入る）
  *
  * @param string $token
  * @param string $url
@@ -387,7 +387,7 @@ function service_export_convert($html, $replaces)
     }, $replaces['path']);
     $html  = preg_replace('/(\s(?:href|src|action)=["\'])(?:' . implode('|', $paths) . ')(?!\/)/', '${1}' . str_replace(['\\', '$'], ['\\\\', '\\$'], $replaces['to']), $html);
 
-    // RSS は entry/feed.xml に出力する
+    // RSSは entry/feed.xml に出力する
     $html = preg_replace('/\/entry\/feed(?=["\'<])/', '/entry/feed.xml', $html);
 
     return $html;
@@ -404,7 +404,7 @@ function service_export_convert($html, $replaces)
  */
 function service_export_save($token, $file, $content)
 {
-    // 作業用のディレクトリの外に書き込まないよう、形を確かめる（service_export_file() が作る形と、RSS・404 のページ）
+    // 作業用のディレクトリの外に書き込まないよう、形を確かめる（service_export_file() が作る形と、RSS・404のページ）
     if (!preg_match('/^([\w\-]+\/)*[\w\-]+\.(html|xml)$/', $file)) {
         return false;
     }
@@ -453,7 +453,7 @@ function service_export_static($token)
 /**
  * ディレクトリを複製
  *
- * 公開しないファイル（.htaccess などの . で始まるファイルと、PHP のファイル）は複製しない
+ * 公開しないファイル（.htaccess などの . で始まるファイルと、PHPのファイル）は複製しない
  *
  * @param string $from
  * @param string $to
@@ -491,10 +491,10 @@ function service_export_copy($from, $to)
 }
 
 /**
- * 出力したファイルを ZIP にまとめる
+ * 出力したファイルをZIPにまとめる
  *
  * @param string      $token
- * @param string|null $path  ZIP ファイルの保存先（指定しなければ作業用のディレクトリ）
+ * @param string|null $path  ZIPファイルの保存先（指定しなければ作業用のディレクトリ）
  *
  * @return bool
  */

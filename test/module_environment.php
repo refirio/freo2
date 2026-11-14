@@ -18,7 +18,7 @@ import('libs/modules/environment.php');
     // 確認
     list($environment, $browser, $os) = environment_useragent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
 
-    // 結果（OS と ブラウザを「 + 」でつないで返すこと）
+    // 結果（OSと ブラウザを「 + 」でつないで返すこと）
     test_equals('environment windows chrome', $environment, 'Windows 10 (or later) + Chrome 120');
     test_equals('environment windows chrome (browser)', $browser, 'Chrome 120');
     test_equals('environment windows chrome (os)', $os, 'Windows 10 (or later)');
@@ -26,7 +26,7 @@ import('libs/modules/environment.php');
 
 // パソコン（Windows + Edge）テスト
 {
-    // 確認（Chrome の文字列も含むが、Edge として判定されること）
+    // 確認（Chromeの文字列も含むが、Edgeとして判定されること）
     list($environment, $browser, $os) = environment_useragent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0');
 
     // 結果
@@ -66,14 +66,14 @@ import('libs/modules/environment.php');
     // 確認
     list($environment, $browser, $os) = environment_useragent('Mozilla/5.0 (Linux; Android 14; Pixel 8) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36');
 
-    // 結果（Mobile を含むのでタブレット扱いにならないこと）
+    // 結果（Mobileを含むのでタブレット扱いにならないこと）
     test_equals('environment android', $environment, 'Android 14 + Chrome 120');
     test_equals('environment android (os)', $os, 'Android 14');
 }
 
 // タブレット（Android）テスト
 {
-    // 確認（Mobile を含まない）
+    // 確認（Mobileを含まない）
     list($environment, $browser, $os) = environment_useragent('Mozilla/5.0 (Linux; Android 14; SM-X200) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
 
     // 結果
@@ -85,7 +85,7 @@ import('libs/modules/environment.php');
     // 確認
     list($environment, $browser, $os) = environment_useragent('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
 
-    // 結果（ロボット・ツールの類は OS を空にして、ブラウザ名だけを返すこと）
+    // 結果（ロボット・ツールの類はOSを空にして、ブラウザ名だけを返すこと）
     test_equals('environment googlebot', $environment, 'Google (Robot)');
     test_equals('environment googlebot (browser)', $browser, 'Google (Robot)');
     test_equals('environment googlebot (os)', $os, '');
@@ -104,7 +104,7 @@ import('libs/modules/environment.php');
 
 // プレビューテスト
 {
-    // 確認（SNS がリンクの内容を取りに来た場合）
+    // 確認（SNSがリンクの内容を取りに来た場合）
     list($environment, $browser, $os) = environment_useragent('Slackbot-LinkExpanding 1.0 (+https://api.slack.com/robots)');
 
     // 結果

@@ -173,13 +173,13 @@ function service_storage_output($key)
     }
 
     if ($GLOBALS['config']['storage_type'] === 's3') {
-        // 署名付きURLへリダイレクトする（PHP で中継しない。オブジェクトの有無は確認しないので、無ければ S3 がエラーを返す）
+        // 署名付きURLへリダイレクトする（PHPで中継しない。オブジェクトの有無は確認しないので、無ければS3がエラーを返す）
         $url = s3_url($key, $GLOBALS['config']['storage_signed_expire'], $mime);
         if ($url === false) {
             return false;
         }
 
-        // 同じ画像を見返すたびに URL を作り直さないよう、署名の期限の半分までは、ブラウザにリダイレクトを覚えさせる
+        // 同じ画像を見返すたびにURLを作り直さないよう、署名の期限の半分までは、ブラウザにリダイレクトを覚えさせる
         header('Cache-Control: private, max-age=' . intval($GLOBALS['config']['storage_signed_expire'] / 2));
         header('Location: ' . $url, true, 302);
         exit;
@@ -270,7 +270,7 @@ function service_storage_temp_clean()
             continue;
         }
 
-        // S3 の更新日時は日時のオブジェクトで返るので、タイムスタンプにそろえる
+        // S3の更新日時は日時のオブジェクトで返るので、タイムスタンプにそろえる
         $modified = is_numeric($file['modified']) ? intval($file['modified']) : strtotime((string)$file['modified']);
 
         if ($modified !== false && $modified < $limit) {
@@ -350,7 +350,7 @@ function service_storage_list($key)
         }
     }
 
-    // 名前で並べ替える（ファイルは readdir() の順、S3 はキーのバイト順で返るため、どちらでも同じ並びにする）
+    // 名前で並べ替える（ファイルは readdir() の順、S3はキーのバイト順で返るため、どちらでも同じ並びにする）
     $compare = function ($a, $b) {
         return strnatcasecmp($a['name'], $b['name']);
     };

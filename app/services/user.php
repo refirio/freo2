@@ -312,7 +312,7 @@ function service_user_frozen($username)
 
 /**
  * ペッパーを適用したパスワードの前処理（bcrypt/argon2 用）
- * HMAC を通すことで、ペッパーを効かせつつ bcrypt の72バイト上限・NULバイト問題も回避する。
+ * HMACを通すことで、ペッパーを効かせつつ bcrypt の72バイト上限・NULバイト問題も回避する。
  *
  * @param string $password
  *
@@ -435,7 +435,7 @@ function service_user_authenticate($username, $password)
         ],
     ]);
 
-    // パスワード認証（照合は保存形式に応じて PHP 側で行う）
+    // パスワード認証（照合は保存形式に応じてPHP側で行う）
     if (!empty($users) && service_user_password_verify($password, $users[0]['password'])) {
         // ログイン時のハッシュ付け替え（設定の方式に合っていなければ作り直す）
         if (service_user_password_needs_rehash($users[0]['password'])) {
