@@ -1,5 +1,7 @@
 <?php
 
+import('app/services/entry.php');
+
 // 絞り込み条件を作成
 $filters = model('filter_entries', $_GET, [
     'associate' => true,
@@ -26,7 +28,7 @@ if (isset($_GET['page'])) {
 } else {
     $_GET['page'] = 1;
 
-    $_SESSION['bulk']['entry'] = [];
+    service_entry_bulk_clear('entry');
 }
 
 // エントリーを取得

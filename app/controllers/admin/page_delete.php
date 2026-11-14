@@ -28,14 +28,7 @@ if (!empty($_POST['id'])) {
     db_transaction();
 
     // エントリーを削除
-    $resource = service_entry_delete([
-        'where' => [
-            'id = :id',
-            [
-                'id' => $_POST['id'],
-            ],
-        ],
-    ]);
+    $resource = service_entry_delete_typed('page', $_POST['id']);
     if (!$resource) {
         error('データを削除できません。');
     }
@@ -53,9 +46,7 @@ if (!empty($_POST['id'])) {
     db_transaction();
 
     // エントリーを削除
-    $resource = service_entry_delete([
-        'where' => 'id IN(' . implode(',', array_map('db_escape', $_POST['list'])) . ')',
-    ]);
+    $resource = service_entry_delete_typed('page', $_POST['list']);
     if (!$resource) {
         error('データを削除できません。');
     }
@@ -63,8 +54,8 @@ if (!empty($_POST['id'])) {
     // トランザクションを終了
     db_commit();
 
-    // 一括処理セッションを初期化
-    unset($_SESSION['bulk']);
+    // 一括処理セッションを初期化（この型の選択だけ）
+    service_entry_bulk_clear('page');
 
     // 操作した一覧の親ページを取得（親ページも削除した場合は、残っている祖先）
     $parent = null;

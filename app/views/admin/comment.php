@@ -92,7 +92,7 @@
                             <?php foreach ($_view['comments'] as $comment) : ?>
                             <tr>
                                 <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
-                                <td><input type="checkbox" name="bulks[]" value="<?php h($comment['id']) ?>"<?php isset($_SESSION['bulk']['comment'][$comment['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
+                                <td><input type="checkbox" name="bulks[]" value="<?php h($comment['id']) ?>"<?php isset($_SESSION['bulk']['comments'][$comment['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
                                 <?php endif ?>
                                 <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $comment['created']) == localdate('Ymd') ? localdate('H:i:s', $comment['created']) : localdate('Y/m/d', $comment['created'])) ?></td>
                                 <td class="d-none d-md-table-cell"><?php if ($comment['user_id'] && !preg_match('/^DELETED /', $comment['user_username'])) :?><code class="text-dark"><?php h($comment['user_id'] ? truncate($comment['user_username'], 50) : '') ?></code><?php endif ?></td>

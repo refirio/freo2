@@ -91,7 +91,7 @@
                             <?php foreach ($_view['contacts'] as $contact) : ?>
                             <tr>
                                 <?php if ($GLOBALS['authority']['power'] >= 2) : ?>
-                                <td><input type="checkbox" name="bulks[]" value="<?php h($contact['id']) ?>"<?php isset($_SESSION['bulk']['contact'][$contact['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
+                                <td><input type="checkbox" name="bulks[]" value="<?php h($contact['id']) ?>"<?php isset($_SESSION['bulk']['contacts'][$contact['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
                                 <?php endif ?>
                                 <td class="d-none d-md-table-cell"><?php h(localdate('Ymd', $contact['created']) == localdate('Ymd') ? localdate('H:i:s', $contact['created']) : localdate('Y/m/d', $contact['created'])) ?></td>
                                 <td class="d-none d-md-table-cell">

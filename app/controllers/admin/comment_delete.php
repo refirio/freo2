@@ -50,7 +50,7 @@ if (!empty($_POST['id'])) {
     db_commit();
 
     // 一括処理セッションを初期化
-    unset($_SESSION['bulk']);
+    unset($_SESSION['bulk']['comments']);
 
     // リダイレクト
     redirect('/admin/comment?page=' . intval($_POST['page']) . '&ok=delete');

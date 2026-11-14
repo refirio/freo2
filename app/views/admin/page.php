@@ -90,7 +90,7 @@
                         <tbody>
                             <?php foreach ($_view['entries'] as $entry) : ?>
                             <tr>
-                                <td><input type="checkbox" name="bulks[]" value="<?php h($entry['id']) ?>"<?php isset($_SESSION['bulk']['entry'][$entry['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
+                                <td><input type="checkbox" name="bulks[]" value="<?php h($entry['id']) ?>"<?php isset($_SESSION['bulk']['entries']['page'][$entry['id']]) ? e('checked="checked"') : '' ?> class="bulk"></td>
                                 <td class="d-none d-md-table-cell"><code class="text-dark"><?php h(truncate($entry['code'], 50)) ?></code></td>
                                 <td>
                                     <?php if (isset($_view['children'][$entry['code']])) : ?>

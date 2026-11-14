@@ -27,7 +27,7 @@ if (isset($_GET['page'])) {
 } else {
     $_GET['page'] = 1;
 
-    $_SESSION['bulk']['comment'] = [];
+    $_SESSION['bulk']['comments'] = [];
 }
 
 // コメントを取得

@@ -856,6 +856,75 @@ $inserted_id = intval($entries[0]['id']);
     }
 }
 
+// 一括削除の対象のテスト（型ごとに分けて控える）
+{
+    // データ（ブラウザから流したときの、本物の選択を退避する）
+    $session_bulk = isset($_SESSION['bulk']) ? $_SESSION['bulk'] : null;
+    unset($_SESSION['bulk']);
+
+    // 確認（1件ずつ選ぶ。ページの一覧からエントリーのIDを送っても、ページとして控えるだけ）
+    service_entry_bulk_select('entry', ['id' => $entry_ids['pub_none'], 'checked' => '1']);
+    service_entry_bulk_select('page', ['id' => $entry_ids['pub_page'], 'checked' => '1']);
+    service_entry_bulk_select('page', ['id' => $entry_ids['pub_user'], 'checked' => '1']);
+
+    // 結果
+    test_equals('bulk select entry', array_keys($_SESSION['bulk']['entries']['entry']), [$entry_ids['pub_none']]);
+    test_equals('bulk select page', array_keys($_SESSION['bulk']['entries']['page']), [$entry_ids['pub_page'], $entry_ids['pub_user']]);
+
+    // 結果（確認画面に出すのは、その型のものだけ）
+    test_equals('bulk entries entry', array_column(service_entry_bulk_entries('entry'), 'code'), ['pub_none']);
+    test_equals('bulk entries page', array_column(service_entry_bulk_entries('page'), 'code'), ['pub_page']);
+    test_equals('bulk entries none', service_entry_bulk_entries('gallery'), []);
+
+    // 確認（選択を外す・一括選択・不正な値）
+    service_entry_bulk_select('page', ['id' => $entry_ids['pub_user'], 'checked' => '0']);
+    service_entry_bulk_select('entry', ['list' => [$entry_ids['pub_all'] => '1', $entry_ids['pub_none'] => '0', 'abc' => '1']]);
+    service_entry_bulk_select('entry', ['list' => 'not array']);
+
+    // 結果
+    test_equals('bulk unselect', array_keys($_SESSION['bulk']['entries']['page']), [$entry_ids['pub_page']]);
+    test_equals('bulk select list', array_keys($_SESSION['bulk']['entries']['entry']), [$entry_ids['pub_all']]);
+
+    // 確認（消すのは、その型の選択だけ）
+    $_SESSION['bulk']['comments'] = [1 => true];
+    service_entry_bulk_clear('entry');
+
+    // 結果
+    test_equals('bulk clear entry', $_SESSION['bulk']['entries']['entry'], []);
+    test_equals('bulk clear keeps page', array_keys($_SESSION['bulk']['entries']['page']), [$entry_ids['pub_page']]);
+    test_equals('bulk clear keeps comment', $_SESSION['bulk']['comments'], [1 => true]);
+
+    // セッションを元に戻す
+    unset($_SESSION['bulk']);
+    if ($session_bulk !== null) {
+        $_SESSION['bulk'] = $session_bulk;
+    }
+}
+
+// 型を指定した削除のテスト
+{
+    // 結果（型のID）
+    test_equals('type id entry', service_entry_type_id('entry'), 1);
+    test_equals('type id unknown', service_entry_type_id('nothing'), null);
+
+    // 確認（エントリーとして、エントリーとページのIDを渡す。ファイルの削除は行わない）
+    service_entry_delete_typed('entry', [$entry_ids['pub_none'], $entry_ids['pub_page']], [
+        'file' => false,
+    ]);
+
+    // 結果（ページは削除されない）
+    $entries = model('select_entries', [
+        'select' => 'code',
+        'where'  => 'id IN(' . $entry_ids['pub_none'] . ',' . $entry_ids['pub_page'] . ')',
+    ]);
+
+    test_equals('delete typed', array_column($entries, 'code'), ['pub_page']);
+
+    // 結果（型が無い・IDが無いときは何もしない）
+    test_equals('delete typed unknown type', service_entry_delete_typed('nothing', [$entry_ids['pub_page']]), null);
+    test_equals('delete typed no id', service_entry_delete_typed('page', ['abc', 0]), null);
+}
+
 // トランザクションを終了
 db_rollback();
 

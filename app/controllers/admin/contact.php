@@ -38,7 +38,7 @@ if (isset($_GET['page'])) {
 } else {
     $_GET['page'] = 1;
 
-    $_SESSION['bulk']['contact'] = [];
+    $_SESSION['bulk']['contacts'] = [];
 }
 
 // お問い合わせを取得
