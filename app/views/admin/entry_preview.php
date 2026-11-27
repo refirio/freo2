@@ -80,5 +80,9 @@
                     <?php endforeach ?>
                     <dt>コメントの受付</dt>
                         <dd><?php h($GLOBALS['config']['option']['entry']['comment'][$_view['entry']['comment']] ?? $_view['entry']['comment']) ?></dd>
+                    <?php if (!empty($_view['preview']['sort'])) : ?>
+                    <dt>並び順</dt>
+                        <dd><?php h($_view['preview']['sort']) ?></dd>
+                    <?php endif ?>
                 </dl>
                 <p><a href="#" class="close">閉じる</a></p>
