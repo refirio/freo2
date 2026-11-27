@@ -811,3 +811,131 @@ function service_entry_file_clear()
 
     unset($_SESSION['file']);
 }
+
+/**
+ * 入力画面の確認に表示する内容を作成
+ *
+ * 検証の結果、選んだカテゴリー・属性の名前、公開側のURL、画像・ファイルの表示先を返す。画像・ファイルは、入力画面でアップロードしたもの（セッション）があればそれを、無ければ登録済みのものを使う
+ *
+ * @param array $entry      入力内容（normalize_entries() で整理したもの）
+ * @param array $type       型
+ * @param array $fields     型のフィールド
+ * @param array $categories 型のカテゴリー
+ * @param array $attributes 属性
+ *
+ * @return array
+ */
+function service_entry_preview($entry, $type, $fields, $categories, $attributes)
+{
+    $preview = [
+        'warnings'   => model('validate_entries', $entry),
+        'url'        => service_entry_url([
+            'type_code' => $type['code'],
+            'code'      => $entry['code'],
+        ]),
+        'categories' => [],
+        'attributes' => [],
+        'pictures'   => [],
+        'thumbnail'  => null,
+        'files'      => [],
+    ];
+
+    // カテゴリーと属性の名前
+    foreach ($categories as $category) {
+        if (in_array($category['id'], $entry['category_sets'])) {
+            $preview['categories'][] = $category['name'];
+        }
+    }
+    foreach ($attributes as $attribute) {
+        if (in_array($attribute['id'], $entry['attribute_sets'])) {
+            $preview['attributes'][] = $attribute['name'];
+        }
+    }
+
+    // 登録済みのファイル
+    $stored = [
+        'pictures'  => [],
+        'thumbnail' => null,
+        'fields'    => [],
+    ];
+    if (!empty($entry['id'])) {
+        $entries = model('select_entries', [
+            'where' => [
+                'id = :id AND type_id = :type_id',
+                [
+                    'id'      => $entry['id'],
+                    'type_id' => $type['id'],
+                ],
+            ],
+        ]);
+        if (!empty($entries)) {
+            $stored['pictures']  = $entries[0]['pictures'] ? explode("\n", $entries[0]['pictures']) : [];
+            $stored['thumbnail'] = $entries[0]['thumbnail'];
+
+            $field_sets = model('select_field_sets', [
+                'where' => [
+                    'entry_id = :entry_id',
+                    [
+                        'entry_id' => $entries[0]['id'],
+                    ],
+                ],
+            ]);
+            foreach ($field_sets as $field_set) {
+                $stored['fields'][$field_set['field_id']] = $field_set['text'];
+            }
+        }
+    }
+
+    $url = MAIN_FILE . '/admin/file?_type=image';
+    $id  = empty($entry['id']) ? '' : '&id=' . intval($entry['id']);
+
+    // 画像（入力画面で並べた順。同じ名前をアップロードし直したときは、後のものを使う）
+    $uploads = isset($_SESSION['file']['entry']['pictures']) ? $_SESSION['file']['entry']['pictures'] : [];
+    foreach ($entry['picture_files'] as $name) {
+        $index = null;
+        foreach ($uploads as $key => $upload) {
+            if (is_int($key) && isset($upload['name']) && $upload['name'] === $name) {
+                $index = $key;
+            }
+        }
+        if ($index !== null) {
+            $preview['pictures'][] = $url . '&target=entry&key=pictures&format=image&index=' . $index;
+        } elseif (($index = array_search($name, $stored['pictures'], true)) !== false) {
+            $preview['pictures'][] = $url . '&target=entry&key=pictures&format=image&index=' . $index . $id;
+        }
+    }
+
+    // サムネイル
+    $upload = isset($_SESSION['file']['entry']['thumbnail']) ? $_SESSION['file']['entry']['thumbnail'] : [];
+    if (!empty($upload['delete'])) {
+    } elseif (!empty($upload['name'])) {
+        $preview['thumbnail'] = $url . '&target=entry&key=thumbnail&format=image';
+    } elseif (!empty($stored['thumbnail'])) {
+        $preview['thumbnail'] = $url . '&target=entry&key=thumbnail&format=image' . $id;
+    }
+
+    // フィールドの画像・ファイル（画像は表示先、ファイルは名前だけ）
+    foreach ($fields as $field) {
+        if ($field['kind'] !== 'image' && $field['kind'] !== 'file') {
+            continue;
+        }
+
+        $key    = 'field_' . $entry['id'] . '_' . $field['id'];
+        $upload = isset($_SESSION['file']['field'][$key]) ? $_SESSION['file']['field'][$key] : [];
+        if (!empty($upload['delete'])) {
+            continue;
+        } elseif (!empty($upload['name'])) {
+            $preview['files'][$field['id']] = [
+                'name' => $upload['name'],
+                'url'  => $field['kind'] === 'image' ? $url . '&target=field&key=' . $key . '&format=image' : null,
+            ];
+        } elseif (!empty($stored['fields'][$field['id']])) {
+            $preview['files'][$field['id']] = [
+                'name' => rawurldecode($stored['fields'][$field['id']]),
+                'url'  => $field['kind'] === 'image' ? $url . '&target=field&key=' . $key . '&format=image' . $id : null,
+            ];
+        }
+    }
+
+    return $preview;
+}

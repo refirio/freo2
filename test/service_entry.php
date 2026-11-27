@@ -856,6 +856,107 @@ $inserted_id = intval($entries[0]['id']);
     }
 }
 
+// 入力画面の確認に表示する内容のテスト
+{
+    // データ（ブラウザから流したときの、本物のアップロードを退避する）
+    $session_file = $_SESSION['file'] ?? null;
+    unset($_SESSION['file']);
+
+    $preview_type  = ['id' => 1, 'code' => 'entry'];
+    $preview_entry = [
+        'id'             => '',
+        'type_id'        => 1,
+        'code'           => 'preview_code',
+        'title'          => 'タイトル',
+        'category_sets'  => ['2'],
+        'attribute_sets' => ['1', '3'],
+        'picture_files'  => [],
+    ];
+    $preview_categories = [
+        ['id' => 1, 'name' => 'カテゴリー1'],
+        ['id' => 2, 'name' => 'カテゴリー2'],
+    ];
+    $preview_attributes = [
+        ['id' => 1, 'name' => '属性1'],
+        ['id' => 2, 'name' => '属性2'],
+        ['id' => 3, 'name' => '属性3'],
+    ];
+    $preview_fields = [
+        ['id' => 98, 'kind' => 'text',  'name' => '一行'],
+        ['id' => 99, 'kind' => 'image', 'name' => '画像'],
+        ['id' => 97, 'kind' => 'file',  'name' => 'ファイル'],
+    ];
+    $preview_url = MAIN_FILE . '/admin/file?_type=image';
+
+    // 確認（新規登録）
+    $preview = service_entry_preview($preview_entry, $preview_type, $preview_fields, $preview_categories, $preview_attributes);
+
+    // 結果（選んだものの名前、公開側のURL、問題が無ければ警告なし。ファイルは何も無い）
+    test_equals('preview categories', $preview['categories'], ['カテゴリー2']);
+    test_equals('preview attributes', $preview['attributes'], ['属性1', '属性3']);
+    test_equals('preview url', $preview['url'], '/entry/detail/preview_code');
+    test_equals('preview url page', service_entry_preview($preview_entry, ['id' => 2, 'code' => 'page'], [], [], [])['url'], '/page/preview_code');
+    test_equals('preview warnings none', $preview['warnings'], []);
+    test_equals('preview pictures none', $preview['pictures'], []);
+    test_equals('preview thumbnail none', $preview['thumbnail'], null);
+    test_equals('preview files none', $preview['files'], []);
+
+    // 結果（登録できない内容なら、検証の警告を返す）
+    $preview = service_entry_preview(['title' => ''] + $preview_entry, $preview_type, [], [], []);
+
+    test_equals('preview warnings', array_keys($preview['warnings']), ['title']);
+
+    // 確認（編集。登録済みの画像 a.jpg・b.jpg とサムネイルがあり、画像1枚・フィールドの画像とファイルをアップロードした）
+    $_SESSION['file'] = [
+        'entry' => [
+            'pictures' => [
+                0 => ['name' => 'new.jpg', 'temp' => 'dummy'],
+            ],
+        ],
+        'field' => [
+            'field_' . $entry_ids['pub_all'] . '_99' => ['name' => 'f.png', 'temp' => 'dummy'],
+            'field_' . $entry_ids['pub_all'] . '_97' => ['name' => '資料.pdf', 'temp' => 'dummy'],
+        ],
+    ];
+
+    $preview = service_entry_preview([
+        'id'            => (string)$entry_ids['pub_all'],
+        'code'          => 'pub_all',
+        'picture_files' => ['b.jpg', 'new.jpg', 'missing.jpg'],
+    ] + $preview_entry, $preview_type, $preview_fields, [], []);
+
+    // 結果（並べた順。登録済みのものは id 付き、アップロードしたものは id 無しで、どちらにも無いものは出さない）
+    test_equals('preview pictures', $preview['pictures'], [
+        $preview_url . '&target=entry&key=pictures&format=image&index=1&id=' . $entry_ids['pub_all'],
+        $preview_url . '&target=entry&key=pictures&format=image&index=0',
+    ]);
+    test_equals('preview thumbnail stored', $preview['thumbnail'], $preview_url . '&target=entry&key=thumbnail&format=image&id=' . $entry_ids['pub_all']);
+    test_equals('preview field image', $preview['files'][99], [
+        'name' => 'f.png',
+        'url'  => $preview_url . '&target=field&key=field_' . $entry_ids['pub_all'] . '_99&format=image',
+    ]);
+    test_equals('preview field file', $preview['files'][97], [
+        'name' => '資料.pdf',
+        'url'  => null,
+    ]);
+    test_array_not_haskey('preview field text', $preview['files'], 98);
+
+    // 確認（サムネイルを削除した・アップロードし直した）
+    $_SESSION['file']['entry']['thumbnail'] = ['delete' => true];
+
+    test_equals('preview thumbnail delete', service_entry_preview(['id' => (string)$entry_ids['pub_all'], 'code' => 'pub_all'] + $preview_entry, $preview_type, [], [], [])['thumbnail'], null);
+
+    $_SESSION['file']['entry']['thumbnail'] = ['name' => 'thumb2.jpg', 'temp' => 'dummy'];
+
+    test_equals('preview thumbnail upload', service_entry_preview(['id' => (string)$entry_ids['pub_all'], 'code' => 'pub_all'] + $preview_entry, $preview_type, [], [], [])['thumbnail'], $preview_url . '&target=entry&key=thumbnail&format=image');
+
+    // セッションを元に戻す
+    unset($_SESSION['file']);
+    if ($session_file !== null) {
+        $_SESSION['file'] = $session_file;
+    }
+}
+
 // 一括削除の対象のテスト（型ごとに分けて控える）
 {
     // データ（ブラウザから流したときの、本物の選択を退避する）

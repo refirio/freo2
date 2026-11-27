@@ -1,5 +1,6 @@
 <?php
 
+import('app/services/entry.php');
 import('libs/modules/file.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -163,6 +164,12 @@ $_view['fields'] = model('select_fields', [
 $_view['attributes'] = model('select_attributes', [
     'order_by' => 'sort, id',
 ]);
+
+if (isset($_POST['view']) && $_POST['view'] === 'preview') {
+    // 確認画面に表示する内容を作成
+    $_view['preview'] = service_entry_preview($_view['entry'], $_view['type'], $_view['fields'], $_view['categories'], $_view['attributes']);
+    $_view['entry']   = model('view_entries', $_view['entry']);
+}
 
 // タイトル
 if (empty($_GET['id'])) {

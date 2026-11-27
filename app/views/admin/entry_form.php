@@ -19,22 +19,7 @@
             <div class="card-header heading"><?php h($_view['title']) ?></div>
             <div class="card-body">
             <?php if (isset($_POST['view']) && $_POST['view'] === 'preview') : ?>
-                <h3>確認</h3>
-                <dl>
-                    <dt>タイトル</dt>
-                        <dd><?php h($_view['entry']['title']) ?></dd>
-                    <?php if ($_view['entry']['text_type'] !== 'none') : ?>
-                    <dt>本文</dt>
-                        <dd><?php if ($_view['entry']['text_type'] === 'textarea') : ?><?php h($_view['entry']['text']) ?><?php else : ?><?php e($_view['entry']['text']) ?><?php endif ?></dd>
-                    <?php endif ?>
-                    <!--
-                    <dt>画像</dt>
-                        <dd><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=pictures&amp;format=image&amp;index=0<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></dd>
-                    <dt>サムネイル</dt>
-                        <dd><img src="<?php t(MAIN_FILE) ?>/admin/file?_type=image&amp;target=entry&amp;key=thumbnail&amp;format=image<?php $_view['entry']['id'] ? t('&id=' . $_view['entry']['id']) : '' ?>"></dd>
-                    -->
-                </dl>
-                <p><a href="#" class="close">閉じる</a></p>
+                <?php import('app/views/admin/entry_preview.php') ?>
             <?php else : ?>
                 <?php if (isset($_GET['ok']) && $_GET['ok'] === 'post') : ?>
                 <div class="alert alert-success">
