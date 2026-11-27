@@ -56,8 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['file'][$_GET['target']][$_GET['key']][$index + $key] = $file;
 
                 $files[] = [
-                    'name' => $_FILES[$_GET['key']]['name'][$index],
-                    'data' => MAIN_FILE . '/admin/file?_type=image&target=' . $_GET['target'] . '&key=' . $_GET['key'] . '&index=' . ($index + $key) . '&format=' . $_GET['format'],
+                    'name'     => $_FILES[$_GET['key']]['name'][$index],
+                    'filename' => service_entry_file_name($_FILES[$_GET['key']]['name'][$index]),
+                    'data'     => MAIN_FILE . '/admin/file?_type=image&target=' . $_GET['target'] . '&key=' . $_GET['key'] . '&index=' . ($index + $key) . '&format=' . $_GET['format'],
                 ];
             }
         }

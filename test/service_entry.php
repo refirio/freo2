@@ -856,6 +856,15 @@ $inserted_id = intval($entries[0]['id']);
     }
 }
 
+// アップロードされたファイルを保存するときの名前のテスト
+{
+    // 結果（拡張子より前だけを rawurlencode() し、拡張子が無ければ null）
+    test_equals('file name ascii', service_entry_file_name('photo.jpg'), 'photo.jpg');
+    test_equals('file name japanese', service_entry_file_name('写真 1.png'), '%E5%86%99%E7%9C%9F%201.png');
+    test_equals('file name dots', service_entry_file_name('a.b.JPG'), 'a.b.JPG');
+    test_equals('file name no extension', service_entry_file_name('photo'), null);
+}
+
 // 入力画面の確認に表示する内容のテスト
 {
     // データ（ブラウザから流したときの、本物のアップロードを退避する）
@@ -911,6 +920,7 @@ $inserted_id = intval($entries[0]['id']);
         'entry' => [
             'pictures' => [
                 0 => ['name' => 'new.jpg', 'temp' => 'dummy'],
+                1 => ['name' => '写真 1.jpg', 'temp' => 'dummy'],
             ],
         ],
         'field' => [
@@ -922,13 +932,14 @@ $inserted_id = intval($entries[0]['id']);
     $preview = service_entry_preview([
         'id'            => (string)$entry_ids['pub_all'],
         'code'          => 'pub_all',
-        'picture_files' => ['b.jpg', 'new.jpg', 'missing.jpg'],
+        'picture_files' => ['b.jpg', 'new.jpg', '%E5%86%99%E7%9C%9F%201.jpg', '写真 1.jpg', 'missing.jpg'],
     ] + $preview_entry, $preview_type, $preview_fields, [], []);
 
-    // 結果（並べた順。登録済みのものは id 付き、アップロードしたものは id 無しで、どちらにも無いものは出さない）
+    // 結果（並べた順。登録済みのものは id 付き、アップロードしたものは id 無しで、どちらにも無いもの（保存するときの名前でないものも）は出さない）
     test_equals('preview pictures', $preview['pictures'], [
         $preview_url . '&target=entry&key=pictures&format=image&index=1&id=' . $entry_ids['pub_all'],
         $preview_url . '&target=entry&key=pictures&format=image&index=0',
+        $preview_url . '&target=entry&key=pictures&format=image&index=1',
     ]);
     test_equals('preview thumbnail stored', $preview['thumbnail'], $preview_url . '&target=entry&key=thumbnail&format=image&id=' . $entry_ids['pub_all']);
     test_equals('preview field image', $preview['files'][99], [

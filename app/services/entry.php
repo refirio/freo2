@@ -779,6 +779,24 @@ function service_entry_file_upload($name, $tmp_name)
 }
 
 /**
+ * アップロードされたファイルを保存するときの名前を取得
+ *
+ * set_file_entries() が保存する名前と同じ（拡張子より前を rawurlencode() する）。画像の一括アップロードでは、この名前を picture_files に入れる
+ *
+ * @param string $name ファイル名
+ *
+ * @return string|null 拡張子が無ければ null
+ */
+function service_entry_file_name($name)
+{
+    if (!preg_match('/(.*)\.(.*)$/', $name, $matches)) {
+        return null;
+    }
+
+    return rawurlencode($matches[1]) . '.' . $matches[2];
+}
+
+/**
  * アップロードされたファイルの内容を取得（一時ファイルから読む。以前の形でセッションに内容があれば、それを返す）
  *
  * @param array $file
@@ -894,7 +912,7 @@ function service_entry_preview($entry, $type, $fields, $categories, $attributes)
     foreach ($entry['picture_files'] as $name) {
         $index = null;
         foreach ($uploads as $key => $upload) {
-            if (is_int($key) && isset($upload['name']) && $upload['name'] === $name) {
+            if (is_int($key) && isset($upload['name']) && service_entry_file_name($upload['name']) === $name) {
                 $index = $key;
             }
         }

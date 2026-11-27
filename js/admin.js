@@ -495,7 +495,7 @@ $(document).ready(function() {
                 // 結果を表示
                 var date = new Date();
                 for (var i = 0; i < response.values.files.length; i++) {
-                    target.find('.pictures_result').append('<div class="file"><span class="handle"><img src="' + response.values.files[i].data + '&' + date.getTime() + '"></span><input type="hidden" name="picture_files[]" value="' + response.values.files[i].name + '"><a href="#" class="remove">×</a></div>');
+                    target.find('.pictures_result').append('<div class="file"><span class="handle"><img src="' + response.values.files[i].data + '&' + date.getTime() + '"></span><input type="hidden" name="picture_files[]" value="' + response.values.files[i].filename + '"><a href="#" class="remove">×</a></div>');
                 }
             },
             error: function(message) {
@@ -534,7 +534,7 @@ $(document).ready(function() {
                 // 結果を表示
                 var date = new Date();
                 for (var i = 0; i < response.values.files.length; i++) {
-                    target.find('.pictures_result').append('<div class="file"><span class="handle"><img src="' + response.values.files[i].data + '&' + date.getTime() + '"></span><input type="hidden" name="picture_files[]" value="' + response.values.files[i].name + '"><a href="#" class="remove">×</a></div>');
+                    target.find('.pictures_result').append('<div class="file"><span class="handle"><img src="' + response.values.files[i].data + '&' + date.getTime() + '"></span><input type="hidden" name="picture_files[]" value="' + response.values.files[i].filename + '"><a href="#" class="remove">×</a></div>');
                 }
             },
             error: function(message) {
