@@ -42,12 +42,12 @@ if (!empty(service_update_pending()) && !($_REQUEST['_mode'] === 'auth' && $_REQ
         redirect('/auth/?referer=' . rawurlencode('/admin/update'));
     }
 
-    // それ以外は、メンテナンス中
+    // それ以外は、メンテナンス中（404.php と違い、503.php はlevisが自動では使わないので、ここで読み込む）
     header('HTTP/1.1 503 Service Unavailable');
     header('Retry-After: 600');
     header('Cache-Control: no-store');
 
-    import('app/views/admin/update_maintenance.php');
+    import('app/views/503.php');
 
     exit;
 }
