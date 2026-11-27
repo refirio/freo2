@@ -386,6 +386,35 @@ function service_entry_insert($queries, $options = [])
 }
 
 /**
+ * 登録したエントリーのIDを取得
+ *
+ * 関連データの登録で db_last_insert_id() が変わるため、型とコードで探す（コードは型ごとに一意）
+ *
+ * @param int    $type_id
+ * @param string $code
+ *
+ * @return int|null
+ */
+function service_entry_inserted_id($type_id, $code)
+{
+    $entries = model('select_entries', [
+        'select' => 'id',
+        'where'  => [
+            'type_id = :type_id AND code = :code',
+            [
+                'type_id' => $type_id,
+                'code'    => $code,
+            ],
+        ],
+    ]);
+    if (empty($entries)) {
+        return null;
+    }
+
+    return intval($entries[0]['id']);
+}
+
+/**
  * エントリーの編集
  *
  * @param array $queries

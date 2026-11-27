@@ -179,9 +179,10 @@ test.scenario = [
     // 登録できたことを確認して、もう一度エントリー登録ページに移動
     function() {
         test.assertText('div.alert-success', 'エントリーを登録しました。', 'エントリーを登録できていません。');
-        test.assert(codeRow(userEntry.code).find('span.badge').last().text().trim() === '登録ユーザーに公開', '公開が「登録ユーザーに公開」になっていません。');
+        test.assertValue('form.register input[name="code"]', userEntry.code, '登録した後に、登録したエントリーの編集画面が表示されていません。');
+        test.assertValue('form.register select[name="public"]', 'user', '公開が「登録ユーザーに公開」になっていません。');
 
-        test.click('a:contains("エントリー登録")');
+        test.visit('/admin/entry_form');
     },
     // 「指定の属性に公開」のエントリーを登録
     function() {
@@ -190,7 +191,8 @@ test.scenario = [
     // 登録できたことを確認してログアウト
     function() {
         test.assertText('div.alert-success', 'エントリーを登録しました。', 'エントリーを登録できていません。');
-        test.assert(codeRow(attributeEntry.code).find('span.badge').last().text().trim() === '指定の属性に公開', '公開が「指定の属性に公開」になっていません。');
+        test.assertValue('form.register input[name="code"]', attributeEntry.code, '登録した後に、登録したエントリーの編集画面が表示されていません。');
+        test.assertValue('form.register select[name="public"]', 'attribute', '公開が「指定の属性に公開」になっていません。');
 
         test.visit('/auth/logout');
     },

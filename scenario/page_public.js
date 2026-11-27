@@ -21,11 +21,6 @@ var codeRow = function(code) {
     });
 };
 
-/* 一覧の行から、公開の表示を取得する（承認列が有効なときもあるので、公開は最後のバッジになる） */
-var publicLabel = function(row) {
-    return row.find('span.badge').last().text().trim();
-};
-
 /* 本文を入力してからコールバックを実行する */
 var fillText = function(html, callback) {
     var textarea = $('form.register textarea[name="text"]');
@@ -111,7 +106,7 @@ test.scenario = [
     // 登録できたことを確認して、公開側のページを開く
     function() {
         test.assertText('div.alert-success', 'ページを登録しました。', 'ページを登録できていません。');
-        test.assert(codeRow(scenarioPage.code).length === 1, '登録したページが一覧にありません。');
+        test.assertValue('form.register input[name="code"]', scenarioPage.code, '登録した後に、登録したページの編集画面が表示されていません。');
 
         test.visit('/page/' + scenarioPage.code);
     },
@@ -135,7 +130,7 @@ test.scenario = [
     // 編集できたことを確認して、公開側のページを開く
     function() {
         test.assertText('div.alert-success', 'ページを登録しました。', 'ページを編集できていません。');
-        test.assert(publicLabel(codeRow(scenarioPage.code)) === '非公開', 'ページの公開が「非公開」になっていません。');
+        test.assertValue('form.register select[name="public"]', 'none', 'ページの公開が「非公開」になっていません。');
 
         test.visit('/page/' + scenarioPage.code);
     },
@@ -165,7 +160,7 @@ test.scenario = [
     // 編集できたことを確認して、公開側のページを開く
     function() {
         test.assertText('div.alert-success', 'ページを登録しました。', 'ページを編集できていません。');
-        test.assert(publicLabel(codeRow(scenarioPage.code)) === 'パスワード認証で公開', 'ページの公開が「パスワード認証で公開」になっていません。');
+        test.assertValue('form.register select[name="public"]', 'password', 'ページの公開が「パスワード認証で公開」になっていません。');
 
         test.visit('/page/' + scenarioPage.code);
     },
@@ -217,7 +212,7 @@ test.scenario = [
     // 編集できたことを確認して、公開側のページを開く
     function() {
         test.assertText('div.alert-success', 'ページを登録しました。', 'ページを編集できていません。');
-        test.assert(publicLabel(codeRow(scenarioPage.code)) === '公開', 'ページの公開が「公開」に戻っていません。');
+        test.assertValue('form.register select[name="public"]', 'all', 'ページの公開が「公開」に戻っていません。');
 
         test.visit('/page/' + scenarioPage.code);
     },

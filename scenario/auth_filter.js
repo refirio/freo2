@@ -215,9 +215,9 @@ test.scenario = [
     // 登録できたことを確認して、もう一度エントリー登録ページに移動
     function() {
         test.assertText('div.alert-success', 'エントリーを登録しました。', 'エントリーを登録できていません。');
-        test.assert(codeRow(filterEntry.code).length === 1, '登録したエントリーが一覧にありません。');
+        test.assertValue('form.register input[name="code"]', filterEntry.code, '登録した後に、登録したエントリーの編集画面が表示されていません。');
 
-        test.click('a:contains("エントリー登録")');
+        test.visit('/admin/entry_form');
     },
     // フィルター対象外の属性に公開するエントリーを登録
     function() {
@@ -226,7 +226,7 @@ test.scenario = [
     // 登録できたことを確認してログアウト
     function() {
         test.assertText('div.alert-success', 'エントリーを登録しました。', 'エントリーを登録できていません。');
-        test.assert(codeRow(generalEntry.code).length === 1, '登録したエントリーが一覧にありません。');
+        test.assertValue('form.register input[name="code"]', generalEntry.code, '登録した後に、登録したエントリーの編集画面が表示されていません。');
 
         test.visit('/auth/logout');
     },

@@ -88,8 +88,8 @@ test.scenario = [
     // 登録できたことを確認して、公開側のページを開く
     function() {
         test.assertText('div.alert-success', 'ページを登録しました。', 'ページを登録できていません。');
-        test.assert(pageRow(scenarioPage.code).length === 1, '登録したページが一覧にありません。');
-        test.assertText(pageRow(scenarioPage.code), scenarioPage.title, '登録したページのタイトルが「' + scenarioPage.title + '」になっていません。');
+        test.assertValue('form.register input[name="code"]', scenarioPage.code, '登録した後に、登録したページの編集画面が表示されていません。');
+        test.assertValue('form.register input[name="title"]', scenarioPage.title, '登録したページのタイトルが「' + scenarioPage.title + '」になっていません。');
 
         test.visit('/page/' + scenarioPage.code);
     },
@@ -121,8 +121,7 @@ test.scenario = [
     // 編集できたことを確認して、階層のコードで公開側のページを開く
     function() {
         test.assertText('div.alert-success', 'ページを登録しました。', 'ページを編集できていません。');
-        test.assert(pageRow(scenarioPageEdited.code).length === 1, '編集したページ ' + scenarioPageEdited.code + ' が一覧にありません。');
-        test.assert(pageRow(scenarioPage.code).length === 0, '編集前のページ ' + scenarioPage.code + ' が一覧に残っています。');
+        test.assertValue('form.register input[name="code"]', scenarioPageEdited.code, '編集した後の編集画面で、コードが ' + scenarioPageEdited.code + ' になっていません。');
 
         test.visit('/page/' + scenarioPageEdited.code);
     },

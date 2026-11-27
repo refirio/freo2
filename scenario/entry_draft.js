@@ -148,13 +148,19 @@ test.scenario = [
             test.click('form.register button[type="submit"]');
         });
     },
-    // 登録できたら一時保存が消えていることを確認して、編集ページに移動
+    // 登録できたら一時保存が消えていることを確認して、編集ページを開き直す
     function() {
         test.assertText('div.alert-success', 'エントリーを登録しました。', 'エントリーを登録できていません。');
-        test.assert(entryRow(scenarioEntry.code).length === 1, '登録したエントリーが一覧にありません。');
+        test.assertValue('form.register input[name="code"]', scenarioEntry.code, '登録した後に、登録したエントリーの編集画面が表示されていません。');
         test.assert(draftItem(window.sessionStorage.getItem(scenarioKeyStorage)) === null, '登録した後も、入力中の内容が残っています。');
 
-        test.click(entryRow(scenarioEntry.code).find('a:contains("編集")'), '一覧の ' + scenarioEntry.code + ' の編集リンクが見つかりません。');
+        var id = $('form.register input[name="id"]').val();
+
+        whenReady(function() {
+            test.assertNotExists('div.draft', '登録した後の編集画面で、復元の確認が表示されています。');
+
+            test.visit('/admin/entry_form?id=' + id);
+        });
     },
     // タイトルを書きかけ、一時保存されたら「その後に別の人が保存した」状態にして再読み込みする
     function() {

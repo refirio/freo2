@@ -63,18 +63,15 @@ var registerSteps = function(entry, index) {
                 test.click('form.register button[type="submit"]');
             });
         },
-        // 登録できたことを確認して、次のエントリーの登録ページに移動（最後のときは、そのまま一覧で選択を始める）
+        // 登録できたことを確認して、次のエントリーの登録ページに移動（最後のときは、エントリー管理ページに移動）
         function() {
             test.assertText('div.alert-success', 'エントリーを登録しました。', 'エントリー ' + entry.code + ' を登録できていません。');
-            test.assert(entryRow(entry.code).length === 1, '登録したエントリー ' + entry.code + ' が一覧にありません。');
+            test.assertValue('form.register input[name="code"]', entry.code, '登録した後に、エントリー ' + entry.code + ' の編集画面が表示されていません。');
 
             if (index < scenarioBulkEntries.length - 1) {
-                test.click('a:contains("エントリー登録")');
+                test.visit('/admin/entry_form');
             } else {
-                // 何も選んでいないまま一括削除を送ると、対象が無い旨が出ることを確認する
-                test.assert($('form.bulk input.bulk:checked').length === 0, '一括削除の対象が、選んでいないのに選択されています。前回のテストが中断した可能性があります。');
-
-                test.click('form.bulk input[type="submit"]');
+                test.visit('/admin/entry');
             }
         }
     ];
@@ -114,6 +111,15 @@ test.scenario = [
         test.click('a:contains("エントリー登録")');
     }
 ].concat(registerScenario).concat([
+    // 3件とも一覧に並ぶことを確認して、何も選んでいないまま一括削除を送る
+    function() {
+        scenarioBulkEntries.forEach(function(entry) {
+            test.assert(entryRow(entry.code).length === 1, '登録したエントリー ' + entry.code + ' が一覧にありません。');
+        });
+        test.assert($('form.bulk input.bulk:checked').length === 0, '一括削除の対象が、選んでいないのに選択されています。前回のテストが中断した可能性があります。');
+
+        test.click('form.bulk input[type="submit"]');
+    },
     // 対象を選ばずに送ると、対象が無い旨が出ることを確認して、一覧に戻る
     function() {
         test.assertText('div.alert-danger', '一括削除対象が選択されていません。', '対象を選ばずに一括削除を送ったときの案内が表示されていません。');

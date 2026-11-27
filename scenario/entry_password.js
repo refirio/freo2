@@ -98,8 +98,8 @@ test.scenario = [
     // 登録できたことを確認して、公開側の詳細を開く
     function() {
         test.assertText('div.alert-success', 'エントリーを登録しました。', 'エントリーを登録できていません。');
-        test.assert(codeRow(scenarioEntry.code).length === 1, '登録したエントリーが一覧にありません。');
-        test.assert(codeRow(scenarioEntry.code).find('span.badge').last().text().trim() === 'パスワード認証で公開', '登録したエントリーの公開が「パスワード認証で公開」になっていません。');
+        test.assertValue('form.register input[name="code"]', scenarioEntry.code, '登録した後に、登録したエントリーの編集画面が表示されていません。');
+        test.assertValue('form.register select[name="public"]', 'password', '登録したエントリーの公開が「パスワード認証で公開」になっていません。');
 
         test.visit('/entry/detail/' + scenarioEntry.code);
     },

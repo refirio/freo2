@@ -142,10 +142,16 @@ test.scenario = [
     function() {
         registerPage(treePages.parent);
     },
-    // 一覧のトップに戻ったことを確認して、（まだ子の無い）親ページの一覧を開く
+    // 登録できたことと、パンくずに親ページが無いことを確認して、一覧のトップを開く
     function() {
         test.assertText('div.alert-success', 'ページを登録しました。', '親ページを登録できていません。');
-        test.assertText('ol.breadcrumb li.active', 'ページ管理', '一覧のトップに戻っていません。');
+        test.assertValue('form.register input[name="code"]', treePages.parent.code, '登録した後に、親ページの編集画面が表示されていません。');
+        assertBreadcrumbLinks([]);
+
+        test.visit('/admin/page');
+    },
+    // 一覧のトップに親ページがあることを確認して、（まだ子の無い）親ページの一覧を開く
+    function() {
         test.assert(pageRow(treePages.parent.code).length === 1, '親ページが一覧にありません。');
         test.assert(childrenLink(treePages.parent.code).length === 0, '子ページが無いのに、子ページの一覧へのリンクがあります。');
 
@@ -165,9 +171,16 @@ test.scenario = [
 
         registerPage(treePages.child);
     },
-    // 親ページの一覧に戻ったことを確認して、途中の階層が無いページを登録
+    // 登録できたことと、パンくずに親ページが出ることを確認して、親ページの一覧を開く
     function() {
         test.assertText('div.alert-success', 'ページを登録しました。', '子ページを登録できていません。');
+        test.assertValue('form.register input[name="code"]', treePages.child.code, '登録した後に、子ページの編集画面が表示されていません。');
+        assertBreadcrumbLinks([treePages.parent]);
+
+        test.visit('/admin/page?parent=' + encodeURIComponent(treePages.parent.code));
+    },
+    // 親ページの一覧に子ページがあることを確認して、途中の階層が無いページを登録
+    function() {
         assertBreadcrumb(treePages.parent.title);
         test.assert(pageRow(treePages.child.code).length === 1, '子ページが親ページの一覧にありません。');
 
@@ -178,11 +191,11 @@ test.scenario = [
 
         registerPage(treePages.orphan);
     },
-    // 最も近い祖先（親ページ）の一覧に戻ったことを確認して、（まだ子の無い）子ページの一覧を開く
+    // パンくずの親が、最も近い祖先（親ページ）になっていることを確認して、（まだ子の無い）子ページの一覧を開く
     function() {
         test.assertText('div.alert-success', 'ページを登録しました。', '途中の階層が無いページを登録できていません。');
-        assertBreadcrumb(treePages.parent.title);
-        test.assert(pageRow(treePages.orphan.code).length === 1, '途中の階層が無いページが、親ページの一覧にありません。');
+        test.assertValue('form.register input[name="code"]', treePages.orphan.code, '登録した後に、途中の階層が無いページの編集画面が表示されていません。');
+        assertBreadcrumbLinks([treePages.parent]);
 
         test.visit('/admin/page?parent=' + encodeURIComponent(treePages.child.code));
     },
@@ -198,13 +211,12 @@ test.scenario = [
 
         registerPage(treePages.grandchild);
     },
-    // 子ページの一覧に戻り、パンくずに祖先が並ぶことを確認して、パンくずから親ページの一覧に戻る
+    // パンくずに祖先が並ぶことを確認して、パンくずから親ページの一覧に移動
     function() {
         test.assertText('div.alert-success', 'ページを登録しました。', '孫ページを登録できていません。');
-        assertBreadcrumb(treePages.child.title);
+        test.assertValue('form.register input[name="code"]', treePages.grandchild.code, '登録した後に、孫ページの編集画面が表示されていません。');
+        assertBreadcrumbLinks([treePages.parent, treePages.child]);
         test.assertExists('ol.breadcrumb a:contains("ページ管理")', 'パンくずに一覧のトップへのリンクがありません。');
-        test.assertExists('ol.breadcrumb a:contains("' + treePages.parent.title + '")', 'パンくずに親ページへのリンクがありません。');
-        test.assert(pageRow(treePages.grandchild.code).length === 1, '孫ページが子ページの一覧にありません。');
 
         test.click('ol.breadcrumb a:contains("' + treePages.parent.title + '")');
     },

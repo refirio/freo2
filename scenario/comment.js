@@ -102,7 +102,7 @@ test.scenario = [
     // 登録できたことを確認してログアウト（コメントはゲストとして投稿する）
     function() {
         test.assertText('div.alert-success', 'エントリーを登録しました。', 'エントリーを登録できていません。');
-        test.assert(codeRow(scenarioEntry.code).length === 1, '登録したエントリーが一覧にありません。');
+        test.assertValue('form.register input[name="code"]', scenarioEntry.code, '登録した後に、登録したエントリーの編集画面が表示されていません。');
 
         logout();
     },

@@ -432,6 +432,7 @@ $categories = model('select_categories', [
 - [category_form.php](app/controllers/admin/category_form.php): 入力と検証
 - [category_post.php](app/controllers/admin/category_post.php): 登録処理。冒頭の `if (forward() === null) { error(...); }` で、**URLを直接開いたアクセスを拒否しています。**
 - 検証は、送信前にも実行されます。フォームに `class="validate"` を付けると、[js/common.js](js/common.js) が `_type=json` を付けて同じURLにAjaxで送信します。コントローラーは `ok()`/`warning()` でJSONを返し、エラーは各入力欄の下に表示されます。
+- **エントリー(`entries`)を登録・編集する画面だけは、登録した後に一覧ではなく入力フォームに戻ります**(`redirect('/admin/entry_form?id=<ID>&ok=post')`。完了メッセージは入力フォームに出す)。本文を書きながら何度も保存できるようにするためです。エントリー・ページのほか、エントリーを使うプラグインの画面も同じ形にします。新規登録のIDは `service_entry_inserted_id()`([app/services/entry.php](app/services/entry.php))で取得します(関連データの登録で `db_last_insert_id()` が変わるため)。
 
 新しい管理画面を作るときは、既存の一式(`category.php` / `category_form.php` / `category_post.php` / `category_delete.php` とビュー)を写して書き換えるのが確実です。
 
@@ -1122,7 +1123,7 @@ function myplugin_dashboard()
   ```
 
   - 一時保存は記事ごとに1件(新規登録は型ごとに1件)で、ユーザーごとに分かれます。キーは `app_draft_key()`([app/bootstrap.php](app/bootstrap.php))が作ります。
-  - **登録が完了したと判断するのは、送信した後に `?ok=post` の付いた画面を開いたときです。** 登録処理の最後は、本体と同じく `redirect('/admin/<一覧>?ok=post')` にします。
+  - **登録が完了したと判断するのは、送信した後に `?ok=post` の付いた画面を開いたときです。** 登録処理の最後は、本体と同じく `redirect('/admin/<入力フォーム>?id=<ID>&ok=post')` にします(→ [5.5](#55-コントローラー-登録編集の定型))。入力フォームに戻っても、送信した一時保存を先に消してから復元を確かめるので、復元の確認は出ません。
   - `data-draft-modified` は、保存されている内容が一時保存より新しいか(ほかの人が更新したか)を判断するのに使います。
   - 明示的にログアウトすると、そのユーザーの一時保存は削除されます(ログイン画面で `$_view['script']` を通してスクリプトを出すので、テーマで `auth/footer.php` を差し替えるときはこの出力を残します)。
 - **エントリーの入力画面で画像・ファイルをアップロードさせるなら、本体の `entry_form` と同じく `/admin/file_upload` を使います。** アップロードされたファイルは一時ファイル(`files/temps/`)に保存され、セッション(`$_SESSION['file']`)には名前と一時ファイルの場所だけが入ります(内容をセッションに入れると、大きなファイルで画面が開けなくなるため)。

@@ -22,9 +22,7 @@
                 <?php if (isset($_GET['ok'])) : ?>
                 <div class="alert alert-success">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
-                    <?php if ($_GET['ok'] === 'post') : ?>
-                    エントリーを登録しました。
-                    <?php elseif ($_GET['ok'] === 'approve') : ?>
+                    <?php if ($_GET['ok'] === 'approve') : ?>
                     エントリーの承認を変更しました。
                     <?php elseif ($_GET['ok'] === 'delete') : ?>
                     エントリーを削除しました。

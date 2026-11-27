@@ -78,26 +78,23 @@ var deletePage = function(code) {
     test.click('form.delete button[type="submit"]');
 };
 
-/* 子ページを1件登録し、親ページの一覧に戻ったことを確認するステップを作る */
+/* 子ページを1件登録し、登録できたことを編集画面で確認するステップを作る */
 var registerSteps = function(page, index) {
     return [
         // 子ページを登録
         function() {
             registerPage(page);
         },
-        // 親ページの一覧に戻ったことを確認して、次の子ページの登録ページに移動（最後のときは、そのまま一覧で選択を始める）
+        // 登録できたことを確認して、次の子ページの登録ページに移動（最後のときは、親ページの一覧に移動）
         function() {
             test.assertText('div.alert-success', 'ページを登録しました。', 'ページ ' + page.code + ' を登録できていません。');
-            assertChildList('登録した後に、親ページの一覧に戻っていません。');
-            test.assert(pageRow(page.code).length === 1, '登録したページ ' + page.code + ' が一覧にありません。');
+            test.assertValue('form.register input[name="code"]', page.code, '登録した後に、ページ ' + page.code + ' の編集画面が表示されていません。');
+            test.assertExists('ol.breadcrumb a:contains("' + scenarioBulkParent.title + '")', '登録した後の編集画面のパンくずに、親ページの一覧へのリンクがありません。');
 
             if (index < scenarioBulkPages.length - 1) {
-                test.click('a:contains("ページ登録")');
+                test.visit('/admin/page_form?parent=' + encodeURIComponent(scenarioBulkParent.code));
             } else {
-                // 何も選んでいないまま一括削除を送ると、対象が無い旨が出ることを確認する
-                test.assert($('form.bulk input.bulk:checked').length === 0, '一括削除の対象が、選んでいないのに選択されています。前回のテストが中断した可能性があります。');
-
-                test.click('form.bulk input[type="submit"]');
+                test.visit('/admin/page?parent=' + encodeURIComponent(scenarioBulkParent.code));
             }
         }
     ];
@@ -141,11 +138,21 @@ test.scenario = [
     // 登録できたことを確認して、親ページの下に子ページを登録する画面を開く
     function() {
         test.assertText('div.alert-success', 'ページを登録しました。', '親ページを登録できていません。');
-        test.assert(pageRow(scenarioBulkParent.code).length === 1, '親ページが一覧にありません。');
+        test.assertValue('form.register input[name="code"]', scenarioBulkParent.code, '登録した後に、親ページの編集画面が表示されていません。');
 
         test.visit('/admin/page_form?parent=' + encodeURIComponent(scenarioBulkParent.code));
     }
 ].concat(registerScenario).concat([
+    // 子ページが親ページの一覧に並ぶことを確認して、何も選んでいないまま一括削除を送る
+    function() {
+        assertChildList('親ページの一覧が表示されていません。');
+        scenarioBulkPages.forEach(function(page) {
+            test.assert(pageRow(page.code).length === 1, '登録したページ ' + page.code + ' が親ページの一覧にありません。');
+        });
+        test.assert($('form.bulk input.bulk:checked').length === 0, '一括削除の対象が、選んでいないのに選択されています。前回のテストが中断した可能性があります。');
+
+        test.click('form.bulk input[type="submit"]');
+    },
     // 対象を選ばずに送ると、対象が無い旨が出ることを確認して、親ページの一覧に戻る
     function() {
         test.assertText('div.alert-danger', '一括削除対象が選択されていません。', '対象を選ばずに一括削除を送ったときの案内が表示されていません。');

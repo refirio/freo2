@@ -36,6 +36,12 @@
                 </dl>
                 <p><a href="#" class="close">閉じる</a></p>
             <?php else : ?>
+                <?php if (isset($_GET['ok']) && $_GET['ok'] === 'post') : ?>
+                <div class="alert alert-success">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
+                    エントリーを登録しました。
+                </div>
+                <?php endif ?>
                 <?php if (isset($_view['warnings'])) : ?>
                 <div class="alert alert-danger">
                     <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>

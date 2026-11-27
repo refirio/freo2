@@ -71,6 +71,8 @@ if (empty($_SESSION['post']['entry']['id'])) {
     if (!$resource) {
         error('データを登録できません。');
     }
+
+    $id = service_entry_inserted_id($_SESSION['post']['entry']['type_id'], $_SESSION['post']['entry']['code']);
 } else {
     // エントリーを編集
     $resource = service_entry_update([
@@ -105,13 +107,12 @@ if (empty($_SESSION['post']['entry']['id'])) {
     if (!$resource) {
         error('データを編集できません。');
     }
+
+    $id = $_SESSION['post']['entry']['id'];
 }
 
 // トランザクションを終了
 db_commit();
-
-// 親ページを取得
-$parent = service_entry_parent($_SESSION['post']['entry']['code'], service_entry_page_codes());
 
 // 投稿セッションを初期化
 unset($_SESSION['post']);
@@ -120,5 +121,5 @@ unset($_SESSION['update']);
 // 投稿ファイルを破棄
 service_entry_file_clear();
 
-// リダイレクト
-redirect(service_entry_page_list('ok=post', $parent));
+// リダイレクト（続けて編集できるよう、入力画面に戻る）
+redirect('/admin/page_form?id=' . intval($id) . '&ok=post');

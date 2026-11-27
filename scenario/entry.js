@@ -89,9 +89,16 @@ test.scenario = [
             test.click('form.register button[type="submit"]');
         });
     },
-    // 登録できたことを確認して、公開側の詳細を開く
+    // 登録できたことを確認して、エントリー管理ページに移動
     function() {
         test.assertText('div.alert-success', 'エントリーを登録しました。', 'エントリーを登録できていません。');
+        test.assertValue('form.register input[name="code"]', scenarioEntry.code, '登録した後に、登録したエントリーの編集画面が表示されていません。');
+        test.assertValue('form.register input[name="title"]', scenarioEntry.title, '登録した後の編集画面に、登録したタイトルが表示されていません。');
+
+        test.visit('/admin/entry');
+    },
+    // 一覧に並ぶことを確認して、公開側の詳細を開く
+    function() {
         test.assert(entryRow(scenarioEntry.code).length === 1, '登録したエントリーが一覧にありません。');
         test.assertText(entryRow(scenarioEntry.code), scenarioEntry.title, '登録したエントリーのタイトルが「' + scenarioEntry.title + '」になっていません。');
         test.assert(entryPublicLabel(entryRow(scenarioEntry.code)) === '公開', '登録したエントリーの公開が「公開」になっていません。');
@@ -133,9 +140,15 @@ test.scenario = [
             test.click('form.register button[type="submit"]');
         });
     },
-    // 編集できたことを確認して、公開側の詳細を開く
+    // 編集できたことを確認して、エントリー管理ページに移動
     function() {
         test.assertText('div.alert-success', 'エントリーを登録しました。', 'エントリーを編集できていません。');
+        test.assertValue('form.register input[name="title"]', scenarioEntryEdited.title, '編集した後の編集画面に、編集したタイトルが表示されていません。');
+
+        test.visit('/admin/entry');
+    },
+    // 一覧の表示が変わったことを確認して、公開側の詳細を開く
+    function() {
         test.assertText(entryRow(scenarioEntry.code), scenarioEntryEdited.title, '編集したエントリーのタイトルが「' + scenarioEntryEdited.title + '」になっていません。');
         test.assert(entryPublicLabel(entryRow(scenarioEntry.code)) === '非公開', '編集したエントリーの公開が「非公開」になっていません。');
 
