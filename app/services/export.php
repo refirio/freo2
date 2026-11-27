@@ -19,11 +19,13 @@ function service_export_dir($token)
 /**
  * 出力を開始
  *
- * 作業用のディレクトリを作り、出力するURLの一覧を保存する
+ * 作業用のディレクトリを作り、出力するURLの一覧を保存する。サーバーに出力するときは、作業用のディレクトリに目印のファイル（directory）を置く
+ *
+ * @param string $target 出力先（directory: サーバーの export_directory、zip: ZIPファイル）
  *
  * @return array ['token' => トークン, 'urls' => 出力するURLの一覧]
  */
-function service_export_start()
+function service_export_start($target = 'directory')
 {
     service_export_clean();
 
@@ -33,8 +35,11 @@ function service_export_start()
     if (!directory_mkdir($dir . 'html/')) {
         error('作業用のディレクトリを作成できません。');
     }
+    if ($target === 'directory' && file_put_contents($dir . 'directory', '') === false) {
+        error('作業用のディレクトリに書き込めません。');
+    }
 
-    $urls = service_export_urls();
+    $urls = service_export_urls($target);
     if (file_put_contents($dir . 'urls.json', json_encode($urls)) === false) {
         error('出力するURLの一覧を保存できません。');
     }
@@ -43,6 +48,18 @@ function service_export_start()
         'token' => $token,
         'urls'  => $urls,
     ];
+}
+
+/**
+ * 出力先を取得
+ *
+ * @param string $token
+ *
+ * @return string directory か zip
+ */
+function service_export_target($token)
+{
+    return is_file(service_export_dir($token) . 'directory') ? 'directory' : 'zip';
 }
 
 /**
@@ -117,9 +134,11 @@ function service_export_select_published($type, $queries)
 /**
  * 出力するURLの一覧を作成
  *
+ * @param string $target 出力先（directory か zip）
+ *
  * @return array [['url' => URL, 'file' => 出力するファイル], ...]
  */
-function service_export_urls()
+function service_export_urls($target = 'directory')
 {
     $urls = [];
 
@@ -203,11 +222,13 @@ function service_export_urls()
         'file' => 'entry/feed.xml',
     ];
 
-    // 存在しないページ（どこにも無いURLを取得して、404のページを出力する）
-    $results[] = [
-        'url'  => '/export-not-found/',
-        'file' => '404.html',
-    ];
+    // 存在しないページ（どこにも無いURLを取得して、404のページを出力する。サーバーに出力するときは、出力していないページをPHPが返すので要らない）
+    if ($target !== 'directory') {
+        $results[] = [
+            'url'  => '/export-not-found/',
+            'file' => '404.html',
+        ];
+    }
 
     return $results;
 }
@@ -343,7 +364,7 @@ function service_export_render($token, $url)
  */
 function service_export_replaces()
 {
-    $export_url  = rtrim(trim($GLOBALS['setting']['export_url']), '/');
+    $export_url  = rtrim(trim((string)$GLOBALS['setting']['export_url']), '/');
     $export_path = rtrim((string)parse_url($export_url, PHP_URL_PATH), '/') . '/';
 
     // 絶対URL（管理用のURLと、ファイルの保存先のURL）
@@ -416,6 +437,20 @@ function service_export_save($token, $file, $content)
     }
 
     return file_put_contents($path, $content) !== false;
+}
+
+/**
+ * 出力できないページか
+ *
+ * ワンタイムトークンの入ったフォーム（コメントの投稿など）は、HTMLにするとトークンが古くなって送信できないので、サーバーに出力するときはPHPで表示する
+ *
+ * @param string $html
+ *
+ * @return bool
+ */
+function service_export_dynamic($html)
+{
+    return (bool)preg_match('/<input\s[^>]*name=["\']_token["\']/i', $html);
 }
 
 /**
@@ -526,25 +561,162 @@ function service_export_zip($token, $path = null)
 }
 
 /**
+ * 作業用のディレクトリに出力したページを、サーバーの出力先に移す
+ *
+ * 作業用のディレクトリのページを1つずつ export_directory に移し（移す前のページは、移した時点で入れ替わる）、今回出力しなかったページを削除する。
+ * 出力の途中に開かれても、そのページは前のHTMLか新しいHTMLのどちらかで返り、無ければPHPが返す
+ *
+ * @param string $token
+ *
+ * @return bool
+ */
+function service_export_publish($token)
+{
+    $from = service_export_dir($token) . 'html/';
+    $to   = $GLOBALS['config']['export_directory'];
+
+    if (!is_dir($to) && !directory_mkdir($to)) {
+        return false;
+    }
+
+    $names = [];
+    foreach (service_export_files($from) as $name) {
+        if (!is_dir(dirname($to . $name)) && !directory_mkdir(dirname($to . $name))) {
+            return false;
+        }
+        if (!rename($from . $name, $to . $name)) {
+            return false;
+        }
+
+        $names[] = $name;
+    }
+
+    return service_export_prune($names);
+}
+
+/**
+ * サーバーに出力したページを削除
+ *
+ * @return bool
+ */
+function service_export_clear()
+{
+    return service_export_prune([]);
+}
+
+/**
+ * サーバーに出力したページのうち、残すもの以外を削除
+ *
+ * . で始まるファイル（.gitkeep など）は削除しない。空になったディレクトリも削除する
+ *
+ * @param array $keeps 残すページ（export_directory からの相対パス）
+ *
+ * @return bool
+ */
+function service_export_prune($keeps)
+{
+    $dir = $GLOBALS['config']['export_directory'];
+    if (!is_dir($dir)) {
+        return true;
+    }
+
+    $keeps  = array_flip($keeps);
+    $result = true;
+    foreach (service_export_files($dir) as $name) {
+        if (!isset($keeps[$name]) && !unlink($dir . $name)) {
+            $result = false;
+        }
+    }
+
+    // 空になったディレクトリ（深いものから）
+    $items = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS), RecursiveIteratorIterator::CHILD_FIRST);
+    $dirs  = [];
+    foreach ($items as $item) {
+        if ($item->isDir()) {
+            $dirs[] = $item->getPathname();
+        }
+    }
+    foreach ($dirs as $path) {
+        if (count(scandir($path)) === 2) {
+            rmdir($path);
+        }
+    }
+
+    return $result;
+}
+
+/**
+ * サーバーに出力したページの数を取得
+ *
+ * @return int
+ */
+function service_export_published()
+{
+    $dir = $GLOBALS['config']['export_directory'];
+    if (!is_dir($dir)) {
+        return 0;
+    }
+
+    return count(service_export_files($dir));
+}
+
+/**
+ * ディレクトリの中のファイルを取得
+ *
+ * . で始まるファイル・ディレクトリは除く
+ *
+ * @param string $dir
+ *
+ * @return array ディレクトリからの相対パス
+ */
+function service_export_files($dir)
+{
+    $dir     = rtrim($dir, '/') . '/';
+    $results = [];
+
+    $items = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS));
+    foreach ($items as $item) {
+        $name = substr(str_replace('\\', '/', $item->getPathname()), strlen($dir));
+
+        if (!preg_match('/(^|\/)\./', $name)) {
+            $results[] = $name;
+        }
+    }
+    sort($results);
+
+    return $results;
+}
+
+/**
  * 出力する前の確認
+ *
+ * @param string $target 出力先（directory か zip）
  *
  * @return array ['errors' => 出力できない理由, 'notices' => 出力しても使えない機能]
  */
-function service_export_check()
+function service_export_check($target = 'directory')
 {
     $errors  = [];
     $notices = [];
 
     // 出力できない理由
-    // 公開用URL（前後の空白は取り除いて使う）
-    $export_url = trim((string)$GLOBALS['setting']['export_url']);
-    if ($export_url === '' || !preg_match('/^https?:\/\/[^\/\s]+(\/\S*)?$/', $export_url)) {
-        $errors[] = '設定「HTML出力設定」の公開用URLを、http:// か https:// で始まる形で入力してください。';
+    if ($target === 'directory') {
+        // 出力先（無ければ作るので、その親に書き込めるか）
+        $dir = $GLOBALS['config']['export_directory'];
+        if (is_dir($dir) ? !is_writable($dir) : !is_writable(dirname($dir))) {
+            $errors[] = '出力先（' . $dir . '）に書き込めません。';
+        }
+    } else {
+        // 公開用URL（前後の空白は取り除いて使う）
+        $export_url = trim((string)$GLOBALS['setting']['export_url']);
+        if ($export_url === '' || !preg_match('/^https?:\/\/[^\/\s]+(\/\S*)?$/', $export_url)) {
+            $errors[] = '設定「HTML出力設定」の公開用URLを、http:// か https:// で始まる形で入力してください。';
+        }
     }
     if (!function_exists('curl_init')) {
         $errors[] = 'PHP の curl が有効ではありません。';
     }
-    if (!class_exists('ZipArchive')) {
+    if ($target !== 'directory' && !class_exists('ZipArchive')) {
         $errors[] = 'PHP の zip が有効ではありません。';
     }
 
@@ -557,20 +729,30 @@ function service_export_check()
     ], [
         'associate' => true,
     ]);
-    if ($entries[0]['count'] > 0) {
+    if ($target === 'directory') {
+        $notices[] = '出力したページは、ログインしている人にも未ログインのときの表示で返します。';
+
+        if ($entries[0]['count'] > 0) {
+            $notices[] = '公開範囲が「全体に公開」以外のエントリー・ページ（' . $entries[0]['count'] . '件）は出力せず、PHPで表示します。出力した一覧には表示されません。';
+        }
+    } elseif ($entries[0]['count'] > 0) {
         $notices[] = '公開範囲が「全体に公開」以外のエントリー・ページ（' . $entries[0]['count'] . '件）は出力しません。会員向けの公開やパスワード認証は使えません。';
     }
 
-    $entries = service_export_select_published('entry', [
-        'select' => 'COUNT(DISTINCT entries.id) AS count',
-        'where'  => 'entries.comment != ' . db_escape('closed'),
-    ]);
-    $pages = service_export_select_published('page', [
-        'select' => 'COUNT(DISTINCT entries.id) AS count',
-        'where'  => 'entries.comment != ' . db_escape('closed'),
-    ]);
-    if ($entries[0]['count'] + $pages[0]['count'] > 0) {
-        $notices[] = 'コメントを受け付けているエントリー・ページ（' . ($entries[0]['count'] + $pages[0]['count']) . '件）は、コメントのフォームを出力しません。承認済みのコメントは表示します。';
+    if ($target === 'directory') {
+        $notices[] = 'フォームのあるページ（コメントを受け付けているエントリー・ページなど）は出力せず、PHPで表示します。';
+    } else {
+        $entries = service_export_select_published('entry', [
+            'select' => 'COUNT(DISTINCT entries.id) AS count',
+            'where'  => 'entries.comment != ' . db_escape('closed'),
+        ]);
+        $pages = service_export_select_published('page', [
+            'select' => 'COUNT(DISTINCT entries.id) AS count',
+            'where'  => 'entries.comment != ' . db_escape('closed'),
+        ]);
+        if ($entries[0]['count'] + $pages[0]['count'] > 0) {
+            $notices[] = 'コメントを受け付けているエントリー・ページ（' . ($entries[0]['count'] + $pages[0]['count']) . '件）は、コメントのフォームを出力しません。承認済みのコメントは表示します。';
+        }
     }
 
     $entries = model('select_entries', [
@@ -589,7 +771,26 @@ function service_export_check()
         $notices[] = '公開期間を指定したエントリー・ページ（' . $entries[0]['count'] . '件）があります。公開の開始・終了の日時になっても、出力し直すまで反映されません。';
     }
 
-    $notices[] = 'お問い合わせ・ログインなどの画面は出力しません。メニューからも外します（ウィジェットや本文に書いたリンクは外れません）。';
+    // サーバーに出力するときは、出力しないページ（お問い合わせ・ログイン・プラグインのページなど）をPHPが返すので、ZIPファイルのときの注意は要らない
+    if ($target === 'directory') {
+        $notices[] = 'エントリーなどを編集しても、出力し直すまでは前のページが表示されます。';
+        $notices[] = '出力したページを返すには、Webサーバーの設定（同梱の .htaccess と mod_rewrite）が必要です。';
+
+        foreach (service_export_plugins() as $plugin) {
+            if ($plugin['export'] === false) {
+                $notices[] = 'プラグイン「' . $plugin['name'] . '」は、HTML出力に対応していません。プラグインのページは出力せず、PHPで表示します。';
+            } elseif ($plugin['export'] === null) {
+                $notices[] = 'プラグイン「' . $plugin['name'] . '」は、HTML出力に対応しているか分かりません。プラグインのページは出力せず、PHPで表示します。';
+            }
+        }
+
+        return [
+            'errors'  => $errors,
+            'notices' => $notices,
+        ];
+    }
+
+    $notices[] = 'お問い合わせ・ログインなどの画面は出力しません。メニューからも外します。（ウィジェットや本文に書いたリンクは外れません。）';
 
     if ($GLOBALS['config']['storage_protect']) {
         $notices[] = 'APP_STORAGE_PROTECT が有効なので、エントリーの画像・フィールドのファイルを表示できません。';
@@ -614,7 +815,7 @@ function service_export_check()
 
         return $path === '' ? '/' : $path;
     };
-    $export_paths = array_map($normalize, array_column(service_export_urls(), 'url'));
+    $export_paths = array_map($normalize, array_column(service_export_urls('zip'), 'url'));
 
     $menus = model('select_menus', [
         'where'    => 'enabled = 1',
@@ -632,7 +833,7 @@ function service_export_check()
     // プラグイン
     foreach (service_export_plugins() as $plugin) {
         if ($plugin['export'] === false) {
-            $notices[] = 'プラグイン「' . $plugin['name'] . '」は、HTML出力に対応していません。';
+            $notices[] = 'プラグイン「' . $plugin['name'] . '」は、HTML出力に対応していません。プラグインのページは出力しません。';
         } elseif ($plugin['export'] === null) {
             $notices[] = 'プラグイン「' . $plugin['name'] . '」は、HTML出力に対応しているか分かりません。プラグインのページは出力しません。';
         }

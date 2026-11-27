@@ -924,4 +924,20 @@ $(document).ready(function() {
         }
     }
 
+    /*
+     * HTML出力の案内
+     *
+     * 登録・編集などの完了メッセージ（無ければ本文の先頭）の後ろに出す。案内の中身は footer.php が template に入れる
+     */
+    if ($('template#export_notice').length > 0) {
+        var notice  = $($('template#export_notice').html());
+        var success = $('main div.alert-success').first();
+
+        if (success.length > 0) {
+            success.after(notice);
+        } else {
+            $('main').first().prepend(notice);
+        }
+    }
+
 });

@@ -100,7 +100,7 @@ model('insert_category_sets', [
     $GLOBALS['attributes'] = [];
 
     // 確認
-    $export_urls  = service_export_urls();
+    $export_urls  = service_export_urls('zip');
     $export_files = array_column($export_urls, 'file', 'url');
 
     // 結果（トップページと、エントリーの一覧のページ送り。3件を2件ずつ）
@@ -137,6 +137,13 @@ model('insert_category_sets', [
     test_equals('urls feed', $export_files['/entry/feed'], 'entry/feed.xml');
     test_equals('urls 404', array_search('404.html', $export_files), '/export-not-found/');
 
+    // 結果（サーバーに出力するときは、404のページは要らない。ほかは同じ）
+    $export_directory_files = array_column(service_export_urls('directory'), 'file', 'url');
+
+    test_equals('urls directory 404', array_search('404.html', $export_directory_files), false);
+    test_equals('urls directory count', count($export_directory_files), count($export_files) - 1);
+    test_equals('urls directory feed', $export_directory_files['/entry/feed'], 'entry/feed.xml');
+
     // 結果（権限と属性は元に戻る）
     test_equals('urls authority', $GLOBALS['authority'], ['power' => 3]);
     test_equals('urls attributes', $GLOBALS['attributes'], []);
@@ -156,7 +163,7 @@ model('insert_category_sets', [
     ];
 
     // 確認
-    $export_files = array_column(service_export_urls(), 'file', 'url');
+    $export_files = array_column(service_export_urls('zip'), 'file', 'url');
 
     // 結果（省略したURLも出力する。プラグインは有効なもの（setting があるもの）の export だけ）
     test_array_haskey('urls page omission (enabled)', $export_files, '/export_page');
@@ -177,7 +184,7 @@ model('insert_category_sets', [
 // 出力する前の確認テスト
 {
     // 確認
-    $export_check = service_export_check();
+    $export_check = service_export_check('zip');
     $export_text  = implode("\n", $export_check['notices']);
 
     // 結果（出力できる。全体に公開以外の4件、コメントを受け付ける1件、公開予約の1件、プラグインの2件を知らせる）
@@ -185,7 +192,7 @@ model('insert_category_sets', [
     test_contains('check public', $export_text, '（4件）は出力しません');
     test_contains('check comment', $export_text, '（1件）は、コメントのフォームを出力しません');
     test_contains('check period', $export_text, '公開期間を指定したエントリー・ページ（1件）');
-    test_contains('check plugin none', $export_text, 'プラグイン「非対応」は、HTML出力に対応していません。');
+    test_contains('check plugin none', $export_text, 'プラグイン「非対応」は、HTML出力に対応していません。プラグインのページは出力しません。');
     test_contains('check plugin unknown', $export_text, 'プラグイン「不明」は、HTML出力に対応しているか分かりません。');
     test_not_contains('check plugin array', $export_text, '「配列」');
 
@@ -193,7 +200,7 @@ model('insert_category_sets', [
     $GLOBALS['setting']['export_url'] = '';
 
     // 結果（出力できない）
-    $export_check = service_export_check();
+    $export_check = service_export_check('zip');
 
     test_equals('check errors (url)', count($export_check['errors']), 1);
 
@@ -201,7 +208,7 @@ model('insert_category_sets', [
     $GLOBALS['setting']['export_url'] = 'static.example.com';
 
     // 結果（出力できない）
-    $export_check = service_export_check();
+    $export_check = service_export_check('zip');
 
     test_equals('check errors (url format)', count($export_check['errors']), 1);
 
@@ -209,7 +216,7 @@ model('insert_category_sets', [
     $GLOBALS['setting']['export_url'] = 'https://static example.com';
 
     // 結果（出力できない）
-    $export_check = service_export_check();
+    $export_check = service_export_check('zip');
 
     test_equals('check errors (url space)', count($export_check['errors']), 1);
 
@@ -217,12 +224,138 @@ model('insert_category_sets', [
     $GLOBALS['setting']['export_url'] = ' https://static.example.com ';
 
     // 結果（取り除いて使うので、出力できる）
-    $export_check = service_export_check();
+    $export_check = service_export_check('zip');
 
     test_equals('check errors (url trim)', $export_check['errors'], []);
 
     $GLOBALS['setting']['export_url'] = 'https://static.example.com/sub/';
     $GLOBALS['plugin']                = [];
+}
+
+// サーバーに出力する前の確認テスト
+{
+    // データ（公開用URLは使わないので空にする。プラグイン）
+    $GLOBALS['setting']['export_url'] = '';
+    $GLOBALS['plugin'] = [
+        'test_export_array'   => ['name' => '配列', 'setting' => [], 'export' => ['/test_export/']],
+        'test_export_none'    => ['name' => '非対応', 'setting' => [], 'export' => false],
+        'test_export_unknown' => ['name' => '不明', 'setting' => []],
+    ];
+
+    // 確認
+    $export_check = service_export_check('directory');
+    $export_text  = implode("\n", $export_check['notices']);
+
+    // 結果（公開用URLが無くても出力できる。ログイン中の表示、全体に公開以外の4件、フォーム、公開予約、編集の反映、プラグインを知らせる）
+    test_equals('check directory errors', $export_check['errors'], []);
+    test_contains('check directory login', $export_text, 'ログインしている人にも未ログインのときの表示で返します');
+    test_contains('check directory public', $export_text, '（4件）は出力せず、PHPで表示します');
+    test_contains('check directory form', $export_text, 'フォームのあるページ');
+    test_contains('check directory period', $export_text, '出力し直すまで反映されません');
+    test_contains('check directory modify', $export_text, '出力し直すまでは前のページが表示されます');
+    test_contains('check directory plugin none', $export_text, 'プラグイン「非対応」は、HTML出力に対応していません。プラグインのページは出力せず');
+    test_contains('check directory plugin unknown', $export_text, 'プラグイン「不明」は、HTML出力に対応しているか分かりません。');
+    test_not_contains('check directory plugin array', $export_text, '「配列」');
+
+    // 結果（ZIPファイルのときだけの注意は出さない）
+    test_not_contains('check directory menu', $export_text, 'メニューからも外します');
+    test_not_contains('check directory comment', $export_text, 'コメントのフォームを出力しません');
+
+    $GLOBALS['setting']['export_url'] = 'https://static.example.com/sub/';
+    $GLOBALS['plugin']                = [];
+}
+
+// 出力できないページの判定テスト
+{
+    // 結果（ワンタイムトークンの入ったフォームがあれば出力しない）
+    test_equals('dynamic token', service_export_dynamic('<form><input type="hidden" name="_token" value="a"></form>'), true);
+    test_equals('dynamic token (single quote)', service_export_dynamic("<input type='hidden' class='token' name='_token' value='a'>"), true);
+    test_equals('dynamic search', service_export_dynamic('<form method="get"><input type="text" name="keyword"></form>'), false);
+    test_equals('dynamic text', service_export_dynamic('<p>name="_token"</p>'), false);
+}
+
+// 出力先の目印テスト
+{
+    // データ（サーバーに出力する）
+    $export = service_export_start('directory');
+
+    // 結果（目印を置き、出力中の描画はZIPファイルのときと違って普段どおり）
+    test_equals('target directory', service_export_target($export['token']), 'directory');
+
+    $_SERVER['HTTP_X_FREO2_EXPORT'] = $export['token'];
+
+    test_equals('app_export directory', app_export(), false);
+
+    directory_rmdir(service_export_dir($export['token']));
+
+    // データ（ZIPファイルに出力する）
+    $export = service_export_start('zip');
+
+    // 結果
+    test_equals('target zip', service_export_target($export['token']), 'zip');
+
+    $_SERVER['HTTP_X_FREO2_EXPORT'] = $export['token'];
+
+    test_equals('app_export zip', app_export(), true);
+
+    directory_rmdir(service_export_dir($export['token']));
+    unset($_SERVER['HTTP_X_FREO2_EXPORT']);
+}
+
+// サーバーへの出力テスト
+{
+    // データ（前回出力したページと、消さないファイル）
+    $export_published = $GLOBALS['config']['export_directory'];
+    $export_token     = 'test' . str_repeat('1', 28);
+    $export_dir       = service_export_dir($export_token);
+
+    test_equals('publish directory', $export_published, 'files/tests/html/');
+
+    if (is_dir($export_published)) {
+        directory_rmdir($export_published);
+    }
+    directory_mkdir($export_published . 'entry/detail/old/');
+    file_put_contents($export_published . '.gitkeep', '');
+    file_put_contents($export_published . 'index.html', 'old');
+    file_put_contents($export_published . 'entry/detail/old/index.html', 'old');
+
+    test_equals('published (before)', service_export_published(), 2);
+
+    // データ（今回出力したページ）
+    directory_mkdir($export_dir . 'html/');
+    service_export_save($export_token, 'index.html', 'new');
+    service_export_save($export_token, 'entry/detail/new/index.html', 'new');
+    service_export_save($export_token, 'entry/feed.xml', 'new');
+
+    // 確認
+    $export_result = service_export_publish($export_token);
+
+    // 結果（新しいページに入れ替わり、出力しなかったページと空になったディレクトリは消える。. で始まるファイルは残る）
+    test_equals('publish', $export_result, true);
+    test_equals('publish replace', file_get_contents($export_published . 'index.html'), 'new');
+    test_equals('publish new', file_get_contents($export_published . 'entry/detail/new/index.html'), 'new');
+    test_equals('publish xml', file_get_contents($export_published . 'entry/feed.xml'), 'new');
+    test_equals('publish old file', is_file($export_published . 'entry/detail/old/index.html'), false);
+    test_equals('publish old dir', is_dir($export_published . 'entry/detail/old'), false);
+    test_equals('publish dot', is_file($export_published . '.gitkeep'), true);
+    test_equals('publish moved', service_export_files($export_dir . 'html/'), []);
+    test_equals('published', service_export_published(), 3);
+
+    // 確認（削除）
+    $export_result = service_export_clear();
+
+    // 結果（ページとディレクトリは消え、. で始まるファイルは残る）
+    test_equals('clear', $export_result, true);
+    test_equals('clear published', service_export_published(), 0);
+    test_equals('clear dir', is_dir($export_published . 'entry'), false);
+    test_equals('clear dot', is_file($export_published . '.gitkeep'), true);
+
+    directory_rmdir($export_dir);
+    directory_rmdir($export_published);
+
+    // 結果（出力先が無くても、削除と数は失敗しない）
+    test_equals('clear none', service_export_clear(), true);
+    test_equals('published none', service_export_published(), 0);
 }
 
 // 出力しないページへのメニューの確認テスト
@@ -245,7 +378,7 @@ model('insert_category_sets', [
     }
 
     // 確認
-    $export_text = implode("\n", service_export_check()['notices']);
+    $export_text = implode("\n", service_export_check('zip')['notices']);
 
     // 結果（有効なメニューのうち、出力しないサイトの中のページだけを知らせる。末尾の / とクエリ文字列は比べない）
     test_contains('check menu', $export_text, 'メニュー「テスト出力しない」（/test_export_none/）のリンク先は出力しません。');
@@ -292,6 +425,14 @@ model('insert_category_sets', [
 
     test_equals('replaces to (trim)', $export_replaces['to'], '/sub/');
     test_equals('replaces url (trim)', $export_replaces['url'][rtrim($GLOBALS['config']['http_url'], '/') . '/'], 'https://static.example.com/sub/');
+
+    // データ（公開用URLが未設定。データベースの値は NULL）
+    $GLOBALS['setting']['export_url'] = null;
+
+    // 結果（警告を出さずに、ルートへ置き換える内容になる）
+    $export_replaces = service_export_replaces();
+
+    test_equals('replaces to (null)', $export_replaces['to'], '/');
 
     $GLOBALS['setting']['export_url'] = 'https://static.example.com/sub/';
 }

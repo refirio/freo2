@@ -41,7 +41,10 @@ function app_export()
         return false;
     }
 
-    return is_dir($GLOBALS['config']['file_target']['temp'] . 'export_' . $_SERVER['HTTP_X_FREO2_EXPORT'] . '/');
+    $dir = $GLOBALS['config']['file_target']['temp'] . 'export_' . $_SERVER['HTTP_X_FREO2_EXPORT'] . '/';
+
+    // サーバーに出力するときは、PHPも動く場所に置くので、普段どおりに描画する（ZIPファイルに出力するときだけ true）
+    return is_dir($dir) && !is_file($dir . 'directory');
 }
 
 /**

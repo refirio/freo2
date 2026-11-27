@@ -253,6 +253,9 @@ $GLOBALS['config']['export_step'] = app_config('APP_EXPORT_STEP', 5);
 /* HTML出力で複製する静的なファイル（公開ディレクトリからの相対パス。アップロードしたファイルは、ストレージがファイルのときに別に複製する） */
 $GLOBALS['config']['export_static'] = app_config('APP_EXPORT_STATIC', ['css/', 'js/', 'img/', 'themes/', 'plugins/']);
 
+/* HTML出力でサーバーに出力するときの出力先（公開ディレクトリからの相対パス。.htaccess がこの場所のページを返すので、変えられないようにしている。テスト中は tests の中を使う） */
+$GLOBALS['config']['export_directory'] = app_test() ? 'files/tests/html/' : 'files/html/';
+
 /* 画像リサイズ時のサイズ（メディアのサムネイルに使用。縦横比を保ってこの範囲に収める） */
 $GLOBALS['config']['resize_width'] = app_config('APP_RESIZE_WIDTH', 400);
 $GLOBALS['config']['resize_height'] = app_config('APP_RESIZE_HEIGHT', 400);

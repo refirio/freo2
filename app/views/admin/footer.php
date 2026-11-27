@@ -22,6 +22,19 @@
             </div>
         </div>
         <?php endif ?>
+
+        <?php if (isset($_GET['ok']) && !empty($GLOBALS['setting']['export_use_html'])) : ?>
+        <template id="export_notice">
+            <div class="alert alert-warning">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24"><use xlink:href="#symbol-exclamation-triangle-fill"/></svg>
+                <?php if ($GLOBALS['authority']['power'] >= 3) : ?>
+                <a href="<?php t(MAIN_FILE) ?>/admin/export" class="alert-link">HTMLを出力しなおしてください。</a>
+                <?php else : ?>
+                HTMLを出力しなおしてください。
+                <?php endif ?>
+            </div>
+        </template>
+        <?php endif ?>
         <?php endif ?>
 
         <svg xmlns="http://www.w3.org/2000/svg" class="d-none">

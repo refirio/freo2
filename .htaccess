@@ -2,7 +2,23 @@ DirectoryIndex index.php
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
+
+    # アップロードしたファイルを公開範囲で判定して返すURL（/storage/）は、拡張子が付いていてもPHPで処理する
     RewriteRule ^(storage/.*)$ index.php/$1 [L]
+
+    # HTML出力でサーバーに出力したページがあれば、PHPを通さずに返す（GETとHEADで、クエリ文字列が無いときだけ。HTML出力の処理が取得するときは、PHPで描画する）
+    RewriteRule ^$ - [E=FREO2_HTML:index.html]
+    RewriteRule ^((?:[\w\-]+/)*[\w\-]+)/?$ - [E=FREO2_HTML:$1/index.html]
+    RewriteRule ^entry/feed$ - [E=FREO2_HTML:entry/feed.xml]
+    RewriteCond %{ENV:FREO2_HTML} .
+    RewriteCond %{REQUEST_METHOD} ^(GET|HEAD)$
+    RewriteCond %{QUERY_STRING} ^$
+    RewriteCond %{HTTP:X-Freo2-Export} ^$
+    RewriteCond $0#%{REQUEST_URI} ^([^#]*)#(.*)\1$
+    RewriteCond %{DOCUMENT_ROOT}%2files/html/%{ENV:FREO2_HTML} -f
+    RewriteRule ^.*$ files/html/%{ENV:FREO2_HTML} [L]
+
+    # ファイルもディレクトリも無いURLは、PHPで処理する（URLから index.php を省略するため。画像などの拡張子のURLは、無ければそのまま404にする）
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} !\.(css|js|png|jpeg|jpg|jpe|gif)$
