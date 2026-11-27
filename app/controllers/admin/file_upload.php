@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 error('アップロードできるファイル形式は' . implode('、', $names) . 'のみです。', ['token' => token('create')]);
             }
 
-            // 内容は一時ファイルに保存し、セッションには名前と場所だけを入れる（差し替える前の一時ファイルは消す）
+            // 内容は一時ファイルに保存し、セッションには名前と場所だけを入れる（差し替える前の一時ファイルは削除する）
             $file = service_entry_file_upload($_FILES[$_GET['key']]['name'], $_FILES[$_GET['key']]['tmp_name']);
             if ($file === false) {
                 error('ファイルを保存できません。', ['token' => token('create')]);

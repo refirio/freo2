@@ -10,7 +10,7 @@ if ($_REQUEST['_work'] !== 'feed') {
     }
 
     if ($list['category'] === null && $list['archive'] === null && $list['page'] === 1) {
-        // 古いURL（クエリ文字列）は、パスで表せれば新しいURLへ転送
+        // クエリ文字列は、パスで表せれば新しいURLへ転送
         if (isset($_GET['category_sets']) || isset($_GET['archive']) || isset($_GET['page'])) {
             $list_filter = service_entry_list_filter($_GET);
             if ($list_filter !== null) {

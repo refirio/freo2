@@ -28,7 +28,8 @@ function service_update_pending()
 
 /**
  * プログラムを置いたディレクトリ（削除済みファイルを探す場所）
- * （1つめはプログラムの置き場所、2つめは公開ディレクトリ。標準の配置では同じ場所になる）
+ *
+ * 1つめはプログラムの置き場所、2つめは公開ディレクトリ。標準の配置では同じ場所になる
  *
  * @return array
  */
@@ -42,7 +43,8 @@ function service_update_roots()
 
 /**
  * 削除済みファイルの一覧の取得
- * （リリースのZIPに入っている app/removed_files.txt。形式は sha256sum の出力と同じで、1行に「ハッシュ、空白2つ、パス」）
+ *
+ * リリースのZIPに入っている app/removed_files.txt。形式は sha256sum の出力と同じで、1行に「ハッシュ、空白2つ、パス」
  *
  * @param string|null $file
  *
@@ -74,7 +76,8 @@ function service_update_removed_list($file = null)
 
 /**
  * 削除の対象にしてよいパスか
- * （一覧の書き換えなどで、プログラムの外や利用者のファイルを消さないようにする）
+ *
+ * 一覧の書き換えなどで、プログラムの外や利用者のファイルを消さないようにする
  *
  * @param string $path
  *
@@ -97,7 +100,8 @@ function service_update_removed_path($path)
 
 /**
  * ファイルの内容のハッシュ
- * （改行コードの違いで判定が変わらないよう、CRLFをLFにそろえてから計算する）
+ *
+ * 改行コードの違いで判定が変わらないよう、CRLFをLFにそろえてから計算する
  *
  * @param string $file
  *
@@ -115,7 +119,8 @@ function service_update_hash($file)
 
 /**
  * サーバーに残っている削除済みファイルの取得
- * （内容が本体の過去の版と一致するものは delete に、一致しないもの（編集した・利用者が作った）は keep に入れる）
+ *
+ * 内容が本体の過去の版と一致するものは delete に、一致しないもの（編集した・利用者が作った）は keep に入れる
  *
  * @param array|null $list
  * @param array|null $roots
@@ -164,7 +169,8 @@ function service_update_removed($list = null, $roots = null)
 
 /**
  * 削除済みファイルの削除
- * （送信された内容は使わず、その場で調べ直して、内容が一致するものだけを消す）
+ *
+ * 送信された内容は使わず、その場で調べ直して、内容が一致するものだけを削除する
  *
  * @param array|null $list
  * @param array|null $roots
@@ -191,7 +197,8 @@ function service_update_remove($list = null, $roots = null)
 
 /**
  * DBの更新
- * （最初に失敗したところで止まる。戻り値の最後の要素の error が null でなければ失敗）
+ *
+ * 最初に失敗したところで止まる。戻り値の最後の要素の error が null でなければ失敗
  *
  * @param array $targets
  *
@@ -210,7 +217,8 @@ function service_update_migrate($targets)
 
 /**
  * DBのバックアップをダウンロードさせる
- * （サーバーには保存しない。呼ぶとダウンロードの応答を返して終了する）
+ *
+ * サーバーには保存しない。呼ぶとダウンロードの応答を返して終了する
  *
  * @return void
  */
@@ -242,7 +250,8 @@ function service_update_failed($results)
 
 /**
  * 更新できる管理者がログインしているか
- * （DBの更新が済むまで、テーブルが新しいコードと合わないことがあるので、読む列はユーザーの有効状態と権限の強さだけにする）
+ *
+ * DBの更新が済むまで、テーブルが新しいコードと合わないことがあるので、読む列はユーザーの有効状態と権限の強さだけにする
  *
  * @return bool
  */

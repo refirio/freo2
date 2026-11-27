@@ -312,7 +312,8 @@ function service_user_frozen($username)
 
 /**
  * ペッパーを適用したパスワードの前処理（bcrypt/argon2 用）
- * HMACを通すことで、ペッパーを効かせつつ bcrypt の72バイト上限・NULバイト問題も回避する。
+ *
+ * HMACを通すことで、ペッパーを効かせつつ bcrypt の72バイト上限・NULバイト問題も回避する
  *
  * @param string $password
  *
@@ -692,7 +693,8 @@ function service_user_login_complete($user_id, $keep, $twostep)
 
 /**
  * ユーザーのコードの照合に失敗した回数を記録し、上限に達したらそのコードを無効にする
- * （パスワード再設定の暗証コードは token、2段階認証用コードは twostep）
+ *
+ * パスワード再設定の暗証コードは token、2段階認証用コードは twostep
  *
  * @param string $user_id
  * @param string $type
@@ -751,7 +753,8 @@ function service_user_code_failed($user_id, $type)
 
 /**
  * ユーザーの2段階認証用メールアドレスに、コードが届くかの確認が必要か
- * （2段階認証を有効にするときと、有効のまま2段階認証用メールアドレスを変えるとき）
+ *
+ * 2段階認証を有効にするときと、有効のまま2段階認証用メールアドレスを変えるとき
  *
  * @param string $user_id
  * @param string $twostep
@@ -783,7 +786,8 @@ function service_user_twostep_verify_required($user_id, $twostep, $twostep_email
 
 /**
  * ユーザーの2段階認証で、コードの入力を省略しているブラウザの解除が必要か
- * （2段階認証を無効にするときと、2段階認証用メールアドレスを変えるとき）
+ *
+ * 2段階認証を無効にするときと、2段階認証用メールアドレスを変えるとき
  *
  * @param string $twostep               変更後の2段階認証
  * @param string|null $twostep_email    変更後の2段階認証用メールアドレス
@@ -821,7 +825,8 @@ function service_user_twostep_reset($user_id)
 
 /**
  * パスワード再設定用のURLのトークンと暗証コードを発行する（有効期限は10分。失敗した回数は数え直す）
- * （token はメールアドレスの存在確認と共用しているので、進行中の存在確認のURLは使えなくなる）
+ *
+ * token はメールアドレスの存在確認と共用しているので、進行中の存在確認のURLは使えなくなる
  *
  * @param string $email
  *
@@ -902,7 +907,8 @@ function service_user_password_mail($email, $token_code, $token_expire)
 
 /**
  * パスワード再設定用の暗証コードの照合に失敗したときに、失敗した回数を記録する
- * （照合そのものは validate_users() が行う。誤っていたときだけ呼ぶ）
+ *
+ * 照合そのものは validate_users() が行う。誤っていたときだけ呼ぶ
  *
  * @param string $email
  * @param string $token_code
@@ -942,7 +948,8 @@ function service_user_password_failed($email, $token_code)
 
 /**
  * メールアドレスの存在確認用のトークンを発行する（有効期限は24時間）
- * （token はパスワード再設定と共用しているので、進行中のパスワード再設定のURLは使えなくなる）
+ *
+ * token はパスワード再設定と共用しているので、進行中のパスワード再設定のURLは使えなくなる
  *
  * @param string $user_id
  *

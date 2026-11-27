@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // 不要なファイルを削除
         $_view['update_remove_results'] = service_update_remove();
 
-        // すべて消せたら、完了の画面へ（消せなかったものがあれば、この画面に出す）
+        // すべて削除できたら、完了の画面へ（削除できなかったものがあれば、この画面に出す）
         if (empty($_view['update_remove_results']['failed'])) {
             redirect('/admin/update?ok=remove');
         }

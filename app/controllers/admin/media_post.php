@@ -36,7 +36,7 @@ if (isset($_SESSION['post']['media']['name']) && isset($_SESSION['post']['media'
         service_media_thumbnail_create(($directory ? $directory . '/' : '') . $media);
     }
 
-    // このメディアの一時ファイルと、古い一時ファイルを削除（記事の入力画面の一時ファイルは、そちらで消すので残す）
+    // このメディアの一時ファイルと、古い一時ファイルを削除（記事の入力画面の一時ファイルは、そちらで削除するので残す）
     $files = service_storage_list($GLOBALS['config']['file_target']['temp']);
 
     foreach ($files as $file) {

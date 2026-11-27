@@ -537,7 +537,7 @@ function service_entry_bulk_entries($type)
 }
 
 /**
- * 一括削除の対象を消す
+ * 一括削除の対象を削除
  *
  * @param string $type 型のコード
  *
